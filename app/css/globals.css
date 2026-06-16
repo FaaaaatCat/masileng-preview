@@ -1,0 +1,44 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+@import "tailwindcss";
+
+:root {
+  /* 브랜드 컬러 */
+  --coral:           oklch(0.66 0.17 18);
+  --coral-strong:    oklch(0.60 0.19 18);
+  --coral-deep:      oklch(0.55 0.20 32);
+  --coral-warm:      oklch(0.78 0.14 40);
+  --coral-soft:      oklch(0.95 0.035 18);
+  --coral-line:      oklch(0.90 0.05 18);
+
+  /* 잉크 (텍스트) */
+  --ink:             oklch(0.26 0.012 50);
+  --ink-2:           oklch(0.46 0.012 50);
+  --ink-3:           oklch(0.62 0.010 50);
+  --near-black:      oklch(0.22 0.01 50);
+
+  /* 라인 / 배경 */
+  --line:            oklch(0.92 0.004 50);
+  --line-2:          oklch(0.95 0.004 50);
+  --bg:              oklch(0.995 0.002 60);
+
+  /* 반경 */
+  --r-md:            14px;
+  --r-lg:            20px;
+
+  /* 그림자 */
+  --shadow:          0 1px 2px rgba(20,12,10,.04), 0 8px 24px -14px rgba(20,12,10,.18);
+  --shadow-hover:    0 2px 4px rgba(20,12,10,.05), 0 18px 40px -18px rgba(20,12,10,.28);
+  --coral-shadow:    rgba(200,60,80,.55);
+  --coral-shadow-sm: rgba(200,60,80,.40);
+  --thumb-shadow:    rgba(20,12,10,.40);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
