@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "../css/MasilengHome.css";
 
 import POOL_RAW      from "../data/challenge_pool.json";
@@ -14,42 +14,72 @@ const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
 
-const BANNER_LEFT  = [1, 2, 0];
-const BANNER_RIGHT = [6, 9];
+// 스캐터 배치 설정 (challenge pool 인덱스 기준)
+const SCATTER = [
+  { x: 24,  y: 96,  w: 150, h: 150, i: 0  },
+  { x: 190, y: 168, w: 152, h: 152, i: 1  },
+  { x: 14,  y: 264, w: 160, h: 200, i: 4  },
+  { x: 198, y: 344, w: 148, h: 148, i: 6  },
+  { x: 40,  y: 484, w: 150, h: 150, i: 10 },
+  { x: 206, y: 514, w: 150, h: 118, i: 12 },
+  { r: 24,  y: 96,  w: 150, h: 150, i: 7  },
+  { r: 190, y: 160, w: 152, h: 152, i: 3  },
+  { r: 18,  y: 266, w: 158, h: 198, i: 11 },
+  { r: 200, y: 346, w: 148, h: 148, i: 9  },
+  { r: 38,  y: 486, w: 150, h: 150, i: 5  },
+  { r: 206, y: 516, w: 150, h: 118, i: 13 },
+];
 
-function ChallengeBanner() {
+function ChallengeHero() {
+  const [items, setItems] = useState([]);
+
+  const compute = useCallback(() => {
+    const W = Math.min(1480, window.innerWidth);
+    const offset = (window.innerWidth - W) / 2;
+    return SCATTER.map((s, idx) => {
+      const d = POOL[s.i];
+      const left = s.x != null ? offset + s.x : offset + W - s.r - s.w;
+      return { ...s, d, left, idx };
+    });
+  }, []);
+
+  useEffect(() => {
+    setItems(compute());
+    let timer;
+    const onResize = () => { clearTimeout(timer); timer = setTimeout(() => setItems(compute()), 120); };
+    window.addEventListener("resize", onResize);
+    return () => { window.removeEventListener("resize", onResize); clearTimeout(timer); };
+  }, [compute]);
+
   return (
-    <div className="challenge-banner">
-      {BANNER_LEFT.map((poolIdx, i) => {
-        const d = POOL[poolIdx];
-        return (
-          <div key={`l${i}`} className={`challenge-banner-card challenge-banner-card-l${i}`}
-            style={{ background: d.g }}>
-            <img src={d.url} alt={d.n} onError={(e) => { e.target.style.display = "none"; }} />
-          </div>
-        );
-      })}
-
-      <div className="challenge-banner-content">
-        <span className="challenge-banner-label">도전 마실랭</span>
-        <h2 className="challenge-banner-title">
-          나만의 창작 레시피를<br />지금 등록해보세요
-        </h2>
-        <p className="challenge-banner-desc">
+    <div className="hero">
+      <div className="hero-bg" />
+      <div className="hero-scatter-layer">
+        <div className="scatter-layer">
+          {items.map(({ left, y, w, h, d, idx }) => (
+            <div key={idx} title={d.n}
+              className="scatter-item thumb-float"
+              style={{ left, top: y, width: w, height: h, background: d.g, animationDelay: `${idx * 55}ms` }}
+            >
+              <img src={d.url} alt={d.n} className="scatter-img"
+                onError={(e) => { e.target.style.display = "none"; }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="hero-content">
+        <h1 className="hero-title">
+          나만의 창작 레시피를<br />
+          <span className="hero-accent">지금 등록해보세요</span>
+        </h1>
+        <p className="hero-subtitle">
           직접 만든 레시피를 공유하고 다른 바텐더들에게<br />나만의 칵테일을 선보여보세요.
         </p>
-        <button className="btn-challenge-register">내 레시피 등록하기</button>
+        <div className="hero-cta">
+          <button className="btn-cta btn-cta-primary">내 레시피 등록하기</button>
+          <button className="btn-cta btn-cta-secondary">레시피 둘러보기</button>
+        </div>
       </div>
-
-      {BANNER_RIGHT.map((poolIdx, i) => {
-        const d = POOL[poolIdx];
-        return (
-          <div key={`r${i}`} className={`challenge-banner-card challenge-banner-card-r${i}`}
-            style={{ background: d.g }}>
-            <img src={d.url} alt={d.n} onError={(e) => { e.target.style.display = "none"; }} />
-          </div>
-        );
-      })}
     </div>
   );
 }
@@ -120,7 +150,7 @@ export default function ChallengeHome() {
 
   return (
     <>
-      <ChallengeBanner />
+      <ChallengeHero />
 
       <div className="page-wrap">
         <FilterBar {...filterProps} />

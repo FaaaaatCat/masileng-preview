@@ -1,53 +1,105 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import "../css/MasilengHome.css";
 
-import POOL_RAW       from "../data/pool.json";
-import SCATTER_CONFIG from "../data/scatterConfig.json";
-import CARDS          from "../data/cards.json";
+import POOL_RAW from "../data/pool.json";
+import CARDS    from "../data/cards.json";
 import { IMG_BASE, NAV_ITEMS, SORT_TABS } from "../data/constants.json";
 
 import { ChevronRightIcon, UploadIcon } from "./icons";
 import CocktailCard, { POOL } from "./CocktailCard";
 import FilterBar from "./FilterBar";
 import ChallengeHome from "./ChallengeHome";
+import IngredientsHome from "./IngredientsHome";
+
+// 폰 목업에 보여줄 pool 이미지 인덱스 (2열 3행 = 6개)
+const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
 
 // ─────────────────────────────────────────────
-// Hero 스캐터
+// 앱 배너 히어로
 // ─────────────────────────────────────────────
-function HeroScatter() {
-  const [items, setItems] = useState([]);
-
-  const compute = useCallback(() => {
-    const W = Math.min(1480, window.innerWidth);
-    const offset = (window.innerWidth - W) / 2;
-    return SCATTER_CONFIG.map((s, idx) => {
-      const d = POOL[s.i];
-      const left = s.x != null ? offset + s.x : offset + W - s.r - s.w;
-      return { ...s, d, left, idx };
-    });
-  }, []);
-
-  useEffect(() => {
-    setItems(compute());
-    let timer;
-    const onResize = () => { clearTimeout(timer); timer = setTimeout(() => setItems(compute()), 120); };
-    window.addEventListener("resize", onResize);
-    return () => { window.removeEventListener("resize", onResize); clearTimeout(timer); };
-  }, [compute]);
-
+function AppHero() {
   return (
-    <div className="scatter-layer">
-      {items.map(({ left, y, w, h, d, idx }) => (
-        <div key={idx} title={d.n}
-          className="scatter-item thumb-float"
-          style={{ left, top: y, width: w, height: h, background: d.g, animationDelay: `${idx * 55}ms` }}
-        >
-          <img src={d.url} alt={d.n} className="scatter-img"
-            onError={(e) => { e.target.style.display = "none"; }} />
+    <div className="hero hero-app">
+      <div className="hero-app-inner">
+
+        {/* 왼쪽: 텍스트 */}
+        <div className="hero-app-left">
+          <div className="hero-app-icon">
+            <span>마</span>
+          </div>
+          <h1 className="hero-app-title">
+            오늘의 칵테일,<br />
+            <span className="hero-accent">마실랭</span>
+          </h1>
+          <p className="hero-app-desc">
+            주류 경험의 새로운 기준이 되는<br />칵테일 라이프 플랫폼 마실랭을 시작해보세요
+          </p>
         </div>
-      ))}
+
+        {/* 가운데: 폰 목업 */}
+        <div className="hero-phone-wrap">
+          <div className="hero-phone">
+            <div className="phone-notch" />
+            <div className="phone-screen">
+              <div className="phone-screen-header">
+                <span className="phone-brand">마실랭<span style={{color:"var(--coral)"}}>●</span></span>
+              </div>
+              <div className="phone-card-grid">
+                {PHONE_ITEMS.map((idx) => {
+                  const d = POOL[idx];
+                  return (
+                    <div key={idx} className="phone-card" style={{ background: d.g }}>
+                      <img src={d.url} alt={d.n}
+                        onError={(e) => { e.target.style.display = "none"; }} />
+                      <span className="phone-card-name">{d.n}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 오른쪽: QR */}
+        <div className="hero-qr-wrap">
+          <div className="hero-qr-box">
+            <svg viewBox="0 0 100 100" className="hero-qr-svg" xmlns="http://www.w3.org/2000/svg">
+              {/* 좌상단 파인더 */}
+              <rect x="5" y="5" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
+              <rect x="13" y="13" width="14" height="14" rx="2" fill="#111"/>
+              {/* 우상단 파인더 */}
+              <rect x="65" y="5" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
+              <rect x="73" y="13" width="14" height="14" rx="2" fill="#111"/>
+              {/* 좌하단 파인더 */}
+              <rect x="5" y="65" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
+              <rect x="13" y="73" width="14" height="14" rx="2" fill="#111"/>
+              {/* 데이터 셀 (랜덤 패턴) */}
+              {[
+                [45,5],[50,5],[55,5],[60,5],
+                [45,12],[55,12],[60,12],
+                [45,19],[50,19],[60,19],
+                [45,26],[50,26],[55,26],
+                [45,33],[60,33],
+                [5,45],[10,45],[20,45],[30,45],[35,45],[45,45],[55,45],[65,45],[75,45],[85,45],[90,45],[95,45],
+                [5,52],[15,52],[25,52],[35,52],[50,52],[60,52],[70,52],[80,52],[90,52],
+                [5,59],[10,59],[20,59],[30,59],[40,59],[55,59],[65,59],[75,59],[85,59],[95,59],
+                [5,66],[15,66],[35,66],[50,66],[60,66],[80,66],[95,66],
+                [5,73],[10,73],[25,73],[40,73],[55,73],[70,73],[85,73],
+                [45,73],[50,73],[55,73],[60,73],[70,73],[80,73],[90,73],[95,73],
+                [45,80],[55,80],[65,80],[75,80],[90,80],
+                [45,87],[50,87],[60,87],[70,87],[80,87],[95,87],
+                [45,94],[55,94],[65,94],[85,94],[95,94],
+              ].map(([cx, cy], i) => (
+                <rect key={i} x={cx} y={cy} width="4" height="4" rx="1" fill="#111" />
+              ))}
+            </svg>
+          </div>
+          <p className="hero-qr-label">앱 다운로드 QR</p>
+        </div>
+
+      </div>
     </div>
   );
 }
@@ -144,6 +196,7 @@ export default function MasilengHome() {
   };
 
   const isChallenge = activeNav === "도전!마실랭";
+  const isIngredients = activeNav === "재료";
 
   return (
     <>
@@ -179,32 +232,14 @@ export default function MasilengHome() {
       </header>
 
       {/* HERO — 칵테일 페이지에만 */}
-      {!isChallenge && (
-        <div className="hero">
-          <div className="hero-bg" />
-          <div className="hero-scatter-layer hero-scatter">
-            <HeroScatter />
-          </div>
-          <div className="hero-content">
-            <h1 className="hero-title">
-              마실랭에서<br />
-              <span className="hero-accent">오늘의 칵테일</span> 만나기
-            </h1>
-            <p className="hero-subtitle">
-              전 세계 칵테일 레시피를 발견하고, 마실랭 유저들의 창작 레시피로 나만의 한 잔을 직접 만들어보세요.
-            </p>
-            <div className="hero-cta">
-              <a href="#" className="btn-cta btn-cta-primary">레시피 둘러보기</a>
-              <a href="#" className="btn-cta btn-cta-secondary">AI에게 추천받기</a>
-            </div>
-          </div>
-        </div>
-      )}
+      {!isChallenge && !isIngredients && <AppHero />}
 
       {/* 페이지 콘텐츠 */}
       {isChallenge
         ? <ChallengeHome />
-        : <CocktailPage filterProps={filterProps} />
+        : isIngredients
+          ? <IngredientsHome />
+          : <CocktailPage filterProps={filterProps} />
       }
     </>
   );
