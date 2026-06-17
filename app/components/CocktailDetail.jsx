@@ -290,8 +290,6 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
   const difficultyClass = difficulty === "쉬움" ? "easy" : difficulty === "보통" ? "medium" : "hard";
 
   // 영문명: desc 에서 추출, 없으면 pool 이미지명
-  const englishMatch = card.desc?.match(/\[([A-Za-z][A-Za-z0-9\s\-'.]+)\]/);
-  const englishName = englishMatch ? englishMatch[1] : (mainImg.n ?? null);
 
   return (
     <>
@@ -361,8 +359,6 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
                   </div>
                   <div className="detail-title-wrap">
                     <h1 className="detail-cocktail-name">{card.t}</h1>
-                    {/* 4. 영문명 */}
-                    {englishName && <p className="detail-cocktail-en">{englishName}</p>}
                   </div>
                   <button
                     className={`detail-like-btn${liked ? " liked" : ""}`}

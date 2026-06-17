@@ -103,9 +103,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 )}
               </div>
             ) : (
-              <Link href="/login" className="btn-login">로그인</Link>
+              <Link href="/login" className="btn-login btn-line-bg">로그인</Link>
             )}
-            <button className="btn-recipe-upload"><UploadIcon />레시피 업로드</button>
+            <Link href="/upload" className="btn-recipe-upload btn-gradient-bg"><UploadIcon />레시피 업로드</Link>
           </div>
         </nav>
       </div>

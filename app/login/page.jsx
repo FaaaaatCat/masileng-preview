@@ -68,7 +68,7 @@ export default function LoginPage() {
           <KakaoIcon />
           카카오로 로그인
         </button>
-        <button className="btn-google" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
+        <button className="btn-google btn-line-bg" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
           <GoogleIcon />
           Google로 로그인
         </button>

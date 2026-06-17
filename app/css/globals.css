@@ -1,72 +1,93 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 @import "tailwindcss";
 
 :root {
   /* ── 피그마 디자인 시스템 ─────────────────── */
 
   /* 폰트 컬러 */
-  --font-0:          #242A38;   /* 제목 */
-  --font-1:          #3A4151;   /* 본문 */
-  --font-2:          #4E596F;   /* 1차 서브폰트 */
-  --font-3:          #6F7A8F;   /* 2차 서브폰트 */
-  --font-4:          #949BAB;   /* placeholder */
-  --font-5:          #B5BCC8;   /* disable */
-  --font-6:          #CCD1DB;   /* 안중요한 정보 */
+  --font-0: #242a38; /* 제목 */
+  --font-1: #3a4151; /* 본문 */
+  --font-2: #4e596f; /* 1차 서브폰트 */
+  --font-3: #6f7a8f; /* 2차 서브폰트 */
+  --font-4: #949bab; /* placeholder */
+  --font-5: #b5bcc8; /* disable */
+  --font-6: #ccd1db; /* 안중요한 정보 */
 
   /* 그레이 */
-  --gray-1:          #F0F2F7;   /* 배경색 */
-  --gray-2:          #DBDFE7;   /* 구분선 */
-  --gray-3:          #C7CBD3;   /* 서브 아이콘 */
+  --gray-1: #f0f2f7; /* 배경색 */
+  --gray-2: #dbdfe7; /* 구분선 */
+  --gray-3: #c7cbd3; /* 서브 아이콘 */
+  --gray-4: #f7f7f8; /* form 컬러*/
 
   /* 서브 컬러 */
-  --yellow:          #FFC355;
-  --yellow-d:        #F98162;
-  --yellow-l:        #FFF5DA;
+  --yellow: #ffc355;
+  --yellow-d: #f98162;
+  --yellow-l: #fff5da;
 
   /* 그라데이션 */
-  --gradient-brand:  linear-gradient(135deg, #FFA06B 0%, #FB5A5A 100%);
+  --gradient-brand: linear-gradient(135deg, #ffa06b 0%, #fb5a5a 100%);
 
   /* 페이지 배경 */
-  --page-bg:         #F8F8F8;
+  --page-bg: #f8f8f8;
 
   /* ── 브랜드 컬러 ─────────────────────────── */
   /* pink = #F34B65, pink_d = #B7374B, pink_l = #FEEFEF */
-  --coral:           #F34B65;
-  --coral-strong:    #B7374B;
-  --coral-deep:      oklch(0.55 0.20 32);
-  --coral-warm:      oklch(0.78 0.14 40);
-  --coral-soft:      #FEEFEF;
-  --coral-line:      oklch(0.90 0.05 18);
+  --coral: #f34b65;
+  --coral-strong: #b7374b;
+  --coral-deep: oklch(0.55 0.2 32);
+  --coral-warm: oklch(0.78 0.14 40);
+  --coral-soft: #feefef;
+  --coral-line: oklch(0.9 0.05 18);
 
   /* ── 잉크 (기존 호환 유지) ────────────────── */
   /* --ink ≈ --font-0, --ink-2 ≈ --font-2, --ink-3 ≈ --font-4 */
-  --ink:             var(--font-0);
-  --ink-2:           var(--font-2);
-  --ink-3:           var(--font-4);
-  --near-black:      oklch(0.22 0.01 50);
+  --ink: var(--font-0);
+  --ink-2: var(--font-2);
+  --ink-3: var(--font-4);
+  --near-black: oklch(0.22 0.01 50);
 
   /* ── 라인 / 배경 (기존 호환 유지) ─────────── */
   /* --line ≈ --gray-2, --line-2 ≈ --gray-1 */
-  --line:            var(--gray-2);
-  --line-2:          var(--gray-1);
-  --bg:              oklch(0.995 0.002 60);
+  --line: var(--gray-2);
+  --line-2: var(--gray-1);
+  --bg: oklch(0.995 0.002 60);
+  --form-bg: var(--gray-1);
+  --form-line: var(--gray-2);
+  --form-bg-hover: var(--gray-2);
+  --form-line-hover: var(--gray-2);
+  --form-bg-active: var(--coral-soft);
+  --form-line-active: var(--coral);
+  --form-bg-disable: var(--gray-2);
+  --form-line-disable: var(--gray-2);
 
   /* ── 반경 */
-  --r-md:            14px;
-  --r-lg:            20px;
+  --r-md: 14px;
+  --r-lg: 20px;
 
   /* ── 그림자 */
-  --shadow:          0 1px 2px rgba(20,12,10,.04), 0 8px 24px -14px rgba(20,12,10,.18);
-  --shadow-hover:    0 2px 4px rgba(20,12,10,.05), 0 18px 40px -18px rgba(20,12,10,.28);
-  --coral-shadow:    rgba(200,60,80,.55);
-  --coral-shadow-sm: rgba(200,60,80,.40);
-  --thumb-shadow:    rgba(20,12,10,.40);
+  --shadow:
+    0 1px 2px rgba(20, 12, 10, 0.04), 0 8px 24px -14px rgba(20, 12, 10, 0.18);
+  --shadow-hover:
+    0 2px 4px rgba(20, 12, 10, 0.05), 0 18px 40px -18px rgba(20, 12, 10, 0.28);
+  --coral-shadow: rgba(200, 60, 80, 0.55);
+  --coral-shadow-sm: rgba(200, 60, 80, 0.4);
+  --thumb-shadow: rgba(20, 12, 10, 0.4);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-family:
+    "Pretendard Variable",
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    sans-serif;
   background: var(--bg);
   color: var(--ink);
   -webkit-font-smoothing: antialiased;

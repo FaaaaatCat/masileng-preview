@@ -11,16 +11,33 @@
 }
 
 /* ─────────────────────────────────────────────
+   Button background utilities
+───────────────────────────────────────────── */
+.btn-gradient-bg {
+  background: linear-gradient(130deg, oklch(0.68 0.22 18) 0%, oklch(0.58 0.24 340) 60%, oklch(0.52 0.22 300) 100%);
+  color: #fff;
+  border: none;
+}
+
+.btn-line-bg {
+  background: var(--bg);
+  border: 1px solid var(--form-line);
+  color: var(--ink-2);
+}
+
+.btn-line-bg:hover {
+  background: var(--form-bg-hover);
+  border-color: var(--form-line-hover);
+}
+
+/* ─────────────────────────────────────────────
    Header buttons
 ───────────────────────────────────────────── */
 .btn-login {
   font-size: 14.5px;
   font-weight: 600;
-  color: var(--ink-2);
   padding: 9px 16px;
   border-radius: 10px;
-  border: 1px solid var(--line);
-  background: none;
   cursor: pointer;
   font-family: inherit;
 }
@@ -28,11 +45,8 @@
 .btn-recipe-upload {
   font-size: 14px;
   font-weight: 700;
-  color: #fff;
   padding: 10px 18px;
   border-radius: 11px;
-  background: linear-gradient(130deg, oklch(0.68 0.22 18) 0%, oklch(0.58 0.24 340) 60%, oklch(0.52 0.22 300) 100%);
-  border: none;
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
@@ -72,9 +86,9 @@
   width: 48px;
   height: 44px;
   border-radius: 11px;
-  background: #fff;
+  background: var(--bg);
   color: var(--ink);
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--form-line);
   text-decoration: none;
   transition: border-color .15s, transform .12s, box-shadow .15s;
   flex-shrink: 0;
@@ -86,7 +100,8 @@
 }
 
 .btn-store:hover {
-  border-color: var(--line-2);
+  border-color: var(--form-line-hover);
+  background: var(--form-bg-hover);
   box-shadow: 0 2px 8px rgba(0,0,0,.08);
   transform: translateY(-1px);
 }
@@ -161,13 +176,19 @@
 .btn-more {
   padding: 13px 32px;
   border-radius: 12px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--form-line);
   font-size: 15px;
   font-weight: 700;
   color: var(--ink);
-  background: #fff;
+  background: var(--bg);
   cursor: pointer;
   font-family: inherit;
+  transition: background .15s, border-color .15s;
+}
+
+.btn-more:hover {
+  background: var(--form-bg-hover);
+  border-color: var(--form-line-hover);
 }
 
 /* ─────────────────────────────────────────────
@@ -198,7 +219,7 @@
   height: 54px;
   padding: 0 18px;
   border-radius: 14px;
-  border: 1.5px solid var(--line);
+  border: 1.5px solid var(--form-line);
   background: none;
   font-size: 13.5px;
   font-weight: 600;
@@ -227,8 +248,8 @@
   height: 54px;
   padding: 0 42px 0 18px;
   border-radius: 14px;
-  border: 1.5px solid var(--line);
-  background: #fff;
+  border: 1.5px solid var(--form-line);
+  background: var(--bg);
   font-size: 14.5px;
   font-weight: 600;
   color: var(--ink);
@@ -242,6 +263,11 @@
   justify-content: space-between;
   text-align: left;
   transition: border-color .15s, background .15s, color .15s;
+}
+
+.custom-select-trigger:not(.active):hover {
+  background: var(--form-bg-hover);
+  border-color: var(--form-line-hover);
 }
 
 .custom-select-trigger.active {
@@ -300,8 +326,8 @@
   top: calc(100% + 6px);
   left: 0;
   min-width: 100%;
-  background: #fff;
-  border: 1.5px solid var(--line);
+  background: var(--bg);
+  border: 1.5px solid var(--form-line);
   border-radius: 14px;
   box-shadow: 0 8px 28px -4px rgba(20,12,10,.13);
   z-index: 200;
@@ -360,12 +386,17 @@
 /* ─────────────────────────────────────────────
    IBA toggle
 ───────────────────────────────────────────── */
+.btn-iba-toggle:not(.active):hover {
+  background: var(--form-bg-hover);
+  border-color: var(--form-line-hover);
+}
+
 .btn-iba-toggle {
   height: 54px;
   padding: 0 18px;
   border-radius: 14px;
-  border: 1.5px solid var(--line);
-  background: #fff;
+  border: 1.5px solid var(--form-line);
+  background: var(--bg);
   font-size: 14.5px;
   font-weight: 600;
   color: var(--ink);
@@ -470,7 +501,7 @@
   gap: 14px;
   height: 54px;
   padding: 0 8px 0 20px;
-  background: #fff;
+  background: var(--bg);
   border: 2px solid var(--coral-line);
   border-radius: 14px;
   transition: border-color .15s;
@@ -512,8 +543,8 @@
   height: 54px;
   padding: 0 18px;
   border-radius: 14px;
-  border: 1.5px solid var(--line);
-  background: #fff;
+  border: 1.5px solid var(--form-line);
+  background: var(--bg);
   display: flex;
   align-items: center;
   gap: 14px;
