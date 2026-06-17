@@ -1,13 +1,18 @@
+import Link from "next/link";
 import POOL_RAW from "../data/pool.json";
 import { IMG_BASE } from "../data/constants.json";
 import { HeartIcon, ChatIcon } from "./icons";
 
 export const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 
-export default function CocktailCard({ card, showAuthor = true }) {
+export default function CocktailCard({ card, cardId, showAuthor = true }) {
   const d = POOL[card.i];
+  const href = cardId !== undefined ? `/cocktail/${cardId}` : undefined;
   return (
-    <article className="card">
+    <article className="card" style={{ cursor: href ? "pointer" : "default", position: "relative" }}>
+      {href && (
+        <Link href={href} style={{ position: "absolute", inset: 0, zIndex: 4 }} aria-label={card.t} />
+      )}
       <div className="card-img-wrap">
         <div className="card-bg" style={{ background: d.g }} />
         <img src={d.url} alt={d.n} className="card-img"

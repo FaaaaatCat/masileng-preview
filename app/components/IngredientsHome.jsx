@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import INGREDIENTS from "../data/ingredients.json";
 import { SearchIcon } from "./icons";
 
@@ -117,20 +118,22 @@ export default function IngredientsHome() {
         {/* 재료 그리드 */}
         <div className="cocktail-grid ing-grid">
           {filtered.map((ing) => (
-            <article key={ing.id} className="ing-card">
-              <div className="ing-card-img-wrap">
-                <img
-                  src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
-                  alt={ing.n}
-                  className="ing-card-img"
-                  onError={(e) => { e.target.style.opacity = "0"; }}
-                />
-              </div>
-              <div className="ing-card-body">
-                <h4 className="ing-card-name">{ing.n}</h4>
-                <p className="ing-card-desc">{ing.desc}</p>
-              </div>
-            </article>
+            <Link key={ing.id} href={`/ingredient/${ing.id}`} style={{ textDecoration: "none" }}>
+              <article className="ing-card">
+                <div className="ing-card-img-wrap">
+                  <img
+                    src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
+                    alt={ing.n}
+                    className="ing-card-img"
+                    onError={(e) => { e.target.style.opacity = "0"; }}
+                  />
+                </div>
+                <div className="ing-card-body">
+                  <h4 className="ing-card-name">{ing.n}</h4>
+                  <p className="ing-card-desc">{ing.desc}</p>
+                </div>
+              </article>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from "react";
 import { BASE_SPIRITS, THEMES } from "../data/constants.json";
 import { SearchIcon, ChevronIcon, XIcon, ResetIcon } from "./icons";
 
@@ -9,21 +10,54 @@ const CheckIcon = () => (
 );
 
 function SelectFilter({ value, onChange, onClear, placeholder, children }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
   const active = Boolean(value);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const options = (Array.isArray(children) ? children : [children]).filter(Boolean).map((child) => ({
+    value: child.props.value,
+    label: child.props.children,
+  }));
+
+  const selectedLabel = value ? (options.find((o) => o.value === value)?.label ?? placeholder) : placeholder;
+
   return (
-    <div className="select-wrap">
-      <select className={`select-filter${active ? " active" : ""}`}
-        value={value} onChange={(e) => onChange(e.target.value)}>
-        <option value="">{placeholder}</option>
-        {children}
-      </select>
-      {active ? (
-        <button className="select-clear-btn"
-          onClick={(e) => { e.stopPropagation(); onClear(); }}>
-          <XIcon />
-        </button>
-      ) : (
-        <span className="select-chevron"><ChevronIcon /></span>
+    <div className={`custom-select-wrap${open ? " open" : ""}`} ref={ref}>
+      <button
+        type="button"
+        className={`custom-select-trigger${active ? " active" : ""}`}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="custom-select-value">{selectedLabel}</span>
+        {active ? (
+          <span className="custom-select-clear" onMouseDown={(e) => { e.stopPropagation(); onClear(); setOpen(false); }}>
+            <XIcon />
+          </span>
+        ) : (
+          <span className={`custom-select-chevron${open ? " rotated" : ""}`}><ChevronIcon /></span>
+        )}
+      </button>
+      {open && (
+        <div className="custom-select-dropdown">
+          {options.map((opt) => (
+            <div
+              key={opt.value}
+              className={`custom-select-option${value === opt.value ? " selected" : ""}`}
+              onMouseDown={() => { onChange(opt.value); setOpen(false); }}
+            >
+              <span>{opt.label}</span>
+              {value === opt.value && <CheckIcon />}
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
@@ -38,6 +72,10 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
   const handleMinChange = (e) => onMinChange(Math.min(Number(e.target.value), max));
   const handleMaxChange = (e) => onMaxChange(Math.max(Number(e.target.value), min));
 
+  // 오른쪽 핸들이 max(10)에 있을 때 우선순위를 높여 왼쪽 인풋이 가로채지 않도록 함
+  const minZIndex = max === 10 ? 4 : (min >= max - 1 ? 5 : 4);
+  const maxZIndex = max === 10 ? 5 : 3;
+
   return (
     <div className={`range-wrap${isActive ? " active" : ""}`}>
       <span className="range-label">재료 수</span>
@@ -47,9 +85,9 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
         <div className="range-thumb" style={{ left: `${pMin}%` }} />
         <div className="range-thumb" style={{ left: `${pMax}%` }} />
         <input type="range" min={2} max={10} step={1} value={min} onChange={handleMinChange}
-          className="range-input" style={{ zIndex: min >= max - 1 ? 5 : 4 }} />
+          className="range-input" style={{ zIndex: minZIndex }} />
         <input type="range" min={2} max={10} step={1} value={max} onChange={handleMaxChange}
-          className="range-input" />
+          className="range-input" style={{ zIndex: maxZIndex }} />
       </div>
       <span className="range-value">{min}~{max >= 10 ? "10+" : max}개</span>
       {isActive && (
@@ -95,6 +133,10 @@ export default function FilterBar({
               {ibaOnly && <CheckIcon />}
             </span>
             IBA
+            <span className="iba-help-wrap" onMouseDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+              <span className="iba-help-icon">?</span>
+              <span className="iba-help-tooltip">국제 바텐더 협회(IBA)에서 공식 인정한 표준 레시피</span>
+            </span>
           </button>
         )}
 

@@ -1,16 +1,18 @@
-﻿"use client";
+"use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import "../css/MasilengHome.css";
 
 import POOL_RAW      from "../data/challenge_pool.json";
-import CARDS         from "../data/challenge_cards.json";
+import CARDS_RAW     from "../data/challenge_cards.json";
 import { IMG_BASE, SORT_TABS } from "../data/constants.json";
 
 import { HeartIcon, ChatIcon, ChevronRightIcon } from "./icons";
 import FilterBar from "./FilterBar";
 
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
+const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
 
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
 
@@ -86,27 +88,65 @@ function ChallengeHero() {
 
 function ChallengeCard({ card }) {
   const d = POOL[card.i];
+  const [dropOpen, setDropOpen] = useState(false);
+  const wrapRef = useRef(null);
+
+  const userCards = CARDS.filter((c) => c.u === card.u);
+
+  useEffect(() => {
+    if (!dropOpen) return;
+    const handler = (e) => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setDropOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [dropOpen]);
+
   return (
-    <article className="card">
-      <div className="card-img-wrap">
-        <div className="card-bg" style={{ background: d.g }} />
-        <img src={d.url} alt={d.n} className="card-img"
-          onError={(e) => { e.target.style.display = "none"; }} />
-        <div className="card-overlay" />
-        <div className="card-author">
-          <div className="card-author-avatar" />
-          <span className="card-author-name">@{card.u}</span>
+    <div className="card-wrap" ref={wrapRef}>
+      <Link href={`/challenge/${card._idx}`} style={{ textDecoration: "none" }}>
+        <article className="card">
+          <div className="card-img-wrap">
+            <div className="card-bg" style={{ background: d.g }} />
+            <img src={d.url} alt={d.n} className="card-img"
+              onError={(e) => { e.target.style.display = "none"; }} />
+            <div className="card-overlay" />
+            <button
+              className={`card-author${dropOpen ? " card-author--open" : ""}`}
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setDropOpen((v) => !v); }}
+            >
+              <img src="/userProfile.png" alt={card.u} className="card-author-profile-img" />
+              <span className="card-author-name">{card.u}</span>
+            </button>
+            <div className="card-desc-layer">
+              <p className="card-desc">{card.desc}</p>
+            </div>
+          </div>
+          <h4 className="card-title">{card.t}</h4>
+          <div className="card-meta">
+            <span className="card-meta-item"><HeartIcon />{card.likes}</span>
+            <span className="card-meta-item"><ChatIcon />{card.cmt}</span>
+          </div>
+        </article>
+      </Link>
+
+      {dropOpen && (
+        <div className="card-author-dropdown">
+          <p className="card-author-dropdown-header">@{card.u}의 레시피</p>
+          {userCards.map((uc) => (
+            <Link
+              key={uc._idx}
+              href={`/challenge/${uc._idx}`}
+              className="card-author-dropdown-item"
+              onClick={() => setDropOpen(false)}
+            >
+              <span className="card-author-dropdown-name">{uc.t}</span>
+              <ChevronRightIcon />
+            </Link>
+          ))}
         </div>
-        <div className="card-desc-layer">
-          <p className="card-desc">{card.desc}</p>
-        </div>
-      </div>
-      <h4 className="card-title">{card.t}</h4>
-      <div className="card-meta">
-        <span className="card-meta-item"><HeartIcon />{card.likes}</span>
-        <span className="card-meta-item"><ChatIcon />{card.cmt}</span>
-      </div>
-    </article>
+      )}
+    </div>
   );
 }
 
@@ -166,8 +206,8 @@ export default function ChallengeHome() {
             </button>
           </div>
           <div className="new-cocktail-row">
-            {NEW_COCKTAILS.map((card, idx) => (
-              <ChallengeCard key={idx} card={card} />
+            {NEW_COCKTAILS.map((card) => (
+              <ChallengeCard key={card._idx} card={card} />
             ))}
           </div>
         </div>
@@ -193,7 +233,7 @@ export default function ChallengeHome() {
 
           <div className="cocktail-grid">
             {filtered.length > 0
-              ? filtered.map((card, idx) => <ChallengeCard key={idx} card={card} />)
+              ? filtered.map((card) => <ChallengeCard key={card._idx} card={card} />)
               : <p style={{ color: "var(--ink-3)", fontSize: 15, padding: "40px 0" }}>검색 결과가 없어요.</p>
             }
           </div>

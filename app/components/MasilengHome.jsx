@@ -1,17 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import "../css/MasilengHome.css";
 
 import POOL_RAW from "../data/pool.json";
-import CARDS    from "../data/cards.json";
-import { IMG_BASE, NAV_ITEMS, SORT_TABS } from "../data/constants.json";
+import CARDS_RAW from "../data/cards.json";
+const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
+import { IMG_BASE, SORT_TABS } from "../data/constants.json";
 
-import { ChevronRightIcon, UploadIcon } from "./icons";
+import { ChevronRightIcon } from "./icons";
 import CocktailCard, { POOL } from "./CocktailCard";
 import FilterBar from "./FilterBar";
 import ChallengeHome from "./ChallengeHome";
 import IngredientsHome from "./IngredientsHome";
+import SiteHeader from "./SiteHeader";
 
 // 폰 목업에 보여줄 pool 이미지 인덱스 (2열 3행 = 6개)
 const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
@@ -151,7 +154,7 @@ function CocktailPage({ filterProps }) {
         </div>
         <div className="cocktail-grid">
           {filtered.length > 0
-            ? filtered.map((card, idx) => <CocktailCard key={idx} card={card} showAuthor={false} />)
+            ? filtered.map((card) => <CocktailCard key={card._id} card={card} cardId={card._id} showAuthor={false} />)
             : <p style={{ color: "var(--ink-3)", fontSize: 15, padding: "40px 0" }}>검색 결과가 없어요.</p>
           }
         </div>
@@ -169,7 +172,13 @@ function CocktailPage({ filterProps }) {
 // 메인 컴포넌트
 // ─────────────────────────────────────────────
 export default function MasilengHome() {
-  const [activeNav, setActiveNav] = useState("칵테일");
+  const searchParams = useSearchParams();
+  const [activeNav, setActiveNav] = useState(() => searchParams.get("tab") || "칵테일");
+
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) setActiveNav(tab);
+  }, [searchParams]);
   const [abv, setAbv] = useState("");
   const [base, setBase] = useState("");
   const [theme, setTheme] = useState("");
@@ -200,36 +209,7 @@ export default function MasilengHome() {
 
   return (
     <>
-      {/* HEADER */}
-      <header className="site-header">
-        <div className="site-header-inner">
-          <nav className="site-nav">
-            <a href="#" className="site-brand">
-              <span>마실랭</span>
-              <span className="site-brand-dot">●</span>
-            </a>
-            <div className="nav-menu">
-              {NAV_ITEMS.map((item) => (
-                <a key={item} href="#"
-                  onClick={(e) => { e.preventDefault(); setActiveNav(item); }}
-                  className={`nav-link${activeNav === item ? " active" : ""}`}
-                >
-                  {item}
-                  {activeNav === item && <span className="nav-link-underline" />}
-                </a>
-              ))}
-              <span className="nav-divider" />
-              <a href="#" className="nav-link">추천</a>
-              <a href="#" className="nav-link nav-link-download">앱 다운로드</a>
-            </div>
-            <div className="nav-spacer" />
-            <div className="nav-actions">
-              <button className="btn-login">로그인</button>
-              <button className="btn-recipe-upload"><UploadIcon />레시피 업로드</button>
-            </div>
-          </nav>
-        </div>
-      </header>
+      <SiteHeader activeNav={activeNav} onNavClick={setActiveNav} />
 
       {/* HERO — 칵테일 페이지에만 */}
       {!isChallenge && !isIngredients && <AppHero />}

@@ -1,0 +1,349 @@
+/* ─────────────────────────────────────────────
+   Ingredient Detail Page
+───────────────────────────────────────────── */
+
+.ing-detail-page {
+  background: var(--page-bg);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.ing-detail-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.ing-detail-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* ── Left ── */
+.ing-detail-left {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ing-detail-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--gray-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ing-detail-img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+}
+
+.ing-detail-img-placeholder {
+  font-size: 80px;
+  opacity: 0.3;
+}
+
+/* 액션 버튼 */
+.ing-action-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ing-btn-basket {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  background: var(--gradient-brand);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(243, 75, 101, 0.35);
+  transition: opacity .15s, transform .12s;
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.ing-btn-basket:hover { opacity: 0.9; transform: translateY(-1px); }
+.ing-btn-basket:active { transform: translateY(0); }
+
+.ing-btn-coupang {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  background: linear-gradient(135deg, #29b8d4 0%, #1a9ab8 100%);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(26, 154, 184, 0.4);
+  transition: opacity .15s, transform .12s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ing-btn-coupang:hover { opacity: 0.92; transform: translateY(-1px); }
+.ing-btn-coupang:active { transform: translateY(0); }
+
+.ing-btn-coupang-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ing-btn-coupang-rocket {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.ing-btn-coupang-texts {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.ing-btn-coupang-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.ing-btn-coupang-sub {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.85;
+  line-height: 1;
+  text-align: left;
+}
+
+/* ── Right ── */
+.ing-detail-right {
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ing-detail-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--gray-2);
+}
+
+/* 재료 설명 */
+.ing-detail-name-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.ing-detail-name {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--font-0);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ing-detail-en {
+  font-size: 15px;
+  color: var(--font-4);
+  margin: 4px 0 12px;
+  font-weight: 400;
+}
+
+.ing-detail-cat {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background: var(--coral-soft);
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.ing-detail-desc {
+  font-size: 15px;
+  color: var(--font-2);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* 섹션 헤더 */
+.ing-section-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--font-0);
+  margin: 0 0 4px;
+}
+
+.ing-section-sub {
+  font-size: 12px;
+  color: var(--font-4);
+  margin: 0 0 16px;
+}
+
+/* 관련 상품 */
+.ing-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.ing-product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.ing-product-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--gray-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ing-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.ing-product-name {
+  font-size: 13px;
+  color: var(--font-1);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ing-product-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--font-0);
+}
+
+.ing-product-rocket {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #1573dc;
+}
+
+/* 해당 재료 칵테일 */
+.ing-cocktail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ing-cocktail-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--page-bg);
+  border: 1px solid var(--gray-2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+
+.ing-cocktail-item:hover {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+}
+
+.ing-cocktail-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gray-1);
+}
+
+.ing-cocktail-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ing-cocktail-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.ing-cocktail-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-0);
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ing-cocktail-meta {
+  font-size: 12px;
+  color: var(--font-4);
+}
+
+.ing-cocktail-arrow {
+  color: var(--font-5);
+  flex-shrink: 0;
+}
+
+.ing-empty {
+  color: var(--font-4);
+  font-size: 14px;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* 광고 배너 */
+.ing-ad-banner {
+  background: var(--gray-1);
+  border-radius: 12px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-4);
+  font-size: 13px;
+}

@@ -2,30 +2,60 @@
 @import "tailwindcss";
 
 :root {
-  /* 브랜드 컬러 */
-  --coral:           oklch(0.66 0.17 18);
-  --coral-strong:    oklch(0.60 0.19 18);
+  /* ── 피그마 디자인 시스템 ─────────────────── */
+
+  /* 폰트 컬러 */
+  --font-0:          #242A38;   /* 제목 */
+  --font-1:          #3A4151;   /* 본문 */
+  --font-2:          #4E596F;   /* 1차 서브폰트 */
+  --font-3:          #6F7A8F;   /* 2차 서브폰트 */
+  --font-4:          #949BAB;   /* placeholder */
+  --font-5:          #B5BCC8;   /* disable */
+  --font-6:          #CCD1DB;   /* 안중요한 정보 */
+
+  /* 그레이 */
+  --gray-1:          #F0F2F7;   /* 배경색 */
+  --gray-2:          #DBDFE7;   /* 구분선 */
+  --gray-3:          #C7CBD3;   /* 서브 아이콘 */
+
+  /* 서브 컬러 */
+  --yellow:          #FFC355;
+  --yellow-d:        #F98162;
+  --yellow-l:        #FFF5DA;
+
+  /* 그라데이션 */
+  --gradient-brand:  linear-gradient(135deg, #FFA06B 0%, #FB5A5A 100%);
+
+  /* 페이지 배경 */
+  --page-bg:         #F8F8F8;
+
+  /* ── 브랜드 컬러 ─────────────────────────── */
+  /* pink = #F34B65, pink_d = #B7374B, pink_l = #FEEFEF */
+  --coral:           #F34B65;
+  --coral-strong:    #B7374B;
   --coral-deep:      oklch(0.55 0.20 32);
   --coral-warm:      oklch(0.78 0.14 40);
-  --coral-soft:      oklch(0.95 0.035 18);
+  --coral-soft:      #FEEFEF;
   --coral-line:      oklch(0.90 0.05 18);
 
-  /* 잉크 (텍스트) */
-  --ink:             oklch(0.26 0.012 50);
-  --ink-2:           oklch(0.46 0.012 50);
-  --ink-3:           oklch(0.62 0.010 50);
+  /* ── 잉크 (기존 호환 유지) ────────────────── */
+  /* --ink ≈ --font-0, --ink-2 ≈ --font-2, --ink-3 ≈ --font-4 */
+  --ink:             var(--font-0);
+  --ink-2:           var(--font-2);
+  --ink-3:           var(--font-4);
   --near-black:      oklch(0.22 0.01 50);
 
-  /* 라인 / 배경 */
-  --line:            oklch(0.92 0.004 50);
-  --line-2:          oklch(0.95 0.004 50);
+  /* ── 라인 / 배경 (기존 호환 유지) ─────────── */
+  /* --line ≈ --gray-2, --line-2 ≈ --gray-1 */
+  --line:            var(--gray-2);
+  --line-2:          var(--gray-1);
   --bg:              oklch(0.995 0.002 60);
 
-  /* 반경 */
+  /* ── 반경 */
   --r-md:            14px;
   --r-lg:            20px;
 
-  /* 그림자 */
+  /* ── 그림자 */
   --shadow:          0 1px 2px rgba(20,12,10,.04), 0 8px 24px -14px rgba(20,12,10,.18);
   --shadow-hover:    0 2px 4px rgba(20,12,10,.05), 0 18px 40px -18px rgba(20,12,10,.28);
   --coral-shadow:    rgba(200,60,80,.55);

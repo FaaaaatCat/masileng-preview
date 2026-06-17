@@ -97,8 +97,49 @@
 }
 
 .nav-link-download {
-  color: var(--coral-strong);
+  color: var(--coral);
   font-weight: 700;
+  /* 2. flyout을 인라인으로 배치 */
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+  height: 44px;
+}
+
+/* 앱 다운로드 hover flyout */
+.nav-download-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-download-flyout {
+  /* 1. absolute/transform 제거 — 인라인 흐름에 배치 */
+  display: none;
+  gap: 6px;
+}
+
+.nav-link-download:hover .nav-download-flyout {
+  display: inline-flex;
+}
+
+.nav-download-option {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  background: #fff;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: border-color .15s, color .15s, background .15s;
+  cursor: pointer;
+}
+
+.nav-download-option:hover {
+  border-color: var(--coral-line);
+  color: var(--coral-strong);
+  background: var(--coral-soft);
 }
 
 .nav-spacer { flex: 1; }
