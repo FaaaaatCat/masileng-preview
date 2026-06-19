@@ -78,7 +78,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                   )}
                 </a>
               ) : (
-                <Link key={item} href="/" className="nav-link">
+                <Link key={item} href={`/?tab=${encodeURIComponent(item)}`} className="nav-link">
                   {item}
                 </Link>
               ),

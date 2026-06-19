@@ -302,7 +302,56 @@
   display: none;
 }
 
-/* 재료명 — 값 입력 시 아이콘 숨김 처리용 */
+/* 재료명 자동완성 드롭다운 */
+.ing-suggest-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--form-bg);
+  border: 1.5px solid var(--form-line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-panel);
+  z-index: 100;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.ing-suggest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  gap: 8px;
+  transition: background var(--time-fast);
+}
+.ing-suggest-item:hover {
+  background: var(--form-bg-hover);
+}
+.ing-suggest-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--font-title);
+}
+.ing-suggest-cat {
+  font-size: 11px;
+  color: var(--font-placeholder);
+  white-space: nowrap;
+}
+.ing-suggest-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  font-size: 12px;
+  color: var(--font-placeholder);
+}
+.ing-suggest-request-btn {
+  align-self: flex-end;
+}
 
 /* 용량 — 고정 너비 + 가운데 정렬 */
 .common-input-sm.disabled,

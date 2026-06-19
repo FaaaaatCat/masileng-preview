@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import SiteHeader from "../components/SiteHeader";
 import { SelectFilter } from "../components/FilterBar";
+import INGREDIENTS_DATA from "../data/ingredients.json";
 
 const THEMES = [
   { id: "sour", en: "Sour", ko: "상큼발랄", img: "/theme/sour.png" },
@@ -43,9 +44,20 @@ export default function UploadPage() {
   const [dragging, setDragging] = useState(false);
   const [ingToast, setIngToast] = useState(false);
   const [ingToastLeaving, setIngToastLeaving] = useState(false);
+  const [openSuggestId, setOpenSuggestId] = useState(null);
+  const [emptyMsgQuery, setEmptyMsgQuery] = useState("");
+  const emptyMsgTimer = useRef(null);
   const fileInputRef = useRef(null);
   const nextIngId = useRef(3);
   const nextStepId = useRef(2);
+
+  const getSuggestions = (query) => {
+    if (!query.trim()) return [];
+    const q = query.toLowerCase();
+    return INGREDIENTS_DATA.filter(
+      (item) => item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q)
+    ).slice(0, 8);
+  };
 
   const selectTheme = (id) => setTheme((prev) => (prev === id ? null : id));
 
@@ -267,14 +279,46 @@ export default function UploadPage() {
                                 type="text"
                                 placeholder="재료명 검색"
                                 value={ing.name}
-                                onChange={(e) =>
-                                  updateIngredient(
-                                    ing.id,
-                                    "name",
-                                    e.target.value,
-                                  )
-                                }
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  updateIngredient(ing.id, "name", val);
+                                  setOpenSuggestId(ing.id);
+                                  clearTimeout(emptyMsgTimer.current);
+                                  emptyMsgTimer.current = setTimeout(() => setEmptyMsgQuery(val), 300);
+                                }}
+                                onFocus={() => ing.name && setOpenSuggestId(ing.id)}
+                                onBlur={() => setTimeout(() => setOpenSuggestId(null), 150)}
                               />
+                              {openSuggestId === ing.id && ing.name.trim() && (
+                                <div className="ing-suggest-dropdown">
+                                  {getSuggestions(ing.name).length > 0 ? (
+                                    getSuggestions(ing.name).map((item) => (
+                                      <div
+                                        key={item.id}
+                                        className="ing-suggest-item"
+                                        onMouseDown={() => {
+                                          updateIngredient(ing.id, "name", item.n);
+                                          setOpenSuggestId(null);
+                                        }}
+                                      >
+                                        <span className="ing-suggest-name">{item.n}</span>
+                                        <span className="ing-suggest-cat">{item.cat}</span>
+                                      </div>
+                                    ))
+                                  ) : emptyMsgQuery === ing.name ? (
+                                    <div className="ing-suggest-empty">
+                                      <span>'{ing.name}'이(가) 없습니다. 관리자에게 요청주세요.</span>
+                                      <button
+                                        type="button"
+                                        className="btn btn-lined btn-gray-light btn-xxs ing-suggest-request-btn"
+                                        onMouseDown={(e) => e.preventDefault()}
+                                      >
+                                        요청하기
+                                      </button>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              )}
                             </div>
                             {/* 용량 */}
                             <input
