@@ -103,7 +103,6 @@ $btn-sizes: (
     color: #fff;
     &:hover {
       background: var(--coral-subtle);
-      border-color: var(--coral-strong);
     }
   }
   &.btn-secondary {
@@ -112,7 +111,6 @@ $btn-sizes: (
     color: #fff;
     &:hover {
       background: var(--point-d);
-      border-color: var(--point-d);
     }
   }
   &.btn-gray-light {
@@ -121,7 +119,6 @@ $btn-sizes: (
     color: var(--font-body);
     &:hover {
       background: var(--ui-bg-dark);
-      border-color: var(--ui-bg-dark);
       color: var(--font-title);
     }
   }
@@ -131,7 +128,6 @@ $btn-sizes: (
     color: #fff;
     &:hover {
       background: var(--gray-1);
-      border-color: var(--gray-1);
     }
   }
   &.btn-gradient-1 {
@@ -643,7 +639,7 @@ $btn-sizes: (
 // ─────────────────────────────────────────────
 //  Input system
 //  공통: %input-base
-//  크기: common-input (large)  common-input-sm (small)
+//  크기: common-input (large)  common-input (small)
 //  상태: :hover  :focus  :disabled  ::placeholder
 // ─────────────────────────────────────────────
 
@@ -680,24 +676,29 @@ $btn-sizes: (
   }
 }
 
-// 일반 텍스트 input / textarea (큰 박스형)
+// 일반 텍스트 input
 .common-input {
-  @extend %input-base;
-  width: 100%;
-  border-radius: var(--r-md);
-  padding: 10px 14px;
-  resize: none;
-}
-
-// 인라인 소형 input (행 내부 필드)
-.common-input-sm {
   @extend %input-base;
   width: 100%;
   height: 40px;
   border-radius: var(--r-sm);
-  padding: 0 12px;
+  padding: 10px 14px;
 
-  // 왼쪽에 아이콘이 있을 때
+  &--icon {
+    padding-left: 30px;
+  }
+  &--icon.has-value {
+    padding-left: 12px;
+  }
+}
+
+.common-textarea {
+  @extend %input-base;
+  width: 100%;
+  height: 68px;
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+
   &--icon {
     padding-left: 30px;
   }

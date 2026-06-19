@@ -57,7 +57,8 @@ export default function UploadPage() {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
     return INGREDIENTS_DATA.filter(
-      (item) => item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q)
+      (item) =>
+        item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q),
     ).slice(0, 8);
   };
 
@@ -168,7 +169,7 @@ export default function UploadPage() {
                   <div className="upload-field">
                     <label className="upload-label">칵테일 이름 *</label>
                     <input
-                      className="common-input-sm"
+                      className="common-input"
                       type="text"
                       placeholder="예: 미드나이트 로즈"
                       value={name}
@@ -178,7 +179,7 @@ export default function UploadPage() {
                   <div className="upload-field">
                     <label className="upload-label">한 줄 소개</label>
                     <textarea
-                      className="common-input"
+                      className="common-textarea"
                       placeholder="이 칵테일의 맛, 분위기, 탄생 배경을 간략히 적어주세요."
                       value={desc}
                       onChange={(e) => setDesc(e.target.value)}
@@ -273,11 +274,11 @@ export default function UploadPage() {
                           <div className="upload-ing-inputs">
                             {/* 재료명 먼저 */}
                             <div
-                              className={`common-input-sm-wrap${ing.name ? " has-value" : ""}`}
+                              className={`common-input-wrap${ing.name ? " has-value" : ""}`}
                             >
                               <SearchIcon />
                               <input
-                                className={`common-input-sm common-input-sm--icon${ing.name ? " has-value" : ""}`}
+                                className={`common-input common-input--icon${ing.name ? " has-value" : ""}`}
                                 type="text"
                                 placeholder="재료명 검색"
                                 value={ing.name}
@@ -286,10 +287,17 @@ export default function UploadPage() {
                                   updateIngredient(ing.id, "name", val);
                                   setOpenSuggestId(ing.id);
                                   clearTimeout(emptyMsgTimer.current);
-                                  emptyMsgTimer.current = setTimeout(() => setEmptyMsgQuery(val), 300);
+                                  emptyMsgTimer.current = setTimeout(
+                                    () => setEmptyMsgQuery(val),
+                                    300,
+                                  );
                                 }}
-                                onFocus={() => ing.name && setOpenSuggestId(ing.id)}
-                                onBlur={() => setTimeout(() => setOpenSuggestId(null), 150)}
+                                onFocus={() =>
+                                  ing.name && setOpenSuggestId(ing.id)
+                                }
+                                onBlur={() =>
+                                  setTimeout(() => setOpenSuggestId(null), 150)
+                                }
                               />
                               {openSuggestId === ing.id && ing.name.trim() && (
                                 <div className="ing-suggest-dropdown">
@@ -299,17 +307,28 @@ export default function UploadPage() {
                                         key={item.id}
                                         className="ing-suggest-item"
                                         onMouseDown={() => {
-                                          updateIngredient(ing.id, "name", item.n);
+                                          updateIngredient(
+                                            ing.id,
+                                            "name",
+                                            item.n,
+                                          );
                                           setOpenSuggestId(null);
                                         }}
                                       >
-                                        <span className="ing-suggest-name">{item.n}</span>
-                                        <span className="ing-suggest-cat">{item.cat}</span>
+                                        <span className="ing-suggest-name">
+                                          {item.n}
+                                        </span>
+                                        <span className="ing-suggest-cat">
+                                          {item.cat}
+                                        </span>
                                       </div>
                                     ))
                                   ) : emptyMsgQuery === ing.name ? (
                                     <div className="ing-suggest-empty">
-                                      <span>'{ing.name}'이(가) 없습니다. 관리자에게 요청주세요.</span>
+                                      <span>
+                                        '{ing.name}'이(가) 없습니다. 관리자에게
+                                        요청주세요.
+                                      </span>
                                       <button
                                         type="button"
                                         className="btn btn-lined btn-gray-light btn-xxs ing-suggest-request-btn"
@@ -328,7 +347,7 @@ export default function UploadPage() {
                             </div>
                             {/* 용량 */}
                             <input
-                              className={`common-input-sm common-input-sm--amount${isNoAmount ? " disabled" : ""}`}
+                              className={`common-input common-input--amount${isNoAmount ? " disabled" : ""}`}
                               type="text"
                               placeholder="용량"
                               value={isNoAmount ? "" : ing.amount}
@@ -351,7 +370,7 @@ export default function UploadPage() {
                               size="medium"
                               styleVariant="select-style-default"
                             >
-                                <optgroup label="계량 단위">
+                              <optgroup label="계량 단위">
                                 <option value="ml">ml</option>
                                 <option value="oz">oz</option>
                                 <option value="tsp">tsp</option>
@@ -375,7 +394,10 @@ export default function UploadPage() {
                       );
                     })}
                   </div>
-                  <button className="upload-add-btn btn-lg" onClick={addIngredient}>
+                  <button
+                    className="upload-add-btn btn-lg"
+                    onClick={addIngredient}
+                  >
                     <PlusIcon /> 재료 추가
                   </button>
                 </div>
@@ -395,7 +417,7 @@ export default function UploadPage() {
                           <div className="upload-ing-num">{idx + 1}</div>
                         </div>
                         <textarea
-                          className="common-input upload-step"
+                          className="common-textarea upload-step"
                           placeholder="예: 얼음을 채운 셰이커에 모든 재료를 넣어주세요."
                           value={step.text}
                           onChange={(e) => updateStep(step.id, e.target.value)}
@@ -524,7 +546,9 @@ export default function UploadPage() {
                 >
                   레시피 등록하기
                 </button>
-                <button className="btn btn-lined btn-gray-light btn-lg">임시저장</button>
+                <button className="btn btn-lined btn-gray-light btn-lg">
+                  임시저장
+                </button>
                 <p className="upload-notice">
                   등록된 레시피는 48시간 내 검토 후 공개됩니다.
                 </p>

@@ -1,0 +1,389 @@
+/* ─────────────────────────────────────────────
+   My Page
+───────────────────────────────────────────── */
+
+/* ── 좌우 2단 레이아웃 */
+.mypage-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+  align-items: start;
+}
+
+/* ── 사이드바 카드 내부 */
+.mypage-sidebar-card {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── 프로필 상단 (아바타·이름·핸들·편집버튼) */
+.mypage-profile-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.mypage-profile-edit-btn {
+  width: 100%;
+  margin-top: 6px;
+  justify-content: center;
+}
+
+/* ── 아바타 */
+.mypage-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+  margin-bottom: 4px;
+}
+
+.mypage-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--r-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.mypage-avatar-edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--r-full);
+  background: var(--gray-1);
+  color: #fff;
+  border: 2px solid #fff;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--time-fast);
+}
+.mypage-avatar-edit:hover {
+  background: var(--gray-0);
+}
+
+/* ── 유저 이름·핸들 */
+.mypage-username {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--font-title);
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.mypage-handle {
+  font-size: 13px;
+  color: var(--font-sub2);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* ── 통계 박스 3열 */
+.mypage-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.mypage-stat-box {
+  background: var(--ui-bg-light);
+  border-radius: var(--r-md);
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mypage-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--font-title);
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.mypage-stat-label {
+  font-size: 11px;
+  color: var(--font-sub2);
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── 사이드바 냉장고 */
+.mypage-sidebar-fridge {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ui-line-light);
+}
+
+.mypage-fridge-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mypage-fridge-empty {
+  font-size: 13px;
+  color: var(--font-placeholder);
+}
+
+/* ── 우측 메인 */
+.mypage-main {
+  min-width: 0;
+}
+
+/* ── 탭 */
+.mypage-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--ui-line-light);
+  padding: 0 8px;
+}
+
+.mypage-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 16px;
+  height: 52px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-sub2);
+  background: none;
+  border: none;
+  border-bottom: 2.5px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color var(--time-fast), border-color var(--time-fast);
+  white-space: nowrap;
+}
+.mypage-tab-btn:hover {
+  color: var(--font-body);
+}
+.mypage-tab-btn.active {
+  color: var(--coral-strong);
+  border-bottom-color: var(--coral);
+  font-weight: 700;
+}
+
+.mypage-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: var(--r-full);
+  background: var(--ui-bg-subtle);
+  color: var(--font-sub2);
+  font-size: 11px;
+  font-weight: 700;
+}
+.mypage-tab-btn.active .mypage-tab-count {
+  background: var(--coral-soft);
+  color: var(--coral-strong);
+}
+
+.mypage-tab-content {
+  padding: 24px;
+  min-height: 200px;
+}
+
+/* ── 탭 내 레시피 목록 */
+.mypage-recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mypage-recipe-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: var(--ui-bg-light);
+  border: 1px solid transparent;
+  text-decoration: none;
+  transition: background var(--time-fast), border-color var(--time-fast);
+}
+.mypage-recipe-item:hover {
+  background: var(--coral-soft);
+  border-color: var(--coral-line);
+}
+
+.mypage-recipe-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.mypage-recipe-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mypage-recipe-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mypage-recipe-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mypage-recipe-meta {
+  font-size: 12px;
+  color: var(--font-placeholder);
+}
+
+.mypage-recipe-likes {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--coral);
+  flex-shrink: 0;
+}
+
+/* ── 냉장고 탭 CTA 버튼 */
+.mypage-shelf-cta {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* ── 냉장고 선반 그리드 */
+.mypage-shelf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+/* ── 선반 카드 */
+.mypage-shelf-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.mypage-shelf-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  margin-bottom: 10px;
+  border-radius: var(--r-md);
+  background: var(--ui-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: transform var(--time-slow) ease, box-shadow var(--time-slow) ease;
+}
+.mypage-shelf-card:hover .mypage-shelf-img-wrap {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.mypage-shelf-img {
+  max-width: 75%;
+  max-height: 75%;
+  object-fit: contain;
+  display: block;
+  transition: transform var(--time-slow) ease;
+}
+.mypage-shelf-card:hover .mypage-shelf-img {
+  transform: scale(1.05);
+}
+
+.mypage-shelf-body {
+  padding: 0 2px;
+}
+
+/* ── 삭제 버튼 */
+.mypage-shelf-del-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 4;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(180, 30, 30, 0.22);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+.mypage-shelf-card:hover .mypage-shelf-del-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+.mypage-shelf-del-btn:hover {
+  background: rgba(180, 30, 30, 0.55);
+}
+
+/* ── 떨어지는 제거 애니메이션 */
+@keyframes shelf-fall {
+  0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+  30%  { opacity: 1; transform: translateY(6px) rotate(-3deg) scale(0.97); }
+  100% { opacity: 0; transform: translateY(60px) rotate(8deg) scale(0.85); }
+}
+
+.mypage-shelf-removing {
+  animation: shelf-fall 0.45s cubic-bezier(0.4, 0, 0.8, 1) forwards;
+  pointer-events: none;
+}
+
+/* ── 빈 상태 */
+.mypage-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 0;
+  text-align: center;
+}
+
+.mypage-empty-icon {
+  font-size: 36px;
+  opacity: 0.4;
+}
+
+.mypage-empty-text {
+  font-size: 14px;
+  color: var(--font-placeholder);
+}

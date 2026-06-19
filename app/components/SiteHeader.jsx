@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import { NAV_ITEMS } from "../data/constants.json";
 import { UploadIcon } from "./icons";
 import IngredientRequestModal from "./IngredientRequestModal";
+import TermsModal from "./TermsModal";
 
 export default function SiteHeader({ activeNav, onNavClick }) {
   const [authUser, setAuthUser] = useState(null);
   const [dropOpen, setDropOpen] = useState(false);
   const [ingRequestOpen, setIngRequestOpen] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
   const dropRef = useRef(null);
   const router = useRouter();
 
@@ -138,9 +140,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 {dropOpen && (
                   <div className="nav-user-dropdown">
                     <a
-                      href="#"
+                      href="/mypage"
                       className="nav-user-item"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={() => setDropOpen(false)}
                     >
                       내 페이지
                     </a>
@@ -154,7 +156,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                     <a
                       href="#"
                       className="nav-user-item"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => { e.preventDefault(); setDropOpen(false); setTermsOpen(true); }}
                     >
                       이용약관
                     </a>
@@ -187,6 +189,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
 
     {ingRequestOpen && (
       <IngredientRequestModal onClose={() => setIngRequestOpen(false)} />
+    )}
+    {termsOpen && (
+      <TermsModal onClose={() => setTermsOpen(false)} />
     )}
     </>
   );
