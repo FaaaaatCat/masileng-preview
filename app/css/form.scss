@@ -5,12 +5,66 @@
 //  색상:   btn-brand  btn-secondary  btn-gray-light  btn-gray-dark
 //          btn-gradient-1  btn-gradient-2
 //  상태:   btn-disable
+//  사이즈 : btn-xxs / btn-xs / btn-sm / btn-md / btn-lg / btn-xl / btn-xxl
 // ─────────────────────────────────────────────
+$btn-sizes: (
+  xxs: (
+    height: 24px,
+    font-size: 11px,
+    padding: 8px,
+    border-radius: var(--r-sm),
+  ),
+  xs: (
+    height: 28px,
+    font-size: 12px,
+    padding: 10px,
+    border-radius: var(--r-sm),
+  ),
+  sm: (
+    height: 36px,
+    font-size: 13px,
+    padding: 12px,
+    border-radius: var(--r-sm),
+  ),
+  md: (
+    height: 40px,
+    font-size: 14px,
+    padding: 18px,
+    border-radius: var(--r-sm),
+  ),
+  lg: (
+    height: 48px,
+    font-size: 14.5px,
+    padding: 18px,
+    border-radius: var(--r-sm),
+  ),
+  xl: (
+    height: 54px,
+    font-size: 15px,
+    padding: 18px,
+    border-radius: var(--r-md),
+  ),
+  xxl: (
+    height: 68px,
+    font-size: 16px,
+    padding: 24px,
+    border-radius: var(--r-md),
+  ),
+);
 
+@each $name, $vals in $btn-sizes {
+  .btn-#{$name} {
+    height: map-get($vals, height);
+    font-size: map-get($vals, font-size);
+    padding: map-get($vals, padding);
+    border-radius: map-get($vals, border-radius);
+  }
+}
 .btn {
   cursor: pointer;
   border: none;
   font-family: inherit;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -28,7 +82,7 @@
     &,
     &:hover {
       background: var(--form-bg-disable) !important;
-      border: 1px solid var(--form-line-disable) !important;
+      border: 1.5px solid var(--form-line-disable) !important;
       color: var(--font-disable) !important;
       box-shadow: none !important;
       transform: none !important;
@@ -45,7 +99,7 @@
 .btn-filled {
   &.btn-brand {
     background: var(--coral);
-    border: 1px solid var(--coral);
+    border: 1.5px solid var(--coral);
     color: #fff;
     &:hover {
       background: var(--coral-subtle);
@@ -54,7 +108,7 @@
   }
   &.btn-secondary {
     background: var(--point);
-    border: 1px solid var(--point);
+    border: 1.5px solid var(--point);
     color: #fff;
     &:hover {
       background: var(--point-d);
@@ -63,7 +117,7 @@
   }
   &.btn-gray-light {
     background: var(--ui-bg-subtle);
-    border: 1px solid var(--ui-bg-subtle);
+    border: 1.5px solid var(--ui-bg-subtle);
     color: var(--font-body);
     &:hover {
       background: var(--ui-bg-dark);
@@ -73,7 +127,7 @@
   }
   &.btn-gray-dark {
     background: var(--gray-1);
-    border: 1px solid var(--gray-1);
+    border: 1.5px solid var(--gray-1);
     color: #fff;
     &:hover {
       background: var(--gray-1);
@@ -82,7 +136,7 @@
   }
   &.btn-gradient-1 {
     background: var(--gradient-brand-1);
-    border: 1px solid transparent;
+    border: none;
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -105,7 +159,7 @@
   }
   &.btn-gradient-2 {
     background: var(--gradient-brand-2);
-    border: 1px solid transparent;
+    border: none;
     color: #fff;
     box-shadow: var(--shadow-btn-2);
     &:hover {
@@ -118,7 +172,7 @@
 .btn-subfilled {
   &.btn-brand {
     background: var(--coral-soft);
-    border: 1px solid rgba(243, 75, 101, 0.35);
+    border: 1.5px solid rgba(243, 75, 101, 0.35);
     color: var(--coral);
     &:hover {
       background: var(--coral-line);
@@ -127,7 +181,7 @@
   }
   &.btn-secondary {
     background: var(--point-l);
-    border: 1px solid rgba(145, 55, 199, 0.3);
+    border: 1.5px solid rgba(145, 55, 199, 0.3);
     color: var(--point);
     &:hover {
       background: color-mix(in oklch, var(--point-l) 70%, var(--point));
@@ -136,7 +190,7 @@
   }
   &.btn-gray-light {
     background: var(--ui-bg-light);
-    border: 1px solid var(--ui-line-light);
+    border: 1.5px solid var(--ui-line-light);
     color: var(--font-sub);
     &:hover {
       background: var(--ui-bg-subtle);
@@ -196,15 +250,8 @@
   align-items: center;
   gap: 10px;
 
-  > .btn {
-    height: 54px;
-    padding: 0 18px;
-    border-radius: 14px;
-    font-size: 13.5px;
-    font-weight: 600;
-    &:last-child {
-      margin-left: auto;
-    }
+  > .btn:last-child {
+    margin-left: auto;
   }
 }
 
@@ -225,21 +272,12 @@
   padding: 0 8px 0 20px;
   background: var(--form-bg);
   border: 2px solid var(--coral-line);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   transition: border-color var(--time-fast);
 
   &:focus-within {
     border-color: var(--coral);
     outline: none;
-  }
-
-  .btn {
-    height: 40px;
-    padding: 0 20px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14.5px;
-    flex-shrink: 0;
   }
 }
 
@@ -270,12 +308,12 @@
   width: 100%;
   height: 54px;
   padding: 0 42px 0 18px;
-  border-radius: 14px;
+  border-radius: var(--r-md);
 
   &.custom-select-trigger--medium {
     height: 40px;
     padding: 0 36px 0 14px;
-    border-radius: 10px;
+    border-radius: var(--r-sm);
     font-size: 13.5px;
   }
   border: 1.5px solid var(--form-line);
@@ -305,7 +343,7 @@
   &.select-style-default.active {
     border-color: var(--form-line);
     background: var(--form-bg);
-    color: var(--coral-strong);
+    color: var(--coral-title);
   }
 }
 
@@ -340,7 +378,7 @@
   justify-content: center;
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   background: var(--coral-soft);
   color: var(--coral-strong);
   cursor: pointer;
@@ -359,11 +397,26 @@
   min-width: 100%;
   background: var(--form-bg);
   border: 1.5px solid var(--form-line);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   box-shadow: var(--shadow-panel);
   z-index: 200;
   overflow: hidden;
   padding: 6px;
+}
+
+.custom-select-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--font-placeholder);
+  padding: 6px 14px 4px;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+
+  &:not(:first-child) {
+    border-top: 1px solid var(--ui-line-light);
+    margin-top: 4px;
+    padding-top: 10px;
+  }
 }
 
 .custom-select-option {
@@ -371,7 +424,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 9px 14px;
-  border-radius: 9px;
+  border-radius: var(--r-sm);
   font-size: 14.5px;
   font-weight: 500;
   color: var(--font-sub);
@@ -401,7 +454,7 @@
 .range-wrap {
   height: 54px;
   padding: 0 18px;
-  border-radius: 14px;
+  border-radius: var(--r-md);
   border: 1.5px solid var(--form-line);
   background: var(--form-bg);
   display: flex;
@@ -445,7 +498,7 @@
   position: absolute;
   inset: 0;
   background: var(--ui-line-light);
-  border-radius: 99px;
+  border-radius: var(--r-full);
 }
 
 .range-fill {
@@ -453,7 +506,7 @@
   top: 0;
   height: 100%;
   background: var(--coral);
-  border-radius: 99px;
+  border-radius: var(--r-full);
   pointer-events: none;
 }
 
@@ -463,7 +516,7 @@
   transform: translate(-50%, -50%);
   width: 18px;
   height: 18px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   background: #fff;
   border: 2px solid var(--coral);
   box-shadow: 0 1px 6px -1px var(--coral-shadow-sm);
@@ -489,7 +542,7 @@
   justify-content: center;
   width: 18px;
   height: 18px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   border: none;
   background: var(--coral-soft);
   color: var(--coral-strong);
@@ -510,7 +563,7 @@
 .iba-check {
   width: 16px;
   height: 16px;
-  border-radius: 4px;
+  border-radius: var(--r-xs);
   border: 1.5px solid currentColor;
   display: flex;
   align-items: center;
@@ -544,7 +597,7 @@
   justify-content: center;
   width: 16px;
   height: 16px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   border: 1.5px solid currentColor;
   font-size: 10px;
   font-weight: 700;
@@ -566,7 +619,7 @@
   font-weight: 500;
   white-space: nowrap;
   padding: 7px 12px;
-  border-radius: 8px;
+  border-radius: var(--r-sm);
   pointer-events: none;
   opacity: 0;
   transition:
@@ -584,5 +637,71 @@
     transform: translateX(-50%);
     border: 5px solid transparent;
     border-top-color: var(--font-title);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Input system
+//  공통: %input-base
+//  크기: common-input (large)  common-input-sm (small)
+//  상태: :hover  :focus  :disabled  ::placeholder
+// ─────────────────────────────────────────────
+
+%input-base {
+  background: var(--form-bg);
+  border: 1.5px solid var(--form-line);
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--font-title);
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    border-color var(--time-fast),
+    background var(--time-fast),
+    box-shadow var(--time-fast);
+
+  &::placeholder {
+    color: var(--font-placeholder);
+  }
+  &:not(:disabled):hover {
+    background: var(--form-bg-hover);
+    border-color: var(--form-line-hover);
+  }
+  &:not(:disabled):focus {
+    border-color: var(--coral);
+    background: #fff;
+    box-shadow: 0 0 0 3px var(--coral-soft);
+  }
+  &:disabled {
+    background: var(--form-bg-disable);
+    color: var(--font-disable);
+    border-color: var(--form-line-disable);
+    cursor: not-allowed;
+  }
+}
+
+// 일반 텍스트 input / textarea (큰 박스형)
+.common-input {
+  @extend %input-base;
+  width: 100%;
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  resize: none;
+}
+
+// 인라인 소형 input (행 내부 필드)
+.common-input-sm {
+  @extend %input-base;
+  width: 100%;
+  height: 40px;
+  border-radius: var(--r-sm);
+  padding: 0 12px;
+
+  // 왼쪽에 아이콘이 있을 때
+  &--icon {
+    padding-left: 30px;
+  }
+  &--icon.has-value {
+    padding-left: 12px;
   }
 }

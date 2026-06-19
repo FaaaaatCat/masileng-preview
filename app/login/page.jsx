@@ -64,11 +64,11 @@ export default function LoginPage() {
         <p className="login-sub">칵테일 라이프의 새로운 기준</p>
 
         {/* 소셜 로그인 */}
-        <button className="btn-kakao" type="button" onClick={() => alert("카카오 로그인은 준비 중입니다.")}>
+        <button className="btn-kakao btn-xl" type="button" onClick={() => alert("카카오 로그인은 준비 중입니다.")}>
           <KakaoIcon />
           카카오로 로그인
         </button>
-        <button className="btn-google btn btn-lined btn-gray-light" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
+        <button className="btn-google btn btn-xl btn-lined btn-gray-light" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
           <GoogleIcon />
           Google로 로그인
         </button>
@@ -83,7 +83,7 @@ export default function LoginPage() {
             placeholder="아이디"
             value={id}
             onChange={(e) => { setId(e.target.value); setError(""); }}
-            className="login-input"
+            className="common-input login-field"
             autoComplete="username"
           />
           <input
@@ -91,11 +91,11 @@ export default function LoginPage() {
             placeholder="비밀번호"
             value={pw}
             onChange={(e) => { setPw(e.target.value); setError(""); }}
-            className="login-input"
+            className="common-input login-field"
             autoComplete="current-password"
           />
           {error && <p className="login-error">{error}</p>}
-          <button type="submit" className="btn-login-submit btn btn-filled btn-brand">로그인</button>
+          <button type="submit" className="btn-login-submit btn btn-xl btn-filled btn-brand">로그인</button>
         </form>
 
         <p className="login-register">

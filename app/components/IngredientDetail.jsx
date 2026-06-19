@@ -17,32 +17,64 @@ const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
 
 const ArrowLeftIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="18"
+    height="18"
+  >
     <path d="M19 12H5M12 5l-7 7 7 7" />
   </svg>
 );
 
 const ChevronRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="16"
+    height="16"
+  >
     <polyline points="9 18 15 12 9 6" />
   </svg>
 );
 
 const RocketIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="12" height="12">
-    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="12"
+    height="12"
+  >
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
   </svg>
 );
 
 const PlusBoxIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
-    strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="20"
+    height="20"
+  >
     <rect x="3" y="3" width="18" height="18" rx="5" />
     <line x1="12" y1="8" x2="12" y2="16" />
     <line x1="8" y1="12" x2="16" y2="12" />
@@ -50,8 +82,16 @@ const PlusBoxIcon = () => (
 );
 
 const ArrowRightIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-    strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="22"
+    height="22"
+  >
     <line x1="5" y1="12" x2="19" y2="12" />
     <polyline points="12 5 19 12 12 19" />
   </svg>
@@ -59,39 +99,114 @@ const ArrowRightIcon = () => (
 
 // 재료별 쿠팡 관련상품 (mock)
 const PRODUCT_MAP = {
-  "럼": [
-    { name: "바카디 슈페리어 럼 750ml", price: "28,900원", img: "https://www.thecocktaildb.com/images/ingredients/Rum-Medium.png", rocket: true },
-    { name: "앱솔루트 오리지널 보드카 대용량 1L", price: "35,000원", img: null, rocket: false },
+  럼: [
+    {
+      name: "바카디 슈페리어 럼 750ml",
+      price: "28,900원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Rum-Medium.png",
+      rocket: true,
+    },
+    {
+      name: "앱솔루트 오리지널 보드카 대용량 1L",
+      price: "35,000원",
+      img: null,
+      rocket: false,
+    },
   ],
-  "보드카": [
-    { name: "스미노프 보드카 375ml", price: "14,900원", img: "https://www.thecocktaildb.com/images/ingredients/Vodka-Medium.png", rocket: true },
-    { name: "앱솔루트 오리지널 보드카 700ml", price: "29,800원", img: null, rocket: true },
+  보드카: [
+    {
+      name: "스미노프 보드카 375ml",
+      price: "14,900원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Vodka-Medium.png",
+      rocket: true,
+    },
+    {
+      name: "앱솔루트 오리지널 보드카 700ml",
+      price: "29,800원",
+      img: null,
+      rocket: true,
+    },
   ],
-  "진": [
-    { name: "비피터 진 750ml", price: "32,000원", img: "https://www.thecocktaildb.com/images/ingredients/Gin-Medium.png", rocket: true },
+  진: [
+    {
+      name: "비피터 진 750ml",
+      price: "32,000원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Gin-Medium.png",
+      rocket: true,
+    },
     { name: "탱커레이 진 700ml", price: "38,500원", img: null, rocket: false },
   ],
-  "토닉워터": [
-    { name: "슈웹스 토닉워터 캔 355ml x 24개", price: "24,900원", img: "https://www.thecocktaildb.com/images/ingredients/Tonic Water-Medium.png", rocket: true },
-    { name: "페리에 탄산수 500ml x 12개", price: "18,500원", img: null, rocket: true },
+  토닉워터: [
+    {
+      name: "슈웹스 토닉워터 캔 355ml x 24개",
+      price: "24,900원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Tonic Water-Medium.png",
+      rocket: true,
+    },
+    {
+      name: "페리에 탄산수 500ml x 12개",
+      price: "18,500원",
+      img: null,
+      rocket: true,
+    },
   ],
-  "라임주스": [
-    { name: "리얼 라임 100% 착즙 주스 500ml", price: "8,900원", img: "https://www.thecocktaildb.com/images/ingredients/Lime juice-Medium.png", rocket: true },
-    { name: "몬인 유기농 라임주스 250ml", price: "6,500원", img: null, rocket: false },
+  라임주스: [
+    {
+      name: "리얼 라임 100% 착즙 주스 500ml",
+      price: "8,900원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Lime juice-Medium.png",
+      rocket: true,
+    },
+    {
+      name: "몬인 유기농 라임주스 250ml",
+      price: "6,500원",
+      img: null,
+      rocket: false,
+    },
   ],
   "계란 흰자": [
-    { name: "[연말특가] 로에나 스테인레… 체망 계란 분리기", price: "4,980원", img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2021/01/27/15/7/07bff43b-5e5d-4af9-888a-40b8a6c9da88.jpg", rocket: true },
-    { name: "오뚜기 맛있는 1등급 액상계란 난백 1kg x 2개", price: "12,990원", img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2021/12/01/15/3/f70c8c5d-8a0c-4da8-b0a0-3ba8a65a2d64.jpg", rocket: false },
+    {
+      name: "[연말특가] 로에나 스테인레… 체망 계란 분리기",
+      price: "4,980원",
+      img: "https://thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2021/01/27/15/7/07bff43b-5e5d-4af9-888a-40b8a6c9da88.jpg",
+      rocket: true,
+    },
+    {
+      name: "오뚜기 맛있는 1등급 액상계란 난백 1kg x 2개",
+      price: "12,990원",
+      img: "https://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/2021/12/01/15/3/f70c8c5d-8a0c-4da8-b0a0-3ba8a65a2d64.jpg",
+      rocket: false,
+    },
   ],
-  "그레나딘": [
-    { name: "몬인 그레나딘 시럽 700ml", price: "12,000원", img: "https://www.thecocktaildb.com/images/ingredients/Grenadine-Medium.png", rocket: true },
-    { name: "로즈 그레나딘 시럽 750ml", price: "15,500원", img: null, rocket: false },
+  그레나딘: [
+    {
+      name: "몬인 그레나딘 시럽 700ml",
+      price: "12,000원",
+      img: "https://www.thecocktaildb.com/images/ingredients/Grenadine-Medium.png",
+      rocket: true,
+    },
+    {
+      name: "로즈 그레나딘 시럽 750ml",
+      price: "15,500원",
+      img: null,
+      rocket: false,
+    },
   ],
 };
 
 const DEFAULT_PRODUCTS = (ing) => [
-  { name: `${ing.n} 관련 프리미엄 상품`, price: "가격 미정", img: null, rocket: false },
-  { name: `${ing.en} 칵테일 재료 세트`, price: "가격 미정", img: null, rocket: true },
+  {
+    name: `${ing.n} 관련 프리미엄 상품`,
+    price: "가격 미정",
+    img: null,
+    rocket: false,
+  },
+  {
+    name: `${ing.en} 칵테일 재료 세트`,
+    price: "가격 미정",
+    img: null,
+    rocket: true,
+  },
 ];
 
 function getProducts(ing) {
@@ -114,7 +229,10 @@ export default function IngredientDetail({ ing }) {
       setShowToast(true);
       setToastLeaving(false);
       setTimeout(() => setToastLeaving(true), 1700);
-      setTimeout(() => { setShowToast(false); setToastLeaving(false); }, 2000);
+      setTimeout(() => {
+        setShowToast(false);
+        setToastLeaving(false);
+      }, 2000);
     }
   };
 
@@ -128,8 +246,10 @@ export default function IngredientDetail({ ing }) {
       <SiteHeader />
       <div className="ing-detail-page">
         {showToast && (
-          <div className={`ing-toast${toastLeaving ? " ing-toast--out" : ""}`}>
-            <span className="ing-toast-icon">🧊</span>
+          <div
+            className={`common-toast${toastLeaving ? " common-toast--out" : ""}`}
+          >
+            <span className="common-toast-icon">🧊</span>
             재료를 내 냉장고에 추가했습니다
           </div>
         )}
@@ -155,7 +275,7 @@ export default function IngredientDetail({ ing }) {
 
               <div className="ing-action-btns">
                 <button
-                  className={`ing-btn-basket btn btn-filled ${isInBasket ? "btn-gray-dark" : "btn-gradient-2"}${isAnimating ? " ing-btn-basket--pop" : ""}`}
+                  className={`ing-btn-basket btn btn-xl btn-filled ${isInBasket ? "btn-gray-dark" : "btn-gradient-2"}${isAnimating ? " ing-btn-basket--pop" : ""}`}
                   onClick={handleBasketToggle}
                 >
                   {isAnimating &&
@@ -173,7 +293,7 @@ export default function IngredientDetail({ ing }) {
                   </span>
                 </button>
                 <button
-                  className="ing-btn-coupang"
+                  className="ing-btn-coupang btn-xxl"
                   onClick={() => alert("쿠팡으로 이동합니다.")}
                 >
                   <span className="ing-btn-coupang-left">
@@ -273,10 +393,12 @@ export default function IngredientDetail({ ing }) {
                             />
                           </div>
                           <div className="ing-cocktail-info">
-                            <p className="ing-cocktail-title">{card.t}</p>
+                            <p className="common-body-lg-bold">{card.t}</p>
                             <div className="ing-cocktail-meta">
                               {getCardTags(card).map((tag) => (
-                                <span key={tag} className="ing-cocktail-tag">{tag}</span>
+                                <span key={tag} className="ing-cocktail-tag">
+                                  {tag}
+                                </span>
                               ))}
                             </div>
                           </div>

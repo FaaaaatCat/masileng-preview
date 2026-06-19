@@ -2,57 +2,6 @@
    Ingredient Detail Page
 ───────────────────────────────────────────── */
 
-/* ── 토스트 */
-@keyframes toast-in {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
-@keyframes toast-out {
-  from {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-50%) translateY(12px);
-  }
-}
-
-.ing-toast {
-  position: fixed;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-radius: 999px;
-  background: var(--gray-1);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  box-shadow: var(--shadow-float);
-  animation: toast-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-.ing-toast--out {
-  animation: toast-out 0.3s ease-in forwards;
-}
-
-.ing-toast-icon {
-  font-size: 18px;
-  line-height: 1;
-}
-
 .ing-detail-page {
   background: var(--page-bg-gray);
   min-height: 100vh;
@@ -84,11 +33,11 @@
 .ing-detail-img-wrap {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 20px;
+  border-radius: var(--r-xl);
   overflow: hidden;
   background: var(--ui-bg-subtle);
   border: 1px solid var(--ui-line-subtle);
-  border-radius: 16px;
+  border-radius: var(--r-lg);
   padding: 24px;
   display: flex;
   align-items: center;
@@ -115,20 +64,13 @@
 
 .ing-btn-basket {
   width: 100%;
-  padding: 14px 20px;
-  border-radius: 14px;
   border: none;
   cursor: pointer;
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
   background: var(--gradient-brand-2);
-  color: #fff;
   box-shadow: 0 4px 14px rgba(243, 75, 101, 0.35);
   transition:
     opacity 0.15s,
     transform 0.12s;
-  letter-spacing: -0.2px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -201,7 +143,7 @@
   position: absolute;
   width: 7px;
   height: 7px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   background: #fff;
   pointer-events: none;
   animation: sparkle-fly 0.55s ease-out forwards;
@@ -251,15 +193,10 @@
 
 .ing-btn-coupang {
   width: 100%;
-  height: 68px;
-  padding: 0 20px;
-  border-radius: 16px;
-  border: none;
   cursor: pointer;
-  font-family: inherit;
-  background: linear-gradient(135deg, #29b8d4 0%, #346AFF 100%);
+  background: linear-gradient(135deg, #29b8d4 0%, #346aff 100%);
   color: #fff;
-  box-shadow: 0 6px 20px rgba(26, 154, 184, 0.4);
+  box-shadow: 0 6px 20px rgba(26, 81, 184, 0.4);
   transition:
     opacity 0.15s,
     transform 0.12s;
@@ -315,7 +252,7 @@
 }
 
 .ing-detail-card {
-  border-radius: 16px;
+  border-radius: var(--r-lg);
   padding: 24px;
   background: var(--ui-bg-white);
   border: 1px solid var(--ui-line-light);
@@ -349,7 +286,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
-  border-radius: 20px;
+  border-radius: var(--r-xl);
   background: var(--coral-soft);
   color: var(--coral);
   font-size: 12px;
@@ -395,7 +332,7 @@
 .ing-product-img-wrap {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
+  border-radius: var(--r-md);
   overflow: hidden;
   background: var(--ui-bg-light);
   display: flex;
@@ -407,7 +344,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: var(--r-md);
 }
 
 .ing-product-name {
@@ -447,7 +384,7 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border-radius: 12px;
+  border-radius: var(--r-md);
   background: var(--page-bg-gray);
   border: 1px solid var(--ui-line-light);
   text-decoration: none;
@@ -465,7 +402,7 @@
 .ing-cocktail-thumb {
   width: 48px;
   height: 48px;
-  border-radius: 10px;
+  border-radius: var(--r-sm);
   overflow: hidden;
   flex-shrink: 0;
   background: var(--ui-bg-subtle);
@@ -482,21 +419,11 @@
   min-width: 0;
 }
 
-.ing-cocktail-title {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--font-title);
-  margin: 0 0 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .ing-cocktail-meta {
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .ing-cocktail-tag {
@@ -504,7 +431,7 @@
   color: var(--font-sub);
   background: var(--ui-bg-subtle);
   border: 1px solid var(--ui-line-subtle);
-  border-radius: 4px;
+  border-radius: var(--r-xs);
   padding: 1px 6px;
 }
 

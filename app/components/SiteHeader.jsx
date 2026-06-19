@@ -46,32 +46,63 @@ export default function SiteHeader({ activeNav, onNavClick }) {
     <header className="site-header">
       <div className="site-header-inner">
         <nav className="site-nav">
-          {onNavClick
-            ? <a href="#" className="site-brand" onClick={(e) => e.preventDefault()}>{logo}</a>
-            : <Link href="/" className="site-brand">{logo}</Link>
-          }
+          {onNavClick ? (
+            <a
+              href="#"
+              className="site-brand"
+              onClick={(e) => e.preventDefault()}
+            >
+              {logo}
+            </a>
+          ) : (
+            <Link href="/" className="site-brand">
+              {logo}
+            </Link>
+          )}
 
           <div className="nav-menu">
             {NAV_ITEMS.map((item) =>
               onNavClick ? (
-                <a key={item} href="#"
-                  onClick={(e) => { e.preventDefault(); onNavClick(item); }}
+                <a
+                  key={item}
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavClick(item);
+                  }}
                   className={`nav-link${activeNav === item ? " active" : ""}`}
                 >
                   {item}
-                  {activeNav === item && <span className="nav-link-underline" />}
+                  {activeNav === item && (
+                    <span className="nav-link-underline" />
+                  )}
                 </a>
               ) : (
-                <Link key={item} href="/" className="nav-link">{item}</Link>
-              )
+                <Link key={item} href="/" className="nav-link">
+                  {item}
+                </Link>
+              ),
             )}
             <span className="nav-divider" />
-            {onNavClick
-              ? <a href="#" className="nav-link" onClick={(e) => e.preventDefault()}>추천</a>
-              : <Link href="/" className="nav-link">추천</Link>
-            }
+            {onNavClick ? (
+              <a
+                href="#"
+                className="nav-link"
+                onClick={(e) => e.preventDefault()}
+              >
+                추천
+              </a>
+            ) : (
+              <Link href="/" className="nav-link">
+                추천
+              </Link>
+            )}
             <div className="nav-download-wrap">
-              <a href="#" className="nav-link nav-link-download" onClick={(e) => e.preventDefault()}>
+              <a
+                href="#"
+                className="nav-link nav-link-download"
+                onClick={(e) => e.preventDefault()}
+              >
                 앱 다운로드
                 <div className="nav-download-flyout">
                   <span className="nav-download-option">안드로이드</span>
@@ -86,26 +117,66 @@ export default function SiteHeader({ activeNav, onNavClick }) {
           <div className="nav-actions">
             {authUser ? (
               <div className="nav-user-wrap" ref={dropRef}>
-                <button className="btn-user-name" onClick={() => setDropOpen((v) => !v)}>
+                <button
+                  className="btn-user-name btn-sm"
+                  onClick={() => setDropOpen((v) => !v)}
+                >
                   {authUser.name} 님
-                  <svg viewBox="0 0 10 6" width="10" height="6" fill="currentColor" style={{ marginLeft: 5 }}>
+                  <svg
+                    viewBox="0 0 10 6"
+                    width="10"
+                    height="6"
+                    fill="currentColor"
+                    style={{ marginLeft: 5 }}
+                  >
                     <path d="M0 0l5 6 5-6z" />
                   </svg>
                 </button>
                 {dropOpen && (
                   <div className="nav-user-dropdown">
-                    <a href="#" className="nav-user-item" onClick={(e) => e.preventDefault()}>내 페이지</a>
-                    <a href="#" className="nav-user-item" onClick={(e) => e.preventDefault()}>재료 요청하기</a>
-                    <a href="#" className="nav-user-item" onClick={(e) => e.preventDefault()}>이용약관</a>
+                    <a
+                      href="#"
+                      className="nav-user-item"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      내 페이지
+                    </a>
+                    <a
+                      href="#"
+                      className="nav-user-item"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      재료 요청하기
+                    </a>
+                    <a
+                      href="#"
+                      className="nav-user-item"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      이용약관
+                    </a>
                     <div className="nav-user-divider" />
-                    <button className="nav-user-item nav-user-logout" onClick={handleLogout}>로그아웃</button>
+                    <button
+                      className="nav-user-item nav-user-logout"
+                      onClick={handleLogout}
+                    >
+                      로그아웃
+                    </button>
                   </div>
                 )}
               </div>
             ) : (
-              <Link href="/login" className="btn btn-lined btn-gray-light">로그인</Link>
+              <Link href="/login" className="btn btn-lined btn-gray-light">
+                로그인
+              </Link>
             )}
-            <Link href="/upload" className="btn btn-filled btn-gradient-1"><UploadIcon />레시피 업로드</Link>
+            <Link
+              href="/upload"
+              className="btn btn-filled btn-gradient-1"
+            >
+              <UploadIcon />
+              레시피 업로드
+            </Link>
           </div>
         </nav>
       </div>

@@ -22,10 +22,19 @@ export function SelectFilter({ value, onChange, onClear, placeholder, children, 
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const options = (Array.isArray(children) ? children : [children]).filter(Boolean).map((child) => ({
-    value: child.props.value,
-    label: child.props.children,
-  }));
+  const options = [];
+  const childArray = (Array.isArray(children) ? children : [children]).filter(Boolean);
+  for (const child of childArray) {
+    if (child.type === "optgroup") {
+      options.push({ isGroup: true, label: child.props.label });
+      const gc = child.props.children;
+      (Array.isArray(gc) ? gc : [gc]).filter(Boolean).forEach((c) =>
+        options.push({ value: c.props.value, label: c.props.children })
+      );
+    } else {
+      options.push({ value: child.props.value, label: child.props.children });
+    }
+  }
 
   const selectedLabel = value ? (options.find((o) => o.value === value)?.label ?? placeholder) : placeholder;
 
@@ -47,16 +56,20 @@ export function SelectFilter({ value, onChange, onClear, placeholder, children, 
       </button>
       {open && (
         <div className="custom-select-dropdown">
-          {options.map((opt) => (
-            <div
-              key={opt.value}
-              className={`custom-select-option${value === opt.value ? " selected" : ""}`}
-              onMouseDown={() => { onChange(opt.value); setOpen(false); }}
-            >
-              <span>{opt.label}</span>
-              {value === opt.value && <CheckIcon />}
-            </div>
-          ))}
+          {options.map((opt, i) =>
+            opt.isGroup ? (
+              <div key={`g-${i}`} className="custom-select-group-label">{opt.label}</div>
+            ) : (
+              <div
+                key={opt.value}
+                className={`custom-select-option${value === opt.value ? " selected" : ""}`}
+                onMouseDown={() => { onChange(opt.value); setOpen(false); }}
+              >
+                <span>{opt.label}</span>
+                {value === opt.value && <CheckIcon />}
+              </div>
+            )
+          )}
         </div>
       )}
     </div>
@@ -131,7 +144,7 @@ export default function FilterBar({
         </SelectFilter>
 
         {showIba && (
-          <button className={`btn btn-gray-light${ibaOnly ? " btn-subfilled" : " btn-lined"}`} onClick={onIbaToggle}>
+          <button className={`btn btn-xl${ibaOnly ? " btn-subfilled btn-brand" : " btn-lined btn-gray-light"}`} onClick={onIbaToggle}>
             <span className="iba-check">
               {ibaOnly && <CheckIcon />}
             </span>
@@ -143,7 +156,7 @@ export default function FilterBar({
           </button>
         )}
 
-        <button className="btn btn-lined btn-gray-light" onClick={onReset}>
+        <button className="btn btn-lined btn-gray-light btn-xl" onClick={onReset}>
           <ResetIcon />
           초기화
         </button>
@@ -156,7 +169,7 @@ export default function FilterBar({
           <input type="text" className="search-input"
             value={search} onChange={(e) => onSearchChange(e.target.value)}
             placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요" />
-          <button className="btn btn-filled btn-brand">검색</button>
+          <button className="btn btn-filled btn-brand btn-md">검색</button>
         </div>
       </div>
     </div>

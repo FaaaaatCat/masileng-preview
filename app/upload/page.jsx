@@ -25,7 +25,6 @@ const THEMES = [
     img: "/theme/tropical.png",
   },
 ];
-const UNITS = ["ml", "oz", "dash", "개", "적당량", "tsp", "tbsp"];
 const DIFFICULTY_LABELS = ["매우 쉬움", "쉬움", "보통", "어려움", "전문가"];
 
 export default function UploadPage() {
@@ -48,36 +47,50 @@ export default function UploadPage() {
   const nextIngId = useRef(3);
   const nextStepId = useRef(2);
 
-  const selectTheme = (id) => setTheme((prev) => prev === id ? null : id);
+  const selectTheme = (id) => setTheme((prev) => (prev === id ? null : id));
 
   const addIngredient = () => {
-    setIngredients((prev) => [...prev, { id: nextIngId.current++, amount: "", unit: "ml", name: "" }]);
+    setIngredients((prev) => [
+      ...prev,
+      { id: nextIngId.current++, amount: "", unit: "ml", name: "" },
+    ]);
   };
   const showIngToast = () => {
     setIngToast(true);
     setIngToastLeaving(false);
     setTimeout(() => setIngToastLeaving(true), 1700);
-    setTimeout(() => { setIngToast(false); setIngToastLeaving(false); }, 2000);
+    setTimeout(() => {
+      setIngToast(false);
+      setIngToastLeaving(false);
+    }, 2000);
   };
 
   const removeIngredient = (id) => {
-    if (ingredients.length <= 2) { showIngToast(); return; }
+    if (ingredients.length <= 2) {
+      showIngToast();
+      return;
+    }
     setIngredients((prev) => prev.filter((i) => i.id !== id));
   };
   const updateIngredient = (id, field, value) =>
-    setIngredients((prev) => prev.map((i) => {
-      if (i.id !== id) return i;
-      const updated = { ...i, [field]: value };
-      if (field === "unit" && value === "적당량") updated.amount = "";
-      return updated;
-    }));
+    setIngredients((prev) =>
+      prev.map((i) => {
+        if (i.id !== id) return i;
+        const updated = { ...i, [field]: value };
+        if (field === "unit" && value === "적당량") updated.amount = "";
+        return updated;
+      }),
+    );
 
   const addStep = () => {
     setSteps((prev) => [...prev, { id: nextStepId.current++, text: "" }]);
   };
   const updateStep = (id, value) =>
-    setSteps((prev) => prev.map((s) => s.id === id ? { ...s, text: value } : s));
-  const removeStep = (id) => setSteps((prev) => prev.filter((s) => s.id !== id));
+    setSteps((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, text: value } : s)),
+    );
+  const removeStep = (id) =>
+    setSteps((prev) => prev.filter((s) => s.id !== id));
 
   const handlePhotoFile = (file) => {
     if (!file || !file.type.startsWith("image/")) return;
@@ -105,8 +118,10 @@ export default function UploadPage() {
     <>
       <SiteHeader />
       {ingToast && (
-        <div className={`ing-toast${ingToastLeaving ? " ing-toast--out" : ""}`}>
-          <span className="ing-toast-icon">⚠️</span>
+        <div
+          className={`common-toast${ingToastLeaving ? " common-toast--out" : ""}`}
+        >
+          <span className="common-toast-icon">⚠️</span>
           재료는 최소 2가지를 넣어주세요
         </div>
       )}
@@ -116,27 +131,30 @@ export default function UploadPage() {
           <div className="upload-hero">
             <span className="upload-badge">✨ 새 레시피 등록</span>
             <h1 className="upload-heading">
-              나만의 칵테일을<br />공유해보세요
+              나만의 칵테일을
+              <br />
+              공유해보세요
             </h1>
-            <p className="upload-sub">레시피를 등록하면 바텐더 팀의 검토 후 공개됩니다.</p>
+            <p className="upload-sub">
+              레시피를 등록하면 바텐더 팀의 검토 후 공개됩니다.
+            </p>
           </div>
 
           {/* Grid */}
           <div className="upload-grid">
             {/* ── Left column ── */}
             <div className="upload-left">
-
               {/* 기본 정보 */}
-              <div className="upload-card">
-                <div className="upload-card-header">
+              <div className="common-card">
+                <div className="common-card-header">
                   <span className="upload-card-icon">📋</span>
-                  <h2 className="upload-card-title">기본 정보</h2>
+                  <h2 className="common-title-md">기본 정보</h2>
                 </div>
-                <div className="upload-card-body">
+                <div className="common-card-inner">
                   <div className="upload-field">
                     <label className="upload-label">칵테일 이름 *</label>
                     <input
-                      className="upload-input"
+                      className="common-input-sm"
                       type="text"
                       placeholder="예: 미드나이트 로즈"
                       value={name}
@@ -146,7 +164,7 @@ export default function UploadPage() {
                   <div className="upload-field">
                     <label className="upload-label">한 줄 소개</label>
                     <textarea
-                      className="upload-textarea"
+                      className="common-input"
                       placeholder="이 칵테일의 맛, 분위기, 탄생 배경을 간략히 적어주세요."
                       value={desc}
                       onChange={(e) => setDesc(e.target.value)}
@@ -159,16 +177,24 @@ export default function UploadPage() {
                     </label>
                     <div className="upload-diff-row">
                       <button
-                        className={`upload-diff-btn${diffMode === "ai" ? " active" : ""}`}
+                        className={`btn btn-sm upload-diff-btn${diffMode === "ai" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
                         onClick={() => handleDiffMode("ai")}
-                      >AI 추천</button>
+                      >
+                        AI 추천
+                      </button>
                       <button
-                        className={`upload-diff-btn${diffMode === "manual" ? " active" : ""}`}
+                        className={`btn btn-sm upload-diff-btn${diffMode === "manual" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
                         onClick={() => handleDiffMode("manual")}
-                      >직접 선택</button>
-                      <div className={`upload-stars${diffMode === "manual" ? " manual" : " ai"}`}>
+                      >
+                        직접 선택
+                      </button>
+                      <div
+                        className={`upload-stars${diffMode === "manual" ? " manual" : " ai"}`}
+                      >
                         {diffMode === "ai" ? (
-                          <span className="upload-stars-ai-msg">AI가 레시피를 읽고 자동으로 난이도를 추천해드립니다</span>
+                          <span className="upload-stars-ai-msg">
+                            AI가 레시피를 읽고 자동으로 난이도를 추천해드립니다
+                          </span>
                         ) : (
                           [1, 2, 3, 4, 5].map((n) => (
                             <button
@@ -177,7 +203,10 @@ export default function UploadPage() {
                               onClick={() => setDifficulty(n)}
                               title={DIFFICULTY_LABELS[n - 1]}
                             >
-                              <StarIconSolid size={20} filled={difficulty >= n} />
+                              <StarIconSolid
+                                size={20}
+                                filled={difficulty >= n}
+                              />
                             </button>
                           ))
                         )}
@@ -188,12 +217,12 @@ export default function UploadPage() {
               </div>
 
               {/* 카테고리 태그 */}
-              <div className="upload-card">
-                <div className="upload-card-header">
+              <div className="common-card">
+                <div className="common-card-header">
                   <span className="upload-card-icon">🏷️</span>
-                  <h2 className="upload-card-title">카테고리 태그</h2>
+                  <h2 className="common-title-md">카테고리 태그</h2>
                 </div>
-                <div className="upload-card-body">
+                <div className="common-card-inner">
                   <div className="upload-theme-grid">
                     {THEMES.map((t) => (
                       <button
@@ -201,7 +230,11 @@ export default function UploadPage() {
                         className={`upload-theme-item${theme === t.id ? " active" : ""}`}
                         onClick={() => selectTheme(t.id)}
                       >
-                        <img src={t.img} alt={t.en} className="upload-theme-img" />
+                        <img
+                          src={t.img}
+                          alt={t.en}
+                          className="upload-theme-img"
+                        />
                         <span className="upload-theme-en">{t.en}</span>
                         <span className="upload-theme-ko">{t.ko}</span>
                       </button>
@@ -211,12 +244,12 @@ export default function UploadPage() {
               </div>
 
               {/* 재료 */}
-              <div className="upload-card">
-                <div className="upload-card-header">
+              <div className="common-card">
+                <div className="common-card-header">
                   <span className="upload-card-icon">🧪</span>
-                  <h2 className="upload-card-title">재료</h2>
+                  <h2 className="common-title-md">재료</h2>
                 </div>
-                <div className="upload-card-body">
+                <div className="common-card-inner">
                   <div className="upload-ing-list">
                     {ingredients.map((ing, idx) => {
                       const isNoAmount = ing.unit === "적당량";
@@ -225,34 +258,60 @@ export default function UploadPage() {
                           <div className="upload-ing-num">{idx + 1}</div>
                           <div className="upload-ing-inputs">
                             {/* 재료명 먼저 */}
-                            <div className={`upload-ing-name-wrap${ing.name ? " has-value" : ""}`}>
+                            <div
+                              className={`common-input-sm-wrap${ing.name ? " has-value" : ""}`}
+                            >
                               <SearchIcon />
                               <input
-                                className={`upload-ing-name${ing.name ? " has-value" : ""}`}
+                                className={`common-input-sm common-input-sm--icon${ing.name ? " has-value" : ""}`}
                                 type="text"
                                 placeholder="재료명 검색"
                                 value={ing.name}
-                                onChange={(e) => updateIngredient(ing.id, "name", e.target.value)}
+                                onChange={(e) =>
+                                  updateIngredient(
+                                    ing.id,
+                                    "name",
+                                    e.target.value,
+                                  )
+                                }
                               />
                             </div>
                             {/* 용량 */}
                             <input
-                              className={`upload-ing-amount${isNoAmount ? " disabled" : ""}`}
+                              className={`common-input-sm common-input-sm--amount${isNoAmount ? " disabled" : ""}`}
                               type="text"
                               placeholder="용량"
                               value={isNoAmount ? "" : ing.amount}
                               disabled={isNoAmount}
-                              onChange={(e) => updateIngredient(ing.id, "amount", e.target.value)}
+                              onChange={(e) =>
+                                updateIngredient(
+                                  ing.id,
+                                  "amount",
+                                  e.target.value,
+                                )
+                              }
                             />
                             {/* 단위 */}
                             <SelectFilter
                               value={ing.unit}
-                              onChange={(v) => updateIngredient(ing.id, "unit", v)}
+                              onChange={(v) =>
+                                updateIngredient(ing.id, "unit", v)
+                              }
                               placeholder="단위"
                               size="medium"
                               styleVariant="select-style-default"
                             >
-                              {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                                <optgroup label="계량 단위">
+                                <option value="ml">ml</option>
+                                <option value="oz">oz</option>
+                                <option value="tsp">tsp</option>
+                                <option value="tbsp">tbsp</option>
+                                <option value="dash">dash</option>
+                              </optgroup>
+                              <optgroup label="기타">
+                                <option value="적당량">적당량</option>
+                                <option value="조각">조각</option>
+                              </optgroup>
                             </SelectFilter>
                           </div>
                           <button
@@ -266,19 +325,19 @@ export default function UploadPage() {
                       );
                     })}
                   </div>
-                  <button className="upload-add-btn" onClick={addIngredient}>
+                  <button className="upload-add-btn btn-lg" onClick={addIngredient}>
                     <PlusIcon /> 재료 추가
                   </button>
                 </div>
               </div>
 
               {/* 조제 방법 */}
-              <div className="upload-card">
-                <div className="upload-card-header">
+              <div className="common-card">
+                <div className="common-card-header">
                   <span className="upload-card-icon">📝</span>
-                  <h2 className="upload-card-title">조제 방법</h2>
+                  <h2 className="common-title-md">조제 방법</h2>
                 </div>
-                <div className="upload-card-body">
+                <div className="common-card-inner">
                   <div className="upload-steps-list">
                     {steps.map((step, idx) => (
                       <div key={step.id} className="upload-step-row">
@@ -286,51 +345,67 @@ export default function UploadPage() {
                           <div className="upload-ing-num">{idx + 1}</div>
                         </div>
                         <textarea
-                          className="upload-step-textarea"
+                          className="common-input upload-step"
                           placeholder="예: 얼음을 채운 셰이커에 모든 재료를 넣어주세요."
                           value={step.text}
                           onChange={(e) => updateStep(step.id, e.target.value)}
                           rows={2}
                         />
                         {steps.length > 1 && (
-                          <button className="upload-ing-del" onClick={() => removeStep(step.id)} title="삭제">
+                          <button
+                            className="upload-ing-del"
+                            onClick={() => removeStep(step.id)}
+                            title="삭제"
+                          >
                             <TrashIcon />
                           </button>
                         )}
                       </div>
                     ))}
                   </div>
-                  <button className="upload-add-btn" onClick={addStep}>
+                  <button className="upload-add-btn btn-lg" onClick={addStep}>
                     <PlusIcon /> 단계 추가
                   </button>
                 </div>
               </div>
-
             </div>
 
             {/* ── Right column (sticky) ── */}
             <div className="upload-right">
-
               {/* 대표 사진 */}
-              <div className="upload-card">
-                <div className="upload-card-body upload-card-body--photo">
-                  <p className="upload-sidebar-title">대표 사진</p>
-                  <p className="upload-sidebar-sub">자연광에서 촬영한 사진을 권장드려요.</p>
+              <div className="common-card">
+                <div className="common-card-inner upload-card-body--photo">
+                  <p className="common-title-sm">대표 사진</p>
+                  <p
+                    className="common-body-sm-light"
+                    style={{ color: "var(--font-placeholder)" }}
+                  >
+                    잘리지 않게 약간 여백을 두고 촬영해주세요
+                  </p>
                   <div
                     className={`upload-photo-zone${dragging ? " dragging" : ""}${photoPreview ? " has-photo" : ""}`}
                     onClick={() => fileInputRef.current?.click()}
-                    onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+                    onDragOver={(e) => {
+                      e.preventDefault();
+                      setDragging(true);
+                    }}
                     onDragLeave={() => setDragging(false)}
                     onDrop={onDrop}
                   >
                     {photoPreview ? (
-                      <img src={photoPreview} alt="대표 사진" className="upload-photo-preview" />
+                      <img
+                        src={photoPreview}
+                        alt="대표 사진"
+                        className="upload-photo-preview"
+                      />
                     ) : (
                       <div className="upload-photo-empty">
                         <div className="upload-photo-icon-wrap">
                           <UploadPhotoIcon />
                         </div>
-                        <p className="upload-photo-text">사진을 드래그하거나 클릭하세요</p>
+                        <p className="upload-photo-text">
+                          사진을 드래그하거나 클릭하세요
+                        </p>
                         <p className="upload-photo-sub">JPG, PNG, WEBP 지원</p>
                       </div>
                     )}
@@ -346,30 +421,38 @@ export default function UploadPage() {
               </div>
 
               {/* 레시피 요약 */}
-              <div className="upload-card">
-                <div className="upload-card-body">
-                  <p className="upload-sidebar-title">레시피 요약</p>
+              <div className="common-card">
+                <div className="common-card-inner">
+                  <p className="common-title-sm">레시피 요약</p>
                   <div className="upload-summary">
                     <div className="upload-summary-row">
                       <span className="upload-summary-label">칵테일 이름</span>
-                      <span className="upload-summary-value">{name || "—"}</span>
+                      <span className="upload-summary-value">
+                        {name || "—"}
+                      </span>
                     </div>
                     <div className="upload-summary-row">
                       <span className="upload-summary-label">난이도</span>
                       <span className="upload-summary-value">
-                        {diffMode === "manual" && difficulty > 0 ? DIFFICULTY_LABELS[difficulty - 1] : "—"}
+                        {diffMode === "manual" && difficulty > 0
+                          ? DIFFICULTY_LABELS[difficulty - 1]
+                          : "—"}
                       </span>
                     </div>
                     <div className="upload-summary-row">
                       <span className="upload-summary-label">재료</span>
                       <span className="upload-summary-value">
-                        {filledIngredients.length > 0 ? `${filledIngredients.length}가지` : "—"}
+                        {filledIngredients.length > 0
+                          ? `${filledIngredients.length}가지`
+                          : "—"}
                       </span>
                     </div>
                     <div className="upload-summary-row">
                       <span className="upload-summary-label">단계</span>
                       <span className="upload-summary-value">
-                        {filledSteps.length > 0 ? `${filledSteps.length}단계` : "—"}
+                        {filledSteps.length > 0
+                          ? `${filledSteps.length}단계`
+                          : "—"}
                       </span>
                     </div>
                     {theme && (
@@ -386,15 +469,16 @@ export default function UploadPage() {
               {/* 액션 버튼 */}
               <div className="upload-actions">
                 <button
-                  className={`upload-submit-btn${name.trim() ? " active" : " disabled"}`}
+                  className={`btn btn-filled btn-gradient-2 btn-lg${name.trim() ? " " : " btn-disable"}`}
                   disabled={!name.trim()}
                 >
                   레시피 등록하기
                 </button>
-                <button className="upload-save-btn">임시저장</button>
-                <p className="upload-notice">등록된 레시피는 48시간 내 검토 후 공개됩니다.</p>
+                <button className="btn btn-lined btn-gray-light btn-lg">임시저장</button>
+                <p className="upload-notice">
+                  등록된 레시피는 48시간 내 검토 후 공개됩니다.
+                </p>
               </div>
-
             </div>
           </div>
         </div>
@@ -408,7 +492,8 @@ export default function UploadPage() {
 function StarIconSolid({ size = 20, filled = false }) {
   return (
     <svg
-      width={size} height={size}
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill={filled ? "currentColor" : "none"}
       stroke="currentColor"
@@ -423,8 +508,16 @@ function StarIconSolid({ size = 20, filled = false }) {
 
 function SearchIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-      strokeLinecap="round" strokeLinejoin="round" width="14" height="14">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="14"
+      height="14"
+    >
       <circle cx="11" cy="11" r="7" />
       <line x1="16.5" y1="16.5" x2="21" y2="21" />
     </svg>
@@ -433,17 +526,34 @@ function SearchIcon() {
 
 function PlusIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-      strokeLinecap="round" strokeLinejoin="round" width="14" height="14">
-      <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="14"
+      height="14"
+    >
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
     </svg>
   );
 }
 
 function TrashIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
-      strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="18"
+      height="18"
+    >
       <polyline points="3 6 5 6 21 6" />
       <path d="M19 6l-1 14H6L5 6" />
       <path d="M10 11v6M14 11v6" />
@@ -454,8 +564,16 @@ function TrashIcon() {
 
 function UploadPhotoIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
-      strokeLinecap="round" strokeLinejoin="round" width="22" height="22">
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width="22"
+      height="22"
+    >
       <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
       <polyline points="17 8 12 3 7 8" />
       <line x1="12" y1="3" x2="12" y2="15" />

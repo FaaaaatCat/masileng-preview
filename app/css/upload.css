@@ -2,41 +2,6 @@
    Upload Page Layout
 ───────────────────────────────────────────── */
 
-@keyframes upload-toast-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-@keyframes upload-toast-out {
-  from { opacity: 1; transform: translateX(-50%) translateY(0); }
-  to   { opacity: 0; transform: translateX(-50%) translateY(12px); }
-}
-.ing-toast {
-  position: fixed;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 999;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-radius: 999px;
-  background: var(--gray-1);
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  box-shadow: var(--shadow-float);
-  animation: upload-toast-in 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-.ing-toast--out {
-  animation: upload-toast-out 0.3s ease-in forwards;
-}
-.ing-toast-icon {
-  font-size: 18px;
-  line-height: 1;
-}
 .upload-page {
   min-height: 100vh;
   background: var(--page-bg-gray);
@@ -59,7 +24,7 @@
   align-items: center;
   height: 28px;
   padding: 0 12px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
   background: #fce4ea;
   color: var(--coral);
   font-size: 12px;
@@ -108,40 +73,10 @@
 /* ─────────────────────────────────────────────
    Card
 ───────────────────────────────────────────── */
-.upload-card {
-  background: #fff;
-  border: 1px solid var(--ui-line-light);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.upload-card-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 20px 24px 16px;
-  border-bottom: 1px solid var(--ui-line-light);
-}
 
 .upload-card-icon {
   font-size: 18px;
   line-height: 1;
-}
-
-.upload-card-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--font-title);
-  margin: 0;
-  letter-spacing: -0.02em;
-}
-
-.upload-card-body {
-  padding: 20px 24px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .upload-card-body--photo {
@@ -174,41 +109,6 @@
   font-size: 11px;
 }
 
-.upload-input,
-.upload-textarea {
-  width: 100%;
-  background: var(--form-bg);
-  border: 1px solid var(--form-line);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--font-title);
-  outline: none;
-  transition:
-    border-color var(--time-fast),
-    box-shadow var(--time-fast);
-  box-sizing: border-box;
-  resize: none;
-}
-
-.upload-input::placeholder,
-.upload-textarea::placeholder {
-  color: var(--font-placeholder);
-}
-
-.upload-input:hover,
-.upload-textarea:hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-}
-
-.upload-input:focus,
-.upload-textarea:focus {
-  border-color: var(--coral);
-  background: #fff;
-  box-shadow: 0 0 0 3px var(--coral-soft);
-}
 
 /* Difficulty */
 .upload-diff-row {
@@ -218,35 +118,13 @@
 }
 
 .upload-diff-btn {
-  height: 33px;
   padding: 0 14px;
-  border-radius: 10px;
-  border: 1px solid var(--form-line);
-  background: var(--form-bg);
-  font-size: 12px;
+  border-radius: var(--r-sm);
   font-weight: 600;
-  color: var(--font-placeholder);
-  cursor: pointer;
-  font-family: inherit;
-  transition:
-    background var(--time-fast),
-    color var(--time-fast),
-    border-color var(--time-fast);
-  white-space: nowrap;
-}
-
-.upload-diff-btn:not(.active):hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-}
-
-.upload-diff-btn.active {
-  background: var(--coral);
-  border-color: var(--coral);
-  color: #fff;
 }
 
 .upload-stars {
+  height: 36px;
   display: flex;
   align-items: center;
   gap: 2px;
@@ -254,7 +132,7 @@
   justify-content: center;
   background: var(--form-bg);
   border: 1px solid var(--form-line);
-  border-radius: 10px;
+  border-radius: var(--r-sm);
   padding: 5px 8px;
   transition: background var(--time-fast);
 }
@@ -326,7 +204,7 @@
 .upload-theme-img {
   width: 54px;
   height: 54px;
-  border-radius: 14px;
+  border-radius: var(--r-md);
   object-fit: cover;
   display: block;
   border: 2.5px solid transparent;
@@ -382,7 +260,7 @@
 .upload-ing-num {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   background: rgba(243, 75, 101, 0.1);
   color: var(--coral);
   font-size: 12px;
@@ -402,7 +280,8 @@
 }
 
 /* 재료명 wrapper (검색 아이콘 + input) */
-.upload-ing-name-wrap {
+/* 재료명 wrapper (검색 아이콘 + input) */
+.common-input-sm-wrap {
   flex: 1;
   min-width: 0;
   position: relative;
@@ -410,7 +289,7 @@
   align-items: center;
 }
 
-.upload-ing-name-wrap > svg {
+.common-input-sm-wrap > svg {
   position: absolute;
   left: 11px;
   color: var(--icon-dark);
@@ -418,92 +297,28 @@
   flex-shrink: 0;
 }
 
-.upload-ing-name {
-  width: 100%;
-  height: 40px;
-  background: var(--form-bg);
-  border: 1px solid var(--form-line);
-  border-radius: 10px;
-  padding: 0 12px 0 30px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--font-title);
-  outline: none;
-  transition:
-    border-color var(--time-fast),
-    padding var(--time-fast);
-  box-sizing: border-box;
-}
-
-.upload-ing-name.has-value {
-  padding-left: 12px;
-}
-
-.upload-ing-name:not(:disabled):not(:focus):hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-}
-
-.upload-ing-name::placeholder {
-  color: var(--font-placeholder);
-}
-.upload-ing-name:not(:disabled):focus {
-  border-color: var(--coral);
-  background: #fff;
-  box-shadow: 0 0 0 2px var(--coral-soft);
-}
-.upload-ing-name.disabled,
-.upload-ing-name:disabled {
-  background: var(--page-bg-gray);
-  color: var(--font-sub2);
-  cursor: default;
-}
-
 /* 검색 아이콘: 값 있을 때 숨김 */
-.upload-ing-name-wrap.has-value > svg {
+.common-input-sm-wrap.has-value > svg {
   display: none;
 }
 
-/* 용량 */
-.upload-ing-amount {
-  width: 68px;
-  flex-shrink: 0;
-  height: 40px;
-  background: var(--form-bg);
-  border: 1px solid var(--form-line);
-  border-radius: 10px;
-  padding: 0 8px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--font-title);
-  text-align: center;
-  outline: none;
-  transition:
-    border-color var(--time-fast),
-    background var(--time-fast),
-    color var(--time-fast);
-  box-sizing: border-box;
-}
+/* 재료명 — 값 입력 시 아이콘 숨김 처리용 */
 
-.upload-ing-amount::placeholder {
-  color: var(--font-placeholder);
-}
-.upload-ing-amount:not(:disabled):not(:focus):hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-}
-.upload-ing-amount:not(:disabled):focus {
-  border-color: var(--coral);
-  background: #fff;
-  box-shadow: 0 0 0 2px var(--coral-soft);
-}
-
-.upload-ing-amount.disabled,
-.upload-ing-amount:disabled {
+/* 용량 — 고정 너비 + 가운데 정렬 */
+.common-input-sm.disabled,
+.common-input-sm:disabled {
   background: var(--form-bg-disable);
   color: var(--font-disable);
   border-color: var(--form-line-disable);
   cursor: not-allowed;
+}
+
+/* 용량 — 고정 너비 + 가운데 정렬 */
+.common-input-sm--amount {
+  width: 68px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0 8px;
 }
 
 /* 단위 */
@@ -513,7 +328,7 @@
   height: 40px;
   background: var(--form-bg);
   border: 1px solid var(--form-line);
-  border-radius: 10px;
+  border-radius: var(--r-sm);
   padding: 0 8px;
   font-size: 13px;
   font-family: inherit;
@@ -553,7 +368,7 @@
 .upload-ing-del {
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: var(--r-full);
   border: 1px solid var(--form-line);
   background: var(--page-bg-gray);
   color: var(--font-sub2);
@@ -591,34 +406,11 @@
   padding-top: 10px;
 }
 
-.upload-step-textarea {
+/* 조제 단계 textarea — layout 고유 속성만 */
+.common-input.upload-step {
   flex: 1;
   min-width: 0;
-  background: var(--form-bg);
-  border: 1px solid var(--form-line);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-size: 14px;
-  font-family: inherit;
-  color: var(--font-title);
   line-height: 1.6;
-  outline: none;
-  resize: none;
-  transition: border-color var(--time-fast);
-  box-sizing: border-box;
-}
-
-.upload-step-textarea::placeholder {
-  color: var(--font-placeholder);
-}
-.upload-step-textarea:not(:focus):hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-}
-.upload-step-textarea:focus {
-  border-color: var(--coral);
-  background: #fff;
-  box-shadow: 0 0 0 3px var(--coral-soft);
 }
 
 /* Add buttons */
@@ -628,11 +420,9 @@
   justify-content: center;
   gap: 6px;
   width: 100%;
-  height: 44px;
-  border-radius: 14px;
+  border-radius: var(--r-md);
   border: 2px dashed var(--form-line);
   background: transparent;
-  font-size: 14px;
   font-weight: 600;
   color: var(--font-placeholder);
   cursor: pointer;
@@ -653,12 +443,6 @@
 /* ─────────────────────────────────────────────
    Right sidebar
 ───────────────────────────────────────────── */
-.upload-sidebar-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--font-title);
-  margin: 0 0 4px;
-}
 
 .upload-sidebar-sub {
   font-size: 12px;
@@ -671,7 +455,7 @@
   width: 100%;
   aspect-ratio: 3 / 4;
   border: 2px dashed var(--ui-line-light);
-  border-radius: 14px;
+  border-radius: var(--r-md);
   overflow: hidden;
   cursor: pointer;
   display: flex;
@@ -706,7 +490,7 @@
 .upload-photo-icon-wrap {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
+  border-radius: var(--r-md);
   background: #fce4ea;
   display: flex;
   align-items: center;
@@ -777,7 +561,7 @@
   align-items: center;
   height: 20px;
   padding: 0 8px;
-  border-radius: 999px;
+  border-radius: var(--r-full);
   background: #fce4ea;
   color: var(--coral);
   font-size: 11px;
@@ -789,63 +573,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.upload-submit-btn {
-  width: 100%;
-  height: 48px;
-  border-radius: 14px;
-  border: none;
-  background: var(--form-bg);
-  color: var(--font-placeholder);
-  font-size: 14px;
-  font-weight: 700;
-  cursor: default;
-  font-family: inherit;
-  transition:
-    background var(--time-fast),
-    color var(--time-fast),
-    box-shadow var(--time-fast);
-  letter-spacing: -0.01em;
-}
-.upload-submit-btn.disabled {
-  background: var(--form-bg-disable);
-  color: var(--font-disable);
-  cursor: not-allowed;
-}
-
-.upload-submit-btn.active {
-  background: linear-gradient(135deg, var(--coral), var(--coral-strong));
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 4px 16px -4px var(--coral-shadow-sm);
-}
-
-.upload-submit-btn.active:hover {
-  box-shadow: 0 6px 20px -4px var(--coral-shadow);
-  transform: translateY(-1px);
-}
-
-.upload-save-btn {
-  width: 100%;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid var(--form-line);
-  background: var(--page-bg-gray);
-  color: var(--font-placeholder);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  transition:
-    border-color var(--time-fast),
-    color var(--time-fast);
-}
-
-.upload-save-btn:hover {
-  background: var(--form-bg-hover);
-  border-color: var(--form-line-hover);
-  color: var(--font-sub);
 }
 
 .upload-notice {

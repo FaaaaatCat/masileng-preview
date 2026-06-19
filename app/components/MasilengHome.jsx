@@ -26,18 +26,20 @@ function AppHero() {
   return (
     <div className="hero hero-app">
       <div className="hero-app-inner">
-
         {/* 왼쪽: 텍스트 */}
         <div className="hero-app-left">
           <div className="hero-app-icon">
             <span>마</span>
           </div>
           <h1 className="hero-app-title">
-            오늘의 칵테일,<br />
+            오늘의 칵테일,
+            <br />
             <span className="hero-accent">마실랭</span>
           </h1>
           <p className="hero-app-desc">
-            주류 경험의 새로운 기준이 되는<br />칵테일 라이프 플랫폼 마실랭을 시작해보세요
+            주류 경험의 새로운 기준이 되는
+            <br />
+            칵테일 라이프 플랫폼 마실랭을 시작해보세요
           </p>
         </div>
 
@@ -47,15 +49,26 @@ function AppHero() {
             <div className="phone-notch" />
             <div className="phone-screen">
               <div className="phone-screen-header">
-                <span className="phone-brand">마실랭<span style={{color:"var(--coral)"}}>●</span></span>
+                <span className="phone-brand">
+                  마실랭<span style={{ color: "var(--coral)" }}>●</span>
+                </span>
               </div>
               <div className="phone-card-grid">
                 {PHONE_ITEMS.map((idx) => {
                   const d = POOL[idx];
                   return (
-                    <div key={idx} className="phone-card" style={{ background: d.g }}>
-                      <img src={d.url} alt={d.n}
-                        onError={(e) => { e.target.style.display = "none"; }} />
+                    <div
+                      key={idx}
+                      className="phone-card"
+                      style={{ background: d.g }}
+                    >
+                      <img
+                        src={d.url}
+                        alt={d.n}
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                        }}
+                      />
                       <span className="phone-card-name">{d.n}</span>
                     </div>
                   );
@@ -68,40 +81,148 @@ function AppHero() {
         {/* 오른쪽: QR */}
         <div className="hero-qr-wrap">
           <div className="hero-qr-box">
-            <svg viewBox="0 0 100 100" className="hero-qr-svg" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              viewBox="0 0 100 100"
+              className="hero-qr-svg"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               {/* 좌상단 파인더 */}
-              <rect x="5" y="5" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
-              <rect x="13" y="13" width="14" height="14" rx="2" fill="#111"/>
+              <rect
+                x="5"
+                y="5"
+                width="30"
+                height="30"
+                rx="4"
+                fill="none"
+                stroke="#111"
+                strokeWidth="4"
+              />
+              <rect x="13" y="13" width="14" height="14" rx="2" fill="#111" />
               {/* 우상단 파인더 */}
-              <rect x="65" y="5" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
-              <rect x="73" y="13" width="14" height="14" rx="2" fill="#111"/>
+              <rect
+                x="65"
+                y="5"
+                width="30"
+                height="30"
+                rx="4"
+                fill="none"
+                stroke="#111"
+                strokeWidth="4"
+              />
+              <rect x="73" y="13" width="14" height="14" rx="2" fill="#111" />
               {/* 좌하단 파인더 */}
-              <rect x="5" y="65" width="30" height="30" rx="4" fill="none" stroke="#111" strokeWidth="4"/>
-              <rect x="13" y="73" width="14" height="14" rx="2" fill="#111"/>
+              <rect
+                x="5"
+                y="65"
+                width="30"
+                height="30"
+                rx="4"
+                fill="none"
+                stroke="#111"
+                strokeWidth="4"
+              />
+              <rect x="13" y="73" width="14" height="14" rx="2" fill="#111" />
               {/* 데이터 셀 (랜덤 패턴) */}
               {[
-                [45,5],[50,5],[55,5],[60,5],
-                [45,12],[55,12],[60,12],
-                [45,19],[50,19],[60,19],
-                [45,26],[50,26],[55,26],
-                [45,33],[60,33],
-                [5,45],[10,45],[20,45],[30,45],[35,45],[45,45],[55,45],[65,45],[75,45],[85,45],[90,45],[95,45],
-                [5,52],[15,52],[25,52],[35,52],[50,52],[60,52],[70,52],[80,52],[90,52],
-                [5,59],[10,59],[20,59],[30,59],[40,59],[55,59],[65,59],[75,59],[85,59],[95,59],
-                [5,66],[15,66],[35,66],[50,66],[60,66],[80,66],[95,66],
-                [5,73],[10,73],[25,73],[40,73],[55,73],[70,73],[85,73],
-                [45,73],[50,73],[55,73],[60,73],[70,73],[80,73],[90,73],[95,73],
-                [45,80],[55,80],[65,80],[75,80],[90,80],
-                [45,87],[50,87],[60,87],[70,87],[80,87],[95,87],
-                [45,94],[55,94],[65,94],[85,94],[95,94],
+                [45, 5],
+                [50, 5],
+                [55, 5],
+                [60, 5],
+                [45, 12],
+                [55, 12],
+                [60, 12],
+                [45, 19],
+                [50, 19],
+                [60, 19],
+                [45, 26],
+                [50, 26],
+                [55, 26],
+                [45, 33],
+                [60, 33],
+                [5, 45],
+                [10, 45],
+                [20, 45],
+                [30, 45],
+                [35, 45],
+                [45, 45],
+                [55, 45],
+                [65, 45],
+                [75, 45],
+                [85, 45],
+                [90, 45],
+                [95, 45],
+                [5, 52],
+                [15, 52],
+                [25, 52],
+                [35, 52],
+                [50, 52],
+                [60, 52],
+                [70, 52],
+                [80, 52],
+                [90, 52],
+                [5, 59],
+                [10, 59],
+                [20, 59],
+                [30, 59],
+                [40, 59],
+                [55, 59],
+                [65, 59],
+                [75, 59],
+                [85, 59],
+                [95, 59],
+                [5, 66],
+                [15, 66],
+                [35, 66],
+                [50, 66],
+                [60, 66],
+                [80, 66],
+                [95, 66],
+                [5, 73],
+                [10, 73],
+                [25, 73],
+                [40, 73],
+                [55, 73],
+                [70, 73],
+                [85, 73],
+                [45, 73],
+                [50, 73],
+                [55, 73],
+                [60, 73],
+                [70, 73],
+                [80, 73],
+                [90, 73],
+                [95, 73],
+                [45, 80],
+                [55, 80],
+                [65, 80],
+                [75, 80],
+                [90, 80],
+                [45, 87],
+                [50, 87],
+                [60, 87],
+                [70, 87],
+                [80, 87],
+                [95, 87],
+                [45, 94],
+                [55, 94],
+                [65, 94],
+                [85, 94],
+                [95, 94],
               ].map(([cx, cy], i) => (
-                <rect key={i} x={cx} y={cy} width="4" height="4" rx="1" fill="#111" />
+                <rect
+                  key={i}
+                  x={cx}
+                  y={cy}
+                  width="4"
+                  height="4"
+                  rx="1"
+                  fill="#111"
+                />
               ))}
             </svg>
           </div>
           <p className="hero-qr-label">앱 다운로드 QR</p>
         </div>
-
       </div>
     </div>
   );
@@ -110,7 +231,10 @@ function AppHero() {
 // ─────────────────────────────────────────────
 // 칵테일 페이지 콘텐츠
 // ─────────────────────────────────────────────
-function applyFilters(cards, { abv, base, theme, ibaOnly, rangeMin, rangeMax, search }) {
+function applyFilters(
+  cards,
+  { abv, base, theme, ibaOnly, rangeMin, rangeMax, search },
+) {
   return cards.filter((card) => {
     if (abv && card.abv !== abv) return false;
     if (base && card.base !== base) return false;
@@ -119,7 +243,11 @@ function applyFilters(cards, { abv, base, theme, ibaOnly, rangeMin, rangeMax, se
     if (card.count < rangeMin || card.count > rangeMax) return false;
     if (search) {
       const q = search.toLowerCase();
-      if (!card.t.toLowerCase().includes(q) && !card.desc.toLowerCase().includes(q)) return false;
+      if (
+        !card.t.toLowerCase().includes(q) &&
+        !card.desc.toLowerCase().includes(q)
+      )
+        return false;
     }
     return true;
   });
@@ -145,22 +273,43 @@ function CocktailPage({ filterProps }) {
           </div>
           <div className="section-sort">
             {SORT_TABS.map((tab) => (
-              <button key={tab} onClick={() => setSortTab(tab)}
-                className={`btn${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}>
+              <button
+                key={tab}
+                onClick={() => setSortTab(tab)}
+                className={`btn btn-sm${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}
+              >
                 {tab}
               </button>
             ))}
           </div>
         </div>
         <div className="cocktail-grid">
-          {filtered.length > 0
-            ? filtered.map((card) => <CocktailCard key={card._id} card={card} cardId={card._id} showAuthor={false} />)
-            : <p style={{ color: "var(--font-placeholder)", fontSize: 15, padding: "40px 0" }}>검색 결과가 없어요.</p>
-          }
+          {filtered.length > 0 ? (
+            filtered.map((card) => (
+              <CocktailCard
+                key={card._id}
+                card={card}
+                cardId={card._id}
+                showAuthor={false}
+              />
+            ))
+          ) : (
+            <p
+              style={{
+                color: "var(--font-placeholder)",
+                fontSize: 15,
+                padding: "40px 0",
+              }}
+            >
+              검색 결과가 없어요.
+            </p>
+          )}
         </div>
         {filtered.length > 0 && (
           <div className="load-more-wrap">
-            <button className="btn btn-lined btn-gray-light">레시피 더 보기</button>
+            <button className="btn btn-lined btn-gray-light btn-xl">
+              레시피 더 보기
+            </button>
           </div>
         )}
       </section>
@@ -173,7 +322,9 @@ function CocktailPage({ filterProps }) {
 // ─────────────────────────────────────────────
 export default function MasilengHome() {
   const searchParams = useSearchParams();
-  const [activeNav, setActiveNav] = useState(() => searchParams.get("tab") || "칵테일");
+  const [activeNav, setActiveNav] = useState(
+    () => searchParams.get("tab") || "칵테일",
+  );
 
   useEffect(() => {
     const tab = searchParams.get("tab");
@@ -188,12 +339,23 @@ export default function MasilengHome() {
   const [search, setSearch] = useState("");
 
   const handleReset = () => {
-    setAbv(""); setBase(""); setTheme(""); setIbaOnly(false);
-    setRangeMin(2); setRangeMax(10); setSearch("");
+    setAbv("");
+    setBase("");
+    setTheme("");
+    setIbaOnly(false);
+    setRangeMin(2);
+    setRangeMax(10);
+    setSearch("");
   };
 
   const filterProps = {
-    abv, base, theme, ibaOnly, rangeMin, rangeMax, search,
+    abv,
+    base,
+    theme,
+    ibaOnly,
+    rangeMin,
+    rangeMax,
+    search,
     onAbvChange: setAbv,
     onBaseChange: setBase,
     onThemeChange: setTheme,
@@ -215,12 +377,13 @@ export default function MasilengHome() {
       {!isChallenge && !isIngredients && <AppHero />}
 
       {/* 페이지 콘텐츠 */}
-      {isChallenge
-        ? <ChallengeHome />
-        : isIngredients
-          ? <IngredientsHome />
-          : <CocktailPage filterProps={filterProps} />
-      }
+      {isChallenge ? (
+        <ChallengeHome />
+      ) : isIngredients ? (
+        <IngredientsHome />
+      ) : (
+        <CocktailPage filterProps={filterProps} />
+      )}
     </div>
   );
 }
