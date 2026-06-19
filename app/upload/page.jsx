@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import SiteHeader from "../components/SiteHeader";
 import { SelectFilter } from "../components/FilterBar";
 import INGREDIENTS_DATA from "../data/ingredients.json";
+import IngredientRequestModal from "../components/IngredientRequestModal";
 
 const THEMES = [
   { id: "sour", en: "Sour", ko: "상큼발랄", img: "/theme/sour.png" },
@@ -45,6 +46,7 @@ export default function UploadPage() {
   const [ingToast, setIngToast] = useState(false);
   const [ingToastLeaving, setIngToastLeaving] = useState(false);
   const [openSuggestId, setOpenSuggestId] = useState(null);
+  const [ingRequestQuery, setIngRequestQuery] = useState(null);
   const [emptyMsgQuery, setEmptyMsgQuery] = useState("");
   const emptyMsgTimer = useRef(null);
   const fileInputRef = useRef(null);
@@ -311,7 +313,11 @@ export default function UploadPage() {
                                       <button
                                         type="button"
                                         className="btn btn-lined btn-gray-light btn-xxs ing-suggest-request-btn"
-                                        onMouseDown={(e) => e.preventDefault()}
+                                        onMouseDown={(e) => {
+                                          e.preventDefault();
+                                          setIngRequestQuery(ing.name);
+                                          setOpenSuggestId(null);
+                                        }}
                                       >
                                         요청하기
                                       </button>
@@ -527,6 +533,13 @@ export default function UploadPage() {
           </div>
         </div>
       </div>
+
+      {ingRequestQuery !== null && (
+        <IngredientRequestModal
+          initialName={ingRequestQuery}
+          onClose={() => setIngRequestQuery(null)}
+        />
+      )}
     </>
   );
 }

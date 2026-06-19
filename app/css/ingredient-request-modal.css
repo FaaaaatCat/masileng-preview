@@ -1,0 +1,249 @@
+/* ─────────────────────────────────────────────
+   Ingredient Request Modal
+───────────────────────────────────────────── */
+.irm-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: irm-backdrop-in 0.18s ease;
+}
+
+@keyframes irm-backdrop-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.irm-modal {
+  background: #fff;
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-modal);
+  display: flex;
+  flex-direction: column;
+  animation: irm-modal-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes irm-modal-in {
+  from { opacity: 0; transform: scale(0.96) translateY(14px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* ── 헤더 */
+.irm-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 24px 24px 0;
+  flex-shrink: 0;
+}
+
+.irm-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--font-title);
+  letter-spacing: -0.03em;
+  margin: 0 0 6px;
+}
+
+.irm-desc {
+  font-size: 13px;
+  color: var(--font-sub2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.irm-close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-full);
+  border: none;
+  background: var(--ui-bg-light);
+  color: var(--font-sub2);
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--time-fast), color var(--time-fast);
+}
+.irm-close:hover {
+  background: var(--ui-bg-subtle);
+  color: var(--font-title);
+}
+
+/* ── 폼 */
+.irm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 24px 28px;
+}
+
+.irm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.irm-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--font-body);
+  letter-spacing: -0.01em;
+}
+
+.irm-required {
+  color: var(--coral);
+  margin-left: 2px;
+}
+
+.irm-optional {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--font-placeholder);
+  margin-left: 4px;
+}
+
+/* ── 사진 업로드 */
+.irm-photo-drop {
+  height: 120px;
+  border: 1.5px dashed var(--ui-line-subtle);
+  border-radius: var(--r-md);
+  background: var(--ui-bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color var(--time-fast), background var(--time-fast);
+  position: relative;
+  overflow: hidden;
+}
+.irm-photo-drop:hover {
+  border-color: var(--coral-line);
+  background: var(--coral-soft);
+}
+.irm-photo-drop--has {
+  border-style: solid;
+  border-color: var(--ui-line-light);
+}
+
+.irm-photo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.irm-photo-icon {
+  font-size: 28px;
+  opacity: 0.5;
+}
+
+.irm-photo-text {
+  font-size: 12px;
+  color: var(--font-placeholder);
+}
+
+.irm-photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.irm-photo-remove {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--r-full);
+  background: rgba(0,0,0,0.45);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--time-fast);
+}
+.irm-photo-remove:hover {
+  background: rgba(0,0,0,0.65);
+}
+
+/* ── textarea */
+.irm-textarea {
+  width: 100%;
+  border: 1.5px solid var(--form-line);
+  border-radius: var(--r-md);
+  background: var(--form-bg);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--font-title);
+  resize: none;
+  outline: none;
+  line-height: 1.6;
+  transition: border-color var(--time-fast);
+}
+.irm-textarea::placeholder { color: var(--font-placeholder); }
+.irm-textarea:focus { border-color: var(--coral-line); }
+
+/* ── 카테고리 */
+.irm-cat-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.irm-cat-btn {
+  flex-shrink: 0;
+}
+
+/* ── 제출 버튼 */
+.irm-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* ── 완료 화면 */
+.irm-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 24px 36px;
+  text-align: center;
+}
+
+.irm-success-icon {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.irm-success-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--font-title);
+  margin: 0;
+}
+
+.irm-success-sub {
+  font-size: 14px;
+  color: var(--font-sub2);
+  margin: 0 0 12px;
+}

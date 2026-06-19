@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NAV_ITEMS } from "../data/constants.json";
 import { UploadIcon } from "./icons";
+import IngredientRequestModal from "./IngredientRequestModal";
 
 export default function SiteHeader({ activeNav, onNavClick }) {
   const [authUser, setAuthUser] = useState(null);
   const [dropOpen, setDropOpen] = useState(false);
+  const [ingRequestOpen, setIngRequestOpen] = useState(false);
   const dropRef = useRef(null);
   const router = useRouter();
 
@@ -43,6 +45,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
   );
 
   return (
+    <>
     <header className="site-header">
       <div className="site-header-inner">
         <nav className="site-nav">
@@ -144,7 +147,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                     <a
                       href="#"
                       className="nav-user-item"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => { e.preventDefault(); setDropOpen(false); setIngRequestOpen(true); }}
                     >
                       재료 요청하기
                     </a>
@@ -181,5 +184,10 @@ export default function SiteHeader({ activeNav, onNavClick }) {
         </nav>
       </div>
     </header>
+
+    {ingRequestOpen && (
+      <IngredientRequestModal onClose={() => setIngRequestOpen(false)} />
+    )}
+    </>
   );
 }
