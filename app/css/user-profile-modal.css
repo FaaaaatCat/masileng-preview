@@ -1,22 +1,26 @@
-/* ─────────────────────────────────────────────
+﻿/* ─────────────────────────────────────────────
    User Profile Modal
 ───────────────────────────────────────────── */
 .profile-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.45);
+  background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(4px);
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  animation: backdrop-in .18s ease;
+  animation: backdrop-in 0.18s ease;
 }
 
 @keyframes backdrop-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .profile-modal {
@@ -28,13 +32,19 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 40px -8px rgba(0,0,0,.28);
-  animation: modal-in .2s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: var(--shadow-modal);
+  animation: modal-in var(--time-slow) cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes modal-in {
-  from { opacity: 0; transform: scale(.96) translateY(12px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* ── 헤더 */
@@ -43,14 +53,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 24px 16px;
-  border-bottom: 1px solid var(--gray-2);
+  border-bottom: 1px solid var(--ui-line-light);
   flex-shrink: 0;
 }
 
 .profile-modal-title {
   font-size: 16px;
   font-weight: 700;
-  color: var(--font-0);
+  color: var(--font-title);
   letter-spacing: -0.02em;
 }
 
@@ -59,16 +69,21 @@
   height: 32px;
   border-radius: 50%;
   border: none;
-  background: var(--gray-1);
-  color: var(--font-3);
+  background: var(--ui-bg-light);
+  color: var(--font-sub2);
   font-size: 14px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background .15s, color .15s;
+  transition:
+    background var(--time-fast),
+    color var(--time-fast);
 }
-.profile-modal-close:hover { background: var(--gray-2); color: var(--font-0); }
+.profile-modal-close:hover {
+  background: var(--ui-bg-light);
+  color: var(--font-title);
+}
 
 /* ── 유저 정보 섹션 */
 .profile-user-section {
@@ -103,14 +118,14 @@
 .profile-username {
   font-size: 18px;
   font-weight: 700;
-  color: var(--font-0);
+  color: var(--font-title);
   letter-spacing: -0.03em;
   margin-bottom: 3px;
 }
 
 .profile-bio {
   font-size: 13px;
-  color: var(--font-3);
+  color: var(--font-sub2);
   margin-bottom: 10px;
 }
 
@@ -129,20 +144,20 @@
 .profile-stat-value {
   font-size: 16px;
   font-weight: 700;
-  color: var(--font-0);
+  color: var(--font-title);
   letter-spacing: -0.02em;
 }
 
 .profile-stat-label {
   font-size: 12px;
-  color: var(--font-4);
+  color: var(--font-placeholder);
   font-weight: 500;
 }
 
 .profile-stat-divider {
   width: 1px;
   height: 14px;
-  background: var(--gray-2);
+  background: var(--ui-bg-light);
   margin: 0 14px;
 }
 
@@ -156,7 +171,7 @@
 .profile-recipes-title {
   font-size: 14px;
   font-weight: 700;
-  color: var(--font-0);
+  color: var(--font-title);
   margin-bottom: 12px;
   padding-top: 4px;
 }
@@ -171,7 +186,7 @@
   text-align: center;
   padding: 32px 0;
   font-size: 14px;
-  color: var(--font-4);
+  color: var(--font-placeholder);
 }
 
 .profile-recipe-item {
@@ -180,10 +195,12 @@
   gap: 12px;
   padding: 10px 12px;
   border-radius: 14px;
-  background: var(--page-bg);
+  background: var(--page-bg-gray);
   border: 1px solid transparent;
   text-decoration: none;
-  transition: background .15s, border-color .15s;
+  transition:
+    background var(--time-fast),
+    border-color var(--time-fast);
   cursor: pointer;
 }
 .profile-recipe-item:hover {
@@ -216,7 +233,7 @@
 .profile-recipe-name {
   font-size: 14px;
   font-weight: 600;
-  color: var(--font-0);
+  color: var(--font-title);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -224,7 +241,7 @@
 
 .profile-recipe-meta {
   font-size: 12px;
-  color: var(--font-4);
+  color: var(--font-placeholder);
 }
 
 .profile-recipe-likes {
@@ -245,17 +262,22 @@
   height: 38px;
   padding: 0 14px;
   border-radius: 10px;
-  border: 1.5px solid var(--gray-2);
+  border: 1.5px solid var(--ui-line-light);
   background: #fff;
   font-size: 14px;
   font-weight: 600;
-  color: var(--font-1);
+  color: var(--font-body);
   cursor: pointer;
   font-family: inherit;
   white-space: nowrap;
-  transition: border-color .15s, background .15s;
+  transition:
+    border-color var(--time-fast),
+    background var(--time-fast);
 }
-.btn-user-name:hover { border-color: var(--coral-line); background: var(--coral-soft); }
+.btn-user-name:hover {
+  border-color: var(--coral-line);
+  background: var(--coral-soft);
+}
 
 .nav-user-dropdown {
   position: absolute;
@@ -263,9 +285,9 @@
   right: 0;
   min-width: 160px;
   background: #fff;
-  border: 1.5px solid var(--gray-2);
+  border: 1.5px solid var(--ui-line-light);
   border-radius: 14px;
-  box-shadow: 0 8px 28px -4px rgba(0,0,0,.13);
+  box-shadow: var(--shadow-panel);
   z-index: 200;
   overflow: hidden;
   padding: 6px;
@@ -278,23 +300,33 @@
   border-radius: 9px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--font-1);
+  color: var(--font-body);
   text-decoration: none;
   cursor: pointer;
   background: none;
   border: none;
   font-family: inherit;
   text-align: left;
-  transition: background .1s, color .1s;
+  transition:
+    background var(--time-fast),
+    color var(--time-fast);
   white-space: nowrap;
 }
-.nav-user-item:hover { background: var(--page-bg); color: var(--font-0); }
+.nav-user-item:hover {
+  background: var(--page-bg-gray);
+  color: var(--font-title);
+}
 
 .nav-user-divider {
   height: 1px;
-  background: var(--gray-2);
+  background: var(--ui-bg-light);
   margin: 4px 0;
 }
 
-.nav-user-logout { color: var(--coral); }
-.nav-user-logout:hover { background: var(--coral-soft); color: var(--coral-strong); }
+.nav-user-logout {
+  color: var(--coral);
+}
+.nav-user-logout:hover {
+  background: var(--coral-soft);
+  color: var(--coral-strong);
+}

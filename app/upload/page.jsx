@@ -2,8 +2,29 @@
 
 import { useState, useRef } from "react";
 import SiteHeader from "../components/SiteHeader";
+import { SelectFilter } from "../components/FilterBar";
 
-const TAGS = ["클래식", "트로피컬", "사워", "하이볼", "목테일", "스파클링", "크리미", "스모키"];
+const THEMES = [
+  { id: "sour", en: "Sour", ko: "상큼발랄", img: "/theme/sour.png" },
+  {
+    id: "sparkling",
+    en: "Sparkling",
+    ko: "탄산감",
+    img: "/theme/sparkling.png",
+  },
+
+  { id: "fruity", en: "Fruity", ko: "과일 잔뜩", img: "/theme/fruity.png" },
+  { id: "city", en: "City", ko: "쎈 도수", img: "/theme/city.png" },
+  { id: "creamy", en: "Creamy", ko: "크리미", img: "/theme/cramy.png" },
+  { id: "hot", en: "Hot", ko: "향신료", img: "/theme/hot.png" },
+  { id: "party", en: "Party", ko: "대중적인", img: "/theme/party.png" },
+  {
+    id: "tropical",
+    en: "Tropical",
+    ko: "이국적인",
+    img: "/theme/tropical.png",
+  },
+];
 const UNITS = ["ml", "oz", "dash", "개", "적당량", "tsp", "tbsp"];
 const DIFFICULTY_LABELS = ["매우 쉬움", "쉬움", "보통", "어려움", "전문가"];
 
@@ -12,7 +33,7 @@ export default function UploadPage() {
   const [desc, setDesc] = useState("");
   const [difficulty, setDifficulty] = useState(0);
   const [diffMode, setDiffMode] = useState("ai");
-  const [tags, setTags] = useState([]);
+  const [theme, setTheme] = useState("sour");
   const [ingredients, setIngredients] = useState([
     { id: 1, amount: "", unit: "적당량", name: "얼음" },
     { id: 2, amount: "", unit: "ml", name: "" },
@@ -21,17 +42,28 @@ export default function UploadPage() {
   const [photo, setPhoto] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [dragging, setDragging] = useState(false);
+  const [ingToast, setIngToast] = useState(false);
+  const [ingToastLeaving, setIngToastLeaving] = useState(false);
   const fileInputRef = useRef(null);
   const nextIngId = useRef(3);
   const nextStepId = useRef(2);
 
-  const toggleTag = (tag) =>
-    setTags((prev) => prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]);
+  const selectTheme = (id) => setTheme((prev) => prev === id ? null : id);
 
   const addIngredient = () => {
     setIngredients((prev) => [...prev, { id: nextIngId.current++, amount: "", unit: "ml", name: "" }]);
   };
-  const removeIngredient = (id) => setIngredients((prev) => prev.filter((i) => i.id !== id));
+  const showIngToast = () => {
+    setIngToast(true);
+    setIngToastLeaving(false);
+    setTimeout(() => setIngToastLeaving(true), 1700);
+    setTimeout(() => { setIngToast(false); setIngToastLeaving(false); }, 2000);
+  };
+
+  const removeIngredient = (id) => {
+    if (ingredients.length <= 2) { showIngToast(); return; }
+    setIngredients((prev) => prev.filter((i) => i.id !== id));
+  };
   const updateIngredient = (id, field, value) =>
     setIngredients((prev) => prev.map((i) => {
       if (i.id !== id) return i;
@@ -72,6 +104,12 @@ export default function UploadPage() {
   return (
     <>
       <SiteHeader />
+      {ingToast && (
+        <div className={`ing-toast${ingToastLeaving ? " ing-toast--out" : ""}`}>
+          <span className="ing-toast-icon">⚠️</span>
+          재료는 최소 2가지를 넣어주세요
+        </div>
+      )}
       <div className="upload-page">
         <div className="upload-inner">
           {/* Hero */}
@@ -128,17 +166,21 @@ export default function UploadPage() {
                         className={`upload-diff-btn${diffMode === "manual" ? " active" : ""}`}
                         onClick={() => handleDiffMode("manual")}
                       >직접 선택</button>
-                      <div className={`upload-stars${diffMode === "manual" ? " manual" : ""}`}>
-                        {[1, 2, 3, 4, 5].map((n) => (
-                          <button
-                            key={n}
-                            className={`upload-star${diffMode !== "ai" && difficulty >= n ? " filled" : ""}`}
-                            onClick={() => { setDifficulty(n); setDiffMode("manual"); }}
-                            title={DIFFICULTY_LABELS[n - 1]}
-                          >
-                            <StarIconSolid size={20} filled={diffMode !== "ai" && difficulty >= n} />
-                          </button>
-                        ))}
+                      <div className={`upload-stars${diffMode === "manual" ? " manual" : " ai"}`}>
+                        {diffMode === "ai" ? (
+                          <span className="upload-stars-ai-msg">AI가 레시피를 읽고 자동으로 난이도를 추천해드립니다</span>
+                        ) : (
+                          [1, 2, 3, 4, 5].map((n) => (
+                            <button
+                              key={n}
+                              className={`upload-star${difficulty >= n ? " filled" : ""}`}
+                              onClick={() => setDifficulty(n)}
+                              title={DIFFICULTY_LABELS[n - 1]}
+                            >
+                              <StarIconSolid size={20} filled={difficulty >= n} />
+                            </button>
+                          ))
+                        )}
                       </div>
                     </div>
                   </div>
@@ -152,13 +194,17 @@ export default function UploadPage() {
                   <h2 className="upload-card-title">카테고리 태그</h2>
                 </div>
                 <div className="upload-card-body">
-                  <div className="upload-tags-wrap">
-                    {TAGS.map((tag) => (
+                  <div className="upload-theme-grid">
+                    {THEMES.map((t) => (
                       <button
-                        key={tag}
-                        className={`upload-tag${tags.includes(tag) ? " active" : ""}`}
-                        onClick={() => toggleTag(tag)}
-                      >{tag}</button>
+                        key={t.id}
+                        className={`upload-theme-item${theme === t.id ? " active" : ""}`}
+                        onClick={() => selectTheme(t.id)}
+                      >
+                        <img src={t.img} alt={t.en} className="upload-theme-img" />
+                        <span className="upload-theme-en">{t.en}</span>
+                        <span className="upload-theme-ko">{t.ko}</span>
+                      </button>
                     ))}
                   </div>
                 </div>
@@ -199,13 +245,15 @@ export default function UploadPage() {
                               onChange={(e) => updateIngredient(ing.id, "amount", e.target.value)}
                             />
                             {/* 단위 */}
-                            <select
-                              className="upload-ing-unit"
+                            <SelectFilter
                               value={ing.unit}
-                              onChange={(e) => updateIngredient(ing.id, "unit", e.target.value)}
+                              onChange={(v) => updateIngredient(ing.id, "unit", v)}
+                              placeholder="단위"
+                              size="medium"
+                              styleVariant="select-style-default"
                             >
-                              {UNITS.map((u) => <option key={u}>{u}</option>)}
-                            </select>
+                              {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
+                            </SelectFilter>
                           </div>
                           <button
                             className="upload-ing-del"
@@ -324,11 +372,11 @@ export default function UploadPage() {
                         {filledSteps.length > 0 ? `${filledSteps.length}단계` : "—"}
                       </span>
                     </div>
-                    {tags.length > 0 && (
+                    {theme && (
                       <div className="upload-summary-tags">
-                        {tags.map((tag) => (
-                          <span key={tag} className="upload-summary-tag">{tag}</span>
-                        ))}
+                        <span className="upload-summary-tag">
+                          {THEMES.find((t) => t.id === theme)?.en}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -338,7 +386,7 @@ export default function UploadPage() {
               {/* 액션 버튼 */}
               <div className="upload-actions">
                 <button
-                  className={`upload-submit-btn${name.trim() ? " active" : ""}`}
+                  className={`upload-submit-btn${name.trim() ? " active" : " disabled"}`}
                   disabled={!name.trim()}
                 >
                   레시피 등록하기

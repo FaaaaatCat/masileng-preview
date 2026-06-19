@@ -224,7 +224,7 @@ export default function ChallengeHome() {
             <div className="section-sort">
               {SORT_TABS.map((tab) => (
                 <button key={tab} onClick={() => setSortTab(tab)}
-                  className={`btn-sort${sortTab === tab ? " active" : ""}`}>
+                  className={`btn${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}>
                   {tab}
                 </button>
               ))}
@@ -234,13 +234,13 @@ export default function ChallengeHome() {
           <div className="cocktail-grid">
             {filtered.length > 0
               ? filtered.map((card) => <ChallengeCard key={card._idx} card={card} />)
-              : <p style={{ color: "var(--ink-3)", fontSize: 15, padding: "40px 0" }}>검색 결과가 없어요.</p>
+              : <p style={{ color: "var(--font-placeholder)", fontSize: 15, padding: "40px 0" }}>검색 결과가 없어요.</p>
             }
           </div>
 
           {filtered.length > 0 && (
             <div className="load-more-wrap">
-              <button className="btn-more">레시피 더 보기</button>
+              <button className="btn btn-lined btn-gray-light">레시피 더 보기</button>
             </div>
           )}
         </section>

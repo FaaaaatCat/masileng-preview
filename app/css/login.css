@@ -1,9 +1,9 @@
-/* ─────────────────────────────────────────────
+﻿/* ─────────────────────────────────────────────
    Login page
 ───────────────────────────────────────────── */
 .login-page {
   min-height: 100vh;
-  background: var(--page-bg);
+  background: var(--page-bg-gray);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,7 +13,9 @@
 .login-card {
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.06), 0 24px 64px -16px rgba(0,0,0,.12);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 24px 64px -16px rgba(0, 0, 0, 0.12);
   padding: 48px 40px 40px;
   width: 100%;
   max-width: 420px;
@@ -25,19 +27,21 @@
 .login-logo {
   margin-bottom: 24px;
 }
-.login-logo img { height: 30px; }
+.login-logo img {
+  height: 30px;
+}
 
 .login-title {
   font-size: 22px;
   font-weight: 800;
-  color: var(--font-0);
+  color: var(--font-title);
   letter-spacing: -0.04em;
   margin-bottom: 6px;
 }
 
 .login-sub {
   font-size: 14px;
-  color: var(--font-4);
+  color: var(--font-placeholder);
   margin-bottom: 28px;
 }
 
@@ -56,20 +60,25 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition: filter .15s, transform .12s;
+  transition:
+    filter var(--time-fast),
+    transform 0.12s;
   margin-bottom: 10px;
 }
 .btn-kakao:hover,
-.btn-google:hover { filter: brightness(.96); transform: translateY(-1px); }
+.btn-google:hover {
+  filter: brightness(0.96);
+  transform: translateY(-1px);
+}
 
 .btn-kakao {
-  background: #FEE500;
-  color: rgba(0,0,0,.85);
+  background: #fee500;
+  color: rgba(0, 0, 0, 0.85);
 }
 
 .btn-google {
-  background: var(--bg);
-  color: var(--font-1);
+  background: var(--page-bg-gray);
+  color: var(--font-body);
   border: 1.5px solid var(--form-line);
 }
 
@@ -86,16 +95,16 @@
   align-items: center;
   gap: 12px;
   margin: 18px 0;
-  color: var(--font-6);
+  color: var(--font-muted);
   font-size: 13px;
   font-weight: 500;
 }
 .login-divider::before,
 .login-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   height: 1px;
-  background: var(--gray-2);
+  background: var(--ui-bg-light);
 }
 
 /* ── 폼 */
@@ -115,9 +124,11 @@
   padding: 0 18px;
   font-size: 15px;
   font-family: inherit;
-  color: var(--font-0);
+  color: var(--font-title);
   outline: none;
-  transition: border-color .15s, background .15s;
+  transition:
+    border-color var(--time-fast),
+    background var(--time-fast);
 }
 .login-input:not(:focus):hover {
   background: var(--form-bg-hover);
@@ -128,7 +139,9 @@
   border-color: var(--coral);
   background: #fff;
 }
-.login-input::placeholder { color: var(--font-4); }
+.login-input::placeholder {
+  color: var(--font-placeholder);
+}
 
 .login-error {
   font-size: 13px;
@@ -141,31 +154,26 @@
   width: 100%;
   height: 52px;
   border-radius: 14px;
-  border: none;
-  background: var(--coral);
-  color: #fff;
   font-size: 16px;
   font-weight: 700;
-  font-family: inherit;
-  cursor: pointer;
   margin-top: 4px;
-  transition: background .15s, transform .12s;
   letter-spacing: -0.01em;
 }
-.btn-login-submit:hover { background: var(--coral-strong); transform: translateY(-1px); }
 
 /* ── 가입 링크 */
 .login-register {
   margin-top: 22px;
   font-size: 13.5px;
-  color: var(--font-3);
+  color: var(--font-sub2);
 }
 .login-register a {
   color: var(--coral);
   font-weight: 700;
   text-decoration: none;
 }
-.login-register a:hover { text-decoration: underline; }
+.login-register a:hover {
+  text-decoration: underline;
+}
 
 /* ── 뒤로가기 */
 .login-back {
@@ -174,10 +182,12 @@
   gap: 6px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--font-3);
+  color: var(--font-sub2);
   text-decoration: none;
   align-self: flex-start;
   margin-bottom: 16px;
-  transition: color .15s;
+  transition: color var(--time-fast);
 }
-.login-back:hover { color: var(--font-0); }
+.login-back:hover {
+  color: var(--font-title);
+}

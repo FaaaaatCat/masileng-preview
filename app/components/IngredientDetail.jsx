@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import "../css/ingredient-detail.css";
 import "../css/cocktail-detail.css";
@@ -7,6 +8,7 @@ import "../css/cocktail-detail.css";
 import CARDS_RAW from "../data/cards.json";
 import POOL_RAW from "../data/pool.json";
 import { IMG_BASE } from "../data/constants.json";
+import { getCardTags } from "../data/detail-helpers";
 import SiteHeader from "./SiteHeader";
 
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
@@ -98,6 +100,23 @@ function getProducts(ing) {
 
 export default function IngredientDetail({ ing }) {
   const imgSrc = `${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`;
+  const [isInBasket, setIsInBasket] = useState(!!ing.myIng);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastLeaving, setToastLeaving] = useState(false);
+
+  const handleBasketToggle = () => {
+    const adding = !isInBasket;
+    setIsInBasket(adding);
+    if (adding) {
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 600);
+      setShowToast(true);
+      setToastLeaving(false);
+      setTimeout(() => setToastLeaving(true), 1700);
+      setTimeout(() => { setShowToast(false); setToastLeaving(false); }, 2000);
+    }
+  };
 
   // 이 재료를 사용하는 칵테일 (base 기준)
   const relatedCards = CARDS.filter((c) => c.base === ing.n).slice(0, 8);
@@ -108,9 +127,14 @@ export default function IngredientDetail({ ing }) {
     <>
       <SiteHeader />
       <div className="ing-detail-page">
+        {showToast && (
+          <div className={`ing-toast${toastLeaving ? " ing-toast--out" : ""}`}>
+            <span className="ing-toast-icon">🧊</span>
+            재료를 내 냉장고에 추가했습니다
+          </div>
+        )}
         <div className="ing-detail-inner">
           <div className="ing-detail-grid">
-
             {/* ── 왼쪽 ── */}
             <div className="ing-detail-left">
               <Link href="/?tab=재료" className="detail-back-btn">
@@ -123,31 +147,51 @@ export default function IngredientDetail({ ing }) {
                   src={imgSrc}
                   alt={ing.n}
                   className="ing-detail-img"
-                  onError={(e) => { e.target.style.display = "none"; }}
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
                 />
               </div>
 
               <div className="ing-action-btns">
-                <button className="ing-btn-basket" onClick={() => alert("내 재료함에 담았습니다!")}>
-                  <PlusBoxIcon />
-                  내 재료함에 담기
+                <button
+                  className={`ing-btn-basket btn btn-filled ${isInBasket ? "btn-gray-dark" : "btn-gradient-2"}${isAnimating ? " ing-btn-basket--pop" : ""}`}
+                  onClick={handleBasketToggle}
+                >
+                  {isAnimating &&
+                    [1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                      <span
+                        key={i}
+                        className={`basket-sparkle basket-sparkle--${i}`}
+                      />
+                    ))}
+                  {!isInBasket && <PlusBoxIcon />}
+                  <span
+                    className={`basket-btn-text${isAnimating ? " basket-btn-text--in" : ""}`}
+                  >
+                    {isInBasket ? "갖고있는 재료입니다!" : "내 재료함에 담기"}
+                  </span>
                 </button>
-                <button className="ing-btn-coupang" onClick={() => alert("쿠팡으로 이동합니다.")}>
+                <button
+                  className="ing-btn-coupang"
+                  onClick={() => alert("쿠팡으로 이동합니다.")}
+                >
                   <span className="ing-btn-coupang-left">
                     <span className="ing-btn-coupang-rocket">🚀</span>
-                    <span className="ing-btn-coupang-texts">
-                      <span className="ing-btn-coupang-title">쿠팡에서 최저가 구매</span>
-                      <span className="ing-btn-coupang-sub">파트너스 링크로 구매 시 마실랭 운영에 도움이 됩니다.</span>
+                    <span className="ing-btn-coupang-title">
+                      쿠팡에서 최저가 구매
                     </span>
                   </span>
                   <ArrowRightIcon />
                 </button>
+                <p className="ing-btn-coupang-info">
+                  파트너스 링크로 구매 시 마실랭 운영에 도움이 됩니다.
+                </p>
               </div>
             </div>
 
             {/* ── 오른쪽 ── */}
             <div className="ing-detail-right">
-
               {/* 1. 재료 설명 */}
               <div className="ing-detail-card">
                 <h1 className="ing-detail-name">{ing.n}</h1>
@@ -159,7 +203,10 @@ export default function IngredientDetail({ ing }) {
               {/* 2. 재료 관련 상품 */}
               <div className="ing-detail-card">
                 <p className="ing-section-title">
-                  <span style={{ color: "var(--coral)", fontStyle: "italic" }}>'{ing.n}'</span> 관련 상품
+                  <span style={{ color: "var(--coral)", fontStyle: "italic" }}>
+                    '{ing.n}'
+                  </span>{" "}
+                  관련 상품
                 </p>
                 <p className="ing-section-sub">
                   (파트너스 링크를 통해 구매 시 마실랭 운영에 도움이 됩니다.)
@@ -168,11 +215,18 @@ export default function IngredientDetail({ ing }) {
                   {products.map((p, i) => (
                     <div key={i} className="ing-product-item">
                       <div className="ing-product-img-wrap">
-                        {p.img
-                          ? <img src={p.img} alt={p.name} className="ing-product-img"
-                              onError={(e) => { e.target.style.display = "none"; }} />
-                          : <span style={{ fontSize: 40, opacity: 0.2 }}>🛒</span>
-                        }
+                        {p.img ? (
+                          <img
+                            src={p.img}
+                            alt={p.name}
+                            className="ing-product-img"
+                            onError={(e) => {
+                              e.target.style.display = "none";
+                            }}
+                          />
+                        ) : (
+                          <span style={{ fontSize: 40, opacity: 0.2 }}>🛒</span>
+                        )}
                       </div>
                       <p className="ing-product-name">{p.name}</p>
                       <p className="ing-product-price">{p.price}</p>
@@ -187,7 +241,7 @@ export default function IngredientDetail({ ing }) {
               </div>
 
               {/* 3. 광고 배너 */}
-              <div className="ing-ad-banner">Google 광고 배너</div>
+              <div className="ad-banner-test">Google 광고 배너</div>
 
               {/* 4. 이 재료로 만드는 칵테일 */}
               <div className="ing-detail-card">
@@ -204,16 +258,31 @@ export default function IngredientDetail({ ing }) {
                     {relatedCards.map((card) => {
                       const poolImg = POOL[card.i % POOL.length];
                       return (
-                        <Link key={card._id} href={`/cocktail/${card._id}`} className="ing-cocktail-item">
+                        <Link
+                          key={card._id}
+                          href={`/cocktail/${card._id}`}
+                          className="ing-cocktail-item"
+                        >
                           <div className="ing-cocktail-thumb">
-                            <img src={poolImg.url} alt={card.t}
-                              onError={(e) => { e.target.style.display = "none"; }} />
+                            <img
+                              src={poolImg.url}
+                              alt={card.t}
+                              onError={(e) => {
+                                e.target.style.display = "none";
+                              }}
+                            />
                           </div>
                           <div className="ing-cocktail-info">
                             <p className="ing-cocktail-title">{card.t}</p>
-                            <p className="ing-cocktail-meta">{card.theme} · {card.abv === "high" ? "강한 도수" : card.abv === "mid" ? "중간 도수" : "약한 도수"}</p>
+                            <div className="ing-cocktail-meta">
+                              {getCardTags(card).map((tag) => (
+                                <span key={tag} className="ing-cocktail-tag">{tag}</span>
+                              ))}
+                            </div>
                           </div>
-                          <span className="ing-cocktail-arrow"><ChevronRightIcon /></span>
+                          <span className="ing-cocktail-arrow">
+                            <ChevronRightIcon />
+                          </span>
                         </Link>
                       );
                     })}
@@ -222,7 +291,6 @@ export default function IngredientDetail({ ing }) {
                   <p className="ing-empty">아직 등록된 칵테일이 없어요.</p>
                 )}
               </div>
-
             </div>
           </div>
         </div>

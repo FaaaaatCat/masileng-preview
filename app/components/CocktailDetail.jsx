@@ -218,8 +218,9 @@ const StarIcon = () => (
 );
 const SwitchIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="14" height="14">
-    <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+    strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+    <path d="M17 3l4 4-4 4" /><path d="M3 7h18" />
+    <path d="M7 21l-4-4 4-4" /><path d="M21 17H3" />
   </svg>
 );
 
@@ -298,7 +299,6 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
       <div className="detail-page">
         <div className="detail-inner">
           <div className="detail-grid">
-
             {/* ── 왼쪽: 뒤로가기 + 이미지 갤러리 ── */}
             <div className="detail-left">
               {/* 1. 뒤로가기 버튼 – detail-left 첫 번째 자식 */}
@@ -311,22 +311,37 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
                 <img
                   src={activeImg.url}
                   alt={card.t}
-                  onError={(e) => { e.target.src = "/theme.png"; }}
+                  onError={(e) => {
+                    e.target.src = "/theme.png";
+                  }}
                 />
               </div>
               <div className="detail-gallery-thumbs">
                 {thumbImgs.map((img, idx) => (
-                  <div key={idx}
+                  <div
+                    key={idx}
                     className={`detail-thumb${activeThumb === idx ? " active" : ""}`}
                     onClick={() => setActiveThumb(idx)}
                   >
-                    <img src={img.url} alt={img.n}
-                      onError={(e) => { e.target.src = "/theme.png"; }} />
+                    <img
+                      src={img.url}
+                      alt={img.n}
+                      onError={(e) => {
+                        e.target.src = "/theme.png";
+                      }}
+                    />
                   </div>
                 ))}
               </div>
-              <button className="detail-share-btn"
-                onClick={() => navigator.share?.({ title: card.t, url: window.location.href })}>
+              <button
+                className="detail-share-btn"
+                onClick={() =>
+                  navigator.share?.({
+                    title: card.t,
+                    url: window.location.href,
+                  })
+                }
+              >
                 <ShareIcon />
                 공유하기
               </button>
@@ -334,7 +349,6 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
 
             {/* ── 오른쪽: 정보 ── */}
             <div className="detail-right">
-
               {/* 기본 정보 카드 */}
               <div className="detail-card">
                 <div className="detail-info-header">
@@ -351,7 +365,8 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
                       <img
                         className="detail-cocktail-icon-illust"
                         src={`/cocktail_illust/${encodeURIComponent(
-                          ILLUST_MAP[card.t] ?? ILLUST_FILES[cardId % ILLUST_FILES.length]
+                          ILLUST_MAP[card.t] ??
+                            ILLUST_FILES[cardId % ILLUST_FILES.length],
                         )}`}
                         alt={card.t}
                       />
@@ -371,7 +386,12 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
 
                 <div className="detail-tags">
                   {tags.map((tag) => (
-                    <span key={tag} className="detail-tag">{tag}</span>
+                    <button
+                      key={tag}
+                      className="detail-tag btn btn-subfilled btn-gray-light"
+                    >
+                      {tag}
+                    </button>
                   ))}
                 </div>
 
@@ -395,75 +415,117 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
                 {/* 5 & 7. 마실랭 공식: 브랜드색 + 흰M, 일반: userProfile.png */}
                 <div className="detail-author-wrap" ref={authorRef}>
                   <button
-                    className={`detail-author${(!isOfficial && !card.iba) ? " detail-author--clickable" : ""}${authorDropOpen ? " detail-author--open" : ""}`}
-                    onClick={() => { if (!isOfficial && !card.iba) setAuthorDropOpen((v) => !v); }}
-                    style={{ background: "none", border: "none", padding: 0, cursor: (!isOfficial && !card.iba) ? "pointer" : "default", font: "inherit", display: "flex", alignItems: "center", gap: "10px" }}
+                    className={`detail-author${!isOfficial && !card.iba ? " detail-author--clickable" : ""}${authorDropOpen ? " detail-author--open" : ""}`}
+                    onClick={() => {
+                      if (!isOfficial && !card.iba)
+                        setAuthorDropOpen((v) => !v);
+                    }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      cursor: !isOfficial && !card.iba ? "pointer" : "default",
+                      font: "inherit",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
                   >
                     <div className="detail-author-avatar">
-                      {(isOfficial || card.iba)
-                        ? <span className="detail-author-avatar-official">M</span>
-                        : <img src="/userProfile.png" alt="프로필" />
-                      }
+                      {isOfficial || card.iba ? (
+                        <span className="detail-author-avatar-official">M</span>
+                      ) : (
+                        <img src="/userProfile.png" alt="프로필" />
+                      )}
                     </div>
                     <span className="detail-author-name">
-                      {(isOfficial || card.iba) ? "마실랭 공식" : card.u}
+                      {isOfficial || card.iba ? "마실랭 공식" : card.u}
                     </span>
-                    {(!isOfficial && !card.iba) && (
-                      <span className={`detail-author-chevron${authorDropOpen ? " detail-author-chevron--up" : ""}`}>
+                    {!isOfficial && !card.iba && (
+                      <span
+                        className={`detail-author-chevron${authorDropOpen ? " detail-author-chevron--up" : ""}`}
+                      >
                         <ChevronRightIcon />
                       </span>
                     )}
                   </button>
-                  {authorDropOpen && (() => {
-                    const userCards = CHALLENGE_CARDS.filter((c) => c.u === card.u);
-                    return (
-                      <div className="detail-author-dropdown">
-                        <p className="detail-author-dropdown-header">@{card.u}의 레시피</p>
-                        {userCards.map((uc) => {
-                          const ucImg = POOL[uc.i % POOL.length];
-                          return (
-                          <Link
-                            key={uc._idx}
-                            href={`/challenge/${uc._idx}`}
-                            className="detail-author-dropdown-item"
-                            onClick={() => setAuthorDropOpen(false)}
-                          >
-                            {ucImg && (
-                              <div className="detail-author-dropdown-thumb" style={{ background: ucImg.g }}>
-                                <img src={ucImg.url} alt={uc.t} onError={(e) => { e.target.style.display = "none"; }} />
-                              </div>
-                            )}
-                            <span className="detail-author-dropdown-name">{uc.t}</span>
-                            <ChevronRightIcon />
-                          </Link>
-                        );})}
-                      </div>
-                    );
-                  })()}
+                  {authorDropOpen &&
+                    (() => {
+                      const userCards = CHALLENGE_CARDS.filter(
+                        (c) => c.u === card.u,
+                      );
+                      return (
+                        <div className="detail-author-dropdown">
+                          <p className="detail-author-dropdown-header">
+                            @{card.u}의 레시피
+                          </p>
+                          {userCards.map((uc) => {
+                            const ucImg = POOL[uc.i % POOL.length];
+                            return (
+                              <Link
+                                key={uc._idx}
+                                href={`/challenge/${uc._idx}`}
+                                className="detail-author-dropdown-item"
+                                onClick={() => setAuthorDropOpen(false)}
+                              >
+                                {ucImg && (
+                                  <div
+                                    className="detail-author-dropdown-thumb"
+                                    style={{ background: ucImg.g }}
+                                  >
+                                    <img
+                                      src={ucImg.url}
+                                      alt={uc.t}
+                                      onError={(e) => {
+                                        e.target.style.display = "none";
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                                <span className="detail-author-dropdown-name">
+                                  {uc.t}
+                                </span>
+                                <ChevronRightIcon />
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
                 </div>
               </div>
 
               {/* 스탯 row */}
               <div className="detail-stats-row">
                 <div className="detail-stat-card">
-                  <div className="detail-stat-icon"><FlameIcon /></div>
+                  <div className="detail-stat-icon">
+                    <FlameIcon />
+                  </div>
                   <div className="detail-stat-body">
                     <span className="detail-stat-label">도수</span>
                     <span className="detail-stat-value">{abvLabel}</span>
                   </div>
                 </div>
                 <div className="detail-stat-card">
-                  <div className="detail-stat-icon"><TagIcon /></div>
+                  <div className="detail-stat-icon">
+                    <TagIcon />
+                  </div>
                   <div className="detail-stat-body">
                     <span className="detail-stat-label">테마</span>
-                    <span className="detail-stat-value">{card.theme ?? "—"}</span>
+                    <span className="detail-stat-value">
+                      {card.theme ?? "—"}
+                    </span>
                   </div>
                 </div>
                 <div className="detail-stat-card">
-                  <div className="detail-stat-icon"><StarIcon /></div>
+                  <div className="detail-stat-icon">
+                    <StarIcon />
+                  </div>
                   <div className="detail-stat-body">
                     <span className="detail-stat-label">난이도</span>
-                    <span className={`detail-stat-badge ${difficultyClass}`}>{difficulty}</span>
+                    <span className={`detail-stat-badge ${difficultyClass}`}>
+                      {difficulty}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -472,44 +534,39 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
               <div className="detail-card">
                 <div className="detail-section-header">
                   <h2 className="detail-section-title">재료 정보</h2>
-                  <button className="detail-unit-btn"
-                    onClick={() => setUnitMode((v) => v === "ml" ? "ratio" : "ml")}>
+                  <div className="detail-label-info"></div>
+                  <button
+                    className="detail-unit-btn btn btn-lined btn-gray-light"
+                    onClick={() =>
+                      setUnitMode((v) => (v === "ml" ? "ratio" : "ml"))
+                    }
+                  >
                     <SwitchIcon />
                     단위 변경
                   </button>
-                  {/* 3 & 4. 비율만 active 클래스 적용, 용량은 active 없음 */}
-                  <div className="detail-ratio-toggle">
-                    <span className={unitMode === "ratio" ? "active" : ""}
-                      onClick={() => setUnitMode("ratio")}>비율</span>
-                    <span style={{ color: "var(--font-6)", margin: "0 4px" }}>/</span>
-                    <span onClick={() => setUnitMode("ml")}>용량</span>
-                  </div>
                 </div>
 
                 <div className="detail-ing-list">
                   {ingredients.map((ing, idx) => {
                     const ratio = ratios[idx];
-                    const showRatio = unitMode === "ratio" && ratio !== null;
-                    const showMl = unitMode === "ml";
                     const ingId = ING_LINK_MAP[ing.name];
                     const inner = (
                       <>
                         <div className="detail-ing-emoji">{ing.emoji}</div>
                         <span className="detail-ing-name">{ing.name}</span>
                         <span className="detail-ing-type">{ing.type}</span>
-                        {showMl && ing.abvStr && (
-                          <span className="detail-ing-abv">{ing.abvStr}</span>
-                        )}
-                        {showRatio && (
+                        {ratio !== null && (
                           <span className="detail-ing-ratio-val">{ratio}%</span>
                         )}
-                        {(showMl || (unitMode === "ratio" && ratio === null)) && (
-                          <span className="detail-ing-amount">{ing.amount}</span>
-                        )}
+                        <span className="detail-ing-amount">{ing.amount}</span>
                       </>
                     );
                     return ingId ? (
-                      <Link key={idx} href={`/ingredient/${ingId}`} className="detail-ing-item detail-ing-item--link">
+                      <Link
+                        key={idx}
+                        href={`/ingredient/${ingId}`}
+                        className="detail-ing-item detail-ing-item--link"
+                      >
                         {inner}
                       </Link>
                     ) : (
@@ -522,7 +579,7 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
               </div>
 
               {/* 광고 배너 */}
-              <div className="detail-ad-banner">Google 광고 배너</div>
+              <div className="ad-banner-test">Google 광고 배너</div>
 
               {/* 레시피 카드 */}
               <div className="detail-card">
@@ -542,15 +599,19 @@ export default function CocktailDetail({ card, cardId, poolData, backHref = "/",
               {/* 댓글 카드 */}
               <div className="detail-card">
                 <h2 className="detail-section-title">댓글</h2>
-                <p className="detail-comment-empty">아직 댓글이 없어요. 첫 댓글을 남겨보세요!</p>
+                <p className="detail-comment-empty">
+                  아직 댓글이 없어요. 첫 댓글을 남겨보세요!
+                </p>
                 <div className="detail-comment-input-wrap">
                   <div className="detail-comment-avatar" />
-                  <input className="detail-comment-input" type="text"
-                    placeholder="댓글을 입력하세요..." />
+                  <input
+                    className="detail-comment-input"
+                    type="text"
+                    placeholder="댓글을 입력하세요..."
+                  />
                   <button className="detail-comment-submit">등록</button>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

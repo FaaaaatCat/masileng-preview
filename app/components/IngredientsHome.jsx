@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import INGREDIENTS from "../data/ingredients.json";
 import { SearchIcon } from "./icons";
+import "../css/ingredient-detail.css";
 
 const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
 
@@ -68,6 +69,38 @@ function SlidingBanner() {
 export default function IngredientsHome() {
   const [cat, setCat] = useState("전체");
   const [search, setSearch] = useState("");
+  const [myIngIds, setMyIngIds] = useState(
+    () => new Set(INGREDIENTS.filter((i) => i.myIng).map((i) => i.id))
+  );
+  const [burstIds, setBurstIds] = useState(new Set());
+  const [showToast, setShowToast] = useState(false);
+  const [toastLeaving, setToastLeaving] = useState(false);
+  const toastTimers = useRef([]);
+
+  const showToastMsg = () => {
+    toastTimers.current.forEach(clearTimeout);
+    setShowToast(true);
+    setToastLeaving(false);
+    const t1 = setTimeout(() => setToastLeaving(true), 1700);
+    const t2 = setTimeout(() => { setShowToast(false); setToastLeaving(false); }, 2000);
+    toastTimers.current = [t1, t2];
+  };
+
+  const toggleMyIng = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setMyIngIds((prev) => {
+      const next = new Set(prev);
+      const adding = !next.has(id);
+      adding ? next.add(id) : next.delete(id);
+      if (adding) {
+        setBurstIds((b) => new Set([...b, id]));
+        setTimeout(() => setBurstIds((b) => { const n = new Set(b); n.delete(id); return n; }), 700);
+        showToastMsg();
+      }
+      return next;
+    });
+  };
 
   const filtered = INGREDIENTS.filter((ing) => {
     if (cat !== "전체" && ing.cat !== cat) return false;
@@ -80,6 +113,12 @@ export default function IngredientsHome() {
 
   return (
     <div className="ing-page">
+      {showToast && (
+        <div className={`ing-toast${toastLeaving ? " ing-toast--out" : ""}`}>
+          <span className="ing-toast-icon">🧊</span>
+          재료를 내 냉장고에 추가했습니다
+        </div>
+      )}
 
       {/* 슬라이딩 배너 */}
       <SlidingBanner />
@@ -97,7 +136,7 @@ export default function IngredientsHome() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button className="btn-search">검색</button>
+              <button className="btn btn-filled btn-brand">검색</button>
             </div>
           </div>
 
@@ -119,14 +158,30 @@ export default function IngredientsHome() {
         <div className="cocktail-grid ing-grid">
           {filtered.map((ing) => (
             <Link key={ing.id} href={`/ingredient/${ing.id}`} style={{ textDecoration: "none" }}>
-              <article className="ing-card">
+              <article className={`ing-card${myIngIds.has(ing.id) ? " ing-card--mine" : ""}${burstIds.has(ing.id) ? " ing-card--burst" : ""}`}>
                 <div className="ing-card-img-wrap">
+                  {burstIds.has(ing.id) && <span className="ing-card-ripple" />}
                   <img
                     src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
                     alt={ing.n}
                     className="ing-card-img"
                     onError={(e) => { e.target.style.opacity = "0"; }}
                   />
+                  <button
+                    className={`ing-card-basket-btn${myIngIds.has(ing.id) ? " ing-card-basket-btn--active" : ""}`}
+                    onClick={(e) => toggleMyIng(e, ing.id)}
+                    title={myIngIds.has(ing.id) ? "갖고있는 재료입니다!" : "내 재료함에 담기"}
+                  >
+                    {myIngIds.has(ing.id) ? (
+                      <img src="/icon_my.svg" alt="내 재료" width="28" height="28" />
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+                        <rect x="3" y="3" width="18" height="18" rx="5" />
+                        <line x1="12" y1="8" x2="12" y2="16" />
+                        <line x1="8" y1="12" x2="16" y2="12" />
+                      </svg>
+                    )}
+                  </button>
                 </div>
                 <div className="ing-card-body">
                   <h4 className="ing-card-name">{ing.n}</h4>

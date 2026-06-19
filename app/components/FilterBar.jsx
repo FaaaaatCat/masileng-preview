@@ -9,7 +9,7 @@ const CheckIcon = () => (
   </svg>
 );
 
-function SelectFilter({ value, onChange, onClear, placeholder, children }) {
+export function SelectFilter({ value, onChange, onClear, placeholder, children, size = "large", styleVariant = "select-style-filter" }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const active = Boolean(value);
@@ -33,11 +33,11 @@ function SelectFilter({ value, onChange, onClear, placeholder, children }) {
     <div className={`custom-select-wrap${open ? " open" : ""}`} ref={ref}>
       <button
         type="button"
-        className={`custom-select-trigger${active ? " active" : ""}`}
+        className={`custom-select-trigger custom-select-trigger--${size} ${styleVariant}${active ? " active" : ""}`}
         onClick={() => setOpen((v) => !v)}
       >
         <span className="custom-select-value">{selectedLabel}</span>
-        {active ? (
+        {active && onClear ? (
           <span className="custom-select-clear" onMouseDown={(e) => { e.stopPropagation(); onClear(); setOpen(false); }}>
             <XIcon />
           </span>
@@ -68,13 +68,14 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
   const pMin = ((min - 2) / total) * 100;
   const pMax = ((max - 2) / total) * 100;
   const isActive = min > 2 || max < 10;
+  const [dragging, setDragging] = useState(null); // 'min' | 'max' | null
 
   const handleMinChange = (e) => onMinChange(Math.min(Number(e.target.value), max));
   const handleMaxChange = (e) => onMaxChange(Math.max(Number(e.target.value), min));
 
-  // 오른쪽 핸들이 max(10)에 있을 때 우선순위를 높여 왼쪽 인풋이 가로채지 않도록 함
-  const minZIndex = max === 10 ? 4 : (min >= max - 1 ? 5 : 4);
-  const maxZIndex = max === 10 ? 5 : 3;
+  // 드래그 중인 핸들을 항상 위로, 겹쳤을 때는 max 핸들 우선
+  const minZIndex = dragging === 'min' ? 5 : (dragging === 'max' ? 3 : (min >= max ? 5 : 4));
+  const maxZIndex = dragging === 'max' ? 5 : (dragging === 'min' ? 3 : 5);
 
   return (
     <div className={`range-wrap${isActive ? " active" : ""}`}>
@@ -85,9 +86,11 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
         <div className="range-thumb" style={{ left: `${pMin}%` }} />
         <div className="range-thumb" style={{ left: `${pMax}%` }} />
         <input type="range" min={2} max={10} step={1} value={min} onChange={handleMinChange}
-          className="range-input" style={{ zIndex: minZIndex }} />
+          className="range-input" style={{ zIndex: minZIndex }}
+          onPointerDown={() => setDragging('min')} onPointerUp={() => setDragging(null)} />
         <input type="range" min={2} max={10} step={1} value={max} onChange={handleMaxChange}
-          className="range-input" style={{ zIndex: maxZIndex }} />
+          className="range-input" style={{ zIndex: maxZIndex }}
+          onPointerDown={() => setDragging('max')} onPointerUp={() => setDragging(null)} />
       </div>
       <span className="range-value">{min}~{max >= 10 ? "10+" : max}개</span>
       {isActive && (
@@ -128,7 +131,7 @@ export default function FilterBar({
         </SelectFilter>
 
         {showIba && (
-          <button className={`btn-iba-toggle${ibaOnly ? " active" : ""}`} onClick={onIbaToggle}>
+          <button className={`btn btn-gray-light${ibaOnly ? " btn-subfilled" : " btn-lined"}`} onClick={onIbaToggle}>
             <span className="iba-check">
               {ibaOnly && <CheckIcon />}
             </span>
@@ -140,7 +143,7 @@ export default function FilterBar({
           </button>
         )}
 
-        <button className="btn-reset" onClick={onReset}>
+        <button className="btn btn-lined btn-gray-light" onClick={onReset}>
           <ResetIcon />
           초기화
         </button>
@@ -153,7 +156,7 @@ export default function FilterBar({
           <input type="text" className="search-input"
             value={search} onChange={(e) => onSearchChange(e.target.value)}
             placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요" />
-          <button className="btn-search">검색</button>
+          <button className="btn btn-filled btn-brand">검색</button>
         </div>
       </div>
     </div>

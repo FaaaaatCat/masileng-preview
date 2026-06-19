@@ -68,7 +68,7 @@ export default function LoginPage() {
           <KakaoIcon />
           카카오로 로그인
         </button>
-        <button className="btn-google btn-line-bg" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
+        <button className="btn-google btn btn-lined btn-gray-light" type="button" onClick={() => alert("Google 로그인은 준비 중입니다.")}>
           <GoogleIcon />
           Google로 로그인
         </button>
@@ -95,7 +95,7 @@ export default function LoginPage() {
             autoComplete="current-password"
           />
           {error && <p className="login-error">{error}</p>}
-          <button type="submit" className="btn-login-submit">로그인</button>
+          <button type="submit" className="btn-login-submit btn btn-filled btn-brand">로그인</button>
         </form>
 
         <p className="login-register">

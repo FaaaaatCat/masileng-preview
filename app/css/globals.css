@@ -2,73 +2,116 @@
 @import "tailwindcss";
 
 :root {
-  /* ── 피그마 디자인 시스템 ─────────────────── */
+  /* (1. static 컬러 - 그레이, 브랜드, 서브 ) */
+  /* ── 그레이스케일────────────────── */
+  --gray-0: #040810;
+  --gray-1: #2d3848;
+  --gray-2: #4a576f;
+  --gray-3: #6c7991;
+  --gray-4: #95a1b7;
+  --gray-5: #b6bfcc;
+  --gray-6: #d1d7e0;
+  --gray-7: #e1e6ed;
+  --gray-8: #eef1f6;
+  --gray-9: #f8fafc;
+  --gray-10: #ffffff;
 
-  /* 폰트 컬러 */
-  --font-0: #242a38; /* 제목 */
-  --font-1: #3a4151; /* 본문 */
-  --font-2: #4e596f; /* 1차 서브폰트 */
-  --font-3: #6f7a8f; /* 2차 서브폰트 */
-  --font-4: #949bab; /* placeholder */
-  --font-5: #b5bcc8; /* disable */
-  --font-6: #ccd1db; /* 안중요한 정보 */
-
-  /* 그레이 */
-  --gray-1: #f0f2f7; /* 배경색 */
-  --gray-2: #dbdfe7; /* 구분선 */
-  --gray-3: #c7cbd3; /* 서브 아이콘 */
-  --gray-4: #f7f7f8; /* form 컬러*/
-
-  /* 서브 컬러 */
-  --yellow: #ffc355;
-  --yellow-d: #f98162;
-  --yellow-l: #fff5da;
-
-  /* 그라데이션 */
-  --gradient-brand: linear-gradient(135deg, #ffa06b 0%, #fb5a5a 100%);
-
-  /* 페이지 배경 */
-  --page-bg: #f8f8f8;
-
-  /* ── 브랜드 컬러 ─────────────────────────── */
-  /* pink = #F34B65, pink_d = #B7374B, pink_l = #FEEFEF */
+  /* ── 브랜드 컬러 ─────────────────── */
   --coral: #f34b65;
+  --coral-subtle: rgb(235, 64, 90);
   --coral-strong: #b7374b;
-  --coral-deep: oklch(0.55 0.2 32);
   --coral-warm: oklch(0.78 0.14 40);
   --coral-soft: #feefef;
   --coral-line: oklch(0.9 0.05 18);
 
-  /* ── 잉크 (기존 호환 유지) ────────────────── */
-  /* --ink ≈ --font-0, --ink-2 ≈ --font-2, --ink-3 ≈ --font-4 */
-  --ink: var(--font-0);
-  --ink-2: var(--font-2);
-  --ink-3: var(--font-4);
-  --near-black: oklch(0.22 0.01 50);
+  /* ── 서브 컬러 ───────────────────── */
+  --yellow: #ffc355;
+  --yellow-d: #f98162;
+  --yellow-l: #fff5da;
 
-  /* ── 라인 / 배경 (기존 호환 유지) ─────────── */
-  /* --line ≈ --gray-2, --line-2 ≈ --gray-1 */
-  --line: var(--gray-2);
-  --line-2: var(--gray-1);
-  --bg: oklch(0.995 0.002 60);
-  --form-bg: var(--gray-1);
-  --form-line: var(--gray-2);
-  --form-bg-hover: var(--gray-2);
-  --form-line-hover: var(--gray-2);
+  /* ── 포인트 컬러 ───────────────────── */
+  --point: #9137c7;
+  --point-d: #6603a0;
+  --point-l: #efd7fd;
+
+  /* ── 그라데이션 ───────────────────── */
+  --gradient-brand-1: linear-gradient(
+    130deg,
+    oklch(0.68 0.22 18) 0%,
+    oklch(0.58 0.24 340) 60%,
+    oklch(0.52 0.22 300) 100%
+  );
+  --gradient-brand-2: linear-gradient(135deg, #ffa06b 0%, #fb5a5a 100%);
+
+  /* ── 배경색상 ─────────────────────── */
+  --page-bg-gray: #f8f8f8; /* 서브페이지 */
+  --page-bg-ivory: #fefdfc; /* 메인페이지 */
+
+  /* (2. semantic 컬러 - 폰트, 아이콘, ui-bg, ui-line, form-bg, form-line ) */
+  /* ── 폰트 semantic ──────────────────────────────────── */
+  --font-title: var(--gray-1); /* 제목 */
+  --font-body: var(--gray-2); /* 본문 */
+  --font-sub: var(--gray-3); /* 1차 서브 */
+  --font-sub2: var(--gray-4); /* 2차 서브 */
+  --font-placeholder: var(--gray-5); /* placeholder */
+  --font-disable: var(--gray-5); /* disable */
+  --font-muted: var(--gray-7); /* 비중요 정보 */
+
+  /* ── 아이콘 semantic ─────────────────────────────────── */
+  --icon-dark: var(--gray-4);
+  --icon-light: var(--gray-6);
+  --icon-disable: var(--gray-4);
+  --icon-red: var(--coral);
+  --icon-white: var(--gray-10);
+
+  /* ── UI semantic ─────────────────────────────────────── */
+  --ui-bg-white: var(--gray-10);
+  --ui-bg-light: var(--gray-9);
+  --ui-bg-subtle: var(--gray-8);
+  --ui-bg-dark: var(--gray-4);
+  --ui-line-white: var(--gray-10);
+  --ui-line-light: var(--gray-7);
+  --ui-line-subtle: var(--gray-6);
+  --ui-line-dark: var(--gray-3);
+
+  /* ── form variables ──────────────────────────────────── */
+  --form-bg: var(--gray-10);
+  --form-line: var(--gray-7);
+  --form-bg-hover: var(--gray-8);
+  --form-line-hover: var(--gray-6);
   --form-bg-active: var(--coral-soft);
   --form-line-active: var(--coral);
-  --form-bg-disable: var(--gray-2);
-  --form-line-disable: var(--gray-2);
+  --form-bg-disable: var(--gray-7);
+  --form-line-disable: var(--gray-7);
+
+  /* ── 트랜지션 */
+  --time-fast: 0.1s;
+  --time-slow: 0.2s;
 
   /* ── 반경 */
   --r-md: 14px;
   --r-lg: 20px;
+
+  /* ── 사이즈 */
+--form-h-sm: 28px;
+--form-h-md: 40px;
+--form-h-lg: 60px;
 
   /* ── 그림자 */
   --shadow:
     0 1px 2px rgba(20, 12, 10, 0.04), 0 8px 24px -14px rgba(20, 12, 10, 0.18);
   --shadow-hover:
     0 2px 4px rgba(20, 12, 10, 0.05), 0 18px 40px -18px rgba(20, 12, 10, 0.28);
+  --shadow-sm: 0 1px 3px rgba(20, 12, 10, 0.04);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-card-sm: 0 6px 20px -10px rgba(0, 0, 0, 0.22);
+  --shadow-card-xs: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-panel: 0 8px 28px -4px rgba(20, 12, 10, 0.13);
+  --shadow-float: 0 8px 28px -6px rgba(0, 0, 0, 0.28);
+  --shadow-modal: 0 8px 40px -8px rgba(0, 0, 0, 0.28);
+  --shadow-btn-1: 0 4px 16px -4px oklch(0.58 0.22 18 / 0.55);
+  --shadow-btn-1-hover: 0 7px 22px -4px oklch(0.58 0.22 18 / 0.65);
+  --shadow-btn-2: 0 4px 16px -4px oklch(60.424% 0.23609 25.516 / 0.76);
   --coral-shadow: rgba(200, 60, 80, 0.55);
   --coral-shadow-sm: rgba(200, 60, 80, 0.4);
   --thumb-shadow: rgba(20, 12, 10, 0.4);
@@ -88,8 +131,23 @@ body {
     BlinkMacSystemFont,
     system-ui,
     sans-serif;
-  background: var(--bg);
-  color: var(--ink);
+  background: var(--page-bg-gray);
+  color: var(--font-title);
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
+}
+
+/* 광고 배너 - 임시로 자리잡게 넣어둔거라 삭제해도 상관없음 */
+.ad-banner-test {
+  height: 160px;
+  background: var(--gray-2);
+  border: 2px dashed var(--ui-line-light);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-muted);
+  letter-spacing: 0.02em;
 }
