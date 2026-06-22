@@ -51,7 +51,7 @@ export default function IngredientRequestModal({ initialName = "", onClose }) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="common-popup-modal">
+      <div className="common-popup-modal popup-sm">
         {submitted ? (
           <div className="common-popup-success">
             <span className="common-popup-success-icon">🎉</span>

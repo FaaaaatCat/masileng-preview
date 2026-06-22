@@ -379,67 +379,6 @@
   gap: 10px;
 }
 
-.ing-cocktail-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: var(--r-md);
-  background: var(--page-bg-gray);
-  border: 1px solid var(--ui-line-light);
-  text-decoration: none;
-  cursor: pointer;
-  transition:
-    border-color 0.15s,
-    background 0.15s;
-}
-
-.ing-cocktail-item:hover {
-  border-color: var(--coral);
-  background: var(--coral-soft);
-}
-
-.ing-cocktail-thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-sm);
-  overflow: hidden;
-  flex-shrink: 0;
-  background: var(--ui-bg-subtle);
-}
-
-.ing-cocktail-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ing-cocktail-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.ing-cocktail-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 4px;
-}
-
-.ing-cocktail-tag {
-  font-size: 11px;
-  color: var(--font-sub);
-  background: var(--ui-bg-subtle);
-  border: 1px solid var(--ui-line-subtle);
-  border-radius: var(--r-xs);
-  padding: 1px 6px;
-}
-
-.ing-cocktail-arrow {
-  color: var(--icon-dark);
-  flex-shrink: 0;
-}
-
 .ing-empty {
   color: var(--font-placeholder);
   font-size: 14px;

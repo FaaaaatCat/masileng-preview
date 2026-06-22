@@ -111,7 +111,7 @@ export default function TermsModal({ onClose }) {
       className="common-popup-backdrop"
       onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
-      <div className="common-popup-modal terms-modal">
+      <div className="common-popup-modal popup-md">
         <div className="common-popup-header">
           <div>
             <h2 className="common-title-lg">개인정보 처리방침</h2>

@@ -644,3 +644,71 @@
   color: var(--font-placeholder);
 }
 
+.detail-comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 4px;
+}
+
+.detail-comment-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.detail-comment-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.detail-comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-comment-author {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--font-title);
+}
+
+.detail-comment-time {
+  font-size: 12px;
+  color: var(--font-sub2);
+}
+
+.detail-comment-text {
+  font-size: 14px;
+  color: var(--font-body);
+  line-height: 1.5;
+}
+
+.detail-comment-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.detail-comment-action-btn {
+  font-size: 12px;
+  color: var(--font-sub2);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: color var(--time-fast);
+}
+.detail-comment-action-btn:hover { color: var(--font-title); }
+.detail-comment-action-delete:hover { color: #dc2626; }
+
+.detail-comment-edit-wrap {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+

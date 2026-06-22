@@ -14,6 +14,43 @@ import FilterBar from "./FilterBar";
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
 
+const AVATAR_COLORS = [
+  "#FFB3C6", "#B5EAD7", "#C4B5FD", "#BAD6F8",
+  "#FEFDC1", "#FFCFC9", "#FFB700", "#C8E600",
+  "#4ECDC4", "#87CEEB", "#2563EB", "#B0BEC5",
+  "#607D8B", "#E63946", "#F472B6", "#9C27B0",
+  "#FED7AA", "#A7F3D0", "#FCA5A5", "#93C5FD",
+];
+const AVATAR_IMGS = [
+  "profile_img",
+  ...Array.from({ length: 27 }, (_, i) => `profile_img-${i + 1}`),
+];
+
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function UserAvatar({ username, size = 28, overrideBg, overrideImg }) {
+  const h = hashStr(username);
+  const bg = overrideBg ?? AVATAR_COLORS[h % AVATAR_COLORS.length];
+  const img = overrideImg ?? AVATAR_IMGS[(h >> 4) % AVATAR_IMGS.length];
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: "50%",
+      background: bg, overflow: "hidden", flexShrink: 0,
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <img
+        src={`/character_illust/profile_img/${img}.png`}
+        alt={username}
+        style={{ width: "100%", height: "100%", objectFit: "contain", padding: 2 }}
+      />
+    </div>
+  );
+}
+
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
 
 // 스캐터 배치 설정 (challenge pool 인덱스 기준)
@@ -112,12 +149,13 @@ function ChallengeHero() {
   );
 }
 
-function ChallengeCard({ card }) {
+function ChallengeCard({ card, currentUser }) {
   const d = POOL[card.i];
   const [dropOpen, setDropOpen] = useState(false);
   const wrapRef = useRef(null);
 
   const userCards = CARDS.filter((c) => c.u === card.u);
+  const isMe = currentUser && (currentUser.profileName || currentUser.name) === card.u;
 
   useEffect(() => {
     if (!dropOpen) return;
@@ -152,10 +190,11 @@ function ChallengeCard({ card }) {
                 setDropOpen((v) => !v);
               }}
             >
-              <img
-                src="/userProfile.png"
-                alt={card.u}
-                className="card-author-profile-img"
+              <UserAvatar
+                username={card.u}
+                size={28}
+                overrideBg={isMe ? (currentUser.profileBg ?? AVATAR_COLORS[0]) : undefined}
+                overrideImg={isMe ? (currentUser.profileImg ?? AVATAR_IMGS[0]) : undefined}
               />
               <span className="card-author-name">{card.u}</span>
             </button>
@@ -205,6 +244,12 @@ export default function ChallengeHome() {
   const [rangeMin, setRangeMin] = useState(2);
   const [rangeMax, setRangeMax] = useState(10);
   const [search, setSearch] = useState("");
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const s = localStorage.getItem("masileng_user");
+    if (s) setCurrentUser(JSON.parse(s));
+  }, []);
 
   const handleReset = () => {
     setAbv("");
@@ -268,7 +313,7 @@ export default function ChallengeHome() {
           </div>
           <div className="new-cocktail-row">
             {NEW_COCKTAILS.map((card) => (
-              <ChallengeCard key={card._idx} card={card} />
+              <ChallengeCard key={card._idx} card={card} currentUser={currentUser} />
             ))}
           </div>
         </div>
@@ -300,7 +345,7 @@ export default function ChallengeHome() {
           <div className="cocktail-grid">
             {filtered.length > 0 ? (
               filtered.map((card) => (
-                <ChallengeCard key={card._idx} card={card} />
+                <ChallengeCard key={card._idx} card={card} currentUser={currentUser} />
               ))
             ) : (
               <p

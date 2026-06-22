@@ -381,9 +381,9 @@ export default function IngredientDetail({ ing }) {
                         <Link
                           key={card._id}
                           href={`/cocktail/${card._id}`}
-                          className="ing-cocktail-item"
+                          className="common-list-item"
                         >
-                          <div className="ing-cocktail-thumb">
+                          <div className="common-list-item-thumb">
                             <img
                               src={poolImg.url}
                               alt={card.t}
@@ -392,19 +392,18 @@ export default function IngredientDetail({ ing }) {
                               }}
                             />
                           </div>
-                          <div className="ing-cocktail-info">
-                            <p className="common-body-lg-bold">{card.t}</p>
-                            <div className="ing-cocktail-meta">
+                          <div className="common-list-item-info">
+                            <span className="common-list-item-title">{card.t}</span>
+                            <span className="common-list-item-desc">{card.desc}</span>
+                            <div className="common-list-item-tags">
                               {getCardTags(card).map((tag) => (
-                                <span key={tag} className="ing-cocktail-tag">
-                                  {tag}
-                                </span>
+                                <span key={tag} className={`common-list-item-tag${tag === "#IBA" ? " tag-iba" : ""}`}>{tag}</span>
                               ))}
                             </div>
                           </div>
-                          <span className="ing-cocktail-arrow">
+                          <div className="common-list-item-action">
                             <ChevronRightIcon />
-                          </span>
+                          </div>
                         </Link>
                       );
                     })}

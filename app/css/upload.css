@@ -524,6 +524,49 @@
 .upload-photo-zone.has-photo {
   border-style: solid;
   border-color: var(--ui-line-light);
+  position: relative;
+}
+
+/* 딤 오버레이 */
+.upload-photo-zone.has-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  border-radius: inherit;
+  transition: background var(--time-fast);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 버튼 텍스트 */
+.upload-photo-zone.has-photo::after {
+  content: "사진 수정하기";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  padding: 8px 20px;
+  border: 1.5px solid #fff;
+  border-radius: var(--r-full);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--time-fast), transform var(--time-fast);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.upload-photo-zone.has-photo:hover::before {
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.upload-photo-zone.has-photo:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .upload-photo-empty {

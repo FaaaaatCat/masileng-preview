@@ -60,7 +60,9 @@
   border-radius: var(--r-lg);
   box-shadow: var(--shadow);
 
-  &--clip { overflow: hidden; }
+  &--clip {
+    overflow: hidden;
+  }
 
   &-header {
     padding: 20px 24px 16px;
@@ -70,7 +72,9 @@
     border-bottom: 1px solid var(--ui-line-light);
 
     // 오른쪽에 버튼이 있을 때 — 타이틀과 버튼 양 끝 정렬
-    &--spread { justify-content: space-between; }
+    &--spread {
+      justify-content: space-between;
+    }
   }
 
   &-inner {
@@ -81,15 +85,24 @@
   }
 }
 
-
 // ── 팝업 (공통)
 @keyframes popup-backdrop-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes popup-in {
-  from { opacity: 0; transform: scale(0.96) translateY(14px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .common-popup {
@@ -117,6 +130,12 @@
     display: flex;
     flex-direction: column;
     animation: popup-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    &.popup-xs { max-width: 400px; }
+    &.popup-sm { max-width: 480px; }
+    &.popup-md { max-width: 600px; }
+    &.popup-lg { max-width: 800px; }
+    &.popup-xl { max-width: 1200px; }
   }
 
   &-header {
@@ -141,7 +160,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background var(--time-fast), color var(--time-fast);
+    transition:
+      background var(--time-fast),
+      color var(--time-fast);
 
     &:hover {
       background: var(--ui-bg-subtle);
@@ -202,6 +223,101 @@ $title-sizes: (
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+  }
+}
+
+// ── 리스트 아이템
+.common-list-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  background: var(--ui-bg-light);
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background var(--time-fast),
+    border-color var(--time-fast);
+
+  &:hover {
+    background: var(--coral-soft);
+    border-color: var(--coral-line);
+  }
+
+  &-thumb {
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    background: var(--ui-bg-subtle);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  &-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--font-title);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-desc {
+    font-size: 13px;
+    color: var(--font-sub2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 2px;
+    
+  }
+
+  &-tag {
+    font-size: 11px;
+    color: var(--font-sub);
+    background: var(--ui-bg-subtle);
+    border: 1px solid var(--ui-line-subtle);
+    border-radius: var(--r-xs);
+    padding: 1px 6px;
+    white-space: nowrap;
+
+    &.tag-iba {
+      background: var(--gray-2);
+      border-color: var(--gray-2);
+      color: var(--gray-10);
+      font-weight: 500;
+    }
+  }
+
+  &-action {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    color: var(--icon-dark);
   }
 }
 

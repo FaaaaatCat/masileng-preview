@@ -35,10 +35,26 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  const MOCK_ACCOUNTS = [
+    { email: "test@email.com", pw: "test", name: "테스트계정" },
+  ];
+
   const handleLogin = (e) => {
     e.preventDefault();
     if (!id.trim()) { setError("아이디를 입력해주세요."); return; }
     if (!pw.trim()) { setError("비밀번호를 입력해주세요."); return; }
+
+    const matched = MOCK_ACCOUNTS.find(
+      (a) => a.email === id.trim() && a.pw === pw
+    );
+    if (matched) {
+      const user = { name: matched.name };
+      localStorage.setItem("masileng_user", JSON.stringify(user));
+      window.dispatchEvent(new Event("masileng_auth"));
+      router.push("/");
+      return;
+    }
+
     const user = { name: id.trim() };
     localStorage.setItem("masileng_user", JSON.stringify(user));
     window.dispatchEvent(new Event("masileng_auth"));

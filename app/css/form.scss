@@ -228,6 +228,25 @@ $btn-sizes: (
       background: var(--ui-bg-subtle);
     }
   }
+  &.btn-red {
+    border: 1.5px solid #f87171;
+    color: #dc2626;
+    &:hover {
+      background: #fee2e2;
+    }
+  }
+}
+
+.btn-filled {
+  &.btn-red {
+    background: #dc2626;
+    border: 1.5px solid #dc2626;
+    color: #fff;
+    &:hover {
+      background: #b91c1c;
+      border-color: #b91c1c;
+    }
+  }
 }
 
 // ─────────────────────────────────────────────
