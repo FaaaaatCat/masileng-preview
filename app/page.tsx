@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import MasilengHome from "./components/MasilengHome";
+import MasilengHome from "./page/MasilengHome";
 
 export default function Home() {
   return (

@@ -9,8 +9,8 @@ import INGREDIENTS_DATA from "../data/ingredients.json";
 import CHALLENGE_CARDS_RAW from "../data/challenge_cards.json";
 import { IMG_BASE } from "../data/constants.json";
 import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
-import { SelectFilter } from "./FilterBar";
-import SiteHeader from "./SiteHeader";
+import { SelectFilter } from "../components/FilterBar";
+import SiteHeader from "../components/SiteHeader";
 
 // 재료 표시명 → ingredients.json id 매핑
 const ING_LINK_MAP = {
@@ -346,7 +346,7 @@ function computeRatios(ingredients) {
 
 function FlavorDots({ value, max = 5 }) {
   return (
-    <div className="flavor-dots">
+    <div className="flex gap-1 items-center">
       {Array.from({ length: max }, (_, i) => (
         <span key={i} className={`flavor-dot${i < value ? " filled" : ""}`} />
       ))}
@@ -879,14 +879,18 @@ export default function CocktailDetail({
 
               <div className="detail-gallery-main">
                 <img
-                  src={activeThumb === 0 && overrideData?.photoPreview ? overrideData.photoPreview : activeImg.url}
+                  src={
+                    activeThumb === 0 && overrideData?.photoPreview
+                      ? overrideData.photoPreview
+                      : activeImg.url
+                  }
                   alt={card.t}
                   onError={(e) => {
                     e.target.src = "/theme.png";
                   }}
                 />
               </div>
-              <div className="detail-gallery-thumbs">
+              <div className="grid grid-cols-3 gap-2 h-[101px]">
                 {thumbImgs.map((img, idx) => (
                   <div
                     key={idx}
@@ -988,9 +992,9 @@ export default function CocktailDetail({
               {/* 기본 정보 카드 */}
               <div className="common-card">
                 <div className="common-card-inner">
-                  <div className="detail-info-header">
+                  <div className="flex items-center gap-2.5">
                     {/* 테마 배경 + 칵테일 일러스트 */}
-                    <div className="detail-cocktail-icon">
+                    <div className="size-20 overflow-hidden shrink-0 relative">
                       {THEME_BG_MAP[card.theme] && (
                         <img
                           className="detail-cocktail-icon-bg"
@@ -1009,7 +1013,7 @@ export default function CocktailDetail({
                         />
                       )}
                     </div>
-                    <div className="detail-title-wrap">
+                    <div className="flex-1 min-w-0">
                       <h1 className="detail-cocktail-name">{displayCard.t}</h1>
                     </div>
                     <button
@@ -1022,7 +1026,7 @@ export default function CocktailDetail({
                     </button>
                   </div>
 
-                  <div className="detail-tags">
+                  <div className="flex flex-wrap gap-1.5">
                     {tags.map((tag) => (
                       <button
                         key={tag}
@@ -1049,7 +1053,10 @@ export default function CocktailDetail({
                       { label: "쌉쌀함", val: flavor.bitter },
                       { label: "바디감", val: flavor.body },
                     ].map(({ label, val }) => (
-                      <div key={label} className="detail-flavor-row">
+                      <div
+                        key={label}
+                        className="flex items-center gap-2 h-[18px]"
+                      >
                         <span className="detail-flavor-label">{label}</span>
                         <FlavorDots value={val} />
                       </div>
@@ -1057,9 +1064,14 @@ export default function CocktailDetail({
                   </div>
 
                   {/* 5 & 7. 마실랭 공식: 브랜드색 + 흰M, 일반: userProfile.png */}
-                  <div className="detail-author-wrap" ref={authorRef}>
+                  <div className="relative" ref={authorRef}>
                     <button
-                      className={`detail-author${!isOfficial && !card.iba ? " detail-author--clickable" : ""}${authorDropOpen ? " detail-author--open" : ""}`}
+                      className={[
+                        !isOfficial && !card.iba && "detail-author--clickable",
+                        authorDropOpen && "detail-author--open",
+                      ]
+                        .filter(Boolean)
+                        .join(" ")}
                       onClick={() => {
                         if (!isOfficial && !card.iba)
                           setAuthorDropOpen((v) => !v);
@@ -1076,7 +1088,7 @@ export default function CocktailDetail({
                         gap: "10px",
                       }}
                     >
-                      <div className="detail-author-avatar">
+                      <div className="size-10 rounded-full overflow-hidden shrink-0">
                         {isOfficial || card.iba ? (
                           <span className="detail-author-avatar-official">
                             M
@@ -1117,7 +1129,7 @@ export default function CocktailDetail({
                                 >
                                   {ucImg && (
                                     <div
-                                      className="detail-author-dropdown-thumb"
+                                      className="size-10 rounded-[10px] overflow-hidden shrink-0"
                                       style={{ background: ucImg.g }}
                                     >
                                       <img
@@ -1129,7 +1141,7 @@ export default function CocktailDetail({
                                       />
                                     </div>
                                   )}
-                                  <span className="detail-author-dropdown-name">
+                                  <span className="flex-1 min-w-0 truncate">
                                     {uc.t}
                                   </span>
                                   <ChevronRightIcon />
@@ -1145,45 +1157,40 @@ export default function CocktailDetail({
               </div>
 
               {/* 스탯 row */}
-              <div className="detail-stats-row">
-                <div className="detail-stat-card">
-                  <div className="detail-stat-icon">
-                    <FlameIcon />
+              <div className="flex flex-row gap-2">
+                {[
+                  { icon: <FlameIcon />, label: "도수", value: abvLabel },
+                  {
+                    icon: <TagIcon />,
+                    label: "테마",
+                    value: card.theme ?? "—",
+                  },
+                  {
+                    icon: <StarIcon />,
+                    label: "난이도",
+                    value: difficulty,
+                    valueClass: `detail-stat-badge ${difficultyClass}`,
+                  },
+                ].map(({ icon, label, value, valueClass }) => (
+                  <div className="common-card flex-1" key={label}>
+                    <div className="common-card-inner">
+                      <div className="flex items-center gap-2">
+                        <div className="detail-stat-icon">{icon}</div>
+                        <span className="common-body-sm-bold">{label}</span>
+                        <div className="nav-spacer"></div>
+                        <span className={valueClass ?? "common-title-md"}>
+                          {value}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="detail-stat-body">
-                    <span className="detail-stat-label">도수</span>
-                    <span className="common-body-md-bold">{abvLabel}</span>
-                  </div>
-                </div>
-                <div className="detail-stat-card">
-                  <div className="detail-stat-icon">
-                    <TagIcon />
-                  </div>
-                  <div className="detail-stat-body">
-                    <span className="detail-stat-label">테마</span>
-                    <span className="common-body-md-bold">
-                      {card.theme ?? "—"}
-                    </span>
-                  </div>
-                </div>
-                <div className="detail-stat-card">
-                  <div className="detail-stat-icon">
-                    <StarIcon />
-                  </div>
-                  <div className="detail-stat-body">
-                    <span className="detail-stat-label">난이도</span>
-                    <span className={`detail-stat-badge ${difficultyClass}`}>
-                      {difficulty}
-                    </span>
-                  </div>
-                </div>
+                ))}
               </div>
 
               {/* 재료 카드 */}
               <div className="common-card">
                 <div className="common-card-header common-card-header--spread">
                   <h2 className="common-title-md">재료 정보</h2>
-                  <div className="detail-label-info"></div>
                   <button
                     className="btn btn-sm btn-lined btn-gray-light"
                     onClick={() =>
@@ -1195,7 +1202,7 @@ export default function CocktailDetail({
                   </button>
                 </div>
                 <div className="common-card-inner">
-                  <div className="detail-ing-list">
+                  <div className="flex flex-col gap-5">
                     {ingredients.map((ing, idx) => {
                       const ratio = ratios[idx];
                       const ingId = ING_LINK_MAP[ing.name];
@@ -1218,12 +1225,12 @@ export default function CocktailDetail({
                         <Link
                           key={idx}
                           href={`/ingredient/${ingId}`}
-                          className="detail-ing-item detail-ing-item--link"
+                          className="flex items-center gap-4 no-underline detail-ing-item--link"
                         >
                           {inner}
                         </Link>
                       ) : (
-                        <div key={idx} className="detail-ing-item">
+                        <div key={idx} className="flex items-center gap-4">
                           {inner}
                         </div>
                       );
@@ -1256,7 +1263,7 @@ export default function CocktailDetail({
                   )}
                 </div>
                 <div className="common-card-inner">
-                  <div className="detail-steps-list">
+                  <div className="flex flex-col">
                     {steps.map((step, idx) => (
                       <div key={idx} className="detail-step-item">
                         <div className="detail-step-num">{idx + 1}</div>
@@ -1271,7 +1278,14 @@ export default function CocktailDetail({
               {/* 댓글 카드 */}
               <div className="common-card">
                 <div className="common-card-header">
-                  <h2 className="common-title-md">댓글 {comments.length > 0 && <span style={{ color: "var(--coral)", fontWeight: 700 }}>{comments.length}</span>}</h2>
+                  <h2 className="common-title-md">
+                    댓글{" "}
+                    {comments.length > 0 && (
+                      <span style={{ color: "var(--coral)", fontWeight: 700 }}>
+                        {comments.length}
+                      </span>
+                    )}
+                  </h2>
                 </div>
                 <div className="common-card-inner">
                   {comments.length === 0 ? (
@@ -1279,35 +1293,85 @@ export default function CocktailDetail({
                       아직 댓글이 없어요. 첫 댓글을 남겨보세요!
                     </p>
                   ) : (
-                    <div className="detail-comment-list">
+                    <div className="flex flex-col gap-4 mb-1">
                       {comments.map((c) => {
-                        const isMyComment = currentUser && (currentUser.profileName || currentUser.name) === (c.user.profileName || c.user.name);
+                        const isMyComment =
+                          currentUser &&
+                          (currentUser.profileName || currentUser.name) ===
+                            (c.user.profileName || c.user.name);
                         const isEditing = editingId === c.id;
                         return (
-                          <div key={c.id} className="detail-comment-item">
+                          <div key={c.id} className="flex gap-2.5 items-start">
                             <CommentAvatar user={c.user} size={32} />
-                            <div className="detail-comment-body">
-                              <div className="detail-comment-meta">
-                                <span className="detail-comment-author">{c.user.profileName || c.user.name}</span>
-                                <span className="detail-comment-time">{c.time}</span>
+                            <div className="flex flex-col gap-1 flex-1">
+                              <div className="flex items-center gap-2">
+                                <span className="detail-comment-author">
+                                  {c.user.profileName || c.user.name}
+                                </span>
+                                <span className="detail-comment-time">
+                                  {c.time}
+                                </span>
                                 {isMyComment && !isEditing && (
-                                  <div className="detail-comment-actions">
-                                    <button className="detail-comment-action-btn" onClick={() => { setEditingId(c.id); setEditingText(c.text); }}>수정</button>
-                                    <button className="detail-comment-action-btn detail-comment-action-delete" onClick={() => handleCommentDelete(c.id)}>삭제</button>
+                                  <div className="flex gap-1.5 ml-auto">
+                                    <button
+                                      className="detail-comment-action-btn"
+                                      onClick={() => {
+                                        setEditingId(c.id);
+                                        setEditingText(c.text);
+                                      }}
+                                    >
+                                      수정
+                                    </button>
+                                    <button
+                                      className="detail-comment-action-btn detail-comment-action-delete"
+                                      onClick={() => handleCommentDelete(c.id)}
+                                    >
+                                      삭제
+                                    </button>
                                   </div>
                                 )}
                               </div>
                               {isEditing ? (
-                                <div className="detail-comment-edit-wrap">
+                                <div className="flex gap-1.5 items-center">
                                   <input
                                     className="detail-comment-input"
                                     value={editingText}
-                                    onChange={(e) => setEditingText(e.target.value)}
-                                    onKeyDown={(e) => { if (e.key === "Enter") handleCommentEditSave(c.id); if (e.key === "Escape") { setEditingId(null); setEditingText(""); } }}
+                                    onChange={(e) =>
+                                      setEditingText(e.target.value)
+                                    }
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter")
+                                        handleCommentEditSave(c.id);
+                                      if (e.key === "Escape") {
+                                        setEditingId(null);
+                                        setEditingText("");
+                                      }
+                                    }}
                                     autoFocus
                                   />
-                                  <button className="btn btn-filled btn-brand btn-sm" style={{ borderRadius: "var(--r-full)", whiteSpace: "nowrap" }} onClick={() => handleCommentEditSave(c.id)}>저장</button>
-                                  <button className="btn btn-lined btn-gray-light btn-sm" style={{ borderRadius: "var(--r-full)", whiteSpace: "nowrap" }} onClick={() => { setEditingId(null); setEditingText(""); }}>취소</button>
+                                  <button
+                                    className="btn btn-filled btn-brand btn-sm"
+                                    style={{
+                                      borderRadius: "var(--r-full)",
+                                      whiteSpace: "nowrap",
+                                    }}
+                                    onClick={() => handleCommentEditSave(c.id)}
+                                  >
+                                    저장
+                                  </button>
+                                  <button
+                                    className="btn btn-lined btn-gray-light btn-sm"
+                                    style={{
+                                      borderRadius: "var(--r-full)",
+                                      whiteSpace: "nowrap",
+                                    }}
+                                    onClick={() => {
+                                      setEditingId(null);
+                                      setEditingText("");
+                                    }}
+                                  >
+                                    취소
+                                  </button>
                                 </div>
                               ) : (
                                 <p className="detail-comment-text">{c.text}</p>
@@ -1318,7 +1382,7 @@ export default function CocktailDetail({
                       })}
                     </div>
                   )}
-                  <div className="detail-comment-input-wrap">
+                  <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-[var(--ui-line-light)]">
                     <CommentAvatar user={currentUser} size={32} />
                     <input
                       className="detail-comment-input"
@@ -1326,7 +1390,9 @@ export default function CocktailDetail({
                       placeholder="댓글을 입력하세요..."
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === "Enter") handleCommentSubmit(); }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleCommentSubmit();
+                      }}
                     />
                     <button
                       className="btn btn-filled btn-brand btn-md"
@@ -1341,13 +1407,22 @@ export default function CocktailDetail({
 
               {/* 로그인 필요 팝업 */}
               {showLoginPopup && (
-                <div className="common-popup-backdrop" onClick={() => setShowLoginPopup(false)}>
-                  <div className="common-popup-modal popup-xs" onClick={(e) => e.stopPropagation()}>
+                <div
+                  className="common-popup-backdrop"
+                  onClick={() => setShowLoginPopup(false)}
+                >
+                  <div
+                    className="common-popup-modal popup-xs"
+                    onClick={(e) => e.stopPropagation()}
+                  >
                     <div className="common-popup-header">
                       <h2 className="common-title-lg">로그인이 필요해요</h2>
                     </div>
                     <div className="common-popup-body" style={{ gap: 12 }}>
-                      <p className="common-body-md-light" style={{ color: "var(--font-sub)" }}>
+                      <p
+                        className="common-body-md-light"
+                        style={{ color: "var(--font-sub)" }}
+                      >
                         댓글을 작성하려면 로그인이 필요합니다.
                       </p>
                       <div style={{ display: "flex", gap: 8, marginTop: 4 }}>

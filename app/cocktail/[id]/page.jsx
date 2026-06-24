@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import CARDS from "../../data/cards.json";
-import CocktailDetail from "../../components/CocktailDetail";
+import CocktailDetail from "../../page/CocktailDetail";
 
 export default async function CocktailDetailPage({ params }) {
   const { id } = await params;

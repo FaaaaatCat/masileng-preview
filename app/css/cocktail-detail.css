@@ -1,5 +1,41 @@
 ﻿/* ─────────────────────────────────────────────
-   Back button (detail-left 첫 번째 자식)
+   Page layout
+───────────────────────────────────────────── */
+.detail-page {
+  background: var(--page-bg-gray);
+  min-height: 100vh;
+  padding-bottom: 80px;
+}
+
+.detail-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.detail-left {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 60px;
+}
+
+/* ─────────────────────────────────────────────
+   Back button
 ───────────────────────────────────────────── */
 .detail-back-btn {
   margin-bottom: 8px;
@@ -22,38 +58,8 @@
 }
 
 /* ─────────────────────────────────────────────
-   Detail page layout
+   Gallery
 ───────────────────────────────────────────── */
-.detail-page {
-  background: var(--page-bg-gray);
-  min-height: 100vh;
-  padding-bottom: 80px;
-}
-
-.detail-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Two-column grid */
-.detail-grid {
-  display: grid;
-  grid-template-columns: 420px 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-/* ─────────────────────────────────────────────
-   Left column — image gallery
-───────────────────────────────────────────── */
-.detail-left {
-  position: sticky;
-  top: 88px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
 .detail-gallery-main {
   width: 100%;
   height: 315px;
@@ -72,13 +78,6 @@
   display: block;
   position: relative;
   z-index: 1;
-}
-
-.detail-gallery-thumbs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  height: 101px;
 }
 
 .detail-thumb {
@@ -107,57 +106,9 @@
   display: block;
 }
 
-.detail-share-btn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  border-radius: var(--r-md);
-  border: 1px solid var(--ui-line-light);
-  background: #fff;
-  font-weight: 500;
-  color: var(--font-sub2);
-  cursor: pointer;
-  font-family: inherit;
-  transition:
-    border-color var(--time-fast),
-    color var(--time-fast);
-  margin-top: 8px;
-}
-.detail-share-btn:hover {
-  border-color: var(--coral-line);
-  color: var(--coral-strong);
-}
-
-/* ─────────────────────────────────────────────
-   Right column
-───────────────────────────────────────────── */
-.detail-right {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding-top: 60px;
-}
-
-
 /* ─────────────────────────────────────────────
    Info card
 ───────────────────────────────────────────── */
-.detail-info-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.detail-cocktail-icon {
-  width: 80px;
-  height: 80px;
-  overflow: hidden;
-  flex-shrink: 0;
-  position: relative;
-}
-
 .detail-cocktail-icon-bg {
   position: absolute;
   inset: 0;
@@ -179,11 +130,6 @@
   padding: 6px;
 }
 
-.detail-title-wrap {
-  flex: 1;
-  min-width: 0;
-}
-
 .detail-cocktail-name {
   font-size: 24px;
   font-weight: 700;
@@ -192,32 +138,8 @@
   line-height: 1.35;
 }
 
-.detail-cocktail-en {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--font-sub2);
-  margin-top: 2px;
-}
-
-
-/* Tags */
-.detail-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-/* Description */
-.detail-desc {
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--font-sub);
-  line-height: 1.7;
-  padding-bottom: 16px;
-}
-
 /* ─────────────────────────────────────────────
-   맛 프로필 — 도트 스타일 (146x96)
+   맛 프로필 도트
 ───────────────────────────────────────────── */
 .detail-flavor-box {
   background: var(--page-bg-gray);
@@ -230,25 +152,12 @@
   margin-bottom: 16px;
 }
 
-.detail-flavor-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 18px;
-}
-
 .detail-flavor-label {
   font-size: 11px;
   font-weight: 500;
   color: var(--font-sub2);
   white-space: nowrap;
   min-width: 40px;
-}
-
-.flavor-dots {
-  display: flex;
-  gap: 4px;
-  align-items: center;
 }
 
 .flavor-dot {
@@ -259,7 +168,6 @@
   background: var(--gray-5);
   flex-shrink: 0;
 }
-
 .flavor-dot.filled {
   background: var(--coral);
 }
@@ -267,25 +175,6 @@
 /* ─────────────────────────────────────────────
    Author
 ───────────────────────────────────────────── */
-.detail-author {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.detail-author-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-full);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.detail-author-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
 .detail-author-avatar-official {
   display: flex;
   width: 100%;
@@ -305,10 +194,6 @@
   color: var(--font-sub);
 }
 
-.detail-author-wrap {
-  position: relative;
-}
-
 .detail-author--clickable:hover .detail-author-name {
   color: var(--coral);
 }
@@ -320,7 +205,6 @@
   transition: transform var(--time-slow);
   transform: rotate(90deg);
 }
-
 .detail-author-chevron--up {
   transform: rotate(-90deg);
 }
@@ -365,125 +249,42 @@
   border-top: 1px solid var(--ui-line-subtle);
   gap: 8px;
 }
-
 .detail-author-dropdown-item:hover {
   background: var(--coral-soft);
   color: var(--coral);
 }
 
-.detail-author-dropdown-thumb {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--r-sm);
-  overflow: hidden;
-  flex-shrink: 0;
-}
-.detail-author-dropdown-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.detail-author-dropdown-name {
-  flex: 1;
-  min-width: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 /* ─────────────────────────────────────────────
-   Stats row
+   Stats
 ───────────────────────────────────────────── */
-.detail-stats-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.detail-stat-card {
-  background: #fff;
-  border: 1px solid var(--ui-line-light);
-  border-radius: var(--r-md);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 .detail-stat-icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
   color: var(--font-placeholder);
   display: flex;
   align-items: center;
 }
 .detail-stat-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
-
-.detail-stat-body {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.detail-stat-label {
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--font-sub2);
-  line-height: 1;
-}
-
 
 .detail-stat-badge {
   display: inline-block;
   padding: 1px 6px;
   border-radius: var(--r-xs);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.45;
 }
-.detail-stat-badge.easy {
-  background: #ecfdf5;
-  color: #009966;
-}
-.detail-stat-badge.medium {
-  background: #fef9c3;
-  color: #a16207;
-}
-.detail-stat-badge.hard {
-  background: #fff1f2;
-  color: #be123c;
-}
+.detail-stat-badge.easy   { background: #ecfdf5; color: #009966; }
+.detail-stat-badge.medium { background: #fef9c3; color: #a16207; }
+.detail-stat-badge.hard   { background: #fff1f2; color: #be123c; }
 
 /* ─────────────────────────────────────────────
-   Ingredients card
+   Ingredients
 ───────────────────────────────────────────── */
-
-
-.detail-label-info {
-  margin-left: auto;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--font-placeholder);
-}
-
-.detail-ing-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.detail-ing-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  text-decoration: none;
-}
-
 .detail-ing-item--link {
   border-radius: var(--r-md);
   padding: 4px 8px;
@@ -535,13 +336,6 @@
   min-width: 0;
 }
 
-.detail-ing-abv {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--font-placeholder);
-  white-space: nowrap;
-}
-
 .detail-ing-amount {
   padding: 6px 14px;
   border-radius: var(--r-full);
@@ -554,15 +348,9 @@
   flex-shrink: 0;
 }
 
-
 /* ─────────────────────────────────────────────
-   Steps card
+   Steps
 ───────────────────────────────────────────── */
-.detail-steps-list {
-  display: flex;
-  flex-direction: column;
-}
-
 .detail-step-item {
   display: flex;
   align-items: flex-start;
@@ -596,7 +384,7 @@
 }
 
 /* ─────────────────────────────────────────────
-   Comments card
+   Comments
 ───────────────────────────────────────────── */
 .detail-comment-empty {
   text-align: center;
@@ -604,23 +392,6 @@
   font-size: 14px;
   color: var(--font-sub2);
   font-weight: 500;
-}
-
-.detail-comment-input-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--ui-line-light);
-}
-
-.detail-comment-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--r-full);
-  background: var(--ui-bg-light);
-  flex-shrink: 0;
 }
 
 .detail-comment-input {
@@ -644,32 +415,6 @@
   color: var(--font-placeholder);
 }
 
-.detail-comment-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 4px;
-}
-
-.detail-comment-item {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-}
-
-.detail-comment-body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  flex: 1;
-}
-
-.detail-comment-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .detail-comment-author {
   font-size: 13px;
   font-weight: 700;
@@ -687,12 +432,6 @@
   line-height: 1.5;
 }
 
-.detail-comment-actions {
-  display: flex;
-  gap: 6px;
-  margin-left: auto;
-}
-
 .detail-comment-action-btn {
   font-size: 12px;
   color: var(--font-sub2);
@@ -705,10 +444,3 @@
 }
 .detail-comment-action-btn:hover { color: var(--font-title); }
 .detail-comment-action-delete:hover { color: #dc2626; }
-
-.detail-comment-edit-wrap {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-

@@ -1,12 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
 import INGREDIENTS from "../data/ingredients.json";
-import { SearchIcon } from "./icons";
+import { SearchIcon } from "../components/icons";
+import IngredientCard from "../components/IngredientCard";
 import "../css/ingredient-detail.css";
 
-const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
 
 const CATS = [
   "전체",
@@ -213,64 +212,24 @@ export default function IngredientsHome() {
         {/* 재료 그리드 */}
         <div className="cocktail-grid">
           {filtered.map((ing) => (
-            <Link
+            <IngredientCard
               key={ing.id}
-              href={`/ingredient/${ing.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <article
-                className={`common-card-item cursor-pointer flex flex-col${myIngIds.has(ing.id) ? " common-card-item--mine" : ""}${burstIds.has(ing.id) ? " common-card-item--burst" : ""}`}
-              >
-                <div className="common-card-item-img-wrap common-card-item-img-wrap--product">
-                  {burstIds.has(ing.id) && <span className="common-card-item-ripple" />}
-                  <img
-                    src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
-                    alt={ing.n}
-                    className="common-card-item-img--product"
-                    onError={(e) => {
-                      e.target.style.opacity = "0";
-                    }}
-                  />
-                  <button
-                    className={`common-card-item-basket-btn${myIngIds.has(ing.id) ? " common-card-item-basket-btn--active" : ""}`}
-                    onClick={(e) => toggleMyIng(e, ing.id)}
-                    title={
-                      myIngIds.has(ing.id)
-                        ? "갖고있는 재료입니다!"
-                        : "내 재료함에 담기"
-                    }
-                  >
-                    {myIngIds.has(ing.id) ? (
-                      <img
-                        src="/icon_my.svg"
-                        alt="내 재료"
-                        width="28"
-                        height="28"
-                      />
-                    ) : (
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        width="20"
-                        height="20"
-                      >
-                        <rect x="3" y="3" width="18" height="18" rx="5" />
-                        <line x1="12" y1="8" x2="12" y2="16" />
-                        <line x1="8" y1="12" x2="16" y2="12" />
-                      </svg>
-                    )}
-                  </button>
-                </div>
-                <div className="px-0.5">
-                  <h4 className="common-title-lg">{ing.n}</h4>
-                  <p className="common-card-item-desc">{ing.desc}</p>
-                </div>
-              </article>
-            </Link>
+              ing={ing}
+              isMine={myIngIds.has(ing.id)}
+              isBurst={burstIds.has(ing.id)}
+              onAction={toggleMyIng}
+              actionIcon={myIngIds.has(ing.id) ? (
+                <img src="/icon_my.svg" alt="내 재료" width="28" height="28" />
+              ) : (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <line x1="12" y1="8" x2="12" y2="16" />
+                  <line x1="8" y1="12" x2="16" y2="12" />
+                </svg>
+              )}
+              actionTitle={myIngIds.has(ing.id) ? "갖고있는 재료입니다!" : "내 재료함에 담기"}
+              showDesc
+            />
           ))}
         </div>
       </div>

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import CARDS from "../../data/challenge_cards.json";
 import POOL_RAW from "../../data/challenge_pool.json";
 import { IMG_BASE } from "../../data/constants.json";
-import CocktailDetail from "../../components/CocktailDetail";
+import CocktailDetail from "../../page/CocktailDetail";
 
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 

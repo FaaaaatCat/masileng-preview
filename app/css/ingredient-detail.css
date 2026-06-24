@@ -315,12 +315,6 @@
   margin: 0 0 16px;
 }
 
-/* 관련 상품 */
-.ing-product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
-}
 
 .ing-product-item {
   display: flex;

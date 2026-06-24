@@ -162,6 +162,15 @@ $btn-sizes: (
       transform: translateY(-1px);
     }
   }
+  &.btn-red {
+    background: #dc2626;
+    border: 1.5px solid #dc2626;
+    color: #fff;
+    &:hover {
+      background: #b91c1c;
+      border-color: #b91c1c;
+    }
+  }
 }
 
 // ── subfilled ──
@@ -237,15 +246,19 @@ $btn-sizes: (
   }
 }
 
-.btn-filled {
-  &.btn-red {
-    background: #dc2626;
-    border: 1.5px solid #dc2626;
-    color: #fff;
-    &:hover {
-      background: #b91c1c;
-      border-color: #b91c1c;
-    }
+// ── transparent ──
+.btn-transparent {
+  color: var(--font-placeholder);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  transition: color var(--time-fast);
+  &:hover{
+    color: var(--coral-strong);
   }
 }
 
@@ -570,6 +583,40 @@ $btn-sizes: (
     background: var(--coral-line);
   }
 }
+
+
+// ─────────────────────────────────────────────
+//  카테고리 탭 (재료 페이지)
+// ─────────────────────────────────────────────
+
+.ing-cat-tab {
+  padding: 7px 18px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--ui-line-light);
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--font-sub);
+  cursor: pointer;
+  font-family: inherit;
+  transition:
+    border-color var(--time-fast),
+    background var(--time-fast),
+    color var(--time-fast);
+  white-space: nowrap;
+}
+
+.ing-cat-tab.active {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+
+.ing-cat-tab:not(.active):hover {
+  border-color: var(--coral-line);
+  color: var(--coral-strong);
+}
+
 
 // ─────────────────────────────────────────────
 //  IBA 토글 (도움말 툴팁 포함)

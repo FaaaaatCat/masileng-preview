@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import INGREDIENTS from "../../data/ingredients.json";
-import IngredientDetail from "../../components/IngredientDetail";
+import IngredientDetail from "../../page/IngredientDetail";
 
 export default async function IngredientPage({ params }) {
   const { id } = await params;

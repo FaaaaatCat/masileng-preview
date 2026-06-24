@@ -11,18 +11,8 @@ export const POOL = POOL_RAW.map((d) => ({
 export default function CocktailCard({ card, cardId, showAuthor = true }) {
   const d = POOL[card.i];
   const href = cardId !== undefined ? `/cocktail/${cardId}` : undefined;
-  return (
-    <article
-      className="common-card-item"
-      style={{ cursor: href ? "pointer" : "default", position: "relative" }}
-    >
-      {href && (
-        <Link
-          href={href}
-          style={{ position: "absolute", inset: 0, zIndex: 4 }}
-          aria-label={card.t}
-        />
-      )}
+  const inner = (
+    <>
       <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
         <div className="common-card-item-bg" style={{ background: d.g }} />
         <img
@@ -56,10 +46,19 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
         </span>
       </div>
       {card.iba && (
-        <div className="mt-1.5 px-0.5 flex gap-1">
-          <span className="tag-iba">IBA</span>
+        <div className="">
+          <span className="common-list-item-tag tag-iba">IBA</span>
         </div>
       )}
-    </article>
+    </>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="common-card-item" style={{ textDecoration: "none" }}>
+        {inner}
+      </Link>
+    );
+  }
+  return <article className="common-card-item" style={{ cursor: "default" }}>{inner}</article>;
 }

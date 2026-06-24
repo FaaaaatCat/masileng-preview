@@ -9,7 +9,7 @@ import CARDS_RAW from "../data/cards.json";
 import POOL_RAW from "../data/pool.json";
 import { IMG_BASE } from "../data/constants.json";
 import { getCardTags } from "../data/detail-helpers";
-import SiteHeader from "./SiteHeader";
+import SiteHeader from "../components/SiteHeader";
 
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
@@ -331,7 +331,7 @@ export default function IngredientDetail({ ing }) {
                 <p className="ing-section-sub">
                   (파트너스 링크를 통해 구매 시 마실랭 운영에 도움이 됩니다.)
                 </p>
-                <div className="ing-product-grid">
+                <div className="cocktail-grid">
                   {products.map((p, i) => (
                     <div key={i} className="ing-product-item">
                       <div className="ing-product-img-wrap">

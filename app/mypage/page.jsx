@@ -9,6 +9,7 @@ import POOL_RAW from "../data/challenge_pool.json";
 import INGREDIENTS from "../data/ingredients.json";
 import { IMG_BASE } from "../data/constants.json";
 import SiteHeader from "../components/SiteHeader";
+import IngredientCard from "../components/IngredientCard";
 import { getCardTags } from "../data/detail-helpers";
 import "../css/mypage.css";
 
@@ -447,46 +448,24 @@ export default function MyPage() {
                         ))}
                       </div>
                     ) : (
-                      <div className="mypage-shelf-grid">
+                      <div className="cocktail-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
                         {fridgeItems.map((ing) => (
-                          <Link
+                          <IngredientCard
                             key={ing.id}
-                            href={`/ingredient/${ing.id}`}
-                            className={`common-card-item flex flex-col${removingIds.has(ing.id) ? " mypage-shelf-removing" : ""}`}
-                            style={{ textDecoration: "none" }}
-                          >
-                            <div className="common-card-item-img-wrap common-card-item-img-wrap--product mypage-shelf-img-wrap">
-                              <img
-                                src={`https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ing.en)}-Medium.png`}
-                                alt={ing.n}
-                                className="common-card-item-img--product"
-                                onError={(e) => { e.target.style.opacity = "0"; }}
-                              />
-                              <button
-                                className="common-card-item-basket-btn mypage-shelf-del-btn"
-                                onClick={(e) => handleRemoveFridge(e, ing.id)}
-                                title="냉장고에서 삭제"
-                              >
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2.2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  width="16"
-                                  height="16"
-                                >
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                              </button>
-                            </div>
-                            <div className="mypage-shelf-body">
-                              <h4 className="common-title-md" style={{ textAlign: "center" }}>
-                                {ing.n}
-                              </h4>
-                            </div>
-                          </Link>
+                            ing={ing}
+                            isRemoving={removingIds.has(ing.id)}
+                            onAction={handleRemoveFridge}
+                            actionIcon={
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                              </svg>
+                            }
+                            actionTitle="냉장고에서 삭제"
+                            imgHeight="200px"
+                            titleSize="md"
+                            titleCenter
+                            actionBtnClassName="mypage-shelf-del-btn"
+                          />
                         ))}
                       </div>
                     )}

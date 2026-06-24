@@ -2,19 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import "../css/MasilengHome.css";
 
 import POOL_RAW from "../data/pool.json";
 import CARDS_RAW from "../data/cards.json";
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
 import { IMG_BASE, SORT_TABS } from "../data/constants.json";
 
-import { ChevronRightIcon } from "./icons";
-import CocktailCard, { POOL } from "./CocktailCard";
-import FilterBar from "./FilterBar";
-import ChallengeHome from "./ChallengeHome";
-import IngredientsHome from "./IngredientsHome";
-import SiteHeader from "./SiteHeader";
+import { ChevronRightIcon } from "../components/icons";
+import CocktailCard, { POOL } from "../components/CocktailCard";
+import FilterBar from "../components/FilterBar";
+import ChallengeHome from "../page/ChallengeHome";
+import IngredientsHome from "../page/IngredientsHome";
+import SiteHeader from "../components/SiteHeader";
 
 // 폰 목업에 보여줄 pool 이미지 인덱스 (2열 3행 = 6개)
 const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
