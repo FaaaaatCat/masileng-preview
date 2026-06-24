@@ -13,7 +13,7 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
   const href = cardId !== undefined ? `/cocktail/${cardId}` : undefined;
   return (
     <article
-      className="card"
+      className="common-card-item"
       style={{ cursor: href ? "pointer" : "default", position: "relative" }}
     >
       {href && (
@@ -23,40 +23,40 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
           aria-label={card.t}
         />
       )}
-      <div className="card-img-wrap">
-        <div className="card-bg" style={{ background: d.g }} />
+      <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
+        <div className="common-card-item-bg" style={{ background: d.g }} />
         <img
           src={d.url}
           alt={d.n}
-          className="card-img"
+          className="common-card-item-img"
           onError={(e) => {
             e.target.style.display = "none";
           }}
         />
-        <div className="card-overlay" />
+        <div className="common-card-item-overlay" />
         {showAuthor && (
-          <div className="card-author">
-            <div className="card-author-avatar" />
-            <span className="card-author-name">@{card.u}</span>
+          <div className="common-card-item-author">
+            <div className="common-card-item-author-avatar" />
+            <span className="common-card-item-author-name">@{card.u}</span>
           </div>
         )}
-        <div className="card-desc-layer">
-          <p className="card-desc">{card.desc}</p>
+        <div className="common-card-item-desc-layer">
+          <p className="common-card-item-desc">{card.desc}</p>
         </div>
       </div>
       <h4 className="common-title-lg">{card.t}</h4>
-      <div className="card-meta">
-        <span className="card-meta-item">
+      <div className="common-card-item-meta">
+        <span className="common-card-item-meta-item">
           <HeartIcon />
           {card.likes}
         </span>
-        <span className="card-meta-item">
+        <span className="common-card-item-meta-item">
           <ChatIcon />
           {card.cmt}
         </span>
       </div>
       {card.iba && (
-        <div className="card-tags">
+        <div className="mt-1.5 px-0.5 flex gap-1">
           <span className="tag-iba">IBA</span>
         </div>
       )}

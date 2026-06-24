@@ -452,17 +452,18 @@ export default function MyPage() {
                           <Link
                             key={ing.id}
                             href={`/ingredient/${ing.id}`}
-                            className={`mypage-shelf-card${removingIds.has(ing.id) ? " mypage-shelf-removing" : ""}`}
+                            className={`common-card-item flex flex-col${removingIds.has(ing.id) ? " mypage-shelf-removing" : ""}`}
+                            style={{ textDecoration: "none" }}
                           >
-                            <div className="mypage-shelf-img-wrap">
+                            <div className="common-card-item-img-wrap common-card-item-img-wrap--product mypage-shelf-img-wrap">
                               <img
                                 src={`https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(ing.en)}-Medium.png`}
                                 alt={ing.n}
-                                className="mypage-shelf-img"
+                                className="common-card-item-img--product"
                                 onError={(e) => { e.target.style.opacity = "0"; }}
                               />
                               <button
-                                className="mypage-shelf-del-btn"
+                                className="common-card-item-basket-btn mypage-shelf-del-btn"
                                 onClick={(e) => handleRemoveFridge(e, ing.id)}
                                 title="냉장고에서 삭제"
                               >

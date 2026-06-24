@@ -24,19 +24,19 @@ const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
 // ─────────────────────────────────────────────
 function AppHero() {
   return (
-    <div className="hero hero-app">
-      <div className="hero-app-inner">
+    <div className="cocktail-main-banner">
+      <div className="cocktail-main-banner-inner">
         {/* 왼쪽: 텍스트 */}
-        <div className="hero-app-left">
-          <div className="hero-app-icon">
+        <div className="cocktail-main-banner-left">
+          <div className="cocktail-main-banner-icon">
             <span>마</span>
           </div>
-          <h1 className="hero-app-title">
+          <h1 className="cocktail-main-banner-title">
             오늘의 칵테일,
             <br />
-            <span className="hero-accent">마실랭</span>
+            <span className="cocktail-main-banner-accent">마실랭</span>
           </h1>
-          <p className="hero-app-desc">
+          <p className="cocktail-main-banner-desc">
             주류 경험의 새로운 기준이 되는
             <br />
             칵테일 라이프 플랫폼 마실랭을 시작해보세요
@@ -44,22 +44,22 @@ function AppHero() {
         </div>
 
         {/* 가운데: 폰 목업 */}
-        <div className="hero-phone-wrap">
-          <div className="hero-phone">
-            <div className="phone-notch" />
-            <div className="phone-screen">
-              <div className="phone-screen-header">
-                <span className="phone-brand">
+        <div className="cocktail-main-banner-phone-wrap">
+          <div className="cocktail-main-banner-phone">
+            <div className="cocktail-main-banner-phone-notch" />
+            <div className="cocktail-main-banner-phone-screen">
+              <div className="cocktail-main-banner-phone-header">
+                <span className="cocktail-main-banner-phone-brand">
                   마실랭<span style={{ color: "var(--coral)" }}>●</span>
                 </span>
               </div>
-              <div className="phone-card-grid">
+              <div className="cocktail-main-banner-phone-grid">
                 {PHONE_ITEMS.map((idx) => {
                   const d = POOL[idx];
                   return (
                     <div
                       key={idx}
-                      className="phone-card"
+                      className="cocktail-main-banner-phone-card"
                       style={{ background: d.g }}
                     >
                       <img
@@ -69,7 +69,7 @@ function AppHero() {
                           e.target.style.display = "none";
                         }}
                       />
-                      <span className="phone-card-name">{d.n}</span>
+                      <span className="cocktail-main-banner-phone-card-name">{d.n}</span>
                     </div>
                   );
                 })}
@@ -79,11 +79,11 @@ function AppHero() {
         </div>
 
         {/* 오른쪽: QR */}
-        <div className="hero-qr-wrap">
-          <div className="hero-qr-box">
+        <div className="cocktail-main-banner-qr-wrap">
+          <div className="cocktail-main-banner-qr-box">
             <svg
               viewBox="0 0 100 100"
-              className="hero-qr-svg"
+              className="cocktail-main-banner-qr-svg"
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* 좌상단 파인더 */}
@@ -221,7 +221,7 @@ function AppHero() {
               ))}
             </svg>
           </div>
-          <p className="hero-qr-label">앱 다운로드 QR</p>
+          <p className="cocktail-main-banner-qr-label">앱 다운로드 QR</p>
         </div>
       </div>
     </div>
@@ -260,7 +260,7 @@ function CocktailPage({ filterProps }) {
   return (
     <div className="page-wrap">
       <FilterBar {...filterProps} showIba={true} />
-      <section className="section-list">
+      <section className="pb-12">
         <div className="section-header">
           <div className="section-title-group">
             <span className="section-title-bar" />
@@ -370,7 +370,7 @@ export default function MasilengHome() {
   const isIngredients = activeNav === "재료";
 
   return (
-    <div className="main-home">
+    <div className="min-h-screen" style={{ background: "var(--page-bg-ivory)" }}>
       <SiteHeader activeNav={activeNav} onNavClick={setActiveNav} />
 
       {/* HERO — 칵테일 페이지에만 */}

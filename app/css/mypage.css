@@ -212,70 +212,19 @@
 }
 
 /* ── 선반 카드 */
-.mypage-shelf-card {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .mypage-shelf-img-wrap {
-  position: relative;
-  width: 100%;
   height: 200px;
-  margin-bottom: 10px;
-  border-radius: var(--r-md);
-  background: var(--ui-bg-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  transition: transform var(--time-slow) ease, box-shadow var(--time-slow) ease;
-}
-.mypage-shelf-card:hover .mypage-shelf-img-wrap {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-}
-
-.mypage-shelf-img {
-  max-width: 75%;
-  max-height: 75%;
-  object-fit: contain;
-  display: block;
-  transition: transform var(--time-slow) ease;
-}
-.mypage-shelf-card:hover .mypage-shelf-img {
-  transform: scale(1.05);
 }
 
 .mypage-shelf-body {
   padding: 0 2px;
 }
 
-/* ── 삭제 버튼 */
+/* ── 삭제 버튼 (크기·색상만 오버라이드) */
 .mypage-shelf-del-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 4;
   width: 36px;
   height: 36px;
-  border-radius: var(--r-sm);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: rgba(180, 30, 30, 0.22);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
-}
-.mypage-shelf-card:hover .mypage-shelf-del-btn {
-  opacity: 1;
-  transform: scale(1);
 }
 .mypage-shelf-del-btn:hover {
   background: rgba(180, 30, 30, 0.55);

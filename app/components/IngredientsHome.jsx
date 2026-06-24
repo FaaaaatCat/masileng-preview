@@ -166,7 +166,7 @@ export default function IngredientsHome() {
   });
 
   return (
-    <div className="ing-page">
+    <div className="pb-20">
       {showToast && (
         <div
           className={`common-toast${toastLeaving ? " common-toast--out" : ""}`}
@@ -179,9 +179,10 @@ export default function IngredientsHome() {
       {/* 슬라이딩 배너 */}
       <SlidingBanner />
 
-      {/* 검색 + 필터 */}
-      <div className="ing-filter-wrap">
-        <div className="filter-inner">
+      <div className="page-wrap">
+        {/* 검색 + 필터 */}
+        <div className="filter-bar">
+          {/* 검색 탭 */}
           <div className="search-row">
             <div className="search-bar">
               <SearchIcon />
@@ -195,9 +196,8 @@ export default function IngredientsHome() {
               <button className="btn btn-filled btn-brand btn-md">검색</button>
             </div>
           </div>
-
           {/* 카테고리 탭 */}
-          <div className="ing-cat-tabs">
+          <div className="flex gap-2 py-3.5">
             {CATS.map((c) => (
               <button
                 key={c}
@@ -209,11 +209,9 @@ export default function IngredientsHome() {
             ))}
           </div>
         </div>
-      </div>
 
-      <div className="page-wrap">
         {/* 재료 그리드 */}
-        <div className="cocktail-grid ing-grid">
+        <div className="cocktail-grid">
           {filtered.map((ing) => (
             <Link
               key={ing.id}
@@ -221,20 +219,20 @@ export default function IngredientsHome() {
               style={{ textDecoration: "none" }}
             >
               <article
-                className={`ing-card${myIngIds.has(ing.id) ? " ing-card--mine" : ""}${burstIds.has(ing.id) ? " ing-card--burst" : ""}`}
+                className={`common-card-item cursor-pointer flex flex-col${myIngIds.has(ing.id) ? " common-card-item--mine" : ""}${burstIds.has(ing.id) ? " common-card-item--burst" : ""}`}
               >
-                <div className="ing-card-img-wrap">
-                  {burstIds.has(ing.id) && <span className="ing-card-ripple" />}
+                <div className="common-card-item-img-wrap common-card-item-img-wrap--product">
+                  {burstIds.has(ing.id) && <span className="common-card-item-ripple" />}
                   <img
                     src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
                     alt={ing.n}
-                    className="ing-card-img"
+                    className="common-card-item-img--product"
                     onError={(e) => {
                       e.target.style.opacity = "0";
                     }}
                   />
                   <button
-                    className={`ing-card-basket-btn${myIngIds.has(ing.id) ? " ing-card-basket-btn--active" : ""}`}
+                    className={`common-card-item-basket-btn${myIngIds.has(ing.id) ? " common-card-item-basket-btn--active" : ""}`}
                     onClick={(e) => toggleMyIng(e, ing.id)}
                     title={
                       myIngIds.has(ing.id)
@@ -267,9 +265,9 @@ export default function IngredientsHome() {
                     )}
                   </button>
                 </div>
-                <div className="ing-card-body">
+                <div className="px-0.5">
                   <h4 className="common-title-lg">{ing.n}</h4>
-                  <p className="ing-card-desc">{ing.desc}</p>
+                  <p className="common-card-item-desc">{ing.desc}</p>
                 </div>
               </article>
             </Link>

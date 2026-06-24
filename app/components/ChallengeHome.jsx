@@ -97,15 +97,15 @@ function ChallengeHero() {
   }, [compute]);
 
   return (
-    <div className="hero">
-      <div className="hero-bg" />
-      <div className="hero-scatter-layer">
-        <div className="scatter-layer">
+    <div className="challenge-main-banner">
+      <div className="challenge-main-banner-bg" />
+      <div className="challenge-main-banner-scatter-layer">
+        <div className="challenge-main-banner-scatter">
           {items.map(({ left, y, w, h, d, idx }) => (
             <div
               key={idx}
               title={d.n}
-              className="scatter-item thumb-float"
+              className="challenge-main-banner-scatter-item challenge-main-banner-thumb"
               style={{
                 left,
                 top: y,
@@ -118,7 +118,7 @@ function ChallengeHero() {
               <img
                 src={d.url}
                 alt={d.n}
-                className="scatter-img"
+                className="challenge-main-banner-scatter-img"
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}
@@ -127,22 +127,22 @@ function ChallengeHero() {
           ))}
         </div>
       </div>
-      <div className="hero-content">
-        <h1 className="hero-title">
+      <div className="challenge-main-banner-content">
+        <h1 className="challenge-main-banner-title">
           나만의 창작 레시피를
           <br />
-          <span className="hero-accent">지금 등록해보세요</span>
+          <span className="challenge-main-banner-accent">지금 등록해보세요</span>
         </h1>
-        <p className="hero-subtitle">
+        <p className="challenge-main-banner-subtitle">
           직접 만든 레시피를 공유하고 다른 바텐더들에게
           <br />
           나만의 칵테일을 선보여보세요.
         </p>
-        <div className="hero-cta">
-          <button className="btn-cta btn-xl btn-cta-primary">
+        <div className="challenge-main-banner-cta">
+          <button className="challenge-main-banner-btn challenge-main-banner-btn-primary btn-xl">
             내 레시피 등록하기
           </button>
-          <button className="btn-cta btn-xl btn-cta-secondary">레시피 둘러보기</button>
+          <button className="challenge-main-banner-btn challenge-main-banner-btn-secondary btn-xl">레시피 둘러보기</button>
         </div>
       </div>
     </div>
@@ -168,22 +168,22 @@ function ChallengeCard({ card, currentUser }) {
   }, [dropOpen]);
 
   return (
-    <div className="card-wrap" ref={wrapRef}>
+    <div className="relative flex flex-col" ref={wrapRef}>
       <Link href={`/challenge/${card._idx}`} style={{ textDecoration: "none" }}>
-        <article className="card">
-          <div className="card-img-wrap">
-            <div className="card-bg" style={{ background: d.g }} />
+        <article className="common-card-item cursor-pointer">
+          <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
+            <div className="common-card-item-bg" style={{ background: d.g }} />
             <img
               src={d.url}
               alt={d.n}
-              className="card-img"
+              className="common-card-item-img"
               onError={(e) => {
                 e.target.style.display = "none";
               }}
             />
-            <div className="card-overlay" />
+            <div className="common-card-item-overlay" />
             <button
-              className={`card-author${dropOpen ? " card-author--open" : ""}`}
+              className={`common-card-item-author${dropOpen ? " common-card-item-author--open" : ""}`}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -196,19 +196,19 @@ function ChallengeCard({ card, currentUser }) {
                 overrideBg={isMe ? (currentUser.profileBg ?? AVATAR_COLORS[0]) : undefined}
                 overrideImg={isMe ? (currentUser.profileImg ?? AVATAR_IMGS[0]) : undefined}
               />
-              <span className="card-author-name">{card.u}</span>
+              <span className="common-card-item-author-name">{card.u}</span>
             </button>
-            <div className="card-desc-layer">
-              <p className="card-desc">{card.desc}</p>
+            <div className="common-card-item-desc-layer">
+              <p className="common-card-item-desc">{card.desc}</p>
             </div>
           </div>
           <h4 className="common-title-lg">{card.t}</h4>
-          <div className="card-meta">
-            <span className="card-meta-item">
+          <div className="common-card-item-meta">
+            <span className="common-card-item-meta-item">
               <HeartIcon />
               {card.likes}
             </span>
-            <span className="card-meta-item">
+            <span className="common-card-item-meta-item">
               <ChatIcon />
               {card.cmt}
             </span>
@@ -217,16 +217,16 @@ function ChallengeCard({ card, currentUser }) {
       </Link>
 
       {dropOpen && (
-        <div className="card-author-dropdown">
-          <p className="card-author-dropdown-header">@{card.u}의 레시피</p>
+        <div className="common-card-item-author-dropdown">
+          <p className="common-card-item-author-dropdown-header">@{card.u}의 레시피</p>
           {userCards.map((uc) => (
             <Link
               key={uc._idx}
               href={`/challenge/${uc._idx}`}
-              className="card-author-dropdown-item"
+              className="common-card-item-author-dropdown-item"
               onClick={() => setDropOpen(false)}
             >
-              <span className="card-author-dropdown-name">{uc.t}</span>
+              <span className="common-card-item-author-dropdown-name">{uc.t}</span>
               <ChevronRightIcon />
             </Link>
           ))}
@@ -301,7 +301,7 @@ export default function ChallengeHome() {
       <div className="page-wrap">
         <FilterBar {...filterProps} />
 
-        <div className="new-cocktail-section">
+        <section className="pb-12">
           <div className="section-header">
             <div className="section-title-group">
               <span className="section-title-bar" />
@@ -313,12 +313,16 @@ export default function ChallengeHome() {
           </div>
           <div className="new-cocktail-row">
             {NEW_COCKTAILS.map((card) => (
-              <ChallengeCard key={card._idx} card={card} currentUser={currentUser} />
+              <ChallengeCard
+                key={card._idx}
+                card={card}
+                currentUser={currentUser}
+              />
             ))}
           </div>
-        </div>
+        </section>
 
-        <section className="section-list">
+        <section className="pb-12">
           <div className="section-header">
             <div className="section-title-group">
               <span className="section-title-bar" />
@@ -334,7 +338,7 @@ export default function ChallengeHome() {
                 <button
                   key={tab}
                   onClick={() => setSortTab(tab)}
-                  className={`btn${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}
+                  className={`btn btn-sm ${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}
                 >
                   {tab}
                 </button>
@@ -345,7 +349,11 @@ export default function ChallengeHome() {
           <div className="cocktail-grid">
             {filtered.length > 0 ? (
               filtered.map((card) => (
-                <ChallengeCard key={card._idx} card={card} currentUser={currentUser} />
+                <ChallengeCard
+                  key={card._idx}
+                  card={card}
+                  currentUser={currentUser}
+                />
               ))
             ) : (
               <p
@@ -362,7 +370,7 @@ export default function ChallengeHome() {
 
           {filtered.length > 0 && (
             <div className="load-more-wrap">
-              <button className="btn btn-lined btn-gray-light">
+              <button className="btn btn-lined btn-gray-light btn-xl">
                 레시피 더 보기
               </button>
             </div>

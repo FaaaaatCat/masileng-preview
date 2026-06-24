@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./css/globals.css";
 import "./css/common.scss";
 import "./css/layout.css";
+import "./css/banner.scss";
 import "./css/form.scss";
 import "./css/cocktail-detail.css";
 import "./css/login.css";
