@@ -128,9 +128,11 @@ const ABV_LABEL = {
 
 // 난이도
 const DIFFICULTY = {
-  none: "쉬움",
-  low: "보통",
-  high: "어려움",
+  none: "아주 간단",
+  low: "쉬움",
+  medium: "보통",
+  high: "중급",
+  expert: "고급",
 };
 
 // 태그 생성

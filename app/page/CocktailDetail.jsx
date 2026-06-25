@@ -288,15 +288,31 @@ const StarIcon = () => (
   </svg>
 );
 const EditIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="16"
+    height="16"
+  >
     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
   </svg>
 );
 const TrashIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-    strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    width="16"
+    height="16"
+  >
     <polyline points="3 6 5 6 21 6" />
     <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
     <path d="M10 11v6M14 11v6" />
@@ -322,12 +338,7 @@ const SwitchIcon = () => (
 );
 
 const YoutubeIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    width="16"
-    height="16"
-  >
+  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
     <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.8 15.5V8.5l6.4 3.5-6.4 3.5z" />
   </svg>
 );
@@ -381,15 +392,28 @@ function CommentAvatar({ user, size = 32 }) {
   const bg = user?.profileBg || FIRST_BG;
   const img = user?.profileImg || FIRST_IMG;
   return (
-    <div style={{
-      width: size, height: size, borderRadius: "50%",
-      background: bg, overflow: "hidden", flexShrink: 0,
-      display: "flex", alignItems: "center", justifyContent: "center",
-    }}>
+    <div
+      style={{
+        width: size,
+        height: size,
+        borderRadius: "50%",
+        background: bg,
+        overflow: "hidden",
+        flexShrink: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <img
         src={`/character_illust/profile_img/${img}.png`}
         alt={user?.profileName || user?.name || "guest"}
-        style={{ width: "100%", height: "100%", objectFit: "contain", padding: 3 }}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "contain",
+          padding: 3,
+        }}
       />
     </div>
   );
@@ -447,32 +471,46 @@ export default function CocktailDetail({
 
   const handleCommentEditSave = (id) => {
     if (!editingText.trim()) return;
-    setComments((prev) => prev.map((c) => c.id === id ? { ...c, text: editingText.trim() } : c));
+    setComments((prev) =>
+      prev.map((c) => (c.id === id ? { ...c, text: editingText.trim() } : c)),
+    );
     setEditingId(null);
     setEditingText("");
   };
 
   const handleCommentSubmit = () => {
-    if (!currentUser) { setShowLoginPopup(true); return; }
+    if (!currentUser) {
+      setShowLoginPopup(true);
+      return;
+    }
     if (!commentText.trim()) return;
     const newComment = {
       id: Date.now(),
       user: currentUser,
       text: commentText.trim(),
-      time: new Date().toLocaleString("ko-KR", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }),
+      time: new Date().toLocaleString("ko-KR", {
+        month: "numeric",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
     setComments((prev) => [...prev, newComment]);
     setCommentText("");
   };
 
-  const isMyRecipe = !isOfficial && currentUser && (currentUser.profileName || currentUser.name) === card.u;
+  const isMyRecipe =
+    !isOfficial &&
+    currentUser &&
+    (currentUser.profileName || currentUser.name) === card.u;
 
   // ── 편집 헬퍼
   const getSuggestions = (query) => {
     if (!query.trim()) return [];
     const q = query.toLowerCase();
     return INGREDIENTS_DATA.filter(
-      (item) => item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q)
+      (item) =>
+        item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q),
     ).slice(0, 8);
   };
 
@@ -490,17 +528,19 @@ export default function CocktailDetail({
     setEditIngredients(
       (overrideData?.ingredients ?? src.ingredients).map((ing, i) => {
         const raw = ing.amount ?? "";
-        if (raw === "적당량") return { id: i + 1, name: ing.name, amount: "", unit: "적당량" };
+        if (raw === "적당량")
+          return { id: i + 1, name: ing.name, amount: "", unit: "적당량" };
         const unit = raw.replace(/^[\d.]+\s*/, "") || "ml";
         const amount = raw.replace(/[^0-9.]/g, "");
         return { id: i + 1, name: ing.name, amount, unit };
-      })
+      }),
     );
     nextIngId.current = src.ingredients.length + 1;
     setEditSteps(
       (overrideData?.steps ?? src.steps).map((s, i) => ({
-        id: i + 1, text: typeof s === "string" ? s : s.text,
-      }))
+        id: i + 1,
+        text: typeof s === "string" ? s : s.text,
+      })),
     );
     nextStepId.current = src.steps.length + 1;
     setEditPhotoPreview(overrideData?.photoPreview ?? null);
@@ -525,8 +565,10 @@ export default function CocktailDetail({
       difficulty: editDifficulty,
       photoPreview: editPhotoPreview,
       ingredients: editIngredients.map((ing) => ({
-        emoji: "🍹", name: ing.name,
-        type: "", abvStr: null,
+        emoji: "🍹",
+        name: ing.name,
+        type: "",
+        abvStr: null,
         amount: ing.unit === "적당량" ? "적당량" : `${ing.amount}${ing.unit}`,
       })),
       steps: editSteps.map((s) => s.text),
@@ -535,26 +577,34 @@ export default function CocktailDetail({
   };
 
   const addEditIng = () => {
-    setEditIngredients((prev) => [...prev, { id: nextIngId.current++, name: "", amount: "", unit: "ml" }]);
+    setEditIngredients((prev) => [
+      ...prev,
+      { id: nextIngId.current++, name: "", amount: "", unit: "ml" },
+    ]);
   };
   const removeEditIng = (id) => {
     if (editIngredients.length <= 2) return;
     setEditIngredients((prev) => prev.filter((i) => i.id !== id));
   };
   const updateEditIng = (id, field, value) =>
-    setEditIngredients((prev) => prev.map((i) => {
-      if (i.id !== id) return i;
-      const u = { ...i, [field]: value };
-      if (field === "unit" && value === "적당량") u.amount = "";
-      return u;
-    }));
+    setEditIngredients((prev) =>
+      prev.map((i) => {
+        if (i.id !== id) return i;
+        const u = { ...i, [field]: value };
+        if (field === "unit" && value === "적당량") u.amount = "";
+        return u;
+      }),
+    );
 
   const addEditStep = () => {
     setEditSteps((prev) => [...prev, { id: nextStepId.current++, text: "" }]);
   };
-  const removeEditStep = (id) => setEditSteps((prev) => prev.filter((s) => s.id !== id));
+  const removeEditStep = (id) =>
+    setEditSteps((prev) => prev.filter((s) => s.id !== id));
   const updateEditStep = (id, value) =>
-    setEditSteps((prev) => prev.map((s) => s.id === id ? { ...s, text: value } : s));
+    setEditSteps((prev) =>
+      prev.map((s) => (s.id === id ? { ...s, text: value } : s)),
+    );
 
   useEffect(() => {
     if (!authorDropOpen) return;
@@ -566,10 +616,27 @@ export default function CocktailDetail({
     return () => document.removeEventListener("mousedown", handler);
   }, [authorDropOpen]);
 
-  const displayCard = overrideData ? { ...card, t: overrideData.title, desc: overrideData.desc, abv: overrideData.abv, base: overrideData.base, theme: overrideData.theme } : card;
-  const { ingredients: derivedIngredients, steps: derivedSteps, flavor, abvLabel, difficulty } = getCardDetail(displayCard);
+  const displayCard = overrideData
+    ? {
+        ...card,
+        t: overrideData.title,
+        desc: overrideData.desc,
+        abv: overrideData.abv,
+        base: overrideData.base,
+        theme: overrideData.theme,
+      }
+    : card;
+  const {
+    ingredients: derivedIngredients,
+    steps: derivedSteps,
+    flavor,
+    abvLabel,
+    difficulty,
+  } = getCardDetail(displayCard);
   const ingredients = overrideData?.ingredients ?? derivedIngredients;
-  const steps = overrideData?.steps?.map((s) => (typeof s === "string" ? s : s)) ?? derivedSteps;
+  const steps =
+    overrideData?.steps?.map((s) => (typeof s === "string" ? s : s)) ??
+    derivedSteps;
   const tags = getCardTags(displayCard);
   const ratios = computeRatios(ingredients);
 
@@ -584,7 +651,11 @@ export default function CocktailDetail({
   const activeImg = thumbImgs[activeThumb];
 
   const difficultyClass =
-    difficulty === "쉬움" ? "easy" : difficulty === "보통" ? "medium" : "hard";
+    difficulty === "아주 간단" ? "easy"
+    : difficulty === "쉬움" ? "easy"
+    : difficulty === "보통" ? "medium"
+    : difficulty === "중급" ? "medium"
+    : "hard";
 
   // 영문명: desc 에서 추출, 없으면 pool 이미지명
 
@@ -608,7 +679,13 @@ export default function CocktailDetail({
           <div className="upload-inner">
             <div className="upload-hero">
               <span className="upload-badge">✏️ 레시피 수정</span>
-              <h1 className="upload-heading">{editTitle || card.t}<br /><span style={{ fontSize: "0.6em", color: "var(--font-sub)" }}>레시피를 수정하고 있어요</span></h1>
+              <h1 className="upload-heading">
+                {editTitle || card.t}
+                <br />
+                <span style={{ fontSize: "0.6em", color: "var(--font-sub)" }}>
+                  레시피를 수정하고 있어요
+                </span>
+              </h1>
             </div>
 
             <div className="upload-grid">
@@ -623,26 +700,84 @@ export default function CocktailDetail({
                   <div className="common-card-inner">
                     <div className="upload-field">
                       <label className="upload-label">칵테일 이름 *</label>
-                      <input className="common-input" type="text" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+                      <input
+                        className="common-input"
+                        type="text"
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                      />
                     </div>
                     <div className="upload-field">
                       <label className="upload-label">한 줄 소개</label>
-                      <textarea className="common-textarea" value={editDesc} onChange={(e) => setEditDesc(e.target.value)} rows={3} />
+                      <textarea
+                        className="common-textarea"
+                        value={editDesc}
+                        onChange={(e) => setEditDesc(e.target.value)}
+                        rows={3}
+                      />
                     </div>
                     <div className="upload-field">
                       <label className="upload-label upload-label--icon">
-                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z"/></svg> 난이도
+                        <svg
+                          width="11"
+                          height="11"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          stroke="none"
+                        >
+                          <path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z" />
+                        </svg>{" "}
+                        난이도
                       </label>
                       <div className="upload-diff-row">
-                        <button className={`btn btn-sm upload-diff-btn${editDiffMode === "ai" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`} onClick={() => { setEditDiffMode("ai"); setEditDifficulty(0); }}>AI 추천</button>
-                        <button className={`btn btn-sm upload-diff-btn${editDiffMode === "manual" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`} onClick={() => setEditDiffMode("manual")}>직접 선택</button>
-                        <div className={`upload-stars${editDiffMode === "manual" ? " manual" : " ai"}`}>
+                        <button
+                          className={`btn btn-sm upload-diff-btn${editDiffMode === "ai" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
+                          onClick={() => {
+                            setEditDiffMode("ai");
+                            setEditDifficulty(0);
+                          }}
+                        >
+                          AI 추천
+                        </button>
+                        <button
+                          className={`btn btn-sm upload-diff-btn${editDiffMode === "manual" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
+                          onClick={() => setEditDiffMode("manual")}
+                        >
+                          직접 선택
+                        </button>
+                        <div
+                          className={`upload-stars${editDiffMode === "manual" ? " manual" : " ai"}`}
+                        >
                           {editDiffMode === "ai" ? (
-                            <span className="upload-stars-ai-msg">AI가 레시피를 읽고 자동으로 난이도를 추천해드립니다</span>
+                            <span className="upload-stars-ai-msg">
+                              AI가 레시피를 읽고 자동으로 난이도를
+                              추천해드립니다
+                            </span>
                           ) : (
-                            [1,2,3,4,5].map((n) => (
-                              <button key={n} className={`upload-star${editDifficulty >= n ? " filled" : ""}`} onClick={() => setEditDifficulty(n)}>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill={editDifficulty >= n ? "currentColor" : "none"} stroke="currentColor" strokeWidth={editDifficulty >= n ? "0" : "1.8"} strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z"/></svg>
+                            [1, 2, 3, 4, 5].map((n) => (
+                              <button
+                                key={n}
+                                className={`upload-star${editDifficulty >= n ? " filled" : ""}`}
+                                onClick={() => setEditDifficulty(n)}
+                              >
+                                <svg
+                                  width="20"
+                                  height="20"
+                                  viewBox="0 0 24 24"
+                                  fill={
+                                    editDifficulty >= n
+                                      ? "currentColor"
+                                      : "none"
+                                  }
+                                  stroke="currentColor"
+                                  strokeWidth={
+                                    editDifficulty >= n ? "0" : "1.8"
+                                  }
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z" />
+                                </svg>
                               </button>
                             ))
                           )}
@@ -666,7 +801,11 @@ export default function CocktailDetail({
                           className={`upload-theme-item${editTheme === t.id ? " active" : ""}`}
                           onClick={() => setEditTheme(t.id)}
                         >
-                          <img src={t.img} alt={t.id} className="upload-theme-img" />
+                          <img
+                            src={t.img}
+                            alt={t.id}
+                            className="upload-theme-img"
+                          />
                           <span className="upload-theme-en">{t.id}</span>
                           <span className="upload-theme-ko">{t.ko}</span>
                         </button>
@@ -689,35 +828,101 @@ export default function CocktailDetail({
                           <div key={ing.id} className="upload-ing-row">
                             <div className="upload-ing-num">{idx + 1}</div>
                             <div className="upload-ing-inputs">
-                              <div className={`common-input-wrap${ing.name ? " has-value" : ""}`} style={{ position: "relative" }}>
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14" style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--font-placeholder)" }}><circle cx="11" cy="11" r="7" /><line x1="16.5" y1="16.5" x2="21" y2="21" /></svg>
+                              <div
+                                className={`common-input-wrap${ing.name ? " has-value" : ""}`}
+                                style={{ position: "relative" }}
+                              >
+                                <svg
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  strokeWidth="2"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  width="14"
+                                  height="14"
+                                  style={{
+                                    position: "absolute",
+                                    left: 10,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    pointerEvents: "none",
+                                    color: "var(--font-placeholder)",
+                                  }}
+                                >
+                                  <circle cx="11" cy="11" r="7" />
+                                  <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                                </svg>
                                 <input
                                   className={`common-input common-input--icon${ing.name ? " has-value" : ""}`}
-                                  type="text" placeholder="재료명 검색" value={ing.name}
-                                  onChange={(e) => { updateEditIng(ing.id, "name", e.target.value); setEditOpenSuggestId(ing.id); }}
-                                  onFocus={() => ing.name && setEditOpenSuggestId(ing.id)}
-                                  onBlur={() => setTimeout(() => setEditOpenSuggestId(null), 150)}
+                                  type="text"
+                                  placeholder="재료명 검색"
+                                  value={ing.name}
+                                  onChange={(e) => {
+                                    updateEditIng(
+                                      ing.id,
+                                      "name",
+                                      e.target.value,
+                                    );
+                                    setEditOpenSuggestId(ing.id);
+                                  }}
+                                  onFocus={() =>
+                                    ing.name && setEditOpenSuggestId(ing.id)
+                                  }
+                                  onBlur={() =>
+                                    setTimeout(
+                                      () => setEditOpenSuggestId(null),
+                                      150,
+                                    )
+                                  }
                                 />
-                                {editOpenSuggestId === ing.id && ing.name.trim() && getSuggestions(ing.name).length > 0 && (
-                                  <div className="ing-suggest-dropdown">
-                                    {getSuggestions(ing.name).map((item) => (
-                                      <div key={item.id} className="ing-suggest-item" onMouseDown={() => { updateEditIng(ing.id, "name", item.n); setEditOpenSuggestId(null); }}>
-                                        <span className="ing-suggest-name">{item.n}</span>
-                                        <span className="ing-suggest-cat">{item.cat}</span>
-                                      </div>
-                                    ))}
-                                  </div>
-                                )}
+                                {editOpenSuggestId === ing.id &&
+                                  ing.name.trim() &&
+                                  getSuggestions(ing.name).length > 0 && (
+                                    <div className="ing-suggest-dropdown">
+                                      {getSuggestions(ing.name).map((item) => (
+                                        <div
+                                          key={item.id}
+                                          className="ing-suggest-item"
+                                          onMouseDown={() => {
+                                            updateEditIng(
+                                              ing.id,
+                                              "name",
+                                              item.n,
+                                            );
+                                            setEditOpenSuggestId(null);
+                                          }}
+                                        >
+                                          <span className="ing-suggest-name">
+                                            {item.n}
+                                          </span>
+                                          <span className="ing-suggest-cat">
+                                            {item.cat}
+                                          </span>
+                                        </div>
+                                      ))}
+                                    </div>
+                                  )}
                               </div>
                               <input
                                 className={`common-input common-input--amount${isNoAmt ? " disabled" : ""}`}
-                                type="text" placeholder="용량" value={isNoAmt ? "" : ing.amount}
+                                type="text"
+                                placeholder="용량"
+                                value={isNoAmt ? "" : ing.amount}
                                 disabled={isNoAmt}
-                                onChange={(e) => updateEditIng(ing.id, "amount", e.target.value)}
+                                onChange={(e) =>
+                                  updateEditIng(
+                                    ing.id,
+                                    "amount",
+                                    e.target.value,
+                                  )
+                                }
                               />
                               <SelectFilter
                                 value={ing.unit}
-                                onChange={(v) => updateEditIng(ing.id, "unit", v)}
+                                onChange={(v) =>
+                                  updateEditIng(ing.id, "unit", v)
+                                }
                                 placeholder="단위"
                                 size="medium"
                                 styleVariant="select-style-default"
@@ -736,15 +941,48 @@ export default function CocktailDetail({
                                 </optgroup>
                               </SelectFilter>
                             </div>
-                            <button className="upload-ing-del" onClick={() => removeEditIng(ing.id)}>
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" /><path d="M9 6V4h6v2" /></svg>
+                            <button
+                              className="upload-ing-del"
+                              onClick={() => removeEditIng(ing.id)}
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                width="18"
+                                height="18"
+                              >
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6l-1 14H6L5 6" />
+                                <path d="M10 11v6M14 11v6" />
+                                <path d="M9 6V4h6v2" />
+                              </svg>
                             </button>
                           </div>
                         );
                       })}
                     </div>
-                    <button className="upload-add-btn btn-lg" onClick={addEditIng}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg> 재료 추가
+                    <button
+                      className="upload-add-btn btn-lg"
+                      onClick={addEditIng}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        width="14"
+                        height="14"
+                      >
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                      </svg>{" "}
+                      재료 추가
                     </button>
                   </div>
                 </div>
@@ -765,19 +1003,54 @@ export default function CocktailDetail({
                           <textarea
                             className="common-textarea upload-step"
                             value={step.text}
-                            onChange={(e) => updateEditStep(step.id, e.target.value)}
+                            onChange={(e) =>
+                              updateEditStep(step.id, e.target.value)
+                            }
                             rows={2}
                           />
                           {editSteps.length > 1 && (
-                            <button className="upload-ing-del" onClick={() => removeEditStep(step.id)}>
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="18" height="18"><polyline points="3 6 5 6 21 6" /><path d="M19 6l-1 14H6L5 6" /><path d="M10 11v6M14 11v6" /><path d="M9 6V4h6v2" /></svg>
+                            <button
+                              className="upload-ing-del"
+                              onClick={() => removeEditStep(step.id)}
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                width="18"
+                                height="18"
+                              >
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6l-1 14H6L5 6" />
+                                <path d="M10 11v6M14 11v6" />
+                                <path d="M9 6V4h6v2" />
+                              </svg>
                             </button>
                           )}
                         </div>
                       ))}
                     </div>
-                    <button className="upload-add-btn btn-lg" onClick={addEditStep}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg> 단계 추가
+                    <button
+                      className="upload-add-btn btn-lg"
+                      onClick={addEditStep}
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        width="14"
+                        height="14"
+                      >
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                      </svg>{" "}
+                      단계 추가
                     </button>
                   </div>
                 </div>
@@ -789,27 +1062,62 @@ export default function CocktailDetail({
                 <div className="common-card">
                   <div className="common-card-inner upload-card-body--photo">
                     <p className="common-title-sm">대표 사진</p>
-                    <p className="common-body-sm-light" style={{ color: "var(--font-placeholder)" }}>
+                    <p
+                      className="common-body-sm-light"
+                      style={{ color: "var(--font-placeholder)" }}
+                    >
                       잘리지 않게 약간 여백을 두고 촬영해주세요
                     </p>
                     <div
                       className={`upload-photo-zone${editDragging ? " dragging" : ""}${editPhotoPreview || mainImg ? " has-photo" : ""}`}
                       onClick={() => editFileRef.current?.click()}
-                      onDragOver={(e) => { e.preventDefault(); setEditDragging(true); }}
+                      onDragOver={(e) => {
+                        e.preventDefault();
+                        setEditDragging(true);
+                      }}
                       onDragLeave={() => setEditDragging(false)}
-                      onDrop={(e) => { e.preventDefault(); setEditDragging(false); handleEditPhotoFile(e.dataTransfer.files[0]); }}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        setEditDragging(false);
+                        handleEditPhotoFile(e.dataTransfer.files[0]);
+                      }}
                     >
                       {editPhotoPreview ? (
-                        <img src={editPhotoPreview} alt="대표 사진" className="upload-photo-preview" />
+                        <img
+                          src={editPhotoPreview}
+                          alt="대표 사진"
+                          className="upload-photo-preview"
+                        />
                       ) : mainImg ? (
-                        <img src={mainImg.url} alt="현재 대표 사진" className="upload-photo-preview" />
+                        <img
+                          src={mainImg.url}
+                          alt="현재 대표 사진"
+                          className="upload-photo-preview"
+                        />
                       ) : (
                         <div className="upload-photo-empty">
                           <div className="upload-photo-icon-wrap">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="22" height="22"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.8"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              width="22"
+                              height="22"
+                            >
+                              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                              <polyline points="17 8 12 3 7 8" />
+                              <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
                           </div>
-                          <p className="upload-photo-text">사진을 드래그하거나 클릭하세요</p>
-                          <p className="upload-photo-sub">JPG, PNG, WEBP 지원</p>
+                          <p className="upload-photo-text">
+                            사진을 드래그하거나 클릭하세요
+                          </p>
+                          <p className="upload-photo-sub">
+                            JPG, PNG, WEBP 지원
+                          </p>
                         </div>
                       )}
                     </div>
@@ -827,14 +1135,48 @@ export default function CocktailDetail({
                   <div className="common-card-inner">
                     <p className="common-title-sm">레시피 요약</p>
                     <div className="upload-summary">
-                      <div className="upload-summary-row"><span className="upload-summary-label">칵테일 이름</span><span className="upload-summary-value">{editTitle || "—"}</span></div>
-                      <div className="upload-summary-row"><span className="upload-summary-label">베이스주</span><span className="upload-summary-value">{editBase}</span></div>
-                      <div className="upload-summary-row"><span className="upload-summary-label">도수</span><span className="upload-summary-value">{{ none: "무알콜", low: "낮은 도수", high: "높은 도수" }[editAbv]}</span></div>
-                      <div className="upload-summary-row"><span className="upload-summary-label">재료</span><span className="upload-summary-value">{editIngredients.filter((i) => i.name.trim()).length}가지</span></div>
-                      <div className="upload-summary-row"><span className="upload-summary-label">단계</span><span className="upload-summary-value">{editSteps.filter((s) => s.text.trim()).length}단계</span></div>
+                      <div className="upload-summary-row">
+                        <span className="upload-summary-label">
+                          칵테일 이름
+                        </span>
+                        <span className="upload-summary-value">
+                          {editTitle || "—"}
+                        </span>
+                      </div>
+                      <div className="upload-summary-row">
+                        <span className="upload-summary-label">베이스주</span>
+                        <span className="upload-summary-value">{editBase}</span>
+                      </div>
+                      <div className="upload-summary-row">
+                        <span className="upload-summary-label">도수</span>
+                        <span className="upload-summary-value">
+                          {
+                            {
+                              none: "무알콜",
+                              low: "낮은 도수",
+                              high: "높은 도수",
+                            }[editAbv]
+                          }
+                        </span>
+                      </div>
+                      <div className="upload-summary-row">
+                        <span className="upload-summary-label">재료</span>
+                        <span className="upload-summary-value">
+                          {editIngredients.filter((i) => i.name.trim()).length}
+                          가지
+                        </span>
+                      </div>
+                      <div className="upload-summary-row">
+                        <span className="upload-summary-label">단계</span>
+                        <span className="upload-summary-value">
+                          {editSteps.filter((s) => s.text.trim()).length}단계
+                        </span>
+                      </div>
                       {editTheme && (
                         <div className="upload-summary-tags">
-                          <span className="upload-summary-tag">{editTheme}</span>
+                          <span className="upload-summary-tag">
+                            {editTheme}
+                          </span>
                         </div>
                       )}
                     </div>
@@ -849,10 +1191,15 @@ export default function CocktailDetail({
                   >
                     수정 완료
                   </button>
-                  <button className="btn btn-lined btn-gray-light btn-lg" onClick={() => setIsEditing(false)}>
+                  <button
+                    className="btn btn-lined btn-gray-light btn-lg"
+                    onClick={() => setIsEditing(false)}
+                  >
                     취소
                   </button>
-                  <p className="upload-notice">수정사항은 새로고침 시 초기화됩니다.</p>
+                  <p className="upload-notice">
+                    수정사항은 새로고침 시 초기화됩니다.
+                  </p>
                 </div>
               </div>
             </div>
@@ -1203,38 +1550,73 @@ export default function CocktailDetail({
                 </div>
                 <div className="common-card-inner">
                   <div className="flex flex-col gap-5">
-                    {ingredients.map((ing, idx) => {
-                      const ratio = ratios[idx];
-                      const ingId = ING_LINK_MAP[ing.name];
-                      const inner = (
-                        <>
-                          <div className="detail-ing-emoji">{ing.emoji}</div>
-                          <span className="detail-ing-name">{ing.name}</span>
-                          <span className="detail-ing-type">{ing.type}</span>
-                          {ratio !== null && (
-                            <span className="detail-ing-ratio-val">
-                              {ratio}%
+                    {[...ingredients]
+                      .sort((a, b) => {
+                        const SUB = ["민트잎", "오렌지 필", "올리브"];
+                        return SUB.includes(a.name) - SUB.includes(b.name);
+                      })
+                      .map((ing, idx) => {
+                        const ratio = ratios[ingredients.indexOf(ing)];
+                        const ingId = ING_LINK_MAP[ing.name];
+                        const isSub = [
+                          "민트잎",
+                          "오렌지 필",
+                          "올리브",
+                        ].includes(ing.name);
+                        const inner = (
+                          <>
+                            <div
+                              className="detail-ing-emoji"
+                              style={
+                                isSub
+                                  ? {
+                                      background: "var(--point-soft)",
+                                      border: "1.5px solid var(--point-line)",
+                                    }
+                                  : undefined
+                              }
+                            >
+                              {ing.emoji}
+                            </div>
+                            <span className="detail-ing-name">{ing.name}</span>
+                            <span className="detail-ing-type">{ing.type}</span>
+                            {ratio !== null && (
+                              <span className="detail-ing-ratio-val">
+                                {ratio}%
+                              </span>
+                            )}
+                            {isSub && (
+                              <span className="detail-ing-sub-label">
+                                부재료
+                                <span className="detail-ing-sub-tooltip-wrap">
+                                  <span className="detail-ing-sub-tooltip-btn">
+                                    ?
+                                  </span>
+                                  <span className="detail-ing-sub-tooltip-box">
+                                    없어도 되지만 있으면 좋은 재료
+                                  </span>
+                                </span>
+                              </span>
+                            )}
+                            <span className="detail-ing-amount">
+                              {ing.amount}
                             </span>
-                          )}
-                          <span className="detail-ing-amount">
-                            {ing.amount}
-                          </span>
-                        </>
-                      );
-                      return ingId ? (
-                        <Link
-                          key={idx}
-                          href={`/ingredient/${ingId}`}
-                          className="flex items-center gap-4 no-underline detail-ing-item--link"
-                        >
-                          {inner}
-                        </Link>
-                      ) : (
-                        <div key={idx} className="flex items-center gap-4">
-                          {inner}
-                        </div>
-                      );
-                    })}
+                          </>
+                        );
+                        return ingId ? (
+                          <Link
+                            key={idx}
+                            href={`/ingredient/${ingId}`}
+                            className="flex items-center gap-4 no-underline detail-ing-item--link"
+                          >
+                            {inner}
+                          </Link>
+                        ) : (
+                          <div key={idx} className="flex items-center gap-4">
+                            {inner}
+                          </div>
+                        );
+                      })}
                   </div>
                 </div>
                 {/* common-card-inner */}

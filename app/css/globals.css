@@ -20,19 +20,20 @@
   --coral: #f34b65;
   --coral-subtle: rgb(235, 64, 90);
   --coral-strong: #b7374b;
-  --coral-warm: oklch(0.78 0.14 40);
   --coral-soft: #feefef;
-  --coral-line: oklch(0.9 0.05 18);
+  --coral-line: #ecb6b6;
 
   /* ── 서브 컬러 ───────────────────── */
   --yellow: #ffc355;
-  --yellow-d: #f98162;
-  --yellow-l: #fff5da;
+  --yellow-strong: #f98162;
+  --yellow-soft: #fff5da;
+  --yellow-line: #f1e5c1;
 
   /* ── 포인트 컬러 ───────────────────── */
   --point: #9137c7;
-  --point-d: #6603a0;
-  --point-l: #efd7fd;
+  --point-strong: #6603a0;
+  --point-soft: #f3deff;
+  --point-line: #e2c4f3;
 
   /* ── 그라데이션 ───────────────────── */
   --gradient-brand-1: linear-gradient(

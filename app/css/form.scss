@@ -110,7 +110,7 @@ $btn-sizes: (
     border: 1.5px solid var(--point);
     color: #fff;
     &:hover {
-      background: var(--point-d);
+      background: var(--point-strong);
     }
   }
   &.btn-gray-light {
@@ -185,11 +185,11 @@ $btn-sizes: (
     }
   }
   &.btn-secondary {
-    background: var(--point-l);
+    background: var(--point-soft);
     border: 1.5px solid rgba(145, 55, 199, 0.3);
     color: var(--point);
     &:hover {
-      background: color-mix(in oklch, var(--point-l) 70%, var(--point));
+      background: color-mix(in oklch, var(--point-soft) 70%, var(--point));
       border-color: rgba(145, 55, 199, 0.55);
     }
   }
@@ -219,7 +219,7 @@ $btn-sizes: (
     border: 1.5px solid var(--point);
     color: var(--point);
     &:hover {
-      background: var(--point-l);
+      background: var(--point-soft);
     }
   }
   &.btn-gray-light {
@@ -257,7 +257,7 @@ $btn-sizes: (
   align-items: center;
   padding: 0;
   transition: color var(--time-fast);
-  &:hover{
+  &:hover {
     color: var(--coral-strong);
   }
 }
@@ -471,7 +471,7 @@ $btn-sizes: (
   &.selected {
     font-weight: 700;
     color: var(--point);
-    background: var(--point-l);
+    background: var(--point-soft);
   }
 }
 
@@ -584,7 +584,6 @@ $btn-sizes: (
   }
 }
 
-
 // ─────────────────────────────────────────────
 //  카테고리 탭 (재료 페이지)
 // ─────────────────────────────────────────────
@@ -616,7 +615,6 @@ $btn-sizes: (
   border-color: var(--coral-line);
   color: var(--coral-strong);
 }
-
 
 // ─────────────────────────────────────────────
 //  IBA 토글 (도움말 툴팁 포함)

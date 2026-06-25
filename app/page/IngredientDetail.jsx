@@ -313,50 +313,69 @@ export default function IngredientDetail({ ing }) {
             {/* ── 오른쪽 ── */}
             <div className="ing-detail-right">
               {/* 1. 재료 설명 */}
-              <div className="ing-detail-card">
-                <h1 className="ing-detail-name">{ing.n}</h1>
-                <p className="ing-detail-en">{ing.en}</p>
-                <span className="ing-detail-cat">{ing.cat}</span>
-                <p className="ing-detail-desc">{ing.desc}</p>
+              <div className="common-card">
+                <div className="common-card-inner" style={{ gap: "0" }}>
+                  <h1 className="ing-detail-name">{ing.n}</h1>
+                  <p className="ing-detail-en">{ing.en}</p>
+                  <div>
+                    <span className="ing-detail-cat">{ing.cat}</span>
+                  </div>
+                  <p className="ing-detail-desc">{ing.desc}</p>
+                </div>
               </div>
 
               {/* 2. 재료 관련 상품 */}
-              <div className="ing-detail-card">
-                <p className="ing-section-title">
-                  <span style={{ color: "var(--coral)", fontStyle: "italic" }}>
-                    '{ing.n}'
-                  </span>{" "}
-                  관련 상품
-                </p>
-                <p className="ing-section-sub">
-                  (파트너스 링크를 통해 구매 시 마실랭 운영에 도움이 됩니다.)
-                </p>
-                <div className="cocktail-grid">
-                  {products.map((p, i) => (
-                    <div key={i} className="ing-product-item">
-                      <div className="ing-product-img-wrap">
-                        {p.img ? (
-                          <img
-                            src={p.img}
-                            alt={p.name}
-                            className="ing-product-img"
-                            onError={(e) => {
-                              e.target.style.display = "none";
-                            }}
-                          />
-                        ) : (
-                          <span style={{ fontSize: 40, opacity: 0.2 }}>🛒</span>
+              <div className="common-card">
+                <div className="common-card-inner">
+                  <div
+                    className="flex flex-col gap-2"
+                    style={{ marginBottom: "8px" }}
+                  >
+                    <p className="common-title-lg">
+                      <span
+                        style={{ color: "var(--coral)", fontStyle: "italic" }}
+                      >
+                        '{ing.n}'
+                      </span>{" "}
+                      관련 상품
+                    </p>
+                    <p
+                      className="common-body-sm-light"
+                      style={{ color: "var(--font-placeholder)" }}
+                    >
+                      (파트너스 링크를 통해 구매 시 마실랭 운영에 도움이
+                      됩니다.)
+                    </p>
+                  </div>
+                  <div className="cocktail-grid">
+                    {products.map((p, i) => (
+                      <div key={i} className="ing-product-item">
+                        <div className="ing-product-img-wrap">
+                          {p.img ? (
+                            <img
+                              src={p.img}
+                              alt={p.name}
+                              className="ing-product-img"
+                              onError={(e) => {
+                                e.target.style.display = "none";
+                              }}
+                            />
+                          ) : (
+                            <span style={{ fontSize: 40, opacity: 0.2 }}>
+                              🛒
+                            </span>
+                          )}
+                        </div>
+                        <p className="ing-product-name">{p.name}</p>
+                        <p className="ing-product-price">{p.price}</p>
+                        {p.rocket && (
+                          <span className="ing-product-rocket">
+                            <RocketIcon /> 로켓배송
+                          </span>
                         )}
                       </div>
-                      <p className="ing-product-name">{p.name}</p>
-                      <p className="ing-product-price">{p.price}</p>
-                      {p.rocket && (
-                        <span className="ing-product-rocket">
-                          <RocketIcon /> 로켓배송
-                        </span>
-                      )}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -364,53 +383,74 @@ export default function IngredientDetail({ ing }) {
               <div className="ad-banner-test">Google 광고 배너</div>
 
               {/* 4. 이 재료로 만드는 칵테일 */}
-              <div className="ing-detail-card">
-                <p className="ing-section-title">
-                  이 재료로 만들 수 있는 칵테일
-                </p>
-                <p className="ing-section-sub">
-                  {relatedCards.length > 0
-                    ? `${relatedCards.length}가지 칵테일을 확인해보세요`
-                    : "등록된 칵테일이 없습니다"}
-                </p>
-                {relatedCards.length > 0 ? (
-                  <div className="ing-cocktail-list">
-                    {relatedCards.map((card) => {
-                      const poolImg = POOL[card.i % POOL.length];
-                      return (
-                        <Link
-                          key={card._id}
-                          href={`/cocktail/${card._id}`}
-                          className="common-list-item"
-                        >
-                          <div className="common-list-item-thumb">
-                            <img
-                              src={poolImg.url}
-                              alt={card.t}
-                              onError={(e) => {
-                                e.target.style.display = "none";
-                              }}
-                            />
-                          </div>
-                          <div className="common-list-item-info">
-                            <span className="common-list-item-title">{card.t}</span>
-                            <span className="common-list-item-desc">{card.desc}</span>
-                            <div className="common-list-item-tags">
-                              {getCardTags(card).map((tag) => (
-                                <span key={tag} className={`common-list-item-tag${tag === "#IBA" ? " tag-iba" : ""}`}>{tag}</span>
-                              ))}
-                            </div>
-                          </div>
-                          <div className="common-list-item-action">
-                            <ChevronRightIcon />
-                          </div>
-                        </Link>
-                      );
-                    })}
+              <div className="common-card">
+                <div className="common-card-inner">
+                  <div
+                    className="flex flex-col gap-2"
+                    style={{ marginBottom: "8px" }}
+                  >
+                    {" "}
+                    <p className="common-title-lg">
+                      이 재료로 만들 수 있는 칵테일
+                    </p>
+                    <p
+                      className="common-body-sm-light"
+                      style={{ color: "var(--font-placeholder)" }}
+                    >
+                      {relatedCards.length > 0
+                        ? `${relatedCards.length}가지 칵테일을 확인해보세요`
+                        : "등록된 칵테일이 없습니다"}
+                    </p>
                   </div>
-                ) : (
-                  <p className="ing-empty">아직 등록된 칵테일이 없어요.</p>
-                )}
+
+                  {relatedCards.length > 0 ? (
+                    <div className="ing-cocktail-list">
+                      {relatedCards.map((card) => {
+                        const poolImg = POOL[card.i % POOL.length];
+                        return (
+                          <Link
+                            key={card._id}
+                            href={`/cocktail/${card._id}`}
+                            className="common-list-item"
+                          >
+                            <div className="common-list-item-thumb">
+                              <img
+                                src={poolImg.url}
+                                alt={card.t}
+                                onError={(e) => {
+                                  e.target.style.display = "none";
+                                }}
+                              />
+                            </div>
+                            <div className="common-list-item-info">
+                              <span className="common-list-item-title">
+                                {card.t}
+                              </span>
+                              <span className="common-list-item-desc">
+                                {card.desc}
+                              </span>
+                              <div className="common-list-item-tags">
+                                {getCardTags(card).map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className={`common-list-item-tag${tag === "#IBA" ? " tag-iba" : ""}`}
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                            <div className="common-list-item-action">
+                              <ChevronRightIcon />
+                            </div>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <p className="ing-empty">아직 등록된 칵테일이 없어요.</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>

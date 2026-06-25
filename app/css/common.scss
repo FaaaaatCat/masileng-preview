@@ -2,8 +2,6 @@
    Common — 사이트 전체 공통 스타일
 ───────────────────────────────────────────── */
 
-
-
 // ── 토스트
 @keyframes toast-in {
   from {
@@ -137,11 +135,21 @@
     flex-direction: column;
     animation: popup-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    &.popup-xs { max-width: 400px; }
-    &.popup-sm { max-width: 480px; }
-    &.popup-md { max-width: 600px; }
-    &.popup-lg { max-width: 800px; }
-    &.popup-xl { max-width: 1200px; }
+    &.popup-xs {
+      max-width: 400px;
+    }
+    &.popup-sm {
+      max-width: 480px;
+    }
+    &.popup-md {
+      max-width: 600px;
+    }
+    &.popup-lg {
+      max-width: 800px;
+    }
+    &.popup-xl {
+      max-width: 1200px;
+    }
   }
 
   &-header {
@@ -212,8 +220,6 @@
   }
 }
 
-
-
 // ── 리스트 아이템
 .common-list-item {
   display: flex;
@@ -279,7 +285,6 @@
     flex-wrap: wrap;
     gap: 4px;
     margin-top: 2px;
-    
   }
 
   &-tag {
@@ -355,8 +360,12 @@
     }
   }
 
-  &:hover &-img-wrap { transform: translateY(-4px); }
-  &:hover &-img-wrap--cover { box-shadow: var(--shadow-hover); }
+  &:hover &-img-wrap {
+    transform: translateY(-4px);
+  }
+  &:hover &-img-wrap--cover {
+    box-shadow: var(--shadow-hover);
+  }
 
   // 배경 그라디언트 (커버 카드 전용)
   &-bg {
@@ -383,7 +392,9 @@
     }
   }
 
-  &:hover &-img--product { transform: scale(1.05); }
+  &:hover &-img--product {
+    transform: scale(1.05);
+  }
 
   // 오버레이
   &-overlay {
@@ -399,7 +410,9 @@
     transition: background var(--time-slow) ease;
   }
 
-  &:hover &-overlay { background: rgba(0, 0, 0, 0.3); }
+  &:hover &-overlay {
+    background: rgba(0, 0, 0, 0.3);
+  }
 
   // 설명 레이어 (hover 시 표시)
   &-desc-layer {
@@ -415,7 +428,9 @@
     transition: opacity var(--time-slow) ease;
   }
 
-  &:hover &-desc-layer { opacity: 1; }
+  &:hover &-desc-layer {
+    opacity: 1;
+  }
 
   // 설명 텍스트 (카드 하단 기본 / 오버레이 내부 화이트)
   &-desc {
@@ -465,13 +480,15 @@
     background: rgba(243, 75, 101, 0.85);
   }
 
-  &:hover &-author { opacity: 0; }
+  &:hover &-author {
+    opacity: 0;
+  }
 
   &-author-avatar {
     width: 18px;
     height: 18px;
     border-radius: var(--r-full);
-    background: linear-gradient(135deg, var(--coral), var(--coral-warm));
+    background: linear-gradient(135deg, var(--coral), var(--yellow-strong));
     flex-shrink: 0;
   }
 
@@ -498,7 +515,9 @@
     transition: transform var(--time-slow);
     transform: rotate(90deg);
 
-    &--up { transform: rotate(-90deg); }
+    &--up {
+      transform: rotate(-90deg);
+    }
   }
 
   &-author-dropdown {
@@ -566,10 +585,17 @@
   }
 
   // 재료 카드 전용
-  &--mine &-img-wrap { background: var(--coral-line); transition: background 0.4s ease; }
+  &--mine &-img-wrap {
+    background: var(--coral-line);
+    transition: background 0.4s ease;
+  }
 
-  &--burst { animation: common-card-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-  &--burst &-basket-btn { animation: common-btn-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+  &--burst {
+    animation: common-card-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  &--burst &-basket-btn {
+    animation: common-btn-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
 
   &-ripple {
     position: absolute;
@@ -607,7 +633,9 @@
       transform 0.2s ease,
       background 0.2s ease;
 
-    &:hover { background: rgba(126, 30, 30, 0.4); }
+    &:hover {
+      background: rgba(126, 30, 30, 0.4);
+    }
 
     &--active {
       background: var(--gradient-brand-2) !important;
@@ -616,7 +644,10 @@
     }
   }
 
-  &:hover &-basket-btn { opacity: 1; transform: scale(1); }
+  &:hover &-basket-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 // ── 카드 그리드
@@ -625,27 +656,53 @@
   grid-template-columns: repeat(6, 1fr);
   gap: 36px 24px;
 
-  @media (max-width: 1300px) { grid-template-columns: repeat(4, 1fr); }
-  @media (max-width: 900px)  { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1300px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @keyframes common-card-pop {
-  0%   { transform: scale(1); }
-  35%  { transform: scale(1.045); }
-  65%  { transform: scale(0.975); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.045);
+  }
+  65% {
+    transform: scale(0.975);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes common-ripple {
-  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.55; }
-  100% { transform: translate(-50%, -50%) scale(4.5); opacity: 0; }
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(4.5);
+    opacity: 0;
+  }
 }
 
 @keyframes common-btn-pop {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.3); }
-  70%  { transform: scale(0.88); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.3);
+  }
+  70% {
+    transform: scale(0.88);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 // ── 제목 텍스트
 $title-sizes: (
