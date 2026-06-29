@@ -5,9 +5,9 @@ import "./css/common.scss";
 import "./css/layout.css";
 import "./css/banner.scss";
 import "./css/form.scss";
+import "./css/recommend-page.scss";
 import "./css/cocktail-detail.css";
 import "./css/login.css";
-import "./css/user-profile-modal.css";
 import "./css/ingredient-detail.css";
 import "./css/upload.css";
 

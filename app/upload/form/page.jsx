@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import SiteHeader from "../../components/SiteHeader";
+import Link from "next/link";
 import { SelectFilter } from "../../components/FilterBar";
 import INGREDIENTS_DATA from "../../data/ingredients.json";
 import IngredientRequestModal from "../../components/IngredientRequestModal";
@@ -177,7 +177,12 @@ export default function UploadPage() {
 
   return (
     <>
-      <SiteHeader />
+      <Link href="/" className="upload-intro-close" aria-label="홈으로">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </Link>
       {ingToast && (
         <div
           className={`common-toast${ingToastLeaving ? " common-toast--out" : ""}`}

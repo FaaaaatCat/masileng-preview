@@ -16,8 +16,22 @@
   --gray-9: #f8fafc;
   --gray-10: #ffffff;
 
+  /* ── 그레이스케일 (다크모드) ────────────────── */
+  --dark-0: #020611; /* 메인 배경 */
+  --dark-1: #0a1020;
+  --dark-2: #131b2b;
+  --dark-3: #1b2433; /* 카드 배경 */
+  --dark-4: #263042; /* hover */
+  --dark-5: #38445a;
+  --dark-6: #53607a;
+  --dark-7: #7987a1;
+  --dark-8: #aeb8c9;
+  --dark-9: #d7dde8;
+  --dark-10: #ffffff;
+
   /* ── 브랜드 컬러 ─────────────────── */
   --coral: #f34b65;
+  --coral-rgb: 243, 75, 101;
   --coral-subtle: rgb(235, 64, 90);
   --coral-strong: #b7374b;
   --coral-soft: #feefef;

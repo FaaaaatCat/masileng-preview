@@ -40,13 +40,13 @@ $btn-sizes: (
   ),
   xl: (
     height: 54px,
-    font-size: 15px,
+    font-size: 16px,
     padding: 18px,
     border-radius: var(--r-md),
   ),
   xxl: (
     height: 68px,
-    font-size: 16px,
+    font-size: 18px,
     padding: 24px,
     border-radius: var(--r-md),
   ),
@@ -79,6 +79,11 @@ $btn-sizes: (
 
   // ── disable (모든 스타일/색상 공통) ──
   &.btn-disable {
+    &.btn-dark {
+      background: var(--gray-1) !important;
+      border: 1.5px solid var(--gray-1) !important;
+      color: var(--gray-3) !important;
+    }
     &,
     &:hover {
       background: var(--form-bg-disable) !important;
@@ -86,7 +91,7 @@ $btn-sizes: (
       color: var(--font-disable) !important;
       box-shadow: none !important;
       transform: none !important;
-      cursor: not-allowed;
+      cursor: not-allowed !important;
       pointer-events: none;
     }
     svg {
@@ -207,7 +212,7 @@ $btn-sizes: (
 
 // ── lined ──
 .btn-lined {
-  background: var(--form-bg);
+  background: transparent;
   &.btn-brand {
     border: 1.5px solid var(--coral);
     color: var(--coral);
@@ -244,6 +249,13 @@ $btn-sizes: (
       background: #fee2e2;
     }
   }
+  &.btn-dark {
+    border: 1.5px solid var(--dark-7);
+    color: var(--dark-7);
+    &:hover {
+      background: var(--dark-3);
+    }
+  }
 }
 
 // ── transparent ──
@@ -259,6 +271,13 @@ $btn-sizes: (
   transition: color var(--time-fast);
   &:hover {
     color: var(--coral-strong);
+  }
+
+  &.btn-dark {
+    color: rgba(255, 255, 255, 0.3);
+    &:hover {
+      color: rgba(255, 255, 255, 0.5);
+    }
   }
 }
 

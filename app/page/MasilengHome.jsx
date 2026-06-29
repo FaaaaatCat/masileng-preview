@@ -369,7 +369,13 @@ export default function MasilengHome() {
   const isIngredients = activeNav === "재료";
 
   return (
-    <div className="min-h-screen" style={{ background: "var(--page-bg-ivory)" }}>
+    <div
+      className="min-h-screen"
+      style={{
+        background: "var(--page-bg-ivory)",
+        transition: "background 280ms ease",
+      }}
+    >
       <SiteHeader activeNav={activeNav} onNavClick={setActiveNav} />
 
       {/* HERO — 칵테일 페이지에만 */}

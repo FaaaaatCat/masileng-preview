@@ -651,11 +651,15 @@ export default function CocktailDetail({
   const activeImg = thumbImgs[activeThumb];
 
   const difficultyClass =
-    difficulty === "아주 간단" ? "easy"
-    : difficulty === "쉬움" ? "easy"
-    : difficulty === "보통" ? "medium"
-    : difficulty === "중급" ? "medium"
-    : "hard";
+    difficulty === "아주 간단"
+      ? "easy"
+      : difficulty === "쉬움"
+        ? "easy"
+        : difficulty === "보통"
+          ? "medium"
+          : difficulty === "중급"
+            ? "medium"
+            : "hard";
 
   // 영문명: desc 에서 추출, 없으면 pool 이미지명
 
@@ -1224,7 +1228,10 @@ export default function CocktailDetail({
                 목록으로
               </Link>
 
-              <div className="detail-gallery-main">
+              <div
+                className="detail-gallery-main"
+                style={!showIllust ? { height: 440 } : undefined}
+              >
                 <img
                   src={
                     activeThumb === 0 && overrideData?.photoPreview
@@ -1237,23 +1244,25 @@ export default function CocktailDetail({
                   }}
                 />
               </div>
-              <div className="grid grid-cols-3 gap-2 h-[101px]">
-                {thumbImgs.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`detail-thumb${activeThumb === idx ? " active" : ""}`}
-                    onClick={() => setActiveThumb(idx)}
-                  >
-                    <img
-                      src={img.url}
-                      alt={img.n}
-                      onError={(e) => {
-                        e.target.src = "/theme.png";
-                      }}
-                    />
-                  </div>
-                ))}
-              </div>
+              {showIllust && (
+                <div className="grid grid-cols-3 gap-2 h-[101px]">
+                  {thumbImgs.map((img, idx) => (
+                    <div
+                      key={idx}
+                      className={`detail-thumb${activeThumb === idx ? " active" : ""}`}
+                      onClick={() => setActiveThumb(idx)}
+                    >
+                      <img
+                        src={img.url}
+                        alt={img.n}
+                        onError={(e) => {
+                          e.target.src = "/theme.png";
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
               <button
                 className="btn btn-lined btn-gray-light btn-lg"
                 onClick={() =>
@@ -1524,7 +1533,7 @@ export default function CocktailDetail({
                       <div className="flex items-center gap-2">
                         <div className="detail-stat-icon">{icon}</div>
                         <span className="common-body-sm-bold">{label}</span>
-                        <div className="nav-spacer"></div>
+                        <div style={{ flex: 1 }}></div>
                         <span className={valueClass ?? "common-title-md"}>
                           {value}
                         </span>

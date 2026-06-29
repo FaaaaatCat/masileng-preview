@@ -89,19 +89,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
               ),
             )}
             <span className="nav-divider" />
-            {onNavClick ? (
-              <a
-                href="#"
-                className="nav-link"
-                onClick={(e) => e.preventDefault()}
-              >
-                추천
-              </a>
-            ) : (
-              <Link href="/" className="nav-link">
-                추천
-              </Link>
-            )}
+            <Link href="/recommend" className="nav-link">
+              추천
+            </Link>
             <div className="nav-download-wrap">
               <a
                 href="#"
@@ -117,13 +107,13 @@ export default function SiteHeader({ activeNav, onNavClick }) {
             </div>
           </div>
 
-          <div className="nav-spacer" />
+          <div style={{flex: 1}} />
 
-          <div className="nav-actions">
+          <div className="flex items-center gap-3">
             {authUser ? (
               <div className="nav-user-wrap" ref={dropRef}>
                 <button
-                  className="btn-user-name btn-sm"
+                  className="btn btn-lined btn-gray-light btn-sm"
                   onClick={() => setDropOpen((v) => !v)}
                 >
                   {authUser.name} 님
@@ -171,13 +161,13 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 )}
               </div>
             ) : (
-              <Link href="/login" className="btn btn-lined btn-gray-light">
+              <Link href="/login" className="btn btn-lined btn-gray-light btn-md">
                 로그인
               </Link>
             )}
             <Link
               href="/upload"
-              className="btn btn-filled btn-gradient-1"
+              className="btn btn-filled btn-gradient-1 btn-md"
             >
               <UploadIcon />
               레시피 업로드
