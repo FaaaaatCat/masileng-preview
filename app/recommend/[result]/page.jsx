@@ -4,15 +4,26 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 
 const WEATHER_LABEL = {
-  sunny: "맑음", cloudy: "약간 흐림", rainy: "높은 비",
-  overcast: "구름 많음", storm: "폭풍우", foggy: "안개",
-  hot: "더움", cold: "추움", snowy: "눈",
+  sunny: "맑음",
+  cloudy: "약간 흐림",
+  rainy: "높은 비",
+  overcast: "구름 많음",
+  storm: "폭풍우",
+  foggy: "안개",
+  hot: "더움",
+  cold: "추움",
+  snowy: "눈",
 };
 const SITUATION_LABEL = {
-  party: "파티", anniversary: "기념일", formal: "격식있게",
-  bright_date: "밝은 데이트", night_date: "심야 데이트",
-  nightout: "밤밖에 말까", deep_talk: "진중한 대화",
-  alone: "혼자의 휴일", whatever: "상관 없음",
+  party: "파티",
+  anniversary: "기념일",
+  formal: "격식있게",
+  bright_date: "밝은 데이트",
+  night_date: "심야 데이트",
+  nightout: "밤밖에 말까",
+  deep_talk: "진중한 대화",
+  alone: "혼자의 휴일",
+  whatever: "상관 없음",
 };
 const LOCATION_LABEL = { indoor: "집에서", outdoor: "밖에서" };
 
@@ -28,6 +39,9 @@ export default function RecommendResultPage() {
   const situationLabel = SITUATION_LABEL[situation] ?? situation;
   const locationLabel = LOCATION_LABEL[location] ?? location;
 
+  const imgSrc =
+    "https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg";
+
   return (
     <div
       className="common-card"
@@ -36,30 +50,79 @@ export default function RecommendResultPage() {
         background: "var(--dark-2)",
         border: "1.5px solid var(--dark-2)",
         boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+        overflow: "hidden",
+        padding: 0,
       }}
     >
-      <div className="common-card-inner items-center" style={{ gap: 32 }}>
-        <span className="dark-badge">추천 결과</span>
-
+      {/* 상단 히어로 이미지 */}
+      <div style={{ position: "relative", width: "100%", height: 400 }}>
+        <img
+          src={imgSrc}
+          alt="애플 모히토"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+          onError={(e) => {
+            e.target.style.display = "none";
+          }}
+        />
         <div
           style={{
-            width: 160,
-            height: 160,
-            borderRadius: "var(--r-md)",
-            overflow: "hidden",
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(to bottom, transparent -50%, var(--dark-2) 100%)",
+          }}
+        />
+        <div
+          className="flex flex-col items-center gap-4"
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
           }}
         >
-          <img
-            src="https://www.thecocktaildb.com/images/media/drink/metwgh1606770327.jpg"
-            alt="애플 모히토"
-            style={{ objectFit: "cover" }}
-            onError={(e) => {
-              e.target.style.display = "none";
-            }}
-          />
-        </div>
+          <p className="common-title-lg" style={{color:"white"}}>추천 결과</p>
 
-        <div className="flex flex-col gap-3 items-center">
+          <div
+            style={{
+              width: 160,
+              height: 160,
+              borderRadius: "var(--r-md)",
+              overflow: "hidden",
+              flexShrink: 0,
+              boxShadow:"0 24px 60px rgba(0,0,0,0.3)"
+            }}
+          >
+            <img
+              src={imgSrc}
+              alt="애플 모히토"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+              onError={(e) => {
+                e.target.style.display = "none";
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="common-card-inner items-center"
+        style={{ gap: 32, paddingTop: 0 }}
+      >
+        <div
+          className="flex flex-col gap-3 items-center"
+          style={{ marginTop: 40 }}
+        >
           <p
             className="common-title-sm"
             style={{ color: "var(--dark-8)", letterSpacing: "0.08em" }}
@@ -101,7 +164,7 @@ export default function RecommendResultPage() {
                   className="common-list-item-tag"
                   style={{
                     background: "var(--dark-3)",
-                    border:"1px solid var(--dark-6)",
+                    border: "1px solid var(--dark-6)",
                     color: "var(--dark-8)",
                   }}
                 >
