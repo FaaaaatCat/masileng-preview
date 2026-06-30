@@ -164,7 +164,7 @@
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
-  min-width: 160px;
+  min-width: 200px;
   background: #fff;
   border: 1.5px solid var(--ui-line-light);
   border-radius: var(--r-md);
@@ -174,7 +174,9 @@
   padding: 6px;
 }
 .nav-user-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   padding: 9px 14px;
   border-radius: var(--r-sm);
@@ -195,6 +197,29 @@
 .nav-user-item:hover {
   background: var(--page-bg-gray);
   color: var(--font-title);
+}
+.nav-user-item--mypage {
+  font-weight: 600;
+  color: var(--font-title);
+}
+.nav-user-item--mypage .nav-user-item-icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--r-full);
+  background: var(--coral);
+  color: #fff;
+  flex-shrink: 0;
+}
+.nav-user-item--mypage .nav-user-item-icon-bg svg {
+  margin: 0 !important;
+  stroke: #fff !important;
+}
+.nav-user-item--mypage svg:last-child {
+  margin-left: auto;
+  color: var(--font-sub2);
 }
 .nav-user-divider {
   height: 1px;
