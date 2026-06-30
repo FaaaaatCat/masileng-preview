@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
+import { XIcon, ArrowLeftIcon, SearchIcon, PlusIcon, TrashIcon, UploadBoxIcon } from "../../components/icons";
 import { SelectFilter } from "../../components/FilterBar";
 import INGREDIENTS_DATA from "../../data/ingredients.json";
 import IngredientRequestModal from "../../components/IngredientRequestModal";
@@ -178,19 +179,7 @@ export default function UploadPage() {
   return (
     <>
       <Link href="/" className="upload-intro-close" aria-label="홈으로">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          width="20"
-          height="20"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
+        <XIcon />
       </Link>
       {ingToast && (
         <div
@@ -209,19 +198,7 @@ export default function UploadPage() {
               className="btn btn-transparent btn-md"
               aria-label="홈으로"
             >
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                width="16"
-                height="16"
-              >
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
+              <ArrowLeftIcon />
               홈으로 돌아가기
             </Link>
             <h1 className="upload-heading">칵테일 레시피 작성</h1>
@@ -732,7 +709,7 @@ export default function UploadPage() {
                     ) : (
                       <div className="upload-photo-empty">
                         <div className="upload-photo-icon-wrap">
-                          <UploadPhotoIcon />
+                          <UploadBoxIcon />
                         </div>
                         <p className="upload-photo-text">
                           사진을 드래그하거나 클릭하세요
@@ -803,7 +780,7 @@ export default function UploadPage() {
                   임시저장
                 </button>
                 <p className="upload-notice">
-                  등록된 레시피는 48시간 내 검토 후 공개됩니다.
+                  적합하지 않은 콘텐츠는 등록이 제한될 수 있습니다.
                 </p>
               </div>
             </div>
@@ -840,77 +817,3 @@ function StarIconSolid({ size = 20, filled = false }) {
   );
 }
 
-function SearchIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      width="14"
-      height="14"
-    >
-      <circle cx="11" cy="11" r="7" />
-      <line x1="16.5" y1="16.5" x2="21" y2="21" />
-    </svg>
-  );
-}
-
-function PlusIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      width="14"
-      height="14"
-    >
-      <line x1="12" y1="5" x2="12" y2="19" />
-      <line x1="5" y1="12" x2="19" y2="12" />
-    </svg>
-  );
-}
-
-function TrashIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      width="18"
-      height="18"
-    >
-      <polyline points="3 6 5 6 21 6" />
-      <path d="M19 6l-1 14H6L5 6" />
-      <path d="M10 11v6M14 11v6" />
-      <path d="M9 6V4h6v2" />
-    </svg>
-  );
-}
-
-function UploadPhotoIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      width="22"
-      height="22"
-    >
-      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-      <polyline points="17 8 12 3 7 8" />
-      <line x1="12" y1="3" x2="12" y2="15" />
-    </svg>
-  );
-}

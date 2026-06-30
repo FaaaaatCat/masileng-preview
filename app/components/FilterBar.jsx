@@ -1,13 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { BASE_SPIRITS, THEMES } from "../data/constants.json";
-import { SearchIcon, ChevronIcon, XIcon, ResetIcon } from "./icons";
-
-const CheckIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-    strokeLinecap="round" strokeLinejoin="round" width="10" height="10">
-    <path d="M20 6 9 17l-5-5" />
-  </svg>
-);
+import { SearchIcon, ChevronIcon, XIcon, ResetIcon, CheckIcon } from "./icons";
 
 export function SelectFilter({ value, onChange, onClear, placeholder, children, size = "large", styleVariant = "select-style-filter" }) {
   const [open, setOpen] = useState(false);

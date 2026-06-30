@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { XIcon } from "../../components/icons";
 
 const WEATHER_OPTIONS = [
   { key: "sunny",    icon: "/recommend_icon/Property 1=1.sun.png",         label: "맑음" },
@@ -101,19 +102,7 @@ export default function RecommendFormPage() {
   return (
     <>
       <Link href="/" className="recommend-intro-close" aria-label="홈으로">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          width="18"
-          height="18"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
+        <XIcon />
       </Link>
 
       <div

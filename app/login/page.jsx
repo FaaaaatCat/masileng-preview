@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "../css/login.css";
+import { ArrowLeftIcon } from "../components/icons";
 
 /* ── 카카오 아이콘 */
 function KakaoIcon() {
@@ -47,15 +48,16 @@ export default function LoginPage() {
     const matched = MOCK_ACCOUNTS.find(
       (a) => a.email === id.trim() && a.pw === pw
     );
+    const DEFAULT_PROFILE = { profileBg: "#FFB3C6", profileImg: "profile_img" };
     if (matched) {
-      const user = { name: matched.name };
+      const user = { name: matched.name, ...DEFAULT_PROFILE };
       localStorage.setItem("masileng_user", JSON.stringify(user));
       window.dispatchEvent(new Event("masileng_auth"));
       router.push("/");
       return;
     }
 
-    const user = { name: id.trim() };
+    const user = { name: id.trim(), ...DEFAULT_PROFILE };
     localStorage.setItem("masileng_user", JSON.stringify(user));
     window.dispatchEvent(new Event("masileng_auth"));
     router.push("/");
@@ -65,10 +67,7 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <Link href="/" className="login-back">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-            strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-            <path d="M19 12H5M12 5l-7 7 7 7" />
-          </svg>
+          <ArrowLeftIcon />
           홈으로
         </Link>
 

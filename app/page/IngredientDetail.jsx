@@ -10,92 +10,12 @@ import POOL_RAW from "../data/pool.json";
 import { IMG_BASE } from "../data/constants.json";
 import { getCardTags } from "../data/detail-helpers";
 import SiteHeader from "../components/SiteHeader";
+import { ArrowLeftIcon, ArrowRightIcon, ChevronRightIcon, RocketIcon, BoxPlusIcon } from "../components/icons";
 
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 
 const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
-
-const ArrowLeftIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    width="18"
-    height="18"
-  >
-    <path d="M19 12H5M12 5l-7 7 7 7" />
-  </svg>
-);
-
-const ChevronRightIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    width="16"
-    height="16"
-  >
-    <polyline points="9 18 15 12 9 6" />
-  </svg>
-);
-
-const RocketIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    width="12"
-    height="12"
-  >
-    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-  </svg>
-);
-
-const PlusBoxIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    width="20"
-    height="20"
-  >
-    <rect x="3" y="3" width="18" height="18" rx="5" />
-    <line x1="12" y1="8" x2="12" y2="16" />
-    <line x1="8" y1="12" x2="16" y2="12" />
-  </svg>
-);
-
-const ArrowRightIcon = () => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    width="22"
-    height="22"
-  >
-    <line x1="5" y1="12" x2="19" y2="12" />
-    <polyline points="12 5 19 12 12 19" />
-  </svg>
-);
 
 // 재료별 쿠팡 관련상품 (mock)
 const PRODUCT_MAP = {
@@ -285,7 +205,7 @@ export default function IngredientDetail({ ing }) {
                         className={`basket-sparkle basket-sparkle--${i}`}
                       />
                     ))}
-                  {!isInBasket && <PlusBoxIcon />}
+                  {!isInBasket && <BoxPlusIcon />}
                   <span
                     className={`basket-btn-text${isAnimating ? " basket-btn-text--in" : ""}`}
                   >

@@ -61,6 +61,14 @@
   /* ── 배경색상 ─────────────────────── */
   --page-bg-gray: #f8f8f8; /* 서브페이지 */
   --page-bg-ivory: #fefdfc; /* 메인페이지 */
+  --page-sour: linear-gradient(0deg,#FFEBD3 0%, #d3e3c1 50%,  var(--page-bg-gray) 100%);
+  --page-party: linear-gradient(0deg, #F9ECFF 0%, #e0caea 50%,  var(--page-bg-gray) 100%);
+  --page-creamy: linear-gradient(0deg,  #FFEFE1 0%, #E7E9FF 50%, var(--page-bg-gray) 100%);
+  --page-sparkling: linear-gradient(0deg, #F8FBFE 0%, #d5e6f6 50%, var(--page-bg-gray) 100%);
+  --page-city: linear-gradient(0deg, #F8E8FF 0%, #cad0ed 50%, var(--page-bg-gray) 100%);
+  --page-tropical: linear-gradient(0deg, #d9e4bf 0%, #ffedd2 50%, var(--page-bg-gray) 100%);
+  --page-fruity: linear-gradient(0deg, #e8cfde 0%, var(--page-bg-gray) 100%);
+  --page-hot: linear-gradient(0deg, #FFF5F1 0%, #eccdc8 50%, var(--page-bg-gray) 100%);
 
   /* (2. semantic 컬러 - 폰트, 아이콘, ui-bg, ui-line, form-bg, form-line ) */
   /* ── 폰트 semantic ──────────────────────────────────── */

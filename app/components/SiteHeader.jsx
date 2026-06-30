@@ -4,9 +4,10 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NAV_ITEMS } from "../data/constants.json";
-import { UploadIcon } from "./icons";
+import { UploadIcon, ChevronIcon } from "./icons";
 import IngredientRequestModal from "./IngredientRequestModal";
 import TermsModal from "./TermsModal";
+import ProfileAvatar from "./ProfileAvatar";
 
 export default function SiteHeader({ activeNav, onNavClick }) {
   const [authUser, setAuthUser] = useState(null);
@@ -116,16 +117,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                   className="btn btn-lined btn-gray-light btn-sm"
                   onClick={() => setDropOpen((v) => !v)}
                 >
-                  {authUser.name} 님
-                  <svg
-                    viewBox="0 0 10 6"
-                    width="10"
-                    height="6"
-                    fill="currentColor"
-                    style={{ marginLeft: 5 }}
-                  >
-                    <path d="M0 0l5 6 5-6z" />
-                  </svg>
+                  <ProfileAvatar user={authUser} size={22} />
+                  {authUser.name}
+                  <ChevronIcon />
                 </button>
                 {dropOpen && (
                   <div className="nav-user-dropdown">

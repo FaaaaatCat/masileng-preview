@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { XIcon, ArrowRightIcon } from "../components/icons";
 
 const STEPS = [
   {
@@ -73,19 +74,7 @@ export default function UploadIntroPage() {
     <>
       <div className="upload-intro-page" ref={revealRef}>
         <Link href="/" className="upload-intro-close" aria-label="홈으로">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            width="20"
-            height="20"
-          >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
+          <XIcon />
         </Link>
 
         {/* ── Hero ── */}
@@ -248,20 +237,3 @@ export default function UploadIntroPage() {
   );
 }
 
-function ArrowRightIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      width="16"
-      height="16"
-    >
-      <line x1="5" y1="12" x2="19" y2="12" />
-      <polyline points="12 5 19 12 12 19" />
-    </svg>
-  );
-}

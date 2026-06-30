@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import INGREDIENTS from "../data/ingredients.json";
-import { SearchIcon } from "../components/icons";
+import { SearchIcon, BoxPlusIcon } from "../components/icons";
 import IngredientCard from "../components/IngredientCard";
 import "../css/ingredient-detail.css";
 
@@ -221,11 +221,7 @@ export default function IngredientsHome() {
               actionIcon={myIngIds.has(ing.id) ? (
                 <img src="/icon_my.svg" alt="내 재료" width="28" height="28" />
               ) : (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <line x1="12" y1="8" x2="12" y2="16" />
-                  <line x1="8" y1="12" x2="16" y2="12" />
-                </svg>
+                <BoxPlusIcon />
               )}
               actionTitle={myIngIds.has(ing.id) ? "갖고있는 재료입니다!" : "내 재료함에 담기"}
               showDesc

@@ -153,6 +153,13 @@
 .nav-user-wrap {
   position: relative;
 }
+.nav-user-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-size: 14px;
+}
 .nav-user-dropdown {
   position: absolute;
   top: calc(100% + 6px);

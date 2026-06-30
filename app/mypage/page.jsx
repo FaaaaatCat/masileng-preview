@@ -12,6 +12,7 @@ import SiteHeader from "../components/SiteHeader";
 import IngredientCard from "../components/IngredientCard";
 import { getCardTags } from "../data/detail-helpers";
 import "../css/mypage.css";
+import { EditIcon, CheckIcon, CartIcon, MinusIcon, PersonIcon } from "../components/icons";
 
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 
@@ -44,15 +45,6 @@ const CAT_EMOJI = {
   "기타": "🧪",
 };
 
-function PencilIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-    </svg>
-  );
-}
 
 function DiceIcon() {
   return (
@@ -68,14 +60,6 @@ function DiceIcon() {
   );
 }
 
-function CheckIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  );
-}
 
 function ProfileEditPopup({ user, onClose, onSave }) {
   const [name, setName] = useState(user.profileName || user.name);
@@ -138,10 +122,7 @@ function ProfileEditPopup({ user, onClose, onSave }) {
             type="button"
             onClick={() => setActiveTab("img")}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="8" r="4"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
-            </svg>
+            <PersonIcon />
           </button>
           <button
             className={`profile-edit-tab${activeTab === "color" ? " active" : ""}`}
@@ -286,7 +267,7 @@ export default function MyPage() {
                 type="button"
                 onClick={() => setShowEditPopup(true)}
               >
-                <PencilIcon /> 프로필 편집
+                <EditIcon /> 프로필 편집
               </button>
             </div>
 
@@ -430,10 +411,7 @@ export default function MyPage() {
                                             }}
                                           >
                                             {item}
-                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                                              <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                                              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-                                            </svg>
+                                            <CartIcon />
                                           </button>
                                         ))
                                       ) : (
@@ -455,11 +433,7 @@ export default function MyPage() {
                             ing={ing}
                             isRemoving={removingIds.has(ing.id)}
                             onAction={handleRemoveFridge}
-                            actionIcon={
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                              </svg>
-                            }
+                            actionIcon={<MinusIcon />}
                             actionTitle="냉장고에서 삭제"
                             imgHeight="200px"
                             titleSize="md"
