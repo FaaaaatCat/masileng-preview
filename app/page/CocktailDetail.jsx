@@ -12,7 +12,7 @@ import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
 import { SelectFilter } from "../components/FilterBar";
 import SiteHeader from "../components/SiteHeader";
 import ProfileAvatar from "../components/ProfileAvatar";
-import { ChevronRightIcon, ArrowLeftIcon, ShareIcon, FlameIcon, TagIcon, EditIcon, TrashIcon, SwapIcon, PlusIcon, UploadBoxIcon, SearchIcon } from "../components/icons";
+import { ChevronRightIcon, ArrowLeftIcon, ShareIcon, FlameIcon, TagIcon, EditIcon, TrashIcon, SwapIcon, PlusIcon, UploadBoxIcon, SearchIcon, ExpandIcon, ChevronLeftIcon, XIcon } from "../components/icons";
 
 // 재료 표시명 → ingredients.json id 매핑
 const ING_LINK_MAP = {
@@ -199,6 +199,59 @@ const ILLUST_MAP = {
   "옐로 버드": "491_옐로 버드.png",
 };
 
+const THEME_SILHOUETTE = {
+  sour: "sour",
+  party: "party",
+  creamy: "creamy",
+  sparkling: "sparkling",
+  city: "city",
+  tropical: "tropical",
+  fruity: "fruity",
+  hot: "hot",
+};
+
+function seededRand(seed) {
+  const x = Math.sin(seed + 1) * 10000;
+  return x - Math.floor(x);
+}
+
+function ThemePattern({ silhouette }) {
+  const SIZE = 308;
+  const COLS = 14;
+  const ROWS = 2;
+
+  const tiles = [];
+  const seed0 = silhouette.charCodeAt(0);
+  for (let row = 0; row < ROWS; row++) {
+    const offsetX = row % 2 === 1 ? SIZE / 2 : 0;
+    for (let col = 0; col < COLS; col++) {
+      // 두 개의 독립 난수로 판단해 연속 제거가 덜 생기도록
+      const r1 = seededRand(seed0 * 7 + row * 31 + col * 13);
+      const r2 = seededRand(seed0 * 3 + row * 17 + col * 29 + 5);
+      if (r1 < 0.55 && r2 < 0.73) continue;
+      tiles.push({
+        key: `${row}-${col}`,
+        left: col * SIZE + offsetX - SIZE / 2,
+        bottom: row * SIZE,
+      });
+    }
+  }
+
+  return (
+    <div className="detail-theme-pattern">
+      {tiles.map(({ key, left, bottom }) => (
+        <img
+          key={key}
+          src={`/theme/silhouette/${silhouette}.svg`}
+          alt=""
+          style={{ left, bottom }}
+          draggable={false}
+        />
+      ))}
+    </div>
+  );
+}
+
 // ─ icons ─
 const HeartIcon = ({ filled }) => (
   <svg
@@ -307,6 +360,7 @@ export default function CocktailDetail({
 }) {
   const [liked, setLiked] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
+  const [lightbox, setLightbox] = useState(null); // null | index
   const [unitMode, setUnitMode] = useState("ml");
   const [authorDropOpen, setAuthorDropOpen] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
@@ -1015,6 +1069,9 @@ export default function CocktailDetail({
             : undefined
         }
       >
+        {card.theme && THEME_SILHOUETTE[card.theme.toLowerCase()] && (
+          <ThemePattern silhouette={THEME_SILHOUETTE[card.theme.toLowerCase()]} />
+        )}
         <div className="detail-inner">
           <div className="detail-grid">
             {/* ── 왼쪽: 뒤로가기 + 이미지 갤러리 ── */}
@@ -1025,10 +1082,7 @@ export default function CocktailDetail({
                 목록으로
               </Link>
 
-              <div
-                className="detail-gallery-main"
-                style={undefined}
-              >
+              <div className="detail-gallery-main" style={undefined}>
                 <img
                   src={
                     activeThumb === 0 && overrideData?.photoPreview
@@ -1036,10 +1090,16 @@ export default function CocktailDetail({
                       : activeImg.url
                   }
                   alt={card.t}
-                  onError={(e) => {
-                    e.target.src = "/theme.png";
-                  }}
+                  onClick={() => setLightbox(activeThumb)}
+                  onError={(e) => { e.target.src = "/theme.png"; }}
                 />
+                <button
+                  className="detail-gallery-expand"
+                  onClick={() => setLightbox(activeThumb)}
+                  aria-label="확대"
+                >
+                  <ExpandIcon />
+                </button>
               </div>
               {showIllust && (
                 <div className={`grid gap-2 h-[80px]`} style={{ gridTemplateColumns: `repeat(${thumbImgs.length}, 1fr)` }}>
@@ -1565,7 +1625,7 @@ export default function CocktailDetail({
                       })}
                     </div>
                   )}
-                  <div className="flex items-center gap-2.5 mt-4 pt-4 border-t border-[var(--ui-line-light)]">
+                  <div className="flex items-center gap-2.5 border-t border-[var(--ui-line-light)]" style={{marginTop:16, paddingTop:16}}>
                     <CommentAvatar user={currentUser} size={32} />
                     <input
                       className="detail-comment-input"
@@ -1633,6 +1693,46 @@ export default function CocktailDetail({
           </div>
         </div>
       </div>
+      {lightbox !== null && (
+        <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="닫기">
+            <XIcon />
+          </button>
+
+          {thumbImgs.length > 1 && (
+            <button
+              className="lightbox-arrow lightbox-arrow--prev"
+              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + thumbImgs.length) % thumbImgs.length); }}
+              aria-label="이전"
+            >
+              <ChevronLeftIcon />
+            </button>
+          )}
+
+          <div className="lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={thumbImgs[lightbox]?.url}
+              alt={card.t}
+              className="lightbox-img"
+              onError={(e) => { e.target.src = "/theme.png"; }}
+            />
+          </div>
+
+          {thumbImgs.length > 1 && (
+            <button
+              className="lightbox-arrow lightbox-arrow--next"
+              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % thumbImgs.length); }}
+              aria-label="다음"
+            >
+              <ChevronRightIcon />
+            </button>
+          )}
+
+          {thumbImgs.length > 1 && (
+            <div className="lightbox-counter">{lightbox + 1} / {thumbImgs.length}</div>
+          )}
+        </div>
+      )}
     </>
   );
 }

@@ -218,3 +218,17 @@ export const UploadBoxIcon = () => (
     <line x1="12" y1="3" x2="12" y2="15" />
   </svg>
 );
+
+export const ExpandIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
+    strokeLinecap="round" strokeLinejoin="round" width="14" height="14">
+    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+  </svg>
+);
+
+export const ChevronLeftIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+    strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+    <path d="m15 18-6-6 6-6" />
+  </svg>
+);
