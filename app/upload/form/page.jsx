@@ -178,7 +178,16 @@ export default function UploadPage() {
   return (
     <>
       <Link href="/" className="upload-intro-close" aria-label="홈으로">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="20" height="20">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          width="20"
+          height="20"
+        >
           <line x1="18" y1="6" x2="6" y2="18" />
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
@@ -195,14 +204,29 @@ export default function UploadPage() {
         <div className="upload-inner">
           {/* Hero */}
           <div className="upload-hero">
-            <span className="upload-badge">✨ 새 레시피 등록</span>
-            <h1 className="upload-heading">
-              나만의 칵테일을
-              <br />
-              공유해보세요
-            </h1>
-            <p className="upload-sub">
-              레시피를 등록하면 바텐더 팀의 검토 후 공개됩니다.
+            <Link
+              href="/"
+              className="btn btn-transparent btn-md"
+              aria-label="홈으로"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                width="16"
+                height="16"
+              >
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+              홈으로 돌아가기
+            </Link>
+            <h1 className="upload-heading">칵테일 레시피 작성</h1>
+            <p className="common-body-lg-light">
+              등록한 레시피는 모두가 볼 수 있는 레시피로 공개됩니다.
             </p>
           </div>
 
@@ -348,9 +372,19 @@ export default function UploadPage() {
                                   ing.name && setOpenSuggestId(ing.id)
                                 }
                                 onBlur={() =>
-                                  setTimeout(() => { setOpenSuggestId(null); setHighlightIdx(-1); }, 150)
+                                  setTimeout(() => {
+                                    setOpenSuggestId(null);
+                                    setHighlightIdx(-1);
+                                  }, 150)
                                 }
-                                onKeyDown={(e) => handleSuggestKeyDown(e, ing.id, updateIngredient, ing.name)}
+                                onKeyDown={(e) =>
+                                  handleSuggestKeyDown(
+                                    e,
+                                    ing.id,
+                                    updateIngredient,
+                                    ing.name,
+                                  )
+                                }
                               />
                               {openSuggestId === ing.id && ing.name.trim() && (
                                 <div className="ing-suggest-dropdown">
@@ -490,39 +524,48 @@ export default function UploadPage() {
                                     ing.name && setOpenSuggestId(ing.id)
                                   }
                                   onBlur={() =>
-                                    setTimeout(
-                                      () => { setOpenSuggestId(null); setHighlightIdx(-1); },
-                                      150,
+                                    setTimeout(() => {
+                                      setOpenSuggestId(null);
+                                      setHighlightIdx(-1);
+                                    }, 150)
+                                  }
+                                  onKeyDown={(e) =>
+                                    handleSuggestKeyDown(
+                                      e,
+                                      ing.id,
+                                      updateSubIngredient,
+                                      ing.name,
                                     )
                                   }
-                                  onKeyDown={(e) => handleSuggestKeyDown(e, ing.id, updateSubIngredient, ing.name)}
                                 />
                                 {openSuggestId === ing.id &&
                                   ing.name.trim() && (
                                     <div className="ing-suggest-dropdown">
                                       {getSuggestions(ing.name).length > 0 ? (
-                                        getSuggestions(ing.name).map((item, i) => (
-                                          <div
-                                            key={item.id}
-                                            className={`ing-suggest-item${highlightIdx === i ? " highlighted" : ""}`}
-                                            onMouseDown={() => {
-                                              updateSubIngredient(
-                                                ing.id,
-                                                "name",
-                                                item.n,
-                                              );
-                                              setOpenSuggestId(null);
-                                              setHighlightIdx(-1);
-                                            }}
-                                          >
-                                            <span className="ing-suggest-name">
-                                              {item.n}
-                                            </span>
-                                            <span className="ing-suggest-cat">
-                                              {item.cat}
-                                            </span>
-                                          </div>
-                                        ))
+                                        getSuggestions(ing.name).map(
+                                          (item, i) => (
+                                            <div
+                                              key={item.id}
+                                              className={`ing-suggest-item${highlightIdx === i ? " highlighted" : ""}`}
+                                              onMouseDown={() => {
+                                                updateSubIngredient(
+                                                  ing.id,
+                                                  "name",
+                                                  item.n,
+                                                );
+                                                setOpenSuggestId(null);
+                                                setHighlightIdx(-1);
+                                              }}
+                                            >
+                                              <span className="ing-suggest-name">
+                                                {item.n}
+                                              </span>
+                                              <span className="ing-suggest-cat">
+                                                {item.cat}
+                                              </span>
+                                            </div>
+                                          ),
+                                        )
                                       ) : emptyMsgQuery === ing.name ? (
                                         <div className="ing-suggest-empty">
                                           <span>
@@ -735,21 +778,15 @@ export default function UploadPage() {
                           : "—"}
                       </span>
                     </div>
+
                     <div className="upload-summary-row">
-                      <span className="upload-summary-label">단계</span>
-                      <span className="upload-summary-value">
-                        {filledSteps.length > 0
-                          ? `${filledSteps.length}단계`
-                          : "—"}
-                      </span>
-                    </div>
-                    {theme && (
-                      <div className="upload-summary-tags">
+                      <span className="upload-summary-label">테마</span>
+                      {theme && (
                         <span className="upload-summary-tag">
                           {THEMES.find((t) => t.id === theme)?.en}
                         </span>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -100,8 +100,8 @@ export default function SiteHeader({ activeNav, onNavClick }) {
               >
                 앱 다운로드
                 <div className="nav-download-flyout">
-                  <span className="nav-download-option">안드로이드</span>
-                  <span className="nav-download-option">애플</span>
+                  <a className="nav-download-option" href="https://play.google.com/store/apps/details?id=com.padro.my_cocktail_app" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>안드로이드</a>
+                  <a className="nav-download-option" href="https://apps.apple.com/us/app/%EB%A7%88%EC%8B%A4%EB%9E%AD-%ED%95%A8%EA%BB%98-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EC%B9%B5%ED%85%8C%EC%9D%BC-%EA%B0%80%EC%9D%B4%EB%93%9C/id1623101096" target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>애플</a>
                 </div>
               </a>
             </div>

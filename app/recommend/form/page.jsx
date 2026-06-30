@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const WEATHER_OPTIONS = [
   { key: "sunny",    icon: "/recommend_icon/Property 1=1.sun.png",         label: "맑음" },
   { key: "cloudy",   icon: "/recommend_icon/Property 1=2.littleCloud.png", label: "약간 흐림" },
-  { key: "rainy",    icon: "/recommend_icon/Property 1=3.rainy.png",       label: "높은 비" },
+  { key: "rainy",    icon: "/recommend_icon/Property 1=3.rainy.png",       label: "보슬 비" },
   { key: "overcast", icon: "/recommend_icon/Property 1=4.cloudy.png",      label: "구름 많음" },
   { key: "storm",    icon: "/recommend_icon/Property 1=5.thunder.png",     label: "폭풍우" },
   { key: "foggy",    icon: "/recommend_icon/Property 1=6.fog.png",         label: "안개" },
@@ -21,7 +22,7 @@ const SITUATION_OPTIONS = [
   { key: "formal",      icon: "/recommend_icon/Property 1=3.suit.png",     label: "격식있게" },
   { key: "bright_date", icon: "/recommend_icon/Property 1=4.sunny.png",    label: "밝은 데이트" },
   { key: "night_date",  icon: "/recommend_icon/Property 1=5.night.png",    label: "심야 데이트" },
-  { key: "nightout",    icon: "/recommend_icon/Property 1=6.something.png",label: "밤밖에 말까" },
+  { key: "nightout",    icon: "/recommend_icon/Property 1=6.something.png",label: "썸일까 말까" },
   { key: "deep_talk",   icon: "/recommend_icon/Property 1=7.talk.png",     label: "진중한 대화" },
   { key: "alone",       icon: "/recommend_icon/Property 1=8.solo.png",     label: "혼자의 휴일" },
   { key: "whatever",    icon: "/recommend_icon/Property 1=9.noMatter.png", label: "상관 없음" },
@@ -80,7 +81,7 @@ export default function RecommendFormPage() {
 
   if (loading) {
     return (
-      <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "var(--dark-0)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 24 }}>
+      <>
         <span style={{ fontSize: 80, animation: "rec-bounce 0.8s ease-in-out infinite alternate" }}>
           🍹
         </span>
@@ -93,38 +94,27 @@ export default function RecommendFormPage() {
             to   { transform: translateY(-20px) rotate(6deg); }
           }
         `}</style>
-      </div>
+      </>
     );
   }
 
   return (
     <>
-      <span className="dark-badge">COCKTAIL RECOMMENDER</span>
-
-      <div className="text-center">
-        <h1 className="common-title-lg" style={{ fontSize: 40, color: "var(--gray-9)", letterSpacing: "-0.03em", marginBottom: 8 }}>
-          오늘의 칵테일
-        </h1>
-        <p className="common-body-lg-light" style={{ color: "var(--gray-4)" }}>
-          당신에게 딱 맞는 한 잔을 찾아드려요
-        </p>
-      </div>
-
-      <div className="flex items-center gap-2">
-        {STEPS.map((_, i) => (
-          <span
-            key={i}
-            style={{
-              width: i === step ? 24 : 8,
-              height: 8,
-              borderRadius: "var(--r-full)",
-              background: i === step ? "var(--coral)" : "var(--dark-4)",
-              transition: "all 0.3s",
-              display: "block",
-            }}
-          />
-        ))}
-      </div>
+      <Link href="/" className="recommend-intro-close" aria-label="홈으로">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          width="18"
+          height="18"
+        >
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </Link>
 
       <div
         className="common-card"
@@ -134,36 +124,66 @@ export default function RecommendFormPage() {
           background: "var(--dark-2)",
           border: "1.5px solid var(--dark-2)",
           boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+          overflow:"hidden"
         }}
       >
-        <div className={`common-card-inner ${cardAnim ? ` recommend-card-${cardAnim}` : ""}`}>
-          <div className="flex items-center justify-between" style={{ height: 32, flexShrink: 0 }}>
-            <p className="common-body-sm-bold" style={{ color: "var(--dark-6)", letterSpacing: "0.1em" }}>
+        <div
+          className={`common-card-inner ${cardAnim ? ` recommend-card-${cardAnim}` : ""}`}
+        >
+          <div
+            className="flex items-center justify-between"
+            style={{ height: 32, flexShrink: 0 }}
+          >
+            <p
+              className="common-body-sm-bold"
+              style={{ color: "var(--dark-6)", letterSpacing: "0.1em" }}
+            >
               STEP 0{step + 1}
             </p>
             {step > 0 && (
-              <button onClick={goBack} className="btn btn-transparent btn-sm btn-dark">
+              <button
+                onClick={goBack}
+                className="btn btn-transparent btn-sm btn-dark"
+              >
                 ← 이전
               </button>
             )}
           </div>
 
-          <h2 className="common-title-lg" style={{ fontSize: 22, color: "var(--dark-9)", whiteSpace: "pre-line", flexShrink: 0 }}>
+          <h2
+            className="common-title-lg"
+            style={{
+              fontSize: 22,
+              color: "var(--dark-9)",
+              whiteSpace: "pre-line",
+              flexShrink: 0,
+            }}
+          >
             {current.title}
           </h2>
 
           <div className="h-full">
-            <div className="grid gap-3 w-full" style={{ gridTemplateColumns: `repeat(${current.grid}, 1fr)` }}>
+            <div
+              className="grid gap-3 w-full"
+              style={{ gridTemplateColumns: `repeat(${current.grid}, 1fr)` }}
+            >
               {current.options.map((opt) => {
                 const isSelected = selections[step] === opt.key;
-                const sizeClass = current.grid === 2 ? "recommend-option--grid2" : "recommend-option--grid3";
+                const sizeClass =
+                  current.grid === 2
+                    ? "recommend-option--grid2"
+                    : "recommend-option--grid3";
                 return (
                   <button
                     key={opt.key}
                     onClick={() => select(opt.key)}
                     className={`recommend-option ${sizeClass}${isSelected ? " recommend-option--selected" : ""}`}
                   >
-                    <img src={opt.icon} alt={opt.label} className="recommend-option-icon" />
+                    <img
+                      src={opt.icon}
+                      alt={opt.label}
+                      className="recommend-option-icon"
+                    />
                     <span className="recommend-option-label">{opt.label}</span>
                   </button>
                 );

@@ -1171,18 +1171,13 @@ export default function CocktailDetail({
                         </span>
                       </div>
                       <div className="upload-summary-row">
-                        <span className="upload-summary-label">단계</span>
-                        <span className="upload-summary-value">
-                          {editSteps.filter((s) => s.text.trim()).length}단계
-                        </span>
-                      </div>
-                      {editTheme && (
-                        <div className="upload-summary-tags">
+                        <span className="upload-summary-label">테마</span>
+                        {editTheme && (
                           <span className="upload-summary-tag">
                             {editTheme}
                           </span>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

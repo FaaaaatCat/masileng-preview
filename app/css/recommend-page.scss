@@ -97,8 +97,8 @@
   align-items: center;
   justify-content: center;
   padding: 40px 24px 60px;
-  gap: 28px;
-  width: 540px;
+  gap: 16px;
+  width: 530px;
   margin: 0 auto;
 }
 
@@ -232,7 +232,7 @@
 .recommend-intro-heading {
   text-align: center;
   line-height: 1.15;
-  font-size: clamp(40px, 8vw, 72px);
+  font-size: clamp(40px, 8vw, 60px);
   font-weight: 900;
   color: var(--gray-8);
   letter-spacing: -0.02em;

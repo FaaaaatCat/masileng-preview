@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 const FLOATING_EMOJIS = [
   { emoji: "🍋", top: "18%", left: "6%",  size: 28, delay: 0,   duration: 6.2, rotate: -8 },
@@ -80,15 +81,15 @@ export default function RecommendIntroPage() {
       </div>
 
       {/* CTA 버튼 */}
-      <a href="/recommend/form" className="w-100 btn btn-filled btn-gradient-1 btn-xxl" style={{ marginTop: 20 }}>
+      <Link href="/recommend/form" className="w-100 btn btn-filled btn-gradient-1 btn-xxl" style={{ margin: "20px 0 -20px 0" }}>
         <span className="recommend-intro-cta-shimmer" />
         칵테일 추천받기 →
-      </a>
+      </Link>
 
       {/* 홈으로 돌아가기 버튼 */}
-      <a href="/" className="btn btn-transparent btn-dark btn-xxl" aria-label="홈으로">
+      <Link href="/" className="btn btn-transparent btn-dark btn-xxl" aria-label="홈으로">
         ← 홈으로 돌아가기
-      </a>
+      </Link>
     </>
   );
 }

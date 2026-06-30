@@ -212,7 +212,7 @@ $btn-sizes: (
 
 // ── lined ──
 .btn-lined {
-  background: transparent;
+  background: var(--form-bg);
   &.btn-brand {
     border: 1.5px solid var(--coral);
     color: var(--coral);
@@ -270,11 +270,11 @@ $btn-sizes: (
   padding: 0;
   transition: color var(--time-fast);
   &:hover {
-    color: var(--coral-strong);
+    color: var(--font-title);
   }
 
   &.btn-dark {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.4);
     &:hover {
       color: rgba(255, 255, 255, 0.5);
     }
