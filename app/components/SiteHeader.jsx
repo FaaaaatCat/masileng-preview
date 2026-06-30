@@ -8,12 +8,14 @@ import { UploadIcon, ChevronIcon } from "./icons";
 import IngredientRequestModal from "./IngredientRequestModal";
 import TermsModal from "./TermsModal";
 import ProfileAvatar from "./ProfileAvatar";
+import LoginModal from "./LoginModal";
 
 export default function SiteHeader({ activeNav, onNavClick }) {
   const [authUser, setAuthUser] = useState(null);
   const [dropOpen, setDropOpen] = useState(false);
   const [ingRequestOpen, setIngRequestOpen] = useState(false);
   const [termsOpen, setTermsOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const dropRef = useRef(null);
   const router = useRouter();
 
@@ -155,9 +157,12 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 )}
               </div>
             ) : (
-              <Link href="/login" className="btn btn-lined btn-gray-light btn-md">
+              <button
+                className="btn btn-lined btn-gray-light btn-md"
+                onClick={() => setLoginOpen(true)}
+              >
                 로그인
-              </Link>
+              </button>
             )}
             <Link
               href="/upload"
@@ -176,6 +181,9 @@ export default function SiteHeader({ activeNav, onNavClick }) {
     )}
     {termsOpen && (
       <TermsModal onClose={() => setTermsOpen(false)} />
+    )}
+    {loginOpen && (
+      <LoginModal onClose={() => setLoginOpen(false)} />
     )}
     </>
   );

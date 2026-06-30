@@ -1,170 +1,48 @@
-﻿/* ─────────────────────────────────────────────
-   Login page
-───────────────────────────────────────────── */
-.login-page {
-  min-height: 100vh;
-  background: var(--page-bg-gray);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-}
 
-.login-card {
-  background: #fff;
-  border-radius: var(--r-xl);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 24px 64px -16px rgba(0, 0, 0, 0.12);
-  padding: 48px 40px 40px;
+
+.login-cheers-img {
   width: 100%;
-  max-width: 420px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  max-width: 240px;
+  align-self: center;
+  margin-bottom: -8px;
+  pointer-events: none;
+  user-select: none;
 }
 
-.login-logo {
-  margin-bottom: 24px;
-}
-.login-logo img {
-  height: 30px;
-}
 
-.login-title {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--font-title);
-  letter-spacing: -0.04em;
-  margin-bottom: 6px;
-}
-
-.login-sub {
-  font-size: 14px;
-  color: var(--font-placeholder);
-  margin-bottom: 28px;
-}
-
-/* ── 소셜 로그인 */
+/* ── 소셜 버튼 */
 .btn-kakao,
 .btn-google {
   width: 100%;
-  border-radius: var(--r-md);
+  border-radius: 16px;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  transition:
-    filter var(--time-fast),
-    transform 0.12s;
-  margin-bottom: 10px;
+  padding: 14px 0;
+  transition: filter var(--time-fast), transform 0.12s;
 }
 .btn-kakao:hover,
 .btn-google:hover {
   filter: brightness(0.96);
   transform: translateY(-1px);
 }
-
 .btn-kakao {
   background: #fee500;
   color: rgba(0, 0, 0, 0.85);
 }
-
 .btn-google {
-  background: var(--page-bg-gray);
-  color: var(--font-body);
-  border: 1.5px solid var(--form-line);
+  background: #fff;
+  color: #333;
+  border: 1px solid var(--ui-line-light);
 }
-
 .social-icon {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-}
-
-/* ── 구분선 */
-.login-divider {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 18px 0;
-  color: var(--font-muted);
-  font-size: 13px;
-  font-weight: 500;
-}
-.login-divider::before,
-.login-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--ui-bg-light);
-}
-
-/* ── 폼 */
-.login-form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* 로그인 input — 고유 크기/간격 override */
-.common-input.login-field {
-  height: 52px;
-  border-radius: var(--r-md);
-  border-width: 1.5px;
-  padding: 0 18px;
-  font-size: 15px;
-}
-
-.login-error {
-  font-size: 13px;
-  color: var(--coral);
-  font-weight: 500;
-  padding: 0 4px;
-}
-
-.btn-login-submit {
-  width: 100%;
-  border-radius: var(--r-md);
-  font-weight: 700;
-  margin-top: 4px;
-  letter-spacing: -0.01em;
-}
-
-/* ── 가입 링크 */
-.login-register {
-  margin-top: 22px;
-  font-size: 13.5px;
-  color: var(--font-sub2);
-}
-.login-register a {
-  color: var(--coral);
-  font-weight: 700;
-  text-decoration: none;
-}
-.login-register a:hover {
-  text-decoration: underline;
-}
-
-/* ── 뒤로가기 */
-.login-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--font-sub2);
-  text-decoration: none;
-  align-self: flex-start;
-  margin-bottom: 16px;
-  transition: color var(--time-fast);
-}
-.login-back:hover {
-  color: var(--font-title);
 }
