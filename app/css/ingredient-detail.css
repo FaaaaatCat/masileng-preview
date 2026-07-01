@@ -24,7 +24,8 @@
 /* ── Left ── */
 .ing-detail-left {
   position: sticky;
-  top: 88px;
+  top: 0;
+  padding-top: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;

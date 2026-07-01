@@ -260,7 +260,7 @@ $btn-sizes: (
 
 // ── transparent ──
 .btn-transparent {
-  color: var(--font-placeholder);
+  color: var(--font-title);
   background: none;
   border: none;
   cursor: pointer;
@@ -269,14 +269,16 @@ $btn-sizes: (
   align-items: center;
   padding: 0;
   transition: color var(--time-fast);
+  opacity: 0.5;
   &:hover {
-    color: var(--font-title);
+    opacity: 1;
   }
 
   &.btn-dark {
-    color: rgba(255, 255, 255, 0.4);
+    color: white;
+    opacity: 0.4;
     &:hover {
-      color: rgba(255, 255, 255, 0.7);
+      opacity: 0.7;
     }
   }
 }
@@ -766,13 +768,6 @@ $btn-sizes: (
   height: 40px;
   border-radius: var(--r-sm);
   padding: 10px 14px;
-
-  &--icon {
-    padding-left: 30px;
-  }
-  &--icon.has-value {
-    padding-left: 12px;
-  }
 }
 
 .common-textarea {
@@ -788,4 +783,134 @@ $btn-sizes: (
   &--icon.has-value {
     padding-left: 12px;
   }
+}
+
+// ─── input 변형 ───────────────────────────────
+
+// 용량 입력 (재료 row)
+.common-input--amount {
+  width: 68px;
+  flex-shrink: 0;
+  text-align: center;
+  padding: 0 8px;
+}
+
+// 조제 단계 textarea layout
+.common-input.upload-step {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.6;
+}
+
+// ─── 재료명 검색 wrapper ──────────────────────
+
+.common-input-wrap {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  & .common-input--icon {
+    padding-left: 36px;
+  }
+
+  > svg {
+    position: absolute;
+    left: 11px;
+    color: var(--icon-dark);
+    pointer-events: none;
+    flex-shrink: 0;
+  }
+
+  // 값이 있으면 아이콘 숨김
+  &:has(input:not(:placeholder-shown)) {
+    & .common-input--icon {
+      padding-left: 14px;
+    }
+    > svg,
+    > span {
+      display: none;
+    }
+  }
+}
+
+// ─── 재료 매칭 태그 ───────────────────────────
+
+.ing-matched-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: 0 10px;
+  background: var(--purple-soft);
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--purple);
+  white-space: nowrap;
+  max-width: 100%;
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ─── 재료명 자동완성 드롭다운 ─────────────────
+
+.ing-suggest-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--form-bg);
+  border: 1.5px solid var(--form-line);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-panel);
+  z-index: 100;
+  overflow: hidden;
+  padding: 4px;
+}
+
+.ing-suggest-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  gap: 8px;
+  transition: background var(--time-fast);
+
+  &:hover,
+  &.highlighted {
+    background: var(--form-bg-hover);
+  }
+}
+
+.ing-suggest-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--font-title);
+}
+
+.ing-suggest-cat {
+  font-size: 11px;
+  color: var(--font-placeholder);
+  white-space: nowrap;
+}
+
+.ing-suggest-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  font-size: 12px;
+  color: var(--font-placeholder);
+}
+
+.ing-suggest-request-btn {
+  align-self: flex-end;
 }

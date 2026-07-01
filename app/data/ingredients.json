@@ -34,5 +34,6 @@
   { "id": 33, "n": "설탕 시럽",     "en": "Sugar",                "cat": "기타",          "myIng": false, "desc": "설탕을 물에 녹인 심플 시럽으로 단맛 조절에 사용" },
   { "id": 34, "n": "계란 흰자",     "en": "Egg white",            "cat": "기타",          "myIng": false, "desc": "거품을 만들어 부드러운 질감과 거품 층을 연출" },
   { "id": 35, "n": "생크림",        "en": "Light cream",          "cat": "기타",          "myIng": false, "desc": "부드럽고 풍부한 질감을 주는 유제품으로 플로팅에도 활용" },
-  { "id": 36, "n": "앙고스투라 비터스", "en": "Angostura Bitters", "cat": "기타",         "myIng": false, "desc": "허브와 향신료로 만든 쓴맛의 조향제로 복잡한 풍미를 더함" }
+  { "id": 36, "n": "앙고스투라 비터스", "en": "Angostura Bitters", "cat": "기타",         "myIng": false, "desc": "허브와 향신료로 만든 쓴맛의 조향제로 복잡한 풍미를 더함" },
+  { "id": 37, "n": "얼음",            "en": "Ice",                  "cat": "기타",          "myIng": false, "desc": "칵테일을 만든다면 거의 필수인 재료죠. 미지근한 칵테일만큼 맛없는 건 없거든요." }
 ]

@@ -1,15 +1,15 @@
 "use client";
+import NoticeBanner from '../components/NoticeBanner';
+import CocktailForm from '../components/CocktailForm';
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import "../css/cocktail-detail.css";
 
 import POOL_RAW from "../data/pool.json";
-import INGREDIENTS_DATA from "../data/ingredients.json";
 import CHALLENGE_CARDS_RAW from "../data/challenge_cards.json";
 import { IMG_BASE } from "../data/constants.json";
 import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
-import { SelectFilter } from "../components/FilterBar";
 import SiteHeader from "../components/SiteHeader";
 import ProfileAvatar from "../components/ProfileAvatar";
 import {
@@ -22,8 +22,6 @@ import {
   TrashIcon,
   SwapIcon,
   PlusIcon,
-  UploadBoxIcon,
-  SearchIcon,
   ExpandIcon,
   ChevronLeftIcon,
   XIcon,
@@ -370,22 +368,8 @@ export default function CocktailDetail({
 
   // ── 편집 모드 state
   const [isEditing, setIsEditing] = useState(false);
-  const [overrideData, setOverrideData] = useState(null); // 저장된 수정값
-  const [editTitle, setEditTitle] = useState("");
-  const [editDesc, setEditDesc] = useState("");
-  const [editAbv, setEditAbv] = useState("high");
-  const [editBase, setEditBase] = useState("위스키");
-  const [editTheme, setEditTheme] = useState("Sour");
-  const [editDifficulty, setEditDifficulty] = useState(0);
-  const [editDiffMode, setEditDiffMode] = useState("ai");
-  const [editIngredients, setEditIngredients] = useState([]);
-  const [editSteps, setEditSteps] = useState([]);
-  const [editOpenSuggestId, setEditOpenSuggestId] = useState(null);
-  const [editPhotoPreview, setEditPhotoPreview] = useState(null);
-  const [editDragging, setEditDragging] = useState(false);
-  const nextIngId = useRef(100);
-  const nextStepId = useRef(100);
-  const editFileRef = useRef(null);
+  const [overrideData, setOverrideData] = useState(null);
+  const [editInitialValues, setEditInitialValues] = useState(null);
 
   useEffect(() => {
     const s = localStorage.getItem("masileng_user");
@@ -432,108 +416,36 @@ export default function CocktailDetail({
     currentUser &&
     (currentUser.profileName || currentUser.name) === card.u;
 
-  // ── 편집 헬퍼
-  const getSuggestions = (query) => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
-    return INGREDIENTS_DATA.filter(
-      (item) =>
-        item.n.toLowerCase().includes(q) || item.en.toLowerCase().includes(q),
-    ).slice(0, 8);
-  };
-
   const startEditing = () => {
-    const base = overrideData?.base ?? card.base;
-    const theme = overrideData?.theme ?? card.theme;
-    const src = getCardDetail({ ...card, ...overrideData });
-    setEditTitle(overrideData?.title ?? card.t);
-    setEditDesc(overrideData?.desc ?? card.desc);
-    setEditAbv(overrideData?.abv ?? card.abv);
-    setEditBase(base);
-    setEditTheme(theme);
-    setEditDiffMode(overrideData?.diffMode ?? "ai");
-    setEditDifficulty(overrideData?.difficulty ?? 0);
-    setEditIngredients(
-      (overrideData?.ingredients ?? src.ingredients).map((ing, i) => {
-        const raw = ing.amount ?? "";
-        if (raw === "적당량")
-          return { id: i + 1, name: ing.name, amount: "", unit: "적당량" };
-        const unit = raw.replace(/^[\d.]+\s*/, "") || "ml";
-        const amount = raw.replace(/[^0-9.]/g, "");
+    const cardSrc = getCardDetail({ ...card, ...overrideData });
+    setEditInitialValues({
+      title:        overrideData?.title        ?? card.t,
+      desc:         overrideData?.desc         ?? card.desc,
+      abv:          overrideData?.abv          ?? card.abv,
+      base:         overrideData?.base         ?? card.base,
+      theme:        overrideData?.theme        ?? card.theme,
+      diffMode:     overrideData?.diffMode     ?? 'ai',
+      difficulty:   overrideData?.difficulty   ?? 0,
+      photoPreview: overrideData?.photoPreview ?? null,
+      ingredients: (overrideData?.ingredients ?? cardSrc.ingredients).map((ing, i) => {
+        const raw = ing.amount ?? '';
+        if (raw === '적당량') return { id: i + 1, name: ing.name, amount: '', unit: '적당량' };
+        const unit   = raw.replace(/^[d.]+s*/, '') || 'ml';
+        const amount = raw.replace(/[^0-9.]/g, '');
         return { id: i + 1, name: ing.name, amount, unit };
       }),
-    );
-    nextIngId.current = src.ingredients.length + 1;
-    setEditSteps(
-      (overrideData?.steps ?? src.steps).map((s, i) => ({
+      steps: (overrideData?.steps ?? cardSrc.steps).map((s, i) => ({
         id: i + 1,
-        text: typeof s === "string" ? s : s.text,
+        text: typeof s === 'string' ? s : s.text,
       })),
-    );
-    nextStepId.current = src.steps.length + 1;
-    setEditPhotoPreview(overrideData?.photoPreview ?? null);
+    });
     setIsEditing(true);
   };
 
-  const handleEditPhotoFile = (file) => {
-    if (!file || !file.type.startsWith("image/")) return;
-    const reader = new FileReader();
-    reader.onload = (e) => setEditPhotoPreview(e.target.result);
-    reader.readAsDataURL(file);
-  };
-
-  const saveEditing = () => {
-    setOverrideData({
-      title: editTitle.trim() || card.t,
-      desc: editDesc,
-      abv: editAbv,
-      base: editBase,
-      theme: editTheme,
-      diffMode: editDiffMode,
-      difficulty: editDifficulty,
-      photoPreview: editPhotoPreview,
-      ingredients: editIngredients.map((ing) => ({
-        emoji: "🍹",
-        name: ing.name,
-        type: "",
-        abvStr: null,
-        amount: ing.unit === "적당량" ? "적당량" : `${ing.amount}${ing.unit}`,
-      })),
-      steps: editSteps.map((s) => s.text),
-    });
+  const saveEditing = (data) => {
+    setOverrideData(data);
     setIsEditing(false);
   };
-
-  const addEditIng = () => {
-    setEditIngredients((prev) => [
-      ...prev,
-      { id: nextIngId.current++, name: "", amount: "", unit: "ml" },
-    ]);
-  };
-  const removeEditIng = (id) => {
-    if (editIngredients.length <= 2) return;
-    setEditIngredients((prev) => prev.filter((i) => i.id !== id));
-  };
-  const updateEditIng = (id, field, value) =>
-    setEditIngredients((prev) =>
-      prev.map((i) => {
-        if (i.id !== id) return i;
-        const u = { ...i, [field]: value };
-        if (field === "unit" && value === "적당량") u.amount = "";
-        return u;
-      }),
-    );
-
-  const addEditStep = () => {
-    setEditSteps((prev) => [...prev, { id: nextStepId.current++, text: "" }]);
-  };
-  const removeEditStep = (id) =>
-    setEditSteps((prev) => prev.filter((s) => s.id !== id));
-  const updateEditStep = (id, value) =>
-    setEditSteps((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, text: value } : s)),
-    );
-
   useEffect(() => {
     if (!authorDropOpen) return;
     const handler = (e) => {
@@ -592,478 +504,19 @@ export default function CocktailDetail({
   // 영문명: desc 에서 추출, 없으면 pool 이미지명
 
   // ── 편집 모드 렌더
-  if (isEditing) {
-    const EDIT_THEMES = [
-      { id: "Sour", ko: "상큼발랄", img: "/theme/sour.png" },
-      { id: "Sparkling", ko: "탄산감", img: "/theme/sparkling.png" },
-      { id: "Fruity", ko: "과일 잔뜩", img: "/theme/fruity.png" },
-      { id: "City", ko: "쎈 도수", img: "/theme/city.png" },
-      { id: "Creamy", ko: "크리미", img: "/theme/cramy.png" },
-      { id: "Hot", ko: "향신료", img: "/theme/hot.png" },
-      { id: "Party", ko: "대중적인", img: "/theme/party.png" },
-      { id: "Tropical", ko: "이국적인", img: "/theme/tropical.png" },
-    ];
-
-    return (
-      <>
-        <SiteHeader />
-        <div className="upload-page">
-          <div className="upload-inner">
-            {/* Hero */}
-            <div style={{ marginBottom: 40 }}>
-              <button className="btn btn-transparent btn-md" onClick={() => setIsEditing(false)}>
-                <ArrowLeftIcon />
-                페이지로 돌아가기
-              </button>
-              <h1 className="upload-heading">{editTitle || card.t}</h1>
-              <p className="common-body-lg-light">
-                레시피를 수정하고 있어요 ✏️
-              </p>
-            </div>
-
-            <div className="upload-grid">
-              {/* ── 왼쪽 */}
-              <div className="upload-left">
-                {/* 기본 정보 */}
-                <div className="common-card">
-                  <div className="common-card-header">
-                    <span className="upload-card-icon">📋</span>
-                    <h2 className="common-title-md">기본 정보</h2>
-                  </div>
-                  <div className="common-card-inner">
-                    <div className="upload-field">
-                      <label className="upload-label">칵테일 이름 *</label>
-                      <input
-                        className="common-input"
-                        type="text"
-                        value={editTitle}
-                        onChange={(e) => setEditTitle(e.target.value)}
-                      />
-                    </div>
-                    <div className="upload-field">
-                      <label className="upload-label">한 줄 소개</label>
-                      <textarea
-                        className="common-textarea"
-                        value={editDesc}
-                        onChange={(e) => setEditDesc(e.target.value)}
-                        rows={3}
-                      />
-                    </div>
-                    <div className="upload-field">
-                      <label className="upload-label upload-label--icon">
-                        <svg
-                          width="11"
-                          height="11"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          stroke="none"
-                        >
-                          <path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z" />
-                        </svg>{" "}
-                        난이도
-                      </label>
-                      <div className="upload-diff-row">
-                        <button
-                          className={`btn btn-sm upload-diff-btn${editDiffMode === "ai" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
-                          onClick={() => {
-                            setEditDiffMode("ai");
-                            setEditDifficulty(0);
-                          }}
-                        >
-                          AI 추천
-                        </button>
-                        <button
-                          className={`btn btn-sm upload-diff-btn${editDiffMode === "manual" ? " btn-filled btn-brand" : " btn-lined btn-gray-light"}`}
-                          onClick={() => setEditDiffMode("manual")}
-                        >
-                          직접 선택
-                        </button>
-                        <div
-                          className={`upload-stars${editDiffMode === "manual" ? " manual" : " ai"}`}
-                        >
-                          {editDiffMode === "ai" ? (
-                            <span className="upload-stars-ai-msg">
-                              AI가 레시피를 읽고 자동으로 난이도를
-                              추천해드립니다
-                            </span>
-                          ) : (
-                            [1, 2, 3, 4, 5].map((n) => (
-                              <button
-                                key={n}
-                                className={`upload-star${editDifficulty >= n ? " filled" : ""}`}
-                                onClick={() => setEditDifficulty(n)}
-                              >
-                                <svg
-                                  width="20"
-                                  height="20"
-                                  viewBox="0 0 24 24"
-                                  fill={
-                                    editDifficulty >= n
-                                      ? "currentColor"
-                                      : "none"
-                                  }
-                                  stroke="currentColor"
-                                  strokeWidth={
-                                    editDifficulty >= n ? "0" : "1.8"
-                                  }
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                >
-                                  <path d="M12 2.5l2.636 5.597 6.044.877-4.37 4.188 1.031 5.943L12 16.25l-5.34 2.855 1.03-5.943-4.37-4.188 6.044-.877z" />
-                                </svg>
-                              </button>
-                            ))
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 카테고리 태그 */}
-                <div className="common-card">
-                  <div className="common-card-header">
-                    <span className="upload-card-icon">🏷️</span>
-                    <h2 className="common-title-md">카테고리 태그</h2>
-                  </div>
-                  <div className="common-card-inner">
-                    <div className="upload-theme-grid">
-                      {EDIT_THEMES.map((t) => (
-                        <button
-                          key={t.id}
-                          className={`upload-theme-item${editTheme === t.id ? " active" : ""}`}
-                          onClick={() => setEditTheme(t.id)}
-                        >
-                          <img
-                            src={t.img}
-                            alt={t.id}
-                            className="upload-theme-img"
-                          />
-                          <span className="upload-theme-en">{t.id}</span>
-                          <span className="upload-theme-ko">{t.ko}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* 재료 */}
-                <div className="common-card">
-                  <div className="common-card-header">
-                    <span className="upload-card-icon">🧪</span>
-                    <h2 className="common-title-md">재료</h2>
-                  </div>
-                  <div className="common-card-inner">
-                    <div className="upload-ing-list">
-                      {editIngredients.map((ing, idx) => {
-                        const isNoAmt = ing.unit === "적당량";
-                        return (
-                          <div key={ing.id} className="upload-ing-row">
-                            <div className="upload-ing-num">{idx + 1}</div>
-                            <div className="upload-ing-inputs">
-                              <div
-                                className={`common-input-wrap${ing.name ? " has-value" : ""}`}
-                                style={{ position: "relative" }}
-                              >
-                                <span
-                                  style={{
-                                    position: "absolute",
-                                    left: 10,
-                                    top: "50%",
-                                    transform: "translateY(-50%)",
-                                    pointerEvents: "none",
-                                    color: "var(--font-placeholder)",
-                                    display: "flex",
-                                  }}
-                                >
-                                  <SearchIcon />
-                                </span>
-                                <input
-                                  className={`common-input common-input--icon${ing.name ? " has-value" : ""}`}
-                                  type="text"
-                                  placeholder="재료명 검색"
-                                  value={ing.name}
-                                  onChange={(e) => {
-                                    updateEditIng(
-                                      ing.id,
-                                      "name",
-                                      e.target.value,
-                                    );
-                                    setEditOpenSuggestId(ing.id);
-                                  }}
-                                  onFocus={() =>
-                                    ing.name && setEditOpenSuggestId(ing.id)
-                                  }
-                                  onBlur={() =>
-                                    setTimeout(
-                                      () => setEditOpenSuggestId(null),
-                                      150,
-                                    )
-                                  }
-                                />
-                                {editOpenSuggestId === ing.id &&
-                                  ing.name.trim() &&
-                                  getSuggestions(ing.name).length > 0 && (
-                                    <div className="ing-suggest-dropdown">
-                                      {getSuggestions(ing.name).map((item) => (
-                                        <div
-                                          key={item.id}
-                                          className="ing-suggest-item"
-                                          onMouseDown={() => {
-                                            updateEditIng(
-                                              ing.id,
-                                              "name",
-                                              item.n,
-                                            );
-                                            setEditOpenSuggestId(null);
-                                          }}
-                                        >
-                                          <span className="ing-suggest-name">
-                                            {item.n}
-                                          </span>
-                                          <span className="ing-suggest-cat">
-                                            {item.cat}
-                                          </span>
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
-                              </div>
-                              <input
-                                className={`common-input common-input--amount${isNoAmt ? " disabled" : ""}`}
-                                type="text"
-                                placeholder="용량"
-                                value={isNoAmt ? "" : ing.amount}
-                                disabled={isNoAmt}
-                                onChange={(e) =>
-                                  updateEditIng(
-                                    ing.id,
-                                    "amount",
-                                    e.target.value,
-                                  )
-                                }
-                              />
-                              <SelectFilter
-                                value={ing.unit}
-                                onChange={(v) =>
-                                  updateEditIng(ing.id, "unit", v)
-                                }
-                                placeholder="단위"
-                                size="medium"
-                                styleVariant="select-style-default"
-                              >
-                                <optgroup label="계량 단위">
-                                  <option value="ml">ml</option>
-                                  <option value="oz">oz</option>
-                                  <option value="tsp">tsp</option>
-                                  <option value="tbsp">tbsp</option>
-                                  <option value="dash">dash</option>
-                                </optgroup>
-                                <optgroup label="기타">
-                                  <option value="적당량">적당량</option>
-                                  <option value="개">개</option>
-                                  <option value="조각">조각</option>
-                                </optgroup>
-                              </SelectFilter>
-                            </div>
-                            <button
-                              className="upload-ing-del"
-                              onClick={() => removeEditIng(ing.id)}
-                            >
-                              <TrashIcon />
-                            </button>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <button
-                      className="upload-add-btn btn-lg"
-                      onClick={addEditIng}
-                    >
-                      <PlusIcon /> 재료 추가
-                    </button>
-                  </div>
-                </div>
-
-                {/* 조제 방법 */}
-                <div className="common-card">
-                  <div className="common-card-header">
-                    <span className="upload-card-icon">📝</span>
-                    <h2 className="common-title-md">조제 방법</h2>
-                  </div>
-                  <div className="common-card-inner">
-                    <div className="upload-steps-list">
-                      {editSteps.map((step, idx) => (
-                        <div key={step.id} className="upload-step-row">
-                          <div className="upload-step-num-wrap">
-                            <div className="upload-ing-num">{idx + 1}</div>
-                          </div>
-                          <textarea
-                            className="common-textarea upload-step"
-                            value={step.text}
-                            onChange={(e) =>
-                              updateEditStep(step.id, e.target.value)
-                            }
-                            rows={2}
-                          />
-                          {editSteps.length > 1 && (
-                            <button
-                              className="upload-ing-del"
-                              onClick={() => removeEditStep(step.id)}
-                            >
-                              <TrashIcon />
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    <button
-                      className="upload-add-btn btn-lg"
-                      onClick={addEditStep}
-                    >
-                      <PlusIcon /> 단계 추가
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* ── 오른쪽 sticky */}
-              <div className="upload-right">
-                {/* 대표 사진 */}
-                <div className="common-card">
-                  <div className="common-card-inner upload-card-body--photo">
-                    <p className="common-title-sm">대표 사진</p>
-                    <p
-                      className="common-body-sm-light"
-                      style={{ color: "var(--font-placeholder)" }}
-                    >
-                      잘리지 않게 약간 여백을 두고 촬영해주세요
-                    </p>
-                    <div
-                      className={`upload-photo-zone${editDragging ? " dragging" : ""}${editPhotoPreview || mainImg ? " has-photo" : ""}`}
-                      onClick={() => editFileRef.current?.click()}
-                      onDragOver={(e) => {
-                        e.preventDefault();
-                        setEditDragging(true);
-                      }}
-                      onDragLeave={() => setEditDragging(false)}
-                      onDrop={(e) => {
-                        e.preventDefault();
-                        setEditDragging(false);
-                        handleEditPhotoFile(e.dataTransfer.files[0]);
-                      }}
-                    >
-                      {editPhotoPreview ? (
-                        <img
-                          src={editPhotoPreview}
-                          alt="대표 사진"
-                          className="upload-photo-preview"
-                        />
-                      ) : mainImg ? (
-                        <img
-                          src={mainImg.url}
-                          alt="현재 대표 사진"
-                          className="upload-photo-preview"
-                        />
-                      ) : (
-                        <div className="upload-photo-empty">
-                          <div className="upload-photo-icon-wrap">
-                            <UploadBoxIcon />
-                          </div>
-                          <p className="upload-photo-text">
-                            사진을 드래그하거나 클릭하세요
-                          </p>
-                          <p className="upload-photo-sub">
-                            JPG, PNG, WEBP 지원
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                    <input
-                      ref={editFileRef}
-                      type="file"
-                      accept="image/*"
-                      style={{ display: "none" }}
-                      onChange={(e) => handleEditPhotoFile(e.target.files[0])}
-                    />
-                  </div>
-                </div>
-
-                <div className="common-card">
-                  <div className="common-card-inner">
-                    <p className="common-title-sm">레시피 요약</p>
-                    <div className="upload-summary">
-                      <div className="upload-summary-row">
-                        <span className="upload-summary-label">
-                          칵테일 이름
-                        </span>
-                        <span className="upload-summary-value">
-                          {editTitle || "—"}
-                        </span>
-                      </div>
-                      <div className="upload-summary-row">
-                        <span className="upload-summary-label">베이스주</span>
-                        <span className="upload-summary-value">{editBase}</span>
-                      </div>
-                      <div className="upload-summary-row">
-                        <span className="upload-summary-label">도수</span>
-                        <span className="upload-summary-value">
-                          {
-                            {
-                              none: "무알콜",
-                              low: "낮은 도수",
-                              high: "높은 도수",
-                            }[editAbv]
-                          }
-                        </span>
-                      </div>
-                      <div className="upload-summary-row">
-                        <span className="upload-summary-label">재료</span>
-                        <span className="upload-summary-value">
-                          {editIngredients.filter((i) => i.name.trim()).length}
-                          가지
-                        </span>
-                      </div>
-                      <div className="upload-summary-row">
-                        <span className="upload-summary-label">테마</span>
-                        {editTheme && (
-                          <span className="upload-summary-tag">
-                            {editTheme}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="upload-actions">
-                  <button
-                    className={`btn btn-filled btn-gradient-2 btn-lg${editTitle.trim() ? "" : " btn-disable"}`}
-                    disabled={!editTitle.trim()}
-                    onClick={saveEditing}
-                  >
-                    수정 완료
-                  </button>
-                  <button
-                    className="btn btn-lined btn-gray-light btn-lg"
-                    onClick={() => setIsEditing(false)}
-                  >
-                    취소
-                  </button>
-                  <p className="upload-notice">
-                    수정사항은 새로고침 시 초기화됩니다.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
+  if (isEditing) return (
+    <CocktailForm
+      mode="edit"
+      initialValues={editInitialValues}
+      existingPhoto={mainImg?.url}
+      onSubmit={saveEditing}
+      onCancel={() => setIsEditing(false)}
+    />
+  );
 
   return (
     <>
+      <NoticeBanner />
       <SiteHeader />
 
       <div
