@@ -182,34 +182,35 @@ export default function RecommendResultPage() {
               신선한 민트와 사과 향이 어우러진 상큼하고 예쁜 칵테일이 단숨에
               기분을 끌어올려 줄 거예요.
             </p>
+            {(weatherLabel || situationLabel || locationLabel) && (
+              <div className="flex gap-2 flex-wrap justify-center">
+                {[weatherLabel, situationLabel, locationLabel]
+                  .filter(Boolean)
+                  .map((label) => (
+                    <span
+                      key={label}
+                      className="common-list-item-tag"
+                      style={{
+                        background: "var(--dark-3)",
+                        border: "1px solid var(--dark-6)",
+                        color: "var(--dark-8)",
+                      }}
+                    >
+                      #{label}
+                    </span>
+                  ))}
+              </div>
+            )}
           </div>
-          {/* 선택한 태그들 */}
-          {(weatherLabel || situationLabel || locationLabel) && (
-            <div className="flex gap-2 flex-wrap justify-center">
-              {[weatherLabel, situationLabel, locationLabel]
-                .filter(Boolean)
-                .map((label) => (
-                  <span
-                    key={label}
-                    className="common-list-item-tag"
-                    style={{
-                      background: "var(--dark-3)",
-                      border: "1px solid var(--dark-6)",
-                      color: "var(--dark-8)",
-                    }}
-                  >
-                    #{label}
-                  </span>
-                ))}
-            </div>
-          )}
-          {/* 버튼들 */}
+          {/* 메인 버튼 */}
           <Link
             href="/cocktail/1"
-            className="btn btn-filled btn-brand btn-xl w-full"
+            className="w-100 btn btn-filled btn-gradient-1 btn-xxl"
           >
+            <span className="recommend-intro-cta-shimmer" />
             '애플 모히토' 레시피 보기
           </Link>
+          {/* 버튼들 */}
           <div className="flex gap-6 justify-center">
             <Link
               href="/"

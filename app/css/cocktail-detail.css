@@ -9,21 +9,56 @@
 }
 .detail-theme-pattern {
   position: fixed;
-  bottom: -20%;
+  bottom: -12%;
   left: 0;
   right: 0;
   height: 620px;
   overflow: visible;
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.1) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
 }
+@keyframes float-up {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
+@keyframes float-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(14px); }
+}
+@keyframes float-left {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-16px); }
+}
+@keyframes float-right {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(12px); }
+}
+@keyframes float-diag1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -14px); }
+}
+@keyframes float-diag2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-12px, 10px); }
+}
+
 .detail-theme-pattern img {
   position: absolute;
   width: 308px;
   height: 308px;
   user-select: none;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 .detail-inner {
@@ -151,8 +186,13 @@
   opacity: 0.8;
   transition: opacity 0.15s;
 }
-.lightbox-close:hover { opacity: 1; }
-.lightbox-close svg { width: 20px; height: 20px; }
+.lightbox-close:hover {
+  opacity: 1;
+}
+.lightbox-close svg {
+  width: 20px;
+  height: 20px;
+}
 .lightbox-img-wrap {
   max-width: 60vw;
   max-height: 88vh;
@@ -182,12 +222,24 @@
   justify-content: center;
   color: #fff;
   opacity: 0.8;
-  transition: background 0.15s, opacity 0.15s;
+  transition:
+    background 0.15s,
+    opacity 0.15s;
 }
-.lightbox-arrow:hover { background: rgba(255, 255, 255, 0.28); opacity: 1; }
-.lightbox-arrow svg { width: 20px; height: 20px; }
-.lightbox-arrow--prev { left: 32px; }
-.lightbox-arrow--next { right: 32px; }
+.lightbox-arrow:hover {
+  background: rgba(255, 255, 255, 0.28);
+  opacity: 1;
+}
+.lightbox-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+.lightbox-arrow--prev {
+  left: 32px;
+}
+.lightbox-arrow--next {
+  right: 32px;
+}
 .lightbox-counter {
   position: absolute;
   bottom: 20px;
@@ -439,7 +491,7 @@
 .detail-ing-sub-label {
   font-size: 13px;
   font-weight: 500;
-  color: var(--point);
+  color: var(--purple);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -456,10 +508,10 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  border: 1.5px solid var(--point);
+  border: 1.5px solid var(--purple);
   font-size: 10px;
   font-weight: 700;
-  color: var(--point);
+  color: var(--purple);
   display: inline-flex;
   align-items: center;
   justify-content: center;

@@ -6,21 +6,11 @@ import POOL_RAW from "../data/challenge_pool.json";
 import CARDS_RAW from "../data/challenge_cards.json";
 import { IMG_BASE } from "../data/constants.json";
 import { HeartIcon, ChatIcon, ChevronRightIcon } from "./icons";
+import { PROFILE_BG_COLORS, PROFILE_IMGS } from "../data/profilePresets";
+import ProfileAvatar from "./ProfileAvatar";
 
 export const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
 export const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
-
-const AVATAR_COLORS = [
-  "#FFB3C6", "#B5EAD7", "#C4B5FD", "#BAD6F8",
-  "#FEFDC1", "#FFCFC9", "#FFB700", "#C8E600",
-  "#4ECDC4", "#87CEEB", "#2563EB", "#B0BEC5",
-  "#607D8B", "#E63946", "#F472B6", "#9C27B0",
-  "#FED7AA", "#A7F3D0", "#FCA5A5", "#93C5FD",
-];
-const AVATAR_IMGS = [
-  "profile_img",
-  ...Array.from({ length: 27 }, (_, i) => `profile_img-${i + 1}`),
-];
 
 function hashStr(s) {
   let h = 0;
@@ -30,21 +20,9 @@ function hashStr(s) {
 
 function UserAvatar({ username, size = 28, overrideBg, overrideImg }) {
   const h = hashStr(username);
-  const bg = overrideBg ?? AVATAR_COLORS[h % AVATAR_COLORS.length];
-  const img = overrideImg ?? AVATAR_IMGS[(h >> 4) % AVATAR_IMGS.length];
-  return (
-    <div style={{
-      width: size, height: size, borderRadius: "50%",
-      background: bg, overflow: "hidden", flexShrink: 0,
-      display: "flex", alignItems: "center", justifyContent: "center",
-    }}>
-      <img
-        src={`/character_illust/profile_img/${img}.png`}
-        alt={username}
-        style={{ width: "100%", height: "100%", objectFit: "contain", padding: 2 }}
-      />
-    </div>
-  );
+  const profileBg = overrideBg ?? PROFILE_BG_COLORS[h % PROFILE_BG_COLORS.length];
+  const profileImg = overrideImg ?? PROFILE_IMGS[(h >> 4) % PROFILE_IMGS.length];
+  return <ProfileAvatar user={{ profileBg, profileImg }} size={size} />;
 }
 
 export default function ChallengeCard({ card, currentUser }) {
@@ -91,8 +69,8 @@ export default function ChallengeCard({ card, currentUser }) {
               <UserAvatar
                 username={card.u}
                 size={28}
-                overrideBg={isMe ? (currentUser.profileBg ?? AVATAR_COLORS[0]) : undefined}
-                overrideImg={isMe ? (currentUser.profileImg ?? AVATAR_IMGS[0]) : undefined}
+                overrideBg={isMe ? (currentUser.profileBg ?? PROFILE_BG_COLORS[0]) : undefined}
+                overrideImg={isMe ? (currentUser.profileImg ?? PROFILE_IMGS[0]) : undefined}
               />
               <span className="common-card-item-author-name">{card.u}</span>
             </button>

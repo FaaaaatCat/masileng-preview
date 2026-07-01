@@ -12,7 +12,22 @@ import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
 import { SelectFilter } from "../components/FilterBar";
 import SiteHeader from "../components/SiteHeader";
 import ProfileAvatar from "../components/ProfileAvatar";
-import { ChevronRightIcon, ArrowLeftIcon, ShareIcon, FlameIcon, TagIcon, EditIcon, TrashIcon, SwapIcon, PlusIcon, UploadBoxIcon, SearchIcon, ExpandIcon, ChevronLeftIcon, XIcon } from "../components/icons";
+import {
+  ChevronRightIcon,
+  ArrowLeftIcon,
+  ShareIcon,
+  FlameIcon,
+  TagIcon,
+  EditIcon,
+  TrashIcon,
+  SwapIcon,
+  PlusIcon,
+  UploadBoxIcon,
+  SearchIcon,
+  ExpandIcon,
+  ChevronLeftIcon,
+  XIcon,
+} from "../components/icons";
 
 // 재료 표시명 → ingredients.json id 매핑
 const ING_LINK_MAP = {
@@ -315,7 +330,6 @@ function FlavorDots({ value, max = 5 }) {
 const ILLUST_FILES = Object.values(ILLUST_MAP);
 const CHALLENGE_CARDS = CHALLENGE_CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
 
-
 const FIRST_BG = "#FFB3C6";
 const FIRST_IMG = "profile_img";
 
@@ -324,28 +338,10 @@ function CommentAvatar({ user, size = 32 }) {
   const img = user?.profileImg || FIRST_IMG;
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: bg,
-        overflow: "hidden",
-        flexShrink: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      className="profile-avatar-wrap"
+      style={{ width: size, height: size, background: bg }}
     >
-      <img
-        src={`/character_illust/profile_img/${img}.png`}
-        alt={user?.profileName || user?.name || "guest"}
-        style={{
-          width: "100%",
-          height: "100%",
-          objectFit: "contain",
-          padding: 3,
-        }}
-      />
+      <img src={`/character_illust/profile_img/${img}.png`} alt={user?.profileName || user?.name || "guest"} />
     </div>
   );
 }
@@ -613,15 +609,16 @@ export default function CocktailDetail({
         <SiteHeader />
         <div className="upload-page">
           <div className="upload-inner">
-            <div className="upload-hero">
-              <span className="upload-badge">✏️ 레시피 수정</span>
-              <h1 className="upload-heading">
-                {editTitle || card.t}
-                <br />
-                <span style={{ fontSize: "0.6em", color: "var(--font-sub)" }}>
-                  레시피를 수정하고 있어요
-                </span>
-              </h1>
+            {/* Hero */}
+            <div style={{ marginBottom: 40 }}>
+              <button className="btn btn-transparent btn-md" onClick={() => setIsEditing(false)}>
+                <ArrowLeftIcon />
+                페이지로 돌아가기
+              </button>
+              <h1 className="upload-heading">{editTitle || card.t}</h1>
+              <p className="common-body-lg-light">
+                레시피를 수정하고 있어요 ✏️
+              </p>
             </div>
 
             <div className="upload-grid">
@@ -768,7 +765,17 @@ export default function CocktailDetail({
                                 className={`common-input-wrap${ing.name ? " has-value" : ""}`}
                                 style={{ position: "relative" }}
                               >
-                                <span style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--font-placeholder)", display: "flex" }}>
+                                <span
+                                  style={{
+                                    position: "absolute",
+                                    left: 10,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    pointerEvents: "none",
+                                    color: "var(--font-placeholder)",
+                                    display: "flex",
+                                  }}
+                                >
                                   <SearchIcon />
                                 </span>
                                 <input
@@ -873,8 +880,7 @@ export default function CocktailDetail({
                       className="upload-add-btn btn-lg"
                       onClick={addEditIng}
                     >
-                      <PlusIcon />{" "}
-                      재료 추가
+                      <PlusIcon /> 재료 추가
                     </button>
                   </div>
                 </div>
@@ -915,8 +921,7 @@ export default function CocktailDetail({
                       className="upload-add-btn btn-lg"
                       onClick={addEditStep}
                     >
-                      <PlusIcon />{" "}
-                      단계 추가
+                      <PlusIcon /> 단계 추가
                     </button>
                   </div>
                 </div>
@@ -1070,7 +1075,9 @@ export default function CocktailDetail({
         }
       >
         {card.theme && THEME_SILHOUETTE[card.theme.toLowerCase()] && (
-          <ThemePattern silhouette={THEME_SILHOUETTE[card.theme.toLowerCase()]} />
+          <ThemePattern
+            silhouette={THEME_SILHOUETTE[card.theme.toLowerCase()]}
+          />
         )}
         <div className="detail-inner">
           <div className="detail-grid">
@@ -1091,7 +1098,9 @@ export default function CocktailDetail({
                   }
                   alt={card.t}
                   onClick={() => setLightbox(activeThumb)}
-                  onError={(e) => { e.target.src = "/theme.png"; }}
+                  onError={(e) => {
+                    e.target.src = "/theme.png";
+                  }}
                 />
                 <button
                   className="detail-gallery-expand"
@@ -1102,7 +1111,12 @@ export default function CocktailDetail({
                 </button>
               </div>
               {showIllust && (
-                <div className={`grid gap-2 h-[80px]`} style={{ gridTemplateColumns: `repeat(${thumbImgs.length}, 1fr)` }}>
+                <div
+                  className={`grid gap-2 h-[80px]`}
+                  style={{
+                    gridTemplateColumns: `repeat(${thumbImgs.length}, 1fr)`,
+                  }}
+                >
                   {thumbImgs.map((img, idx) => (
                     <div
                       key={idx}
@@ -1226,8 +1240,19 @@ export default function CocktailDetail({
                     </button>
                     <button
                       className="btn btn-lined btn-gray-light"
-                      style={{ width: 40, height: 40, borderRadius: "var(--r-full)", padding: 0, flexShrink: 0 }}
-                      onClick={() => navigator.share?.({ title: card.t, url: window.location.href })}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: "var(--r-full)",
+                        padding: 0,
+                        flexShrink: 0,
+                      }}
+                      onClick={() =>
+                        navigator.share?.({
+                          title: card.t,
+                          url: window.location.href,
+                        })
+                      }
                       aria-label="공유하기"
                     >
                       <ShareIcon />
@@ -1306,7 +1331,9 @@ export default function CocktailDetail({
                         )}
                       </div>
                       <span className="detail-author-name">
-                        {isOfficial || card.iba ? "마실랭 공식" : card.u + "님의 레시피"}
+                        {isOfficial || card.iba
+                          ? "마실랭 공식"
+                          : card.u + "님의 레시피"}
                       </span>
                       {!isOfficial && !card.iba && (
                         <span
@@ -1431,8 +1458,8 @@ export default function CocktailDetail({
                               style={
                                 isSub
                                   ? {
-                                      background: "var(--point-soft)",
-                                      border: "1.5px solid var(--point-line)",
+                                      background: "var(--purple-soft)",
+                                      border: "1.5px solid var(--purple-line)",
                                     }
                                   : undefined
                               }
@@ -1625,7 +1652,10 @@ export default function CocktailDetail({
                       })}
                     </div>
                   )}
-                  <div className="flex items-center gap-2.5 border-t border-[var(--ui-line-light)]" style={{marginTop:16, paddingTop:16}}>
+                  <div
+                    className="flex items-center gap-2.5 border-t border-[var(--ui-line-light)]"
+                    style={{ marginTop: 16, paddingTop: 16 }}
+                  >
                     <CommentAvatar user={currentUser} size={32} />
                     <input
                       className="detail-comment-input"
@@ -1695,33 +1725,50 @@ export default function CocktailDetail({
       </div>
       {lightbox !== null && (
         <div className="lightbox-overlay" onClick={() => setLightbox(null)}>
-          <button className="lightbox-close" onClick={() => setLightbox(null)} aria-label="닫기">
+          <button
+            className="lightbox-close"
+            onClick={() => setLightbox(null)}
+            aria-label="닫기"
+          >
             <XIcon />
           </button>
 
           {thumbImgs.length > 1 && (
             <button
               className="lightbox-arrow lightbox-arrow--prev"
-              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox - 1 + thumbImgs.length) % thumbImgs.length); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox(
+                  (lightbox - 1 + thumbImgs.length) % thumbImgs.length,
+                );
+              }}
               aria-label="이전"
             >
               <ChevronLeftIcon />
             </button>
           )}
 
-          <div className="lightbox-img-wrap" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="lightbox-img-wrap"
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src={thumbImgs[lightbox]?.url}
               alt={card.t}
               className="lightbox-img"
-              onError={(e) => { e.target.src = "/theme.png"; }}
+              onError={(e) => {
+                e.target.src = "/theme.png";
+              }}
             />
           </div>
 
           {thumbImgs.length > 1 && (
             <button
               className="lightbox-arrow lightbox-arrow--next"
-              onClick={(e) => { e.stopPropagation(); setLightbox((lightbox + 1) % thumbImgs.length); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setLightbox((lightbox + 1) % thumbImgs.length);
+              }}
               aria-label="다음"
             >
               <ChevronRightIcon />
@@ -1729,7 +1776,9 @@ export default function CocktailDetail({
           )}
 
           {thumbImgs.length > 1 && (
-            <div className="lightbox-counter">{lightbox + 1} / {thumbImgs.length}</div>
+            <div className="lightbox-counter">
+              {lightbox + 1} / {thumbImgs.length}
+            </div>
           )}
         </div>
       )}

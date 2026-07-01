@@ -44,10 +44,10 @@
   --yellow-line: #f1e5c1;
 
   /* ── 포인트 컬러 ───────────────────── */
-  --point: #9137c7;
-  --point-strong: #6603a0;
-  --point-soft: #f3deff;
-  --point-line: #e2c4f3;
+  --purple: #9137c7;
+  --purple-strong: #6603a0;
+  --purple-soft: #f3deff;
+  --purple-line: #e2c4f3;
 
   /* ── 그라데이션 ───────────────────── */
   --gradient-brand-1: linear-gradient(
@@ -60,15 +60,50 @@
 
   /* ── 배경색상 ─────────────────────── */
   --page-bg-gray: #f8f8f8; /* 서브페이지 */
-  --page-bg-ivory: #fefdfc; /* 메인페이지 */
-  --page-sour: linear-gradient(0deg,#FFEBD3 0%, #d3e3c1 50%,  var(--page-bg-gray) 100%);
-  --page-party: linear-gradient(0deg, #F9ECFF 0%, #e0caea 50%,  var(--page-bg-gray) 100%);
-  --page-creamy: linear-gradient(0deg,  #FFEFE1 0%, #E7E9FF 50%, var(--page-bg-gray) 100%);
-  --page-sparkling: linear-gradient(0deg, #F8FBFE 0%, #d5e6f6 50%, var(--page-bg-gray) 100%);
-  --page-city: linear-gradient(0deg, #F8E8FF 0%, #cad0ed 50%, var(--page-bg-gray) 100%);
-  --page-tropical: linear-gradient(0deg, #d9e4bf 0%, #ffedd2 50%, var(--page-bg-gray) 100%);
+  --page-bg-ivory: #f8f8f8; /* 메인페이지 */
+  --page-sour: linear-gradient(
+    0deg,
+    #ffebd3 0%,
+    #d3e3c1 50%,
+    var(--page-bg-gray) 100%
+  );
+  --page-party: linear-gradient(
+    0deg,
+    #f9ecff 0%,
+    #e0caea 50%,
+    var(--page-bg-gray) 100%
+  );
+  --page-creamy: linear-gradient(
+    0deg,
+    #ffefe1 0%,
+    #e7e9ff 50%,
+    var(--page-bg-gray) 100%
+  );
+  --page-sparkling: linear-gradient(
+    0deg,
+    #f8fbfe 0%,
+    #d5e6f6 50%,
+    var(--page-bg-gray) 100%
+  );
+  --page-city: linear-gradient(
+    0deg,
+    #f8e8ff 0%,
+    #cad0ed 50%,
+    var(--page-bg-gray) 100%
+  );
+  --page-tropical: linear-gradient(
+    0deg,
+    #d9e4bf 0%,
+    #ffedd2 50%,
+    var(--page-bg-gray) 100%
+  );
   --page-fruity: linear-gradient(0deg, #e8cfde 0%, var(--page-bg-gray) 100%);
-  --page-hot: linear-gradient(0deg, #FFF5F1 0%, #eccdc8 50%, var(--page-bg-gray) 100%);
+  --page-hot: linear-gradient(
+    0deg,
+    #fff5f1 0%,
+    #eccdc8 50%,
+    var(--page-bg-gray) 100%
+  );
 
   /* (2. semantic 컬러 - 폰트, 아이콘, ui-bg, ui-line, form-bg, form-line ) */
   /* ── 폰트 semantic ──────────────────────────────────── */

@@ -10,6 +10,7 @@ import POOL_RAW from "../data/pool.json";
 import { IMG_BASE } from "../data/constants.json";
 import { getCardTags } from "../data/detail-helpers";
 import SiteHeader from "../components/SiteHeader";
+import NoticeBanner from "../components/NoticeBanner";
 import { ArrowLeftIcon, ArrowRightIcon, ChevronRightIcon, RocketIcon, BoxPlusIcon } from "../components/icons";
 
 const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
@@ -163,6 +164,7 @@ export default function IngredientDetail({ ing }) {
 
   return (
     <>
+      <NoticeBanner />
       <SiteHeader />
       <div className="ing-detail-page">
         {showToast && (

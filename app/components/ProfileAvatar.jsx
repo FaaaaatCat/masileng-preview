@@ -4,23 +4,10 @@ export default function ProfileAvatar({ user, size = 40 }) {
 
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        borderRadius: "50%",
-        background: bg,
-        overflow: "hidden",
-        flexShrink: 0,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
+      className="profile-avatar-wrap"
+      style={{ width: size, height: size, background: bg }}
     >
-      <img
-        src={`/character_illust/profile_img/${imgKey}.png`}
-        alt="프로필"
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
+      <img src={`/character_illust/profile_img/${imgKey}.png`} alt="프로필" />
     </div>
   );
 }

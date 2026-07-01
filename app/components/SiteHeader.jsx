@@ -102,10 +102,8 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 추천
               </Link>
               <div className="nav-download-wrap">
-                <a
-                  href="#"
+                <div
                   className="nav-link nav-link-download"
-                  onClick={(e) => e.preventDefault()}
                 >
                   앱 다운로드
                   <div className="nav-download-flyout">
@@ -128,7 +126,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                       애플
                     </a>
                   </div>
-                </a>
+                </div>
               </div>
             </div>
 

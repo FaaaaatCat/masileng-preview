@@ -81,13 +81,13 @@ export default function RecommendIntroPage() {
       </div>
 
       {/* CTA 버튼 */}
-      <Link href="/recommend/form" className="w-100 btn btn-filled btn-gradient-1 btn-xxl" style={{ margin: "20px 0 -20px 0" }}>
+      <Link href="/recommend/form" className="w-100 btn btn-filled btn-gradient-1 btn-xxl" style={{ margin: "20px 0 0 0" }}>
         <span className="recommend-intro-cta-shimmer" />
         칵테일 추천받기 →
       </Link>
 
       {/* 홈으로 돌아가기 버튼 */}
-      <Link href="/" className="btn btn-transparent btn-dark btn-xxl" aria-label="홈으로">
+      <Link href="/" className="btn btn-transparent btn-dark btn-xl" aria-label="홈으로">
         ← 홈으로 돌아가기
       </Link>
     </>

@@ -14,6 +14,7 @@ import FilterBar from "../components/FilterBar";
 import ChallengeHome from "../page/ChallengeHome";
 import IngredientsHome from "../page/IngredientsHome";
 import SiteHeader from "../components/SiteHeader";
+import NoticeBanner from "../components/NoticeBanner";
 
 // 폰 목업에 보여줄 pool 이미지 인덱스 (2열 3행 = 6개)
 const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
@@ -376,6 +377,7 @@ export default function MasilengHome() {
         transition: "background 280ms ease",
       }}
     >
+      <NoticeBanner />
       <SiteHeader activeNav={activeNav} onNavClick={setActiveNav} />
 
       {/* HERO — 칵테일 페이지에만 */}

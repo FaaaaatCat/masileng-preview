@@ -111,11 +111,11 @@ $btn-sizes: (
     }
   }
   &.btn-secondary {
-    background: var(--point);
-    border: 1.5px solid var(--point);
+    background: var(--purple);
+    border: 1.5px solid var(--purple);
     color: #fff;
     &:hover {
-      background: var(--point-strong);
+      background: var(--purple-strong);
     }
   }
   &.btn-gray-light {
@@ -190,11 +190,11 @@ $btn-sizes: (
     }
   }
   &.btn-secondary {
-    background: var(--point-soft);
+    background: var(--purple-soft);
     border: 1.5px solid rgba(145, 55, 199, 0.3);
-    color: var(--point);
+    color: var(--purple);
     &:hover {
-      background: color-mix(in oklch, var(--point-soft) 70%, var(--point));
+      background: color-mix(in oklch, var(--purple-soft) 70%, var(--purple));
       border-color: rgba(145, 55, 199, 0.55);
     }
   }
@@ -221,10 +221,10 @@ $btn-sizes: (
     }
   }
   &.btn-secondary {
-    border: 1.5px solid var(--point);
-    color: var(--point);
+    border: 1.5px solid var(--purple);
+    color: var(--purple);
     &:hover {
-      background: var(--point-soft);
+      background: var(--purple-soft);
     }
   }
   &.btn-gray-light {
@@ -276,7 +276,7 @@ $btn-sizes: (
   &.btn-dark {
     color: rgba(255, 255, 255, 0.4);
     &:hover {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.7);
     }
   }
 }
@@ -489,8 +489,8 @@ $btn-sizes: (
   }
   &.selected {
     font-weight: 700;
-    color: var(--point);
-    background: var(--point-soft);
+    color: var(--purple);
+    background: var(--purple-soft);
   }
 }
 

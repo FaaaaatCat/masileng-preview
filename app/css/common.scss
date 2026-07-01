@@ -703,6 +703,22 @@
   }
 }
 
+// ── 프로필 아바타
+.profile-avatar-wrap {
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
 // ── 제목 텍스트
 $title-sizes: (
   sm: 14px,

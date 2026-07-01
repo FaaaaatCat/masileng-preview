@@ -2,15 +2,16 @@
 
 import { useEffect } from "react";
 import "../css/common.scss";
+import ProfileAvatar from "./ProfileAvatar";
 
 const TEAM = [
-  { initial: "김", name: "김경환", role: "기획 / PM", bg: "#A78BFA" },
-  { initial: "황", name: "황재성", role: "풀스택 개발", bg: "#60A5FA" },
-  { initial: "곽", name: "곽태정", role: "프로덕트 디자인", bg: "#FB923C"},
-  { initial: "박", name: "박선주", role: "기획 / 마케팅", bg: "#34D399" },
-  { initial: "이", name: "이동현", role: "웹 개발", bg: "#F472B6" },
-  { initial: "신", name: "신영주", role: "BX / 일러스트", bg: "#FBBF24" },
-  { initial: "김", name: "김유진", role: "백엔드", bg: "#6EE7B7" },
+  { name: "김경환", role: "기획 / PM",       profileBg: "#A78BFA", profileImg: "profile_img" },
+  { name: "황재성", role: "풀스택 개발",      profileBg: "#60A5FA", profileImg: "profile_img-5" },
+  { name: "곽태정", role: "프로덕트 디자인",  profileBg: "#FB923C", profileImg: "profile_img-8" },
+  { name: "박선주", role: "기획 / 마케팅",    profileBg: "#34D399", profileImg: "profile_img-12" },
+  { name: "이동현", role: "웹 개발",          profileBg: "#F472B6", profileImg: "profile_img-16" },
+  { name: "신영주", role: "BX / 일러스트",    profileBg: "#FBBF24", profileImg: "profile_img-20" },
+  { name: "김유진", role: "백엔드",           profileBg: "#6EE7B7", profileImg: "profile_img-23" },
 ];
 
 export default function TeamModal({ onClose }) {
@@ -64,28 +65,12 @@ export default function TeamModal({ onClose }) {
               디자이너들이 함께 프로젝트를 만들어가고 있어요.
             </p>
           </div>
-          {TEAM.map(({ initial, name, role, bg }) => (
+          {TEAM.map(({ name, role, profileBg, profileImg }) => (
             <div
               key={name}
               style={{ display: "flex", alignItems: "center", gap: 14 }}
             >
-              <div
-                style={{
-                  width: 44,
-                  height: 44,
-                  borderRadius: "50%",
-                  background: bg,
-                  flexShrink: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: "#fff",
-                }}
-              >
-                {initial}
-              </div>
+              <ProfileAvatar user={{ profileBg, profileImg }} size={44} />
               <div>
                 <p className="common-body-md" style={{ fontWeight: 600 }}>
                   {name}

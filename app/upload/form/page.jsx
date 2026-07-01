@@ -2,7 +2,14 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { XIcon, ArrowLeftIcon, SearchIcon, PlusIcon, TrashIcon, UploadBoxIcon } from "../../components/icons";
+import {
+  XIcon,
+  ArrowLeftIcon,
+  SearchIcon,
+  PlusIcon,
+  TrashIcon,
+  UploadBoxIcon,
+} from "../../components/icons";
 import { SelectFilter } from "../../components/FilterBar";
 import INGREDIENTS_DATA from "../../data/ingredients.json";
 import IngredientRequestModal from "../../components/IngredientRequestModal";
@@ -192,7 +199,7 @@ export default function UploadPage() {
       <div className="upload-page">
         <div className="upload-inner">
           {/* Hero */}
-          <div className="upload-hero">
+          <div style={{marginBottom:40}}>
             <Link
               href="/"
               className="btn btn-transparent btn-md"
@@ -470,8 +477,8 @@ export default function UploadPage() {
                             <div
                               className="upload-ing-num"
                               style={{
-                                background: "var(--point-soft)",
-                                color: "var(--point)",
+                                background: "var(--purple-soft)",
+                                color: "var(--purple)",
                               }}
                             >
                               {idx + 1}
@@ -816,4 +823,3 @@ function StarIconSolid({ size = 20, filled = false }) {
     </svg>
   );
 }
-

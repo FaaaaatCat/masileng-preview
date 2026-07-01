@@ -13,26 +13,11 @@ import IngredientCard from "../components/IngredientCard";
 import { getCardTags } from "../data/detail-helpers";
 import "../css/mypage.css";
 import { EditIcon, CheckIcon, CartIcon, MinusIcon, PersonIcon } from "../components/icons";
+import { PROFILE_BG_COLORS, PROFILE_IMGS } from "../data/profilePresets";
+import ProfileAvatar from "../components/ProfileAvatar";
+import NoticeBanner from "../components/NoticeBanner";
 
 const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
-
-const AVATAR_COLORS = [
-  "#F34B65", "#FFC355", "#6C63FF", "#3ABEF9",
-  "#52C87A", "#F98162", "#9B51E0",
-];
-
-const PROFILE_BG_COLORS = [
-  "#FFB3C6", "#B5EAD7", "#C4B5FD", "#BAD6F8",
-  "#FEFDC1", "#FFCFC9", "#FFB700", "#C8E600",
-  "#4ECDC4", "#87CEEB", "#2563EB", "#B0BEC5",
-  "#607D8B", "#E63946", "#F472B6", "#9C27B0",
-  "#FED7AA", "#A7F3D0", "#FCA5A5", "#93C5FD",
-];
-
-const PROFILE_IMGS = [
-  "profile_img",
-  ...Array.from({ length: 27 }, (_, i) => `profile_img-${i + 1}`),
-];
 
 const TABS = ["내 냉장고", "내 레시피", "좋아요"];
 
@@ -234,6 +219,7 @@ export default function MyPage() {
 
   return (
     <>
+      <NoticeBanner />
       <SiteHeader />
       {showEditPopup && (
         <ProfileEditPopup
@@ -248,16 +234,7 @@ export default function MyPage() {
           <div className="common-card mypage-sidebar-card">
             {/* 아바타 + 이름 */}
             <div className="mypage-profile-top">
-              <div className="mypage-avatar-wrap">
-                <div
-                  className="mypage-avatar"
-                  style={{ background: avatarColor }}
-                >
-                  {profileImg
-                    ? <img src={`/character_illust/profile_img/${profileImg}.png`} alt={username} className="mypage-avatar-img" />
-                    : initial}
-                </div>
-              </div>
+              <ProfileAvatar user={user} size={120} />
               <h1 className="mypage-username">{username}</h1>
               <p className="mypage-handle">
                 @{username.toLowerCase().replace(/\s/g, "_")}
