@@ -3,11 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import CARDS from "../data/cards.json";
-import CHALLENGE_CARDS from "../data/challenge_cards.json";
-import POOL_RAW from "../data/challenge_pool.json";
+import COCKTAILS from "../data/cocktails.json";
 import INGREDIENTS from "../data/ingredients.json";
-import { IMG_BASE } from "../data/constants.json";
 import SiteHeader from "../components/SiteHeader";
 import IngredientCard from "../components/IngredientCard";
 import { getCardTags } from "../data/detail-helpers";
@@ -17,7 +14,8 @@ import { PROFILE_BG_COLORS, PROFILE_IMGS } from "../data/profilePresets";
 import ProfileAvatar from "../components/ProfileAvatar";
 import NoticeBanner from "../components/NoticeBanner";
 
-const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
+const CARDS = COCKTAILS.filter((c) => c.official);
+const CHALLENGE_CARDS = COCKTAILS.filter((c) => !c.official);
 
 const TABS = ["내 냉장고", "내 레시피", "좋아요"];
 
@@ -204,11 +202,9 @@ export default function MyPage() {
   const avatarColor = user.profileBg || PROFILE_BG_COLORS[0];
   const profileImg = user.profileImg || PROFILE_IMGS[0];
 
-  const myRecipes = CHALLENGE_CARDS
-    .map((c, i) => ({ ...c, _id: i }))
-    .filter((c) => c.u === username);
+  const myRecipes = CHALLENGE_CARDS.filter((c) => c.user === username);
 
-  const likedRecipes = CARDS.slice(0, 4).map((c, i) => ({ ...c, _id: i }));
+  const likedRecipes = COCKTAILS.filter((c) => c.official).slice(0, 4);
 
   const myIngredients = INGREDIENTS.filter((ing) => ing.myIng);
   const fridgeItems = (myIngredients.length > 0 ? myIngredients : INGREDIENTS.slice(0, 12))
@@ -323,22 +319,22 @@ export default function MyPage() {
                         {[
                           {
                             label: "지금 바로 제작 가능", badge: "ready",
-                            cards: CARDS.slice(0, 3).map((c, i) => ({ ...c, missing: [], _cardIdx: i })),
+                            cards: CARDS.slice(0, 3).map((c, i) => ({ ...c, missing: [], _idx:i })),
                           },
                           {
                             label: "재료 1개 부족", badge: "miss1",
                             cards: [
-                              { ...CARDS[3], missing: ["데킬라"], _cardIdx: 3 },
-                              { ...CARDS[4], missing: ["트리플 섹"], _cardIdx: 4 },
-                              { ...CARDS[5], missing: ["진저 비어"], _cardIdx: 5 },
+                              { ...CARDS[3], missing: ["데킬라"], _idx:3 },
+                              { ...CARDS[4], missing: ["트리플 섹"], _idx:4 },
+                              { ...CARDS[5], missing: ["진저 비어"], _idx:5 },
                             ],
                           },
                           {
                             label: "재료 2개 부족", badge: "miss2",
                             cards: [
-                              { ...CARDS[6], missing: ["럼", "라임 주스"], _cardIdx: 6 },
-                              { ...CARDS[7], missing: ["버번 위스키", "아마로"], _cardIdx: 7 },
-                              { ...CARDS[8], missing: ["코코넛 크림", "파인애플 주스"], _cardIdx: 8 },
+                              { ...CARDS[6], missing: ["럼", "라임 주스"], _idx:6 },
+                              { ...CARDS[7], missing: ["버번 위스키", "아마로"], _idx:7 },
+                              { ...CARDS[8], missing: ["코코넛 크림", "파인애플 주스"], _idx:8 },
                             ],
                           },
                         ].map(({ label, badge, cards }) => (
@@ -348,25 +344,24 @@ export default function MyPage() {
                             </p>
                             <div className="mypage-recipe-list">
                               {cards.map((card, idx) => {
-                                const poolImg = POOL[card.i % POOL.length];
                                 return (
                                   <Link
                                     key={idx}
-                                    href={`/cocktail/${card._cardIdx}`}
+                                    href={`/cocktail/${card.id}`}
                                     className="common-list-item"
                                   >
                                     <div
                                       className="common-list-item-thumb mypage-recipe-thumb"
-                                      style={{ background: poolImg?.g }}
+                                      style={{ background: card.gradient }}
                                     >
                                       <img
-                                        src={poolImg?.url}
-                                        alt={card.t}
+                                        src={card.photo_0}
+                                        alt={card.name}
                                         onError={(e) => { e.target.src = "/theme.png"; }}
                                       />
                                     </div>
                                     <div className="common-list-item-info">
-                                      <span className="common-list-item-title">{card.t}</span>
+                                      <span className="common-list-item-title">{card.name}</span>
                                       <span className="common-list-item-desc">{card.desc}</span>
                                       <div className="common-list-item-tags">
                                         {getCardTags(card).map((tag) => (
@@ -435,27 +430,26 @@ export default function MyPage() {
                 ) : (
                   <div className="mypage-recipe-list">
                     {myRecipes.map((card) => {
-                      const poolImg = POOL[card.i % POOL.length];
                       return (
                         <Link
-                          key={card._id}
-                          href={`/challenge/${card._id}`}
+                          key={card.id}
+                          href={`/challenge/${card.id}`}
                           className="common-list-item"
                         >
                           <div
                             className="common-list-item-thumb mypage-recipe-thumb"
-                            style={{ background: poolImg?.g }}
+                            style={{ background: card.gradient }}
                           >
                             <img
-                              src={poolImg?.url}
-                              alt={card.t}
+                              src={card.photo_0}
+                              alt={card.name}
                               onError={(e) => {
                                 e.target.src = "/theme.png";
                               }}
                             />
                           </div>
                           <div className="common-list-item-info">
-                            <span className="common-list-item-title">{card.t}</span>
+                            <span className="common-list-item-title">{card.name}</span>
                             <span className="common-list-item-desc">{card.desc}</span>
                             <div className="common-list-item-tags">
                               {getCardTags(card).map((tag) => (
@@ -484,25 +478,24 @@ export default function MyPage() {
                 ) : (
                   <div className="mypage-recipe-list">
                     {likedRecipes.map((card) => {
-                      const poolImg = POOL[card.i % POOL.length];
                       return (
                       <Link
-                        key={card._id}
-                        href={`/cocktail/${card._id}`}
+                        key={card.id}
+                        href={`/cocktail/${card.id}`}
                         className="common-list-item"
                       >
                         <div
                           className="common-list-item-thumb mypage-recipe-thumb"
-                          style={{ background: poolImg?.g }}
+                          style={{ background: card.gradient }}
                         >
                           <img
-                            src={poolImg?.url}
-                            alt={card.t}
+                            src={card.photo_0}
+                            alt={card.name}
                             onError={(e) => { e.target.src = "/theme.png"; }}
                           />
                         </div>
                         <div className="common-list-item-info">
-                          <span className="common-list-item-title">{card.t}</span>
+                          <span className="common-list-item-title">{card.name}</span>
                           <span className="common-list-item-desc">{card.desc}</span>
                           <div className="common-list-item-tags">
                             {getCardTags(card).map((tag) => (

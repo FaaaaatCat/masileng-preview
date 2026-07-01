@@ -2,36 +2,33 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import POOL_RAW from "../data/challenge_pool.json";
-import CARDS_RAW from "../data/challenge_cards.json";
-import { IMG_BASE } from "../data/constants.json";
+import COCKTAILS from "../data/cocktails.json";
 import { HeartIcon, ChatIcon, ChevronRightIcon } from "./icons";
 import { PROFILE_BG_COLORS, PROFILE_IMGS } from "../data/profilePresets";
 import ProfileAvatar from "./ProfileAvatar";
 
-export const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
-export const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
+export const CARDS = COCKTAILS.filter((c) => !c.official);
 
 function hashStr(s) {
+  if (!s) return 0;
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
   return Math.abs(h);
 }
 
 function UserAvatar({ username, size = 28, overrideBg, overrideImg }) {
-  const h = hashStr(username);
+  const h = hashStr(username ?? "");
   const profileBg = overrideBg ?? PROFILE_BG_COLORS[h % PROFILE_BG_COLORS.length];
   const profileImg = overrideImg ?? PROFILE_IMGS[(h >> 4) % PROFILE_IMGS.length];
   return <ProfileAvatar user={{ profileBg, profileImg }} size={size} />;
 }
 
 export default function ChallengeCard({ card, currentUser }) {
-  const d = POOL[card.i];
   const [dropOpen, setDropOpen] = useState(false);
   const wrapRef = useRef(null);
 
-  const userCards = CARDS.filter((c) => c.u === card.u);
-  const isMe = currentUser && (currentUser.profileName || currentUser.name) === card.u;
+  const userCards = CARDS.filter((c) => c.user === card.user);
+  const isMe = currentUser && (currentUser.profileName || currentUser.name) === card.user;
 
   useEffect(() => {
     if (!dropOpen) return;
@@ -45,13 +42,13 @@ export default function ChallengeCard({ card, currentUser }) {
 
   return (
     <div className="relative flex flex-col" ref={wrapRef}>
-      <Link href={`/challenge/${card._idx}`} style={{ textDecoration: "none" }}>
+      <Link href={`/challenge/${card.id}`} style={{ textDecoration: "none" }}>
         <article className="common-card-item cursor-pointer">
           <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
-            <div className="common-card-item-bg" style={{ background: d.g }} />
+            <div className="common-card-item-bg" style={{ background: card.gradient }} />
             <img
-              src={d.url}
-              alt={d.n}
+              src={card.photo_0}
+              alt={card.name}
               className="common-card-item-img"
               onError={(e) => {
                 e.target.style.display = "none";
@@ -67,18 +64,18 @@ export default function ChallengeCard({ card, currentUser }) {
               }}
             >
               <UserAvatar
-                username={card.u}
+                username={card.user}
                 size={28}
                 overrideBg={isMe ? (currentUser.profileBg ?? PROFILE_BG_COLORS[0]) : undefined}
                 overrideImg={isMe ? (currentUser.profileImg ?? PROFILE_IMGS[0]) : undefined}
               />
-              <span className="common-card-item-author-name">{card.u}</span>
+              <span className="common-card-item-author-name">{card.user}</span>
             </button>
             <div className="common-card-item-desc-layer">
               <p className="common-card-item-desc">{card.desc}</p>
             </div>
           </div>
-          <h4 className="common-title-lg">{card.t}</h4>
+          <h4 className="common-title-lg">{card.name}</h4>
           <div className="common-card-item-meta">
             <span className="common-card-item-meta-item">
               <HeartIcon />
@@ -86,7 +83,7 @@ export default function ChallengeCard({ card, currentUser }) {
             </span>
             <span className="common-card-item-meta-item">
               <ChatIcon />
-              {card.cmt}
+              {card.comments}
             </span>
           </div>
         </article>
@@ -94,15 +91,15 @@ export default function ChallengeCard({ card, currentUser }) {
 
       {dropOpen && (
         <div className="common-card-item-author-dropdown">
-          <p className="common-card-item-author-dropdown-header">@{card.u}의 레시피</p>
+          <p className="common-card-item-author-dropdown-header">@{card.user}의 레시피</p>
           {userCards.map((uc) => (
             <Link
-              key={uc._idx}
-              href={`/challenge/${uc._idx}`}
+              key={uc.id}
+              href={`/challenge/${uc.id}`}
               className="common-card-item-author-dropdown-item"
               onClick={() => setDropOpen(false)}
             >
-              <span className="common-card-item-author-dropdown-name">{uc.t}</span>
+              <span className="common-card-item-author-dropdown-name">{uc.name}</span>
               <ChevronRightIcon />
             </Link>
           ))}

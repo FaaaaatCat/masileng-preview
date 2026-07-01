@@ -2,11 +2,11 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-import { IMG_BASE, SORT_TABS } from "../data/constants.json";
+import { SORT_TABS } from "../data/constants.json";
 
 import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
-import ChallengeCard, { POOL, CARDS } from "../components/ChallengeCard";
+import ChallengeCard, { CARDS } from "../components/ChallengeCard";
 
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
 
@@ -33,7 +33,7 @@ function ChallengeHero() {
     const W = Math.min(1480, window.innerWidth);
     const offset = (window.innerWidth - W) / 2;
     return SCATTER.map((s, idx) => {
-      const d = POOL[s.i];
+      const d = CARDS[s.i % CARDS.length];
       const left = s.x != null ? offset + s.x : offset + W - s.r - s.w;
       return { ...s, d, left, idx };
     });
@@ -61,20 +61,20 @@ function ChallengeHero() {
           {items.map(({ left, y, w, h, d, idx }) => (
             <div
               key={idx}
-              title={d.n}
+              title={d?.name}
               className="challenge-main-banner-scatter-item challenge-main-banner-thumb"
               style={{
                 left,
                 top: y,
                 width: w,
                 height: h,
-                background: d.g,
+                background: d?.gradient,
                 animationDelay: `${idx * 55}ms`,
               }}
             >
               <img
-                src={d.url}
-                alt={d.n}
+                src={d?.photo_0}
+                alt={d?.name}
                 className="challenge-main-banner-scatter-img"
                 onError={(e) => {
                   e.target.style.display = "none";
@@ -150,14 +150,16 @@ export default function ChallengeHome() {
   };
 
   const filtered = CARDS.filter((card) => {
-    if (abv && card.abv !== abv) return false;
+    if (abv === "low" && card.abv > 15) return false;
+    if (abv === "high" && card.abv <= 15) return false;
     if (base && card.base !== base) return false;
     if (theme && card.theme !== theme) return false;
-    if (card.count < rangeMin || card.count > rangeMax) return false;
+    const count = card.ingredients?.length ?? 0;
+    if (count < rangeMin || count > rangeMax) return false;
     if (search) {
       const q = search.toLowerCase();
       if (
-        !card.t.toLowerCase().includes(q) &&
+        !card.name.toLowerCase().includes(q) &&
         !card.desc.toLowerCase().includes(q)
       )
         return false;
@@ -185,7 +187,7 @@ export default function ChallengeHome() {
           <div className="cocktail-grid">
             {NEW_COCKTAILS.map((card) => (
               <ChallengeCard
-                key={card._idx}
+                key={card.id}
                 card={card}
                 currentUser={currentUser}
               />
@@ -221,7 +223,7 @@ export default function ChallengeHome() {
             {filtered.length > 0 ? (
               filtered.map((card) => (
                 <ChallengeCard
-                  key={card._idx}
+                  key={card.id}
                   card={card}
                   currentUser={currentUser}
                 />

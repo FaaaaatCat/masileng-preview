@@ -3,13 +3,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
-import POOL_RAW from "../data/pool.json";
-import CARDS_RAW from "../data/cards.json";
-const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
-import { IMG_BASE, SORT_TABS } from "../data/constants.json";
+import COCKTAILS from "../data/cocktails.json";
+const CARDS = COCKTAILS.filter((c) => c.official);
+import { SORT_TABS } from "../data/constants.json";
 
 import { ChevronRightIcon } from "../components/icons";
-import CocktailCard, { POOL } from "../components/CocktailCard";
+import CocktailCard from "../components/CocktailCard";
 import FilterBar from "../components/FilterBar";
 import ChallengeHome from "../page/ChallengeHome";
 import IngredientsHome from "../page/IngredientsHome";
@@ -55,21 +54,22 @@ function AppHero() {
               </div>
               <div className="cocktail-main-banner-phone-grid">
                 {PHONE_ITEMS.map((idx) => {
-                  const d = POOL[idx];
+                  const d = CARDS[idx];
+                  if (!d) return null;
                   return (
                     <div
                       key={idx}
                       className="cocktail-main-banner-phone-card"
-                      style={{ background: d.g }}
+                      style={{ background: d.gradient }}
                     >
                       <img
-                        src={d.url}
-                        alt={d.n}
+                        src={d.photo_0}
+                        alt={d.name}
                         onError={(e) => {
                           e.target.style.display = "none";
                         }}
                       />
-                      <span className="cocktail-main-banner-phone-card-name">{d.n}</span>
+                      <span className="cocktail-main-banner-phone-card-name">{d.name}</span>
                     </div>
                   );
                 })}
@@ -236,15 +236,17 @@ function applyFilters(
   { abv, base, theme, ibaOnly, rangeMin, rangeMax, search },
 ) {
   return cards.filter((card) => {
-    if (abv && card.abv !== abv) return false;
+    if (abv === "low" && card.abv > 15) return false;
+    if (abv === "high" && card.abv <= 15) return false;
     if (base && card.base !== base) return false;
     if (theme && card.theme !== theme) return false;
     if (ibaOnly && !card.iba) return false;
-    if (card.count < rangeMin || card.count > rangeMax) return false;
+    const count = card.ingredients?.length ?? 0;
+    if (count < rangeMin || count > rangeMax) return false;
     if (search) {
       const q = search.toLowerCase();
       if (
-        !card.t.toLowerCase().includes(q) &&
+        !card.name.toLowerCase().includes(q) &&
         !card.desc.toLowerCase().includes(q)
       )
         return false;
@@ -287,9 +289,9 @@ function CocktailPage({ filterProps }) {
           {filtered.length > 0 ? (
             filtered.map((card) => (
               <CocktailCard
-                key={card._id}
+                key={card.id}
                 card={card}
-                cardId={card._id}
+                cardId={card.id}
                 showAuthor={false}
               />
             ))

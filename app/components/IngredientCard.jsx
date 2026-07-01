@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 
-const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
-
 export default function IngredientCard({
   ing,
   isMine = false,
@@ -43,7 +41,7 @@ export default function IngredientCard({
       >
         {isBurst && <span className="common-card-item-ripple" />}
         <img
-          src={`${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`}
+          src={ing.photo}
           alt={ing.n}
           className="common-card-item-img--product"
           onError={(e) => { e.target.style.opacity = "0"; }}

@@ -1,23 +1,15 @@
 import Link from "next/link";
-import POOL_RAW from "../data/pool.json";
-import { IMG_BASE } from "../data/constants.json";
 import { HeartIcon, ChatIcon } from "./icons";
 
-export const POOL = POOL_RAW.map((d) => ({
-  ...d,
-  url: `${IMG_BASE}${d.f}.jpg`,
-}));
-
 export default function CocktailCard({ card, cardId, showAuthor = true }) {
-  const d = POOL[card.i];
   const href = cardId !== undefined ? `/cocktail/${cardId}` : undefined;
   const inner = (
     <>
       <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
-        <div className="common-card-item-bg" style={{ background: d.g }} />
+        <div className="common-card-item-bg" style={{ background: card.gradient }} />
         <img
-          src={d.url}
-          alt={d.n}
+          src={card.photo_0}
+          alt={card.name}
           className="common-card-item-img"
           onError={(e) => {
             e.target.style.display = "none";
@@ -27,14 +19,14 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
         {showAuthor && (
           <div className="common-card-item-author">
             <div className="common-card-item-author-avatar" />
-            <span className="common-card-item-author-name">@{card.u}</span>
+            <span className="common-card-item-author-name">@{card.user}</span>
           </div>
         )}
         <div className="common-card-item-desc-layer">
           <p className="common-card-item-desc">{card.desc}</p>
         </div>
       </div>
-      <h4 className="common-title-lg">{card.t}</h4>
+      <h4 className="common-title-lg">{card.name}</h4>
       <div className="common-card-item-meta">
         <span className="common-card-item-meta-item">
           <HeartIcon />
@@ -42,7 +34,7 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
         </span>
         <span className="common-card-item-meta-item">
           <ChatIcon />
-          {card.cmt}
+          {card.comments}
         </span>
       </div>
       {card.iba && (

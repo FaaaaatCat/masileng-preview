@@ -1,15 +1,13 @@
 import { notFound } from "next/navigation";
-import CARDS from "../../data/challenge_cards.json";
-import POOL_RAW from "../../data/challenge_pool.json";
-import { IMG_BASE } from "../../data/constants.json";
+import COCKTAILS from "../../data/cocktails.json";
 import CocktailDetail from "../../page/CocktailDetail";
 
-const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
+const CARDS = COCKTAILS.filter((c) => !c.official);
 
 export default async function ChallengePage({ params }) {
   const { id } = await params;
   const cardId = parseInt(id, 10);
-  if (isNaN(cardId) || cardId < 0 || cardId >= CARDS.length) notFound();
-  const card = CARDS[cardId];
-  return <CocktailDetail card={card} cardId={cardId} poolData={POOL} backHref="/" showIllust={false} />;
+  const card = CARDS.find((c) => c.id === cardId);
+  if (!card) notFound();
+  return <CocktailDetail card={card} cardId={cardId} backHref="/" showIllust={false} />;
 }

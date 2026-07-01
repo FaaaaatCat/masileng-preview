@@ -5,18 +5,13 @@ import Link from "next/link";
 import "../css/ingredient-detail.css";
 import "../css/cocktail-detail.css";
 
-import CARDS_RAW from "../data/cards.json";
-import POOL_RAW from "../data/pool.json";
-import { IMG_BASE } from "../data/constants.json";
+import COCKTAILS from "../data/cocktails.json";
 import { getCardTags } from "../data/detail-helpers";
 import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
 import { ArrowLeftIcon, ArrowRightIcon, ChevronRightIcon, RocketIcon, BoxPlusIcon } from "../components/icons";
 
-const CARDS = CARDS_RAW.map((c, i) => ({ ...c, _id: i }));
-const POOL = POOL_RAW.map((d) => ({ ...d, url: `${IMG_BASE}${d.f}.jpg` }));
-
-const ING_IMG = "https://www.thecocktaildb.com/images/ingredients/";
+const CARDS = COCKTAILS.filter((c) => c.official);
 
 // 재료별 쿠팡 관련상품 (mock)
 const PRODUCT_MAP = {
@@ -135,7 +130,7 @@ function getProducts(ing) {
 }
 
 export default function IngredientDetail({ ing }) {
-  const imgSrc = `${ING_IMG}${encodeURIComponent(ing.en)}-Medium.png`;
+  const imgSrc = ing.photo;
   const [isInBasket, setIsInBasket] = useState(!!ing.myIng);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -158,7 +153,10 @@ export default function IngredientDetail({ ing }) {
   };
 
   // 이 재료를 사용하는 칵테일 (base 기준)
-  const relatedCards = CARDS.filter((c) => c.base === ing.n).slice(0, 8);
+  const relatedCards = CARDS.filter((c) => {
+    const bases = Array.isArray(c.base) ? c.base : [c.base];
+    return bases.includes(ing.n);
+  }).slice(0, 8);
 
   const products = getProducts(ing);
 
@@ -328,17 +326,16 @@ export default function IngredientDetail({ ing }) {
                   {relatedCards.length > 0 ? (
                     <div className="ing-cocktail-list">
                       {relatedCards.map((card) => {
-                        const poolImg = POOL[card.i % POOL.length];
                         return (
                           <Link
-                            key={card._id}
-                            href={`/cocktail/${card._id}`}
+                            key={card.id}
+                            href={`/cocktail/${card.id}`}
                             className="common-list-item"
                           >
                             <div className="common-list-item-thumb">
                               <img
-                                src={poolImg.url}
-                                alt={card.t}
+                                src={card.photo_0}
+                                alt={card.name}
                                 onError={(e) => {
                                   e.target.style.display = "none";
                                 }}
@@ -346,7 +343,7 @@ export default function IngredientDetail({ ing }) {
                             </div>
                             <div className="common-list-item-info">
                               <span className="common-list-item-title">
-                                {card.t}
+                                {card.name}
                               </span>
                               <span className="common-list-item-desc">
                                 {card.desc}

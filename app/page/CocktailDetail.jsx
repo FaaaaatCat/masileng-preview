@@ -6,9 +6,8 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import "../css/cocktail-detail.css";
 
-import POOL_RAW from "../data/pool.json";
-import CHALLENGE_CARDS_RAW from "../data/challenge_cards.json";
-import { IMG_BASE } from "../data/constants.json";
+import COCKTAILS from "../data/cocktails.json";
+import INGREDIENTS from "../data/ingredients.json";
 import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
 import SiteHeader from "../components/SiteHeader";
 import ProfileAvatar from "../components/ProfileAvatar";
@@ -27,49 +26,8 @@ import {
   XIcon,
 } from "../components/icons";
 
-// 재료 표시명 → ingredients.json id 매핑
-const ING_LINK_MAP = {
-  "화이트 럼": 1,
-  럼: 1,
-  보드카: 2,
-  "드라이 진": 3,
-  진: 3,
-  "실버 데킬라": 4,
-  데킬라: 4,
-  위스키: 5,
-  "버번 위스키": 6,
-  버번: 6,
-  브랜디: 7,
-  꼬냑: 8,
-  "트리플 섹": 11,
-  깔루아: 13,
-  아마레토: 14,
-  캄파리: 15,
-  토닉워터: 19,
-  탄산수: 20,
-  소다수: 20,
-  "라임 주스": 23,
-  라임주스: 23,
-  "레몬 주스": 24,
-  레몬주스: 24,
-  "오렌지 주스": 25,
-  "크랜베리 주스": 26,
-  라임: 28,
-  레몬: 29,
-  민트잎: 31,
-  민트: 31,
-  그레나딘: 32,
-  "슈거 시럽": 33,
-  "설탕 시럽": 33,
-  "계란 흰자": 34,
-  생크림: 35,
-  "앙고스투라 비터스": 36,
-};
-
-const DEFAULT_POOL = POOL_RAW.map((d) => ({
-  ...d,
-  url: `${IMG_BASE}${d.f}.jpg`,
-}));
+// 재료명 → ingredients.json 항목 매핑
+const ING_MAP = new Map(INGREDIENTS.map((i) => [i.n, i]));
 
 // ─ 테마 배경 매핑 ─
 const THEME_BG_MAP = {
@@ -83,134 +41,6 @@ const THEME_BG_MAP = {
   Hot: "Property 1=hot.png",
 };
 
-// ─ 칵테일 일러스트 매핑 ─
-const ILLUST_MAP = {
-  애플마티니: "1_애플마티니.png",
-  "B-52": "2_B-52.png",
-  "바카디 칵테일": "3_바카디 칵테일.png",
-  "블랙 러시안": "4_블랙 러시안.png",
-  "블러디 메리": "5_블러디 메리.png",
-  "블로우 잡": "6_블로우 잡.png",
-  "블루 하와이": "7_블루 하와이.png",
-  "블루 카미카제": "8_블루 카미카제.png",
-  "블루 라군": "9_블루 라군.png",
-  "블루 오션": "10_블루 오션.png",
-  BMW: "11_BMW.png",
-  "보일러 메이커": "12_보일러 메이커.png",
-  "브랜디 에그노그": "13_브랜디 에그노그.png",
-  브롱크스: "14_브롱크스.png",
-  코스모폴리탄: "15_코스모폴리탄.png",
-  "쿠바 리브레": "16_쿠바 리브레.png",
-  다이키리: "17_다이키리.png",
-  "더티 마티니": "18_더티 마티니.png",
-  "에스프레소 마티니": "19_에스프레소 마티니.png",
-  깁슨: "20_깁슨.png",
-  김렛: "21_김렛.png",
-  진피즈: "22_진피즈.png",
-  진토닉: "23_진토닉.png",
-  갓파더: "24_갓파더.png",
-  갓마더: "25_갓마더.png",
-  골드러쉬: "26_골드러쉬.png",
-  그래스호퍼: "27_그래스호퍼.png",
-  "그린 멕시칸": "28_그린 멕시칸.png",
-  "하비 월뱅어": "29_하비 월뱅어.png",
-  하이볼: "30_하이볼.png",
-  "핫 토디": "31_핫 토디.png",
-  허리케인: "32_허리케인.png",
-  잭콕: "33_잭콕.png",
-  예거밤: "34_예거밤.png",
-  젤리피쉬: "35_젤리피쉬.png",
-  키르: "36_키르.png",
-  레이디킬러: "37_레이디킬러.png",
-  런던콜링: "38_런던콜링.png",
-  "롱아일랜드 아이스티": "39_롱아일랜드 아이스티.png",
-  마이타이: "40_마이타이.png",
-  맨하탄: "41_맨하탄.png",
-  마가리타: "42_마가리타.png",
-  마티니: "43_마티니.png",
-  "미도리 사워": "44_미도리 사워.png",
-  모히또: "45_모히또.png",
-  "모스코 뮬": "46_모스코 뮬.png",
-  머드슬라이드: "47_머드슬라이드.png",
-  네그로니: "48_네그로니.png",
-  "뉴욕 사워": "49_뉴욕 사워.png",
-  "올드 패션드": "50_올드 패션드.png",
-  오르가즘: "51_오르가즘.png",
-  페인킬러: "52_페인킬러.png",
-  "피나 콜라다": "53_피나 콜라다.png",
-  "라모즈 피즈": "54_라모즈 피즈.png",
-  "러스티 네일": "55_러스티 네일.png",
-  샹그리아: "56_샹그리아.png",
-  스크류드라이버: "57_스크류드라이버.png",
-  씨브리즈: "58_씨브리즈.png",
-  섹스온더비치: "59_섹스온더비치.png",
-  "사이드 카": "60_사이드 카.png",
-  "실버 불렛": "61_실버 불렛.png",
-  "싱가포르 슬링": "62_싱가포르 슬링.png",
-  "데킬라 선라이즈": "63_데킬라 선라이즈.png",
-  "보드카 마티니": "64_보드카 마티니.png",
-  "화이트 러시안": "65_화이트 러시안.png",
-  꿀주: "66_꿀주.png",
-  에너자이저주: "67_에너자이저주.png",
-  고진감래주: "68_고진감래주.png",
-  한라토닉: "69_한라토닉.png",
-  로이로저스: "70_로이로저스.png",
-  "셜리 템플": "71_셜리 템플.png",
-  "버진 콜라다": "72_버진 콜라다.png",
-  "민트 줄렙": "253_민트 줄렙.png",
-  "화이트 레이디": "325_화이트 레이디.png",
-  불바디에: "335_불바디에.png",
-  알렉산더: "388_알렉산더.png",
-  아메리카노: "389_아메리카노.png",
-  엔젤페이스: "390_엔젤페이스.png",
-  에비에이션: "391_에비에이션.png",
-  "비트윈 더 시트": "393_비트윈 더 시트.png",
-  "브랜디 크러스타": "394_브랜디 크러스타.png",
-  카지노: "395_카지노.png",
-  "클로버 클럽": "396_클로버 클럽.png",
-  "드라이 마티니": "397_드라이 마티니.png",
-  행키팽키: "398_행키팽키.png",
-  "존 콜린스": "399_존 콜린스.png",
-  마르티네즈: "400_마르티네즈.png",
-  "메리 픽포드": "405_메리 픽포드.png",
-  "몽키 글랜드": "406_몽키 글랜드.png",
-  파라다이스: "408_파라다이스.png",
-  "플랜터스 터치": "409_플랜터스 터치.png",
-  "포르토 플립": "410_포르토 플립.png",
-  사제락: "411_사제락.png",
-  스팅어: "415_스팅어.png",
-  턱시도: "416_턱시도.png",
-  "뷰 카레": "417_뷰 카레.png",
-  "위스키 사워": "418_위스키 사워.png",
-  프렌치75: "454_프렌치75.png",
-  "골든 드림": "455_골든 드림.png",
-  "헤밍웨이 스페셜": "460_헤밍웨이 스페셜.png",
-  "홀시스 넥": "461_홀시스 넥.png",
-  "아이리쉬 커피": "462_아이리쉬 커피.png",
-  미모사: "463_미모사.png",
-  "피스코 사워": "464_피스코 사워.png",
-  베스퍼: "465_베스퍼.png",
-  좀비: "466_좀비.png",
-  바라쿠다: "468_바라쿠다.png",
-  "비스 니즈": "469_비스 니즈.png",
-  브램블: "471_브램블.png",
-  칸찬차라: "472_칸찬차라.png",
-  페르난디토: "473_페르난디토.png",
-  "프렌치 마티니": "474_프렌치 마티니.png",
-  일레갈: "475_일레갈.png",
-  "네이키드 앤 패이머스": "476_네이키드 앤 패이머스.png",
-  "올드 쿠반": "477_올드 쿠반.png",
-  "페이퍼 플레인": "478_페이퍼 플레인.png",
-  페니실린: "483_페니실린.png",
-  "스파이시 피프티": "484_스파이시 피프티.png",
-  스프리츠: "485_스프리츠.png",
-  "서퍼링 바스타드": "486_서퍼링 바스타드.png",
-  티퍼레리: "487_티퍼레리.png",
-  "토미스 마가리타": "488_토미스 마가리타.png",
-  "트리니다드 사워": "489_트리니다드 사워.png",
-  "VE.N.TO": "490_VE.N.TO.png",
-  "옐로 버드": "491_옐로 버드.png",
-};
 
 const THEME_SILHOUETTE = {
   sour: "sour",
@@ -325,8 +155,7 @@ function FlavorDots({ value, max = 5 }) {
 
 /* 헤더 – MasilengHome과 동일 구조 */
 
-const ILLUST_FILES = Object.values(ILLUST_MAP);
-const CHALLENGE_CARDS = CHALLENGE_CARDS_RAW.map((c, i) => ({ ...c, _idx: i }));
+const CHALLENGE_CARDS = COCKTAILS.filter((c) => !c.official);
 
 const FIRST_BG = "#FFB3C6";
 const FIRST_IMG = "profile_img";
@@ -347,7 +176,6 @@ function CommentAvatar({ user, size = 32 }) {
 export default function CocktailDetail({
   card,
   cardId,
-  poolData,
   backHref = "/",
   showIllust = true,
   isOfficial = false,
@@ -414,12 +242,12 @@ export default function CocktailDetail({
   const isMyRecipe =
     !isOfficial &&
     currentUser &&
-    (currentUser.profileName || currentUser.name) === card.u;
+    (currentUser.profileName || currentUser.name) === card.user;
 
   const startEditing = () => {
     const cardSrc = getCardDetail({ ...card, ...overrideData });
     setEditInitialValues({
-      title:        overrideData?.title        ?? card.t,
+      title:        overrideData?.title        ?? card.name,
       desc:         overrideData?.desc         ?? card.desc,
       abv:          overrideData?.abv          ?? card.abv,
       base:         overrideData?.base         ?? card.base,
@@ -459,7 +287,7 @@ export default function CocktailDetail({
   const displayCard = overrideData
     ? {
         ...card,
-        t: overrideData.title,
+        name: overrideData.title,
         desc: overrideData.desc,
         abv: overrideData.abv,
         base: overrideData.base,
@@ -480,15 +308,8 @@ export default function CocktailDetail({
   const tags = getCardTags(displayCard);
   const ratios = computeRatios(ingredients);
 
-  const POOL = poolData || DEFAULT_POOL;
-  const POOL_LEN = POOL.length;
-
-  const poolIdx = card.i % POOL_LEN;
-  const mainImg = POOL[poolIdx];
-  const thumb1Img = POOL[(poolIdx + 1) % POOL_LEN];
-  const thumb2Img = POOL[(poolIdx + 2) % POOL_LEN];
-  const thumbImgs = [mainImg, thumb1Img, thumb2Img];
-  const activeImg = thumbImgs[activeThumb];
+  const thumbImgs = [card.photo_0, card.photo_1, card.photo_2].filter(Boolean);
+  const activeImg = thumbImgs[activeThumb] ?? thumbImgs[0];
 
   const difficultyClass =
     difficulty === "아주 간단"
@@ -508,7 +329,7 @@ export default function CocktailDetail({
     <CocktailForm
       mode="edit"
       initialValues={editInitialValues}
-      existingPhoto={mainImg?.url}
+      existingPhoto={card.photo_0}
       onSubmit={saveEditing}
       onCancel={() => setIsEditing(false)}
     />
@@ -547,9 +368,9 @@ export default function CocktailDetail({
                   src={
                     activeThumb === 0 && overrideData?.photoPreview
                       ? overrideData.photoPreview
-                      : activeImg.url
+                      : activeImg
                   }
-                  alt={card.t}
+                  alt={card.name}
                   onClick={() => setLightbox(activeThumb)}
                   onError={(e) => {
                     e.target.src = "/theme.png";
@@ -570,15 +391,15 @@ export default function CocktailDetail({
                     gridTemplateColumns: `repeat(${thumbImgs.length}, 1fr)`,
                   }}
                 >
-                  {thumbImgs.map((img, idx) => (
+                  {thumbImgs.map((url, idx) => (
                     <div
                       key={idx}
                       className={`detail-thumb${activeThumb === idx ? " active" : ""}`}
                       onClick={() => setActiveThumb(idx)}
                     >
                       <img
-                        src={img.url}
-                        alt={img.n}
+                        src={url}
+                        alt=""
                         onError={(e) => {
                           e.target.src = "/theme.png";
                         }}
@@ -669,19 +490,16 @@ export default function CocktailDetail({
                           alt=""
                         />
                       )}
-                      {showIllust && (
+                      {showIllust && card.cocktail_illust && (
                         <img
                           className="detail-cocktail-icon-illust"
-                          src={`/cocktail_illust/${encodeURIComponent(
-                            ILLUST_MAP[card.t] ??
-                              ILLUST_FILES[cardId % ILLUST_FILES.length],
-                          )}`}
-                          alt={card.t}
+                          src={card.cocktail_illust}
+                          alt={card.name}
                         />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h1 className="detail-cocktail-name">{displayCard.t}</h1>
+                      <h1 className="detail-cocktail-name">{displayCard.name}</h1>
                     </div>
                     <button
                       className={`btn btn-md ${liked ? " btn-subfilled btn-brand" : "btn-lined btn-gray-light"}`}
@@ -702,7 +520,7 @@ export default function CocktailDetail({
                       }}
                       onClick={() =>
                         navigator.share?.({
-                          title: card.t,
+                          title: card.name,
                           url: window.location.href,
                         })
                       }
@@ -786,7 +604,7 @@ export default function CocktailDetail({
                       <span className="detail-author-name">
                         {isOfficial || card.iba
                           ? "마실랭 공식"
-                          : card.u + "님의 레시피"}
+                          : card.user + "님의 레시피"}
                       </span>
                       {!isOfficial && !card.iba && (
                         <span
@@ -799,43 +617,40 @@ export default function CocktailDetail({
                     {authorDropOpen &&
                       (() => {
                         const userCards = CHALLENGE_CARDS.filter(
-                          (c) => c.u === card.u,
+                          (c) => c.user === card.user,
                         );
                         return (
                           <div className="detail-author-dropdown">
                             <p className="detail-author-dropdown-header">
-                              @{card.u}의 레시피
+                              @{card.user}의 레시피
                             </p>
-                            {userCards.map((uc) => {
-                              const ucImg = POOL[uc.i % POOL.length];
-                              return (
-                                <Link
-                                  key={uc._idx}
-                                  href={`/challenge/${uc._idx}`}
-                                  className="detail-author-dropdown-item"
-                                  onClick={() => setAuthorDropOpen(false)}
-                                >
-                                  {ucImg && (
-                                    <div
-                                      className="size-10 rounded-[10px] overflow-hidden shrink-0"
-                                      style={{ background: ucImg.g }}
-                                    >
-                                      <img
-                                        src={ucImg.url}
-                                        alt={uc.t}
-                                        onError={(e) => {
-                                          e.target.style.display = "none";
-                                        }}
-                                      />
-                                    </div>
-                                  )}
-                                  <span className="flex-1 min-w-0 truncate">
-                                    {uc.t}
-                                  </span>
-                                  <ChevronRightIcon />
-                                </Link>
-                              );
-                            })}
+                            {userCards.map((uc) => (
+                              <Link
+                                key={uc.id}
+                                href={`/challenge/${uc.id}`}
+                                className="detail-author-dropdown-item"
+                                onClick={() => setAuthorDropOpen(false)}
+                              >
+                                {uc.photo_0 && (
+                                  <div
+                                    className="size-10 rounded-[10px] overflow-hidden shrink-0"
+                                    style={{ background: uc.gradient }}
+                                  >
+                                    <img
+                                      src={uc.photo_0}
+                                      alt={uc.name}
+                                      onError={(e) => {
+                                        e.target.style.display = "none";
+                                      }}
+                                    />
+                                  </div>
+                                )}
+                                <span className="flex-1 min-w-0 truncate">
+                                  {uc.name}
+                                </span>
+                                <ChevronRightIcon />
+                              </Link>
+                            ))}
                           </div>
                         );
                       })()}
@@ -898,7 +713,8 @@ export default function CocktailDetail({
                       })
                       .map((ing, idx) => {
                         const ratio = ratios[ingredients.indexOf(ing)];
-                        const ingId = ING_LINK_MAP[ing.name];
+                        const ingData = ING_MAP.get(ing.name);
+                        const ingId = ingData?.id;
                         const isSub = [
                           "민트잎",
                           "오렌지 필",
@@ -910,14 +726,20 @@ export default function CocktailDetail({
                               className="detail-ing-emoji"
                               style={
                                 isSub
-                                  ? {
-                                      background: "var(--purple-soft)",
-                                      border: "1.5px solid var(--purple-line)",
-                                    }
+                                  ? { background: "var(--purple-soft)", border: "1.5px solid var(--purple-line)" }
+                                  : !ingData?.photo
+                                  ? { background: "var(--gray-soft, #e5e7eb)", color: "var(--font-placeholder)", fontSize: "16px" }
                                   : undefined
                               }
                             >
-                              {ing.emoji}
+                              {ingData?.photo ? (
+                                <img
+                                  src={ingData.photo}
+                                  alt={ing.name}
+                                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                                  onError={(e) => { e.target.replaceWith(Object.assign(document.createTextNode("?"))); }}
+                                />
+                              ) : "?"}
                             </div>
                             <span className="detail-ing-name">{ing.name}</span>
                             <span className="detail-ing-type">{ing.type}</span>
@@ -975,7 +797,7 @@ export default function CocktailDetail({
                       className="btn btn-sm btn-lined btn-gray-light"
                       onClick={() =>
                         window.open(
-                          `https://www.youtube.com/results?search_query=${encodeURIComponent(card.t + " 칵테일 만들기")}`,
+                          `https://www.youtube.com/results?search_query=${encodeURIComponent(card.name + " 칵테일 만들기")}`,
                           "_blank",
                         )
                       }
@@ -1206,8 +1028,8 @@ export default function CocktailDetail({
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={thumbImgs[lightbox]?.url}
-              alt={card.t}
+              src={thumbImgs[lightbox]}
+              alt={card.name}
               className="lightbox-img"
               onError={(e) => {
                 e.target.src = "/theme.png";

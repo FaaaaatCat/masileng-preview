@@ -119,30 +119,20 @@ const FLAVOR_BY_THEME = {
   "Hot":      { sweet: 3, sour: 1, bitter: 2, body: 3 },
 };
 
-// abv 코드별 % 텍스트
-const ABV_LABEL = {
-  none: "0%",
-  low: "약 12%",
-  high: "약 30%",
-};
-
-// 난이도
-const DIFFICULTY = {
-  none: "아주 간단",
-  low: "쉬움",
-  medium: "보통",
-  high: "중급",
-  expert: "고급",
-};
+// 난이도 코드별 텍스트
+const DIFFICULTY_LABEL = ["보통", "쉬움", "보통", "중급", "고급"];
 
 // 태그 생성
 export function getCardTags(card) {
   const tags = [];
-  if (card.abv === "none") tags.push("#무알콜");
-  else if (card.abv === "low") tags.push("#낮은 도수");
-  else if (card.abv === "high") tags.push("#높은 도수");
+  if (card.abv === 0) tags.push("#무알콜");
+  else if (card.abv <= 15) tags.push("#낮은 도수");
+  else tags.push("#높은 도수");
 
-  if (card.base) tags.push(`#${card.base} 베이스`);
+  if (card.base) {
+    const bases = Array.isArray(card.base) ? card.base : [card.base];
+    bases.forEach((b) => tags.push(`#${b} 베이스`));
+  }
   if (card.theme) tags.push(`#${card.theme}`);
   if (card.iba) tags.push("#IBA");
 
@@ -150,11 +140,19 @@ export function getCardTags(card) {
 }
 
 export function getCardDetail(card) {
-  const ingredients = INGREDIENTS_BY_BASE[card.base] ?? INGREDIENTS_BY_BASE["위스키"];
-  const steps = STEPS_BY_THEME[card.theme] ?? STEPS_BY_THEME["City"];
+  const ingredients = (card.ingredients ?? []).map((ing) => {
+    if (typeof ing === "object" && ing !== null) {
+      return { emoji: "🍸", name: ing.name, type: "", abvStr: null, amount: ing.amount ?? "적당량" };
+    }
+    return { emoji: "🍸", name: ing, type: "", abvStr: null, amount: "적당량" };
+  });
+  const steps =
+    card.steps?.length > 0
+      ? card.steps
+      : STEPS_BY_THEME[card.theme] ?? STEPS_BY_THEME["City"];
   const flavor = FLAVOR_BY_THEME[card.theme] ?? { sweet: 2, sour: 2, bitter: 2, body: 2 };
-  const abvLabel = ABV_LABEL[card.abv] ?? "0%";
-  const difficulty = DIFFICULTY[card.abv] ?? "보통";
+  const abvLabel = card.abv > 0 ? `약 ${card.abv}%` : "0%";
+  const difficulty = DIFFICULTY_LABEL[card.difficulty ?? 0] ?? "보통";
 
   return { ingredients, steps, flavor, abvLabel, difficulty };
 }
