@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, Fragment } from "react";
 import Link from "next/link";
 import {
   XIcon,
@@ -9,6 +9,7 @@ import {
   PlusIcon,
   TrashIcon,
   UploadBoxIcon,
+  ArrowUpDownIcon,
 } from "./icons";
 import { SelectFilter } from "./FilterBar";
 import INGREDIENTS_DATA from "../data/ingredients.json";
@@ -85,7 +86,14 @@ export default function CocktailForm({
   const [emptyMsgQuery,   setEmptyMsgQuery]    = useState("");
   const [ingToast,        setIngToast]         = useState(false);
   const [ingToastLeaving, setIngToastLeaving]  = useState(false);
+  const [dragIngId,       setDragIngId]        = useState(null);
+  const [clickingIngId,   setClickingIngId]    = useState(null);
+  const [ingErrorIds,     setIngErrorIds]      = useState([]);
+  const [triedSubmit,     setTriedSubmit]      = useState(false);
+  const [showCongrats,    setShowCongrats]     = useState(false);
+  const [newRecipeId,     setNewRecipeId]      = useState(null);
   const emptyMsgTimer = useRef(null);
+  const dragItemRef   = useRef(null); // { list: "main" | "sub", index }
 
   // ── 재료 검색 자동완성
   const getSuggestions = (query) => {
@@ -152,14 +160,31 @@ export default function CocktailForm({
         if (i.id !== id) return i;
         const u = { ...i, [field]: value };
         if (field === "unit" && value === "적당량") u.amount = "";
-        if (field === "name") u.matched = false;
+        if (field === "name") { u.matched = false; u.custom = false; }
         return u;
       }),
     );
 
-  const matchIngredient = (id, name) =>
+  // 과일·기타 카테고리는 계량 없이 '적당량'으로 고정
+  const isFreeAmountCat = (name) => {
+    const item = INGREDIENTS_DATA.find((d) => d.n === name);
+    return !!item && (item.cat === "과일" || item.cat === "기타");
+  };
+
+  // 과일·기타면 '적당량'으로, 그 외 카테고리면 '적당량'이었던 단위를 ml로 복원
+  const unitByCategory = (i, name, custom) => {
+    if (!custom && isFreeAmountCat(name)) return { unit: "적당량", amount: "" };
+    if (i.unit === "적당량") return { unit: "ml" };
+    return {};
+  };
+
+  const matchIngredient = (id, name, custom = false) =>
     setIngredients((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, name, matched: true } : i)),
+      prev.map((i) =>
+        i.id === id
+          ? { ...i, name, matched: true, custom, ...unitByCategory(i, name, custom) }
+          : i,
+      ),
     );
 
   // ── 부재료 (create 전용)
@@ -175,14 +200,18 @@ export default function CocktailForm({
         if (i.id !== id) return i;
         const u = { ...i, [field]: value };
         if (field === "unit" && value === "적당량") u.amount = "";
-        if (field === "name") u.matched = false;
+        if (field === "name") { u.matched = false; u.custom = false; }
         return u;
       }),
     );
 
-  const matchSubIngredient = (id, name) =>
+  const matchSubIngredient = (id, name, custom = false) =>
     setSubIngredients((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, name, matched: true } : i)),
+      prev.map((i) =>
+        i.id === id
+          ? { ...i, name, matched: true, custom, ...unitByCategory(i, name, custom) }
+          : i,
+      ),
     );
 
   // ── 단계
@@ -200,9 +229,39 @@ export default function CocktailForm({
   };
 
   // ── 제출
+  // 이름·한 줄 소개·난이도만 채워지면 등록 버튼 활성화, 나머지는 클릭 시 섹션별로 검증
+  const canTrySubmit = Boolean(
+    title.trim() && desc.trim() && (diffMode === "ai" || difficulty > 0),
+  );
+
+  const ingComplete = (i) => i.matched && (i.unit === "적당량" || i.amount.trim());
+  const ingHasContent = (i) => i.matched || i.name.trim() || i.amount.trim();
+  const sectionValid = {
+    basic: canTrySubmit,
+    theme: !!theme,
+    // 빈 행은 무시 — 완성된 재료 2개 이상 + 내용이 있는 행은 모두 완성 상태여야 함
+    ingredients:
+      ingredients.filter(ingComplete).length >= 2 &&
+      [...ingredients, ...subIngredients].filter(ingHasContent).every(ingComplete),
+    steps: steps.every((s) => s.text.trim()),
+    photo: !!(photoPreview || existingPhoto),
+  };
+
   const handleSubmit = () => {
-    if (!title.trim()) return;
-    onSubmit?.({
+    if (!canTrySubmit) return;
+    // 태그로 변환되지 않고 input으로 남아있는 재료 행 표시
+    setIngErrorIds(
+      [...ingredients, ...subIngredients]
+        .filter((i) => i.name.trim() && !i.matched)
+        .map((i) => i.id),
+    );
+    if (!Object.values(sectionValid).every(Boolean)) {
+      setTriedSubmit(true);
+      return;
+    }
+    setTriedSubmit(false);
+    // onSubmit이 새 레시피 id를 반환하면 축하 팝업의 '보러가기' 링크에 사용
+    const result = onSubmit?.({
       title: title.trim(),
       desc,
       abv,
@@ -211,7 +270,7 @@ export default function CocktailForm({
       diffMode,
       difficulty,
       photoPreview,
-      ingredients: [...ingredients, ...subIngredients].map((ing) => ({
+      ingredients: [...ingredients, ...subIngredients].filter((ing) => ing.matched).map((ing) => ({
         emoji: "🍹",
         name: ing.name,
         type: "",
@@ -220,28 +279,69 @@ export default function CocktailForm({
       })),
       steps: steps.map((s) => s.text),
     });
+    if (!isEdit) {
+      setNewRecipeId(typeof result === "number" || typeof result === "string" ? result : null);
+      setShowCongrats(true);
+    }
   };
+
+  // 제출 시도 후 미입력 섹션의 카드 헤더 우측에 표시
+  const cardAlert = (key, msg) =>
+    triedSubmit && !sectionValid[key] ? <span className="upload-card-alert">{msg}</span> : null;
 
   // ── 재료 인풋 공통 렌더
   const renderIngRow = (ing, idx, updateFn, removeFn, matchFn, isSubIng = false) => {
     const isNoAmt = ing.unit === "적당량";
+    const listKey = isSubIng ? "sub" : "main";
+    const setListFn = isSubIng ? setSubIngredients : setIngredients;
+    const hasError = ingErrorIds.includes(ing.id) && ing.name.trim() && !ing.matched;
     return (
-      <div key={ing.id} className="upload-ing-row">
+      <Fragment key={ing.id}>
+      <div
+        className={`upload-ing-row${clickingIngId === ing.id ? " upload-ing-row--clicking" : ""}`}
+        onDragOver={(e) => {
+          const drag = dragItemRef.current;
+          if (!drag || drag.list !== listKey) return;
+          e.preventDefault();
+          if (drag.index === idx) return;
+          setListFn((prev) => {
+            const next = [...prev];
+            const [moved] = next.splice(drag.index, 1);
+            next.splice(idx, 0, moved);
+            return next;
+          });
+          dragItemRef.current = { list: listKey, index: idx };
+        }}
+        onDrop={(e) => e.preventDefault()}
+      >
         <div
-          className="upload-ing-num"
-          style={isSubIng ? { background: "var(--purple-soft)", color: "var(--purple)" } : undefined}
+          className={`upload-ing-num${isSubIng ? " upload-ing-num--sub" : ""}`}
+          draggable
+          onMouseDown={() => {
+            setClickingIngId(ing.id);
+            window.addEventListener("mouseup", () => setClickingIngId(null), { once: true });
+          }}
+          onDragStart={(e) => {
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text/plain", "");
+            dragItemRef.current = { list: listKey, index: idx };
+            setDragIngId(ing.id);
+          }}
+          onDragEnd={() => { dragItemRef.current = null; setDragIngId(null); setClickingIngId(null); }}
+          title="드래그하여 순서 변경"
         >
-          {idx + 1}
+          <span className="upload-ing-num-label">{idx + 1}</span>
+          <span className="upload-ing-num-drag"><ArrowUpDownIcon /></span>
         </div>
         <div className="upload-ing-inputs">
           <div className="common-input-wrap" style={{ position: "relative" }}>
             {ing.matched ? (
-              <div className="ing-matched-tag">
+              <div className={`ing-matched-tag${ing.custom ? " ing-matched-tag--custom" : ""}`}>
                 <span>{ing.name}</span>
                 <button
                   type="button"
                   className="btn btn-transparent btn-xs"
-                  style={{color:"var(--purple)"}}
+                  style={{ color: ing.custom ? "var(--font-sub)" : "var(--purple)" }}
                   onMouseDown={(e) => { e.preventDefault(); updateFn(ing.id, "name", ""); }}
                   aria-label="재료 삭제"
                 >
@@ -290,13 +390,27 @@ export default function CocktailForm({
                     ) : emptyMsgQuery === ing.name ? (
                       <div className="ing-suggest-empty">
                         <span>'{ing.name}'이(가) 없습니다. 관리자에게 요청주세요.</span>
-                        <button
-                          type="button"
-                          className="btn btn-lined btn-gray-light btn-xxs ing-suggest-request-btn"
-                          onMouseDown={(e) => { e.preventDefault(); setIngRequestQuery(ing.name); setOpenSuggestId(null); }}
-                        >
-                          요청하기
-                        </button>
+                        <div className="ing-suggest-empty-actions">
+                          <button
+                            type="button"
+                            className="btn btn-lined btn-gray-light btn-xxs"
+                            onMouseDown={(e) => { e.preventDefault(); setIngRequestQuery(ing.name); setOpenSuggestId(null); }}
+                          >
+                            요청하기
+                          </button>
+                          <button
+                            type="button"
+                            className="btn btn-lined btn-gray-light btn-xxs"
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                              matchFn(ing.id, ing.name.trim(), true);
+                              setOpenSuggestId(null);
+                              setHighlightIdx(-1);
+                            }}
+                          >
+                            + '{ing.name}' 임시 재료 추가
+                          </button>
+                        </div>
                       </div>
                     ) : null}
                   </div>
@@ -337,6 +451,8 @@ export default function CocktailForm({
           <TrashIcon />
         </button>
       </div>
+      {hasError && <p className="upload-ing-error">재료를 제대로 입력해주세요</p>}
+      </Fragment>
     );
   };
 
@@ -394,7 +510,7 @@ export default function CocktailForm({
                 </div>
                 <div className="common-card-inner">
                   <div className="upload-field">
-                    <label className="upload-label">칵테일 이름 *</label>
+                    <label className="upload-label">칵테일 이름</label>
                     <input
                       className="common-input"
                       type="text"
@@ -456,6 +572,7 @@ export default function CocktailForm({
                 <div className="common-card-header">
                   <span className="upload-card-icon">🏷️</span>
                   <h2 className="common-title-md">카테고리 태그</h2>
+                  {cardAlert("theme", "태그를 선택해주세요")}
                 </div>
                 <div className="common-card-inner">
                   <div className="upload-theme-grid">
@@ -479,6 +596,7 @@ export default function CocktailForm({
                 <div className="common-card-header">
                   <span className="upload-card-icon">🧪</span>
                   <h2 className="common-title-md">재료</h2>
+                  {cardAlert("ingredients", "재료를 모두 입력해주세요")}
                 </div>
                 <div className="common-card-inner">
                   <div className="upload-ing-list">
@@ -516,6 +634,7 @@ export default function CocktailForm({
                 <div className="common-card-header">
                   <span className="upload-card-icon">📝</span>
                   <h2 className="common-title-md">조제 방법</h2>
+                  {cardAlert("steps", "조제 방법을 입력해주세요")}
                 </div>
                 <div className="common-card-inner">
                   <div className="upload-steps-list">
@@ -551,7 +670,10 @@ export default function CocktailForm({
               {/* 대표 사진 */}
               <div className="common-card">
                 <div className="common-card-inner upload-card-body--photo">
-                  <p className="common-title-sm">대표 사진</p>
+                  <p className="common-title-sm" style={{ display: "flex" }}>
+                    대표 사진
+                    {cardAlert("photo", "대표 사진을 등록해주세요")}
+                  </p>
                   <p className="common-body-sm-light" style={{ color: "var(--font-placeholder)" }}>
                     잘리지 않게 약간 여백을 두고 촬영해주세요
                   </p>
@@ -633,25 +755,21 @@ export default function CocktailForm({
               {/* 액션 버튼 */}
               <div className="upload-actions">
                 <button
-                  className={`btn btn-filled btn-gradient-2 btn-lg${title.trim() ? "" : " btn-disable"}`}
-                  disabled={!title.trim()}
+                  className={`btn btn-filled btn-gradient-2 btn-lg${canTrySubmit ? "" : " btn-disable"}`}
+                  disabled={!canTrySubmit}
                   onClick={handleSubmit}
                 >
                   {isEdit ? "수정 완료" : "레시피 등록하기"}
                 </button>
-                {isEdit ? (
+                {isEdit && (
                   <button className="btn btn-lined btn-gray-light btn-lg" onClick={onCancel}>
                     취소
-                  </button>
-                ) : (
-                  <button className="btn btn-lined btn-gray-light btn-lg">
-                    임시저장
                   </button>
                 )}
                 <p className="upload-notice">
                   {isEdit
                     ? "수정사항은 새로고침 시 초기화됩니다."
-                    : "적합하지 않은 콘텐츠는 등록이 제한될 수 있습니다."}
+                    : "모든 내용을 다 입력해주셔야 합니다."}
                 </p>
               </div>
             </div>
@@ -664,6 +782,36 @@ export default function CocktailForm({
           initialName={ingRequestQuery}
           onClose={() => setIngRequestQuery(null)}
         />
+      )}
+
+      {/* 등록 완료 축하 팝업 */}
+      {showCongrats && (
+        <div className="common-popup-backdrop">
+          <div className="common-popup-modal popup-xs">
+            <div className="common-popup-success">
+              <img
+                src="/character_illust/happyLemon.png"
+                alt="축하"
+                className="upload-congrats-img"
+              />
+              <p className="common-popup-success-title">레시피 등록 완료!</p>
+              <p className="common-popup-success-sub">
+                멋진 레시피를 알려주셔서 감사해요! <br /> 모두에게 공유도 해보는건 어때요?
+              </p>
+              <div className="upload-congrats-actions">
+                <Link
+                  href={newRecipeId != null ? `/cocktail/${newRecipeId}` : "/"}
+                  className="btn btn-filled btn-brand btn-lg"
+                >
+                  작성한 레시피 보러가기
+                </Link>
+                <Link href="/" className="btn btn-transparent btn-md">
+                  홈으로 돌아가기
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

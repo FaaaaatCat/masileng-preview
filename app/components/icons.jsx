@@ -161,6 +161,15 @@ export const SwapIcon = () => (
   </svg>
 );
 
+export const ArrowUpDownIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+    strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+    <polyline points="8 6 12 2 16 6" />
+    <polyline points="8 18 12 22 16 18" />
+    <line x1="12" y1="2" x2="12" y2="22" />
+  </svg>
+);
+
 export const CheckIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
     strokeLinecap="round" strokeLinejoin="round" width="10" height="10">

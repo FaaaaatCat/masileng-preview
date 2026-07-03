@@ -808,6 +808,52 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  /* 클릭 시 보더가 생겨도 레이아웃이 밀리지 않도록 미리 자리 확보 */
+  padding: 5px;
+  margin: -6px;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  transition: border-color var(--time-fast), box-shadow var(--time-fast);
+}
+
+.upload-ing-row--clicking {
+  border-color: var(--coral);
+  box-shadow: 0 4px 14px rgba(243, 75, 101, 0.18);
+}
+
+/* 등록 완료 축하 팝업 이미지 */
+.upload-congrats-img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+
+/* 등록 완료 축하 팝업 버튼 */
+.upload-congrats-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 260px;
+  margin-top: 4px;
+}
+
+/* 제출 시 미입력 섹션 경고 — 카드 헤더 우측 */
+.upload-card-alert {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--coral);
+  white-space: nowrap;
+}
+
+/* 태그로 변환되지 않은 재료 경고 문구 */
+.upload-ing-error {
+  margin: -2px 0 0 40px; /* 번호(28px) + 간격(12px)만큼 들여쓰기 */
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--coral);
 }
 
 .upload-ing-num {
@@ -823,6 +869,39 @@
   justify-content: center;
   flex-shrink: 0;
 }
+
+.upload-ing-num--sub {
+  background: var(--purple-soft);
+  color: var(--purple);
+}
+
+/* 재료 행: 번호에 hover 시 드래그 핸들(위아래 화살표)로 전환 */
+.upload-ing-num-drag {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.upload-ing-row .upload-ing-num {
+  cursor: grab;
+}
+
+.upload-ing-row .upload-ing-num:active {
+  cursor: grabbing;
+}
+
+.upload-ing-row .upload-ing-num:hover {
+  background: transparent;
+}
+
+.upload-ing-row .upload-ing-num:hover .upload-ing-num-label {
+  display: none;
+}
+
+.upload-ing-row .upload-ing-num:hover .upload-ing-num-drag {
+  display: flex;
+}
+
 
 .upload-ing-inputs {
   display: flex;

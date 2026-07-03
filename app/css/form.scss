@@ -857,6 +857,12 @@ $btn-sizes: (
   }
 }
 
+// 임시(미등록) 재료 태그 — 회색
+.ing-matched-tag--custom {
+  background: var(--gray-8);
+  color: var(--font-sub);
+}
+
 // ─── 재료명 자동완성 드롭다운 ─────────────────
 
 .ing-suggest-dropdown {
@@ -911,6 +917,8 @@ $btn-sizes: (
   color: var(--font-placeholder);
 }
 
-.ing-suggest-request-btn {
+.ing-suggest-empty-actions {
+  display: flex;
+  gap: 6px;
   align-self: flex-end;
 }
