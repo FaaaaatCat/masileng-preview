@@ -131,6 +131,7 @@ function getProducts(ing) {
 
 export default function IngredientDetail({ ing }) {
   const imgSrc = ing.photo;
+  const isAlcohol = ing.cat === "술(강한 도수)" || ing.cat === "술(약한 도수)";
   const [isInBasket, setIsInBasket] = useState(!!ing.myIng);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -213,7 +214,8 @@ export default function IngredientDetail({ ing }) {
                   </span>
                 </button>
                 <button
-                  className="ing-btn-coupang btn-xxl"
+                  className={`ing-btn-coupang btn-xxl${isAlcohol ? " ing-btn-coupang--disabled" : ""}`}
+                  disabled={isAlcohol}
                   onClick={() => alert("쿠팡으로 이동합니다.")}
                 >
                   <span className="ing-btn-coupang-left">
@@ -225,7 +227,9 @@ export default function IngredientDetail({ ing }) {
                   <ArrowRightIcon />
                 </button>
                 <p className="ing-btn-coupang-info">
-                  파트너스 링크로 구매 시 마실랭 운영에 도움이 됩니다.
+                  {isAlcohol
+                    ? "술은 오프라인에서만 구매 가능합니다."
+                    : "파트너스 링크로 구매 시 마실랭 운영에 도움이 됩니다."}
                 </p>
               </div>
             </div>

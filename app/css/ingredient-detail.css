@@ -210,6 +210,22 @@
   transform: translateY(0);
 }
 
+.ing-btn-coupang--disabled,
+.ing-btn-coupang--disabled:hover,
+.ing-btn-coupang--disabled:active {
+  cursor: not-allowed;
+  background: var(--form-bg-disable);
+  border: 1.5px solid var(--form-line-disable);
+  color: var(--font-disable);
+  box-shadow: none;
+  opacity: 1;
+  transform: none;
+}
+.ing-btn-coupang--disabled .ing-btn-coupang-rocket{
+  opacity: 0;
+  margin-left: -20px;
+}
+
 .ing-btn-coupang-left {
   display: flex;
   align-items: center;
