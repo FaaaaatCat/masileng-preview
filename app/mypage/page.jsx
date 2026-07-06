@@ -224,7 +224,7 @@ export default function MyPage() {
           onSave={handleProfileSave}
         />
       )}
-      <div className="mypage-layout">
+      <div className="page-wrap mypage-layout">
         {/* ── 좌측 사이드바 */}
         <aside>
           <div className="common-card mypage-sidebar-card">
@@ -298,9 +298,9 @@ export default function MyPage() {
               {/* 내 냉장고 */}
               {activeTab === 0 &&
                 (fridgeItems.length === 0 ? (
-                  <div className="mypage-empty">
-                    <span className="mypage-empty-icon">🧊</span>
-                    <p className="mypage-empty-text">냉장고가 비어있어요.</p>
+                  <div className="common-empty">
+                    <span className="common-empty-icon">🧊</span>
+                    <p className="common-empty-text">냉장고가 비어있어요.</p>
                   </div>
                 ) : (
                   <>
@@ -421,9 +421,9 @@ export default function MyPage() {
               {/* 내 레시피 */}
               {activeTab === 1 &&
                 (myRecipes.length === 0 ? (
-                  <div className="mypage-empty">
-                    <span className="mypage-empty-icon">🍹</span>
-                    <p className="mypage-empty-text">
+                  <div className="common-empty">
+                    <span className="common-empty-icon">🍹</span>
+                    <p className="common-empty-text">
                       아직 등록한 레시피가 없어요.
                     </p>
                   </div>
@@ -469,9 +469,9 @@ export default function MyPage() {
               {/* 좋아요 */}
               {activeTab === 2 &&
                 (likedRecipes.length === 0 ? (
-                  <div className="mypage-empty">
-                    <span className="mypage-empty-icon">🤍</span>
-                    <p className="mypage-empty-text">
+                  <div className="common-empty">
+                    <span className="common-empty-icon">🤍</span>
+                    <p className="common-empty-text">
                       좋아요한 레시피가 없어요.
                     </p>
                   </div>

@@ -90,16 +90,16 @@ export default function ChallengeCard({ card, currentUser }) {
       </Link>
 
       {dropOpen && (
-        <div className="common-card-item-author-dropdown">
-          <p className="common-card-item-author-dropdown-header">@{card.user}의 레시피</p>
+        <div className="common-dropdown common-card-item-author-dropdown">
+          <p className="common-dropdown-header">@{card.user}의 레시피</p>
           {userCards.map((uc) => (
             <Link
               key={uc.id}
               href={`/challenge/${uc.id}`}
-              className="common-card-item-author-dropdown-item"
+              className="common-dropdown-item"
               onClick={() => setDropOpen(false)}
             >
-              <span className="common-card-item-author-dropdown-name">{uc.name}</span>
+              <span className="common-dropdown-name">{uc.name}</span>
               <ChevronRightIcon />
             </Link>
           ))}

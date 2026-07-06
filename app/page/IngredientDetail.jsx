@@ -165,7 +165,7 @@ export default function IngredientDetail({ ing }) {
     <>
       <NoticeBanner />
       <SiteHeader />
-      <div className="ing-detail-page">
+      <div className="detail-page">
         {showToast && (
           <div
             className={`common-toast${toastLeaving ? " common-toast--out" : ""}`}
@@ -174,10 +174,10 @@ export default function IngredientDetail({ ing }) {
             재료를 내 냉장고에 추가했습니다
           </div>
         )}
-        <div className="ing-detail-inner">
-          <div className="ing-detail-grid">
+        <div className="page-wrap">
+          <div className="detail-grid">
             {/* ── 왼쪽 ── */}
-            <div className="ing-detail-left">
+            <div className="detail-left">
               <Link href="/?tab=재료" className="detail-back-btn">
                 <ArrowLeftIcon />
                 목록으로
@@ -235,14 +235,14 @@ export default function IngredientDetail({ ing }) {
             </div>
 
             {/* ── 오른쪽 ── */}
-            <div className="ing-detail-right">
+            <div className="detail-right">
               {/* 1. 재료 설명 */}
               <div className="common-card">
                 <div className="common-card-inner" style={{ gap: "0" }}>
                   <h1 className="ing-detail-name">{ing.n}</h1>
                   <p className="ing-detail-en">{ing.en}</p>
                   <div>
-                    <span className="ing-detail-cat">{ing.cat}</span>
+                    <span className="common-tag common-tag--coral ing-detail-cat">{ing.cat}</span>
                   </div>
                   <p className="ing-detail-desc">{ing.desc}</p>
                 </div>
@@ -371,7 +371,7 @@ export default function IngredientDetail({ ing }) {
                       })}
                     </div>
                   ) : (
-                    <p className="ing-empty">아직 등록된 칵테일이 없어요.</p>
+                    <p className="common-empty common-empty--compact common-empty-text">아직 등록된 칵테일이 없어요.</p>
                   )}
                 </div>
               </div>

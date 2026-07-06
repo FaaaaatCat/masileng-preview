@@ -237,10 +237,18 @@
 /* ─────────────────────────────────────────────
    Page layout
 ───────────────────────────────────────────── */
+/* 센터 컨테이너 — 사이트 전 페이지 공통 (기본 콘텐츠 폭 1200px) */
 .page-wrap {
-  width: 1200px;
+  width: 100%;
+  max-width: calc(1200px + 2 * var(--page-gutter));
   margin: 0 auto;
-  padding-bottom: 2rem;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+}
+
+/* 폭 변형 — 콘텐츠 기준 폭 */
+.page-wrap--sm {
+  max-width: calc(1000px + 2 * var(--page-gutter));
 }
 
 

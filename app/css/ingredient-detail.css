@@ -2,34 +2,7 @@
    Ingredient Detail Page
 ───────────────────────────────────────────── */
 
-.ing-detail-page {
-  background: var(--page-bg-gray);
-  min-height: 100vh;
-  padding-bottom: 80px;
-}
-
-.ing-detail-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.ing-detail-grid {
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-/* ── Left ── */
-.ing-detail-left {
-  position: sticky;
-  top: 0;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* 페이지 루트·그리드·좌우 컬럼은 detail-page.scss 공통 사용 */
 
 .ing-detail-img-wrap {
   width: 100%;
@@ -256,13 +229,6 @@
 }
 
 /* ── Right ── */
-.ing-detail-right {
-  padding-top: 60px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
 /* 재료 설명 */
 .ing-detail-name {
   font-size: 26px;
@@ -279,15 +245,8 @@
   font-weight: 400;
 }
 
+/* 배지 비주얼은 common-tag--coral 공통 사용 */
 .ing-detail-cat {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  border-radius: var(--r-xl);
-  background: var(--coral-soft);
-  color: var(--coral);
-  font-size: 12px;
-  font-weight: 600;
   margin-bottom: 14px;
 }
 
@@ -354,9 +313,4 @@
   flex-direction: column;
   gap: 10px;
 }
-.ing-empty {
-  color: var(--font-placeholder);
-  font-size: 14px;
-  padding: 20px 0;
-  text-align: center;
-}
+/* 빈 상태는 common-empty 공통 사용 */

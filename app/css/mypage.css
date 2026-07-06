@@ -2,14 +2,13 @@
    My Page
 ───────────────────────────────────────────── */
 
-/* ── 좌우 2단 레이아웃 */
+/* ── 좌우 2단 레이아웃 — 센터링·폭은 .page-wrap 공통 사용 */
 .mypage-layout {
   display: grid;
   grid-template-columns: 300px 1fr;
   gap: 20px;
-  width: 1200px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding-top: 40px;
+  padding-bottom: 80px;
   align-items: start;
 }
 
@@ -527,22 +526,4 @@
   box-shadow: 0 0 0 3px #fff inset, 0 2px 8px rgba(0,0,0,0.12);
 }
 
-/* ── 빈 상태 (empty) */
-.mypage-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 48px 0;
-  text-align: center;
-}
-
-.mypage-empty-icon {
-  font-size: 36px;
-  opacity: 0.4;
-}
-
-.mypage-empty-text {
-  font-size: 14px;
-  color: var(--font-placeholder);
-}
+/* ── 빈 상태는 common-empty 공통 사용 */

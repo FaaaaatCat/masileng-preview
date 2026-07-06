@@ -475,7 +475,7 @@ export default function CocktailForm({
 
 
       <div className="upload-page">
-        <div className="upload-inner">
+        <div className="page-wrap page-wrap--sm">
           {/* ── Hero */}
           <div style={{ marginBottom: 40 }}>
             {isEdit ? (
@@ -619,9 +619,9 @@ export default function CocktailForm({
                     {!isEdit && (
                       <button className="upload-add-btn upload-add-btn--sub btn-lg" onClick={addSubIngredient}>
                         <PlusIcon /> 부재료 추가
-                        <div className="upload-tooltip-wrap" onClick={(e) => e.stopPropagation()}>
+                        <div className="common-tooltip-wrap" onClick={(e) => e.stopPropagation()}>
                           <span className="upload-tooltip-btn">?</span>
-                          <div className="upload-tooltip-box">없어도 되지만 있으면 좋은 재료</div>
+                          <div className="common-tooltip-box">없어도 되지만 있으면 좋은 재료</div>
                         </div>
                       </button>
                     )}
@@ -746,7 +746,7 @@ export default function CocktailForm({
                     </div>
                     <div className="upload-summary-row">
                       <span className="upload-summary-label">테마</span>
-                      {theme && <span className="upload-summary-tag">{theme}</span>}
+                      {theme && <span className="common-tag common-tag--coral common-tag--sm">{theme}</span>}
                     </div>
                   </div>
                 </div>

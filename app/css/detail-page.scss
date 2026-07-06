@@ -1,0 +1,58 @@
+/* ─────────────────────────────────────────────
+   Detail Page — 상세페이지 공통 레이아웃
+   (칵테일 상세 · 재료 상세)
+───────────────────────────────────────────── */
+
+// ── 페이지 루트
+.detail-page {
+  background: var(--page-bg-gray);
+  min-height: 100vh;
+  padding-bottom: 80px;
+  position: relative;
+}
+
+// ── 좌우 2단 그리드 (좌: 스티키 이미지 영역 / 우: 콘텐츠)
+.detail-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.detail-left {
+  position: sticky;
+  top: 0;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detail-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 60px;
+}
+
+// ── 뒤로가기 버튼
+.detail-back-btn {
+  margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--font-sub2);
+  padding: 0;
+  text-decoration: none;
+  transition: color var(--time-fast);
+
+  &:hover {
+    color: var(--font-title);
+  }
+}

@@ -104,7 +104,7 @@ export default function UploadIntroPage() {
           </div>
 
           <div className="upload-intro-text-wrap">
-            <span className="upload-badge">✨ 레시피 업로드</span>
+            <span className="common-tag common-tag--coral upload-badge">✨ 레시피 업로드</span>
             <h1 className="upload-intro-heading">
               당신의 레시피를
               <br />
@@ -132,7 +132,7 @@ export default function UploadIntroPage() {
 
         {/* ── Process Steps ── */}
         <section className="upload-intro-section">
-          <div className="upload-intro-section-inner">
+          <div className="page-wrap page-wrap--sm upload-intro-section-inner">
             <h2 className="upload-intro-section-title reveal">등록 프로세스</h2>
             <p className="upload-intro-section-sub reveal reveal-delay-1">
               3단계면 충분해요
@@ -163,7 +163,7 @@ export default function UploadIntroPage() {
         {/* ── Guidelines ── */}
         <section className="upload-intro-section upload-intro-section--gray">
           <div
-            className="upload-intro-section-inner"
+            className="page-wrap page-wrap--sm upload-intro-section-inner"
             style={{ marginBottom: "40px" }}
           >
             <h2 className="upload-intro-section-title reveal">
@@ -188,7 +188,7 @@ export default function UploadIntroPage() {
 
         {/* ── Hall of Fame ── */}
         <section className="upload-intro-hof">
-          <div className="upload-intro-hof-inner">
+          <div className="page-wrap page-wrap--sm">
             <div className="upload-intro-hof-badge reveal">🏆 명예의 전당</div>
             <h2 className="upload-intro-hof-heading reveal reveal-delay-1">
               좋아요가 쌓이면

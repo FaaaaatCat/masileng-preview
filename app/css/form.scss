@@ -656,20 +656,9 @@ $btn-sizes: (
   }
 }
 
-.iba-help-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-
-  &:hover {
-    .iba-help-icon {
-      opacity: 1;
-    }
-    .iba-help-tooltip {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  }
+// 래퍼·말풍선은 common-tooltip-* 공통 사용 — 여기선 아이콘 hover만 추가
+.iba-help-wrap:hover .iba-help-icon {
+  opacity: 1;
 }
 
 .iba-help-icon {
@@ -687,38 +676,6 @@ $btn-sizes: (
   cursor: default;
   flex-shrink: 0;
   transition: opacity var(--time-fast);
-}
-
-.iba-help-tooltip {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(4px);
-  background: var(--font-title);
-  color: #fff;
-  font-size: 12.5px;
-  font-weight: 500;
-  white-space: nowrap;
-  padding: 7px 12px;
-  border-radius: var(--r-sm);
-  pointer-events: none;
-  opacity: 0;
-  transition:
-    opacity var(--time-fast),
-    transform var(--time-fast);
-  z-index: 100;
-  letter-spacing: -0.01em;
-  line-height: 1;
-
-  &::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: var(--font-title);
-  }
 }
 
 // ─────────────────────────────────────────────

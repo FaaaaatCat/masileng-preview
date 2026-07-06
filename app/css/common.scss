@@ -327,6 +327,109 @@
   letter-spacing: -0.01em;
   white-space: nowrap;
   user-select: none;
+
+  // 브랜드 강조 (코랄)
+  &--coral {
+    background: var(--coral-soft);
+    color: var(--coral);
+  }
+
+  // 작은 크기
+  &--sm {
+    height: 20px;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+}
+
+// ── 드롭다운 패널 (작성자 레시피 목록 등 — 포지셔닝은 사용처에서 정의)
+.common-dropdown {
+  background: #fff;
+  border: 1px solid var(--ui-line-light);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  z-index: 20;
+
+  &-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--font-placeholder);
+    padding: 10px 14px 6px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.12s;
+    border-top: 1px solid var(--ui-line-subtle);
+    gap: 8px;
+
+    &:hover {
+      background: var(--coral-soft);
+      color: var(--coral);
+    }
+  }
+
+  &-name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ── 툴팁 (hover 시 위로 페이드 표시 — 트리거 버튼 스타일은 사용처에서 정의)
+.common-tooltip-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover .common-tooltip-box {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.common-tooltip-box {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: var(--font-title);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: var(--r-sm);
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity var(--time-fast),
+    transform var(--time-fast);
+  z-index: 100;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--font-title);
+  }
 }
 
 // ── 카드 아이템 (칵테일·재료 공통)
@@ -519,50 +622,9 @@
     }
   }
 
+  // 패널 비주얼은 .common-dropdown 공통 사용 — 카드 아래 배치 간격만 정의
   &-author-dropdown {
-    background: #fff;
-    border: 1px solid var(--ui-line-light);
-    border-radius: var(--r-md);
-    box-shadow: var(--shadow-card);
-    overflow: hidden;
     margin-top: 6px;
-    z-index: 20;
-
-    &-header {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--font-placeholder);
-      padding: 10px 14px 6px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-    }
-
-    &-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      text-decoration: none;
-      color: var(--font-body);
-      font-size: 13px;
-      font-weight: 500;
-      transition: background 0.12s;
-      border-top: 1px solid var(--ui-line-subtle);
-      gap: 8px;
-
-      &:hover {
-        background: var(--coral-soft);
-        color: var(--coral);
-      }
-    }
-
-    &-name {
-      flex: 1;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
   }
 
   // 메타 정보 (좋아요·댓글)
@@ -705,6 +767,31 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+// ── 빈 상태 (목록·탭에 콘텐츠가 없을 때)
+.common-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 0;
+  text-align: center;
+
+  // 카드 내부 등 좁은 영역용
+  &--compact {
+    padding: 24px 0;
+  }
+
+  &-icon {
+    font-size: 36px;
+    opacity: 0.4;
+  }
+
+  &-text {
+    font-size: 14px;
+    color: var(--font-placeholder);
   }
 }
 

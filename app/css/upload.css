@@ -265,10 +265,8 @@
   background: var(--page-bg-gray);
 }
 
+/* 센터링·폭은 .page-wrap.page-wrap--sm 공통 사용 */
 .upload-intro-section-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 40px;
   text-align: center;
 }
 
@@ -436,12 +434,6 @@
   text-align: center;
 }
 
-.upload-intro-hof-inner {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
 .upload-intro-hof-badge {
   display: inline-flex;
   align-items: center;
@@ -567,22 +559,8 @@
   padding: 48px 0 80px;
 }
 
-.upload-inner {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
+/* 배지 비주얼은 common-tag--coral 공통 사용 */
 .upload-badge {
-  display: inline-flex;
-  align-items: center;
-  height: 28px;
-  padding: 0 12px;
-  border-radius: var(--r-full);
-  background: #fce4ea;
-  color: var(--coral);
-  font-size: 12px;
-  font-weight: 600;
   margin-bottom: 12px;
 }
 
@@ -1041,10 +1019,7 @@
   color: var(--purple);
 }
 
-.upload-tooltip-wrap {
-  position: relative;
-}
-
+/* 툴팁 래퍼·말풍선은 common-tooltip-* 공통 사용 */
 .upload-tooltip-btn {
   width: 20px;
   height: 20px;
@@ -1060,35 +1035,6 @@
   justify-content: center;
   padding: 0;
   line-height: 20px;
-}
-
-.upload-tooltip-box {
-  display: none;
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--font-title);
-  color: #fff;
-  font-size: 12px;
-  white-space: nowrap;
-  padding: 5px 10px;
-  border-radius: var(--r-sm);
-  pointer-events: none;
-}
-
-.upload-tooltip-box::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 5px solid transparent;
-  border-top-color: var(--font-title);
-}
-
-.upload-tooltip-wrap:hover .upload-tooltip-box {
-  display: block;
 }
 
 /* ─────────────────────────────────────────────
@@ -1243,18 +1189,6 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--font-title);
-}
-
-.upload-summary-tag {
-  display: inline-flex;
-  align-items: center;
-  height: 20px;
-  padding: 0 8px;
-  border-radius: var(--r-full);
-  background: #fce4ea;
-  color: var(--coral);
-  font-size: 11px;
-  font-weight: 700;
 }
 
 /* Action buttons */

@@ -142,9 +142,9 @@ export default function FilterBar({
               {ibaOnly && <CheckIcon />}
             </span>
             IBA
-            <span className="iba-help-wrap" onMouseDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
+            <span className="common-tooltip-wrap iba-help-wrap" onMouseDown={(e) => e.stopPropagation()} onClick={(e) => e.stopPropagation()}>
               <span className="iba-help-icon">?</span>
-              <span className="iba-help-tooltip">국제 바텐더 협회(IBA)에서 공식 인정한 표준 레시피</span>
+              <span className="common-tooltip-box">국제 바텐더 협회(IBA)에서 공식 인정한 표준 레시피</span>
             </span>
           </button>
         )}

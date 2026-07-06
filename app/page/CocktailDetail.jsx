@@ -353,7 +353,7 @@ export default function CocktailDetail({
             silhouette={THEME_SILHOUETTE[card.theme.toLowerCase()]}
           />
         )}
-        <div className="detail-inner">
+        <div className="page-wrap page-wrap--sm detail-inner">
           <div className="detail-grid">
             {/* ── 왼쪽: 뒤로가기 + 이미지 갤러리 ── */}
             <div className="detail-left">
@@ -620,15 +620,15 @@ export default function CocktailDetail({
                           (c) => c.user === card.user,
                         );
                         return (
-                          <div className="detail-author-dropdown">
-                            <p className="detail-author-dropdown-header">
+                          <div className="common-dropdown detail-author-dropdown">
+                            <p className="common-dropdown-header">
                               @{card.user}의 레시피
                             </p>
                             {userCards.map((uc) => (
                               <Link
                                 key={uc.id}
                                 href={`/challenge/${uc.id}`}
-                                className="detail-author-dropdown-item"
+                                className="common-dropdown-item"
                                 onClick={() => setAuthorDropOpen(false)}
                               >
                                 {uc.photo_0 && (
@@ -751,11 +751,11 @@ export default function CocktailDetail({
                             {isSub && (
                               <span className="detail-ing-sub-label">
                                 부재료
-                                <span className="detail-ing-sub-tooltip-wrap">
+                                <span className="common-tooltip-wrap">
                                   <span className="detail-ing-sub-tooltip-btn">
                                     ?
                                   </span>
-                                  <span className="detail-ing-sub-tooltip-box">
+                                  <span className="common-tooltip-box">
                                     없어도 되지만 있으면 좋은 재료
                                   </span>
                                 </span>
@@ -834,7 +834,7 @@ export default function CocktailDetail({
                 </div>
                 <div className="common-card-inner">
                   {comments.length === 0 ? (
-                    <p className="detail-comment-empty">
+                    <p className="common-empty common-empty--compact common-empty-text">
                       아직 댓글이 없어요. 첫 댓글을 남겨보세요!
                     </p>
                   ) : (
