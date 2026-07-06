@@ -196,7 +196,7 @@ export default function IngredientsHome() {
             </div>
           </div>
           {/* 카테고리 탭 */}
-          <div className="flex gap-2 py-3.5">
+          <div className="flex gap-2 py-3.5 overflow-x-auto">
             {CATS.map((c) => (
               <button
                 key={c}

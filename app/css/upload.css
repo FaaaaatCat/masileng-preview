@@ -1206,3 +1206,88 @@
   line-height: 1.6;
 }
 
+/* ─────────────────────────────────────────────
+   모바일
+───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* ── 업로드 폼: 1단 전환 */
+  .upload-page {
+    padding: 24px 0 60px;
+  }
+
+  .upload-grid {
+    /* 자식 min-content가 넓어도 트랙이 컨테이너를 넘지 않도록 */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  /* 재료 입력 행: 좁은 화면에서 줄바꿈 허용 */
+  .upload-ing-inputs {
+    flex-wrap: wrap;
+  }
+
+  .upload-right {
+    position: static;
+  }
+
+  .upload-heading {
+    font-size: 26px;
+  }
+
+  .upload-theme-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* ── 인트로: 세로 스택 */
+  .upload-intro-layout {
+    flex-direction: column;
+    gap: 40px;
+    padding: 4rem var(--page-gutter) 3rem;
+  }
+
+  .upload-intro-phone-wrap {
+    width: 100%;
+    height: 420px;
+  }
+
+  .upload-intro-circle {
+    width: 300px;
+    height: 300px;
+  }
+
+  .upload-intro-text-wrap {
+    align-items: center;
+    text-align: center;
+  }
+
+  .upload-intro-heading {
+    font-size: 30px;
+  }
+
+  .upload-intro-steps {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .upload-intro-step-arrow {
+    display: none;
+  }
+
+  .upload-intro-guidelines {
+    grid-template-columns: 1fr;
+  }
+
+  .upload-intro-section {
+    padding: 48px 0;
+  }
+
+  .upload-intro-hof-cards {
+    flex-wrap: wrap;
+  }
+
+  .upload-intro-hof-heading {
+    font-size: 26px;
+  }
+}
+

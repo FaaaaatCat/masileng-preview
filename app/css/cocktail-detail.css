@@ -188,6 +188,19 @@
 .lightbox-arrow--next {
   right: 32px;
 }
+
+/* 모바일: 이미지 폭 확대 + 화살표 여백 축소 */
+@media (max-width: 768px) {
+  .lightbox-img-wrap {
+    max-width: 92vw;
+  }
+  .lightbox-arrow--prev {
+    left: 8px;
+  }
+  .lightbox-arrow--next {
+    right: 8px;
+  }
+}
 .lightbox-counter {
   position: absolute;
   bottom: 20px;

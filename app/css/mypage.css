@@ -12,6 +12,27 @@
   align-items: start;
 }
 
+/* 모바일: 1단 전환 + 탭 가로 스크롤 */
+@media (max-width: 768px) {
+  .mypage-layout {
+    grid-template-columns: 1fr;
+    padding-top: 20px;
+    padding-bottom: 60px;
+  }
+
+  .mypage-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mypage-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mypage-tab-content {
+    padding: 16px;
+  }
+}
+
 
 /* ── 사이드바 카드 내부 */
 .mypage-sidebar-card {

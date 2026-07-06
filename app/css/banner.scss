@@ -357,3 +357,15 @@
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   }
 }
+
+/* ─────────────────────────────────────────────
+   모바일: 메인 배너 3종 숨김
+   (칵테일 홈 · 슬라이딩 · 도전!마실랭)
+───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .cocktail-main-banner,
+  .sliding-banner-wrap,
+  .challenge-main-banner {
+    display: none;
+  }
+}

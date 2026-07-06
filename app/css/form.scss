@@ -308,6 +308,28 @@ $btn-sizes: (
   display: flex;
 }
 
+// ── 모바일: 필터 줄바꿈 + 슬라이더 전체 폭
+@media (max-width: 768px) {
+  .filter-bar {
+    margin: 20px 0;
+  }
+
+  .filter-row {
+    flex-wrap: wrap;
+
+    > .range-wrap {
+      order: 10;
+      width: 100%;
+    }
+  }
+
+  .search-bar {
+    height: 48px;
+    gap: 8px;
+    padding: 0 6px 0 14px;
+  }
+}
+
 // ─────────────────────────────────────────────
 //  Search bar
 // ─────────────────────────────────────────────

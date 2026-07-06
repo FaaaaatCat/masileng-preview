@@ -234,6 +234,50 @@
   color: var(--coral-strong);
 }
 
+/* ── 모바일: 2단 헤더 (1행 로고+버튼 / 2행 가로 스크롤 탭) */
+@media (max-width: 768px) {
+  .site-header-inner {
+    padding: 0 var(--page-gutter);
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .nav-menu {
+    order: 10;
+    width: 100%;
+    overflow-x: auto;
+    gap: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-menu::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 15px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  /* 밑줄 위치: 고정 높이(-14px) 기준 → 탭 행 하단 */
+  .nav-link::after,
+  .nav-link-underline {
+    bottom: 2px;
+  }
+
+  /* hover flyout은 터치에서 무의미 */
+  .nav-download-wrap,
+  .nav-divider {
+    display: none;
+  }
+}
+
 /* ─────────────────────────────────────────────
    Page layout
 ───────────────────────────────────────────── */

@@ -189,6 +189,28 @@
     padding: 20px 24px 28px;
   }
 
+  // 모바일: 바텀시트 전환
+  @media (max-width: 768px) {
+    &-backdrop {
+      align-items: flex-end;
+      padding: 0;
+    }
+
+    &-modal {
+      &,
+      &.popup-xs,
+      &.popup-sm,
+      &.popup-md,
+      &.popup-lg,
+      &.popup-xl {
+        max-width: 100%;
+      }
+      width: 100%;
+      max-height: 92vh;
+      border-radius: var(--r-xl) var(--r-xl) 0 0;
+    }
+  }
+
   &-success {
     display: flex;
     flex-direction: column;
@@ -726,6 +748,18 @@
   }
   @media (max-width: 900px) {
     grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 12px;
+  }
+}
+
+// 모바일: 카드 이미지 고정 높이(240px) → 카드 폭 비례
+@media (max-width: 768px) {
+  .common-card-item-img-wrap {
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }
 
