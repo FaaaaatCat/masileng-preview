@@ -37,11 +37,6 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
           {card.comments}
         </span>
       </div>
-      {card.iba && (
-        <div className="">
-          <span className="common-list-item-tag tag-iba">IBA</span>
-        </div>
-      )}
     </>
   );
 

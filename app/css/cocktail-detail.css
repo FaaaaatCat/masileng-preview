@@ -189,16 +189,10 @@
   right: 32px;
 }
 
-/* 모바일: 이미지 폭 확대 + 화살표 여백 축소 */
+/* 모바일: 이미지 폭 확대 */
 @media (max-width: 768px) {
   .lightbox-img-wrap {
     max-width: 92vw;
-  }
-  .lightbox-arrow--prev {
-    left: 8px;
-  }
-  .lightbox-arrow--next {
-    right: 8px;
   }
 }
 .lightbox-counter {
@@ -236,6 +230,19 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* ─────────────────────────────────────────────
+   단일 이미지 정책 — 칵테일은 첫 번째 사진 한 장만 노출
+   (JS는 그대로 두고 화면단에서만: 썸네일 목록 행 +
+    라이트박스 이전/다음/카운터 숨김)
+───────────────────────────────────────────── */
+.detail-left > div:has(> .detail-thumb) {
+  display: none;
+}
+.lightbox-arrow,
+.lightbox-counter {
+  display: none;
 }
 
 /* ─────────────────────────────────────────────
