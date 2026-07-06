@@ -499,7 +499,9 @@ export default function CocktailDetail({
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h1 className="detail-cocktail-name">{displayCard.name}</h1>
+                      <h1 className="detail-cocktail-name">
+                        {displayCard.name}
+                      </h1>
                     </div>
                     <button
                       className={`btn btn-md ${liked ? " btn-subfilled btn-brand" : "btn-lined btn-gray-light"}`}
@@ -676,11 +678,12 @@ export default function CocktailDetail({
                   },
                 ].map(({ icon, label, value, valueClass }) => (
                   <div className="common-card flex-1" key={label}>
-                    <div className="common-card-inner justify-center">
-                      <div className="flex items-center gap-2">
-                        <div className="detail-stat-icon">{icon}</div>
-                        <span className="common-body-sm-bold">{label}</span>
-                        <div style={{ flex: 1 }}></div>
+                    <div className="common-card-inner">
+                      <div className="detail-stat-inner">
+                        <div className="flex items-center gap-2 flex-1">
+                          <div className="detail-stat-icon">{icon}</div>
+                          <span className="common-body-sm-bold">{label}</span>
+                        </div>
                         <span className={valueClass ?? "common-title-md"}>
                           {value}
                         </span>
@@ -726,20 +729,39 @@ export default function CocktailDetail({
                               className="detail-ing-emoji"
                               style={
                                 isSub
-                                  ? { background: "var(--purple-soft)", border: "1.5px solid var(--purple-line)" }
+                                  ? {
+                                      background: "var(--purple-soft)",
+                                      border: "1.5px solid var(--purple-line)",
+                                    }
                                   : !ingData?.photo
-                                  ? { background: "var(--gray-soft, #e5e7eb)", color: "var(--font-placeholder)", fontSize: "16px" }
-                                  : undefined
+                                    ? {
+                                        background: "var(--gray-soft, #e5e7eb)",
+                                        color: "var(--font-placeholder)",
+                                        fontSize: "16px",
+                                      }
+                                    : undefined
                               }
                             >
                               {ingData?.photo ? (
                                 <img
                                   src={ingData.photo}
                                   alt={ing.name}
-                                  style={{ width: "100%", height: "100%", objectFit: "contain" }}
-                                  onError={(e) => { e.target.replaceWith(Object.assign(document.createTextNode("?"))); }}
+                                  style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "contain",
+                                  }}
+                                  onError={(e) => {
+                                    e.target.replaceWith(
+                                      Object.assign(
+                                        document.createTextNode("?"),
+                                      ),
+                                    );
+                                  }}
                                 />
-                              ) : "?"}
+                              ) : (
+                                "?"
+                              )}
                             </div>
                             <span className="detail-ing-name">{ing.name}</span>
                             <span className="detail-ing-type">{ing.type}</span>

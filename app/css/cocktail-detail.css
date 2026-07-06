@@ -51,8 +51,58 @@
   width: 308px;
   height: 308px;
   user-select: none;
+  animation-name: float-up;
+  animation-duration: 7s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* 이미지마다 방향·속도·시작점을 다르게 — 동기화 없이 둥실둥실 천천히
+   (음수 delay로 첫 프레임부터 서로 다른 위상에서 시작) */
+.detail-theme-pattern img:nth-child(6n + 1) {
+  animation-name: float-up;
+  animation-duration: 7s;
+  animation-delay: 0s;
+}
+.detail-theme-pattern img:nth-child(6n + 2) {
+  animation-name: float-down;
+  animation-duration: 8.5s;
+  animation-delay: -1.2s;
+}
+.detail-theme-pattern img:nth-child(6n + 3) {
+  animation-name: float-diag1;
+  animation-duration: 9s;
+  animation-delay: -0.6s;
+}
+.detail-theme-pattern img:nth-child(6n + 4) {
+  animation-name: float-left;
+  animation-duration: 7.5s;
+  animation-delay: -2s;
+}
+.detail-theme-pattern img:nth-child(6n + 5) {
+  animation-name: float-diag2;
+  animation-duration: 8s;
+  animation-delay: -1.6s;
+}
+.detail-theme-pattern img:nth-child(6n + 6) {
+  animation-name: float-right;
+  animation-duration: 9.5s;
+  animation-delay: -0.9s;
+}
+
+/* 접근성: 모션 최소화 설정 시 정지 */
+@media (prefers-reduced-motion: reduce) {
+  .detail-theme-pattern img {
+    animation: none;
+  }
+}
+
+/* 모바일: 장식 이미지 숨김 */
+@media (max-width: 768px) {
+  .detail-theme-pattern {
+    display: none;
+  }
 }
 
 /* 센터링·폭은 .page-wrap.page-wrap--sm 공통 사용 */
@@ -365,6 +415,19 @@
 /* ─────────────────────────────────────────────
    Stats
 ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .detail-stat-inner{
+    flex-direction: column !important;
+    gap: 8px;
+  }
+}
+.detail-stat-inner{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 .detail-stat-icon {
   width: 18px;
   height: 18px;
