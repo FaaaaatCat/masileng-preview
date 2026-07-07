@@ -304,9 +304,6 @@ $btn-sizes: (
   }
 }
 
-.search-row {
-  display: flex;
-}
 
 // ── 모바일 전용 필터 트리거 버튼 (데스크톱에서는 숨김)
 .filter-mobile-trigger {
@@ -338,49 +335,12 @@ $btn-sizes: (
     }
   }
 
-  .search-bar {
-    height: 48px;
-    gap: 8px;
-    padding: 0 6px 0 14px;
-  }
-
   // 필터 팝업(바텀시트) 내부 여백
   .filter-popup-modal .common-popup-body {
     gap: 14px;
   }
 }
 
-// ─────────────────────────────────────────────
-//  Search bar
-// ─────────────────────────────────────────────
-
-.search-bar {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  height: 54px;
-  padding: 0 8px 0 20px;
-  background: var(--form-bg);
-  border: 2px solid var(--coral-line);
-  border-radius: var(--r-md);
-  transition: border-color var(--time-fast);
-
-  &:focus-within {
-    border-color: var(--coral);
-    outline: none;
-  }
-}
-
-.search-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: none;
-  font-size: 16px;
-  color: var(--font-title);
-  font-family: inherit;
-}
 
 // ─────────────────────────────────────────────
 //  Custom Select Dropdown

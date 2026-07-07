@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { BASE_SPIRITS, THEMES } from "../data/constants.json";
-import { SearchIcon, ChevronIcon, XIcon, ResetIcon, CheckIcon, FilterIcon } from "./icons";
+import { ChevronIcon, XIcon, ResetIcon, CheckIcon, FilterIcon } from "./icons";
 
 export function SelectFilter({ value, onChange, onClear, placeholder, children, size = "large", styleVariant = "select-style-filter" }) {
   const [open, setOpen] = useState(false);
@@ -110,10 +110,9 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
 }
 
 export default function FilterBar({
-  abv, base, theme, ibaOnly, rangeMin, rangeMax, search,
+  abv, base, theme, ibaOnly, rangeMin, rangeMax,
   onAbvChange, onBaseChange, onThemeChange, onIbaToggle,
-  onRangeMinChange, onRangeMaxChange,
-  onSearchChange, onReset,
+  onRangeMinChange, onRangeMaxChange, onReset,
   showIba = false,
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -168,17 +167,6 @@ export default function FilterBar({
           <ResetIcon />
           초기화
         </button>
-      </div>
-
-      {/* 검색 행 */}
-      <div className="search-row">
-        <div className="search-bar">
-          <SearchIcon />
-          <input type="text" className="search-input"
-            value={search} onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요" />
-          <button className="btn btn-filled btn-brand btn-md">검색</button>
-        </div>
       </div>
     </>
   );

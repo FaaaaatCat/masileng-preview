@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import INGREDIENTS from "../data/ingredients.json";
-import { SearchIcon, BoxPlusIcon } from "../components/icons";
+import { BoxPlusIcon } from "../components/icons";
 import IngredientCard from "../components/IngredientCard";
 import "../css/ingredient-detail.css";
 
@@ -106,7 +106,6 @@ function SlidingBanner() {
 
 export default function IngredientsHome() {
   const [cat, setCat] = useState("전체");
-  const [search, setSearch] = useState("");
   const [myIngIds, setMyIngIds] = useState(
     () => new Set(INGREDIENTS.filter((i) => i.myIng).map((i) => i.id)),
   );
@@ -153,14 +152,6 @@ export default function IngredientsHome() {
 
   const filtered = INGREDIENTS.filter((ing) => {
     if (cat !== "전체" && ing.cat !== cat) return false;
-    if (search) {
-      const q = search.toLowerCase();
-      if (
-        !ing.n.toLowerCase().includes(q) &&
-        !ing.desc.toLowerCase().includes(q)
-      )
-        return false;
-    }
     return true;
   });
 
@@ -179,22 +170,8 @@ export default function IngredientsHome() {
       <SlidingBanner />
 
       <div className="page-wrap">
-        {/* 검색 + 필터 */}
+        {/* 필터 */}
         <div className="filter-bar">
-          {/* 검색 탭 */}
-          <div className="search-row">
-            <div className="search-bar">
-              <SearchIcon />
-              <input
-                type="text"
-                className="search-input"
-                placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <button className="btn btn-filled btn-brand btn-md">검색</button>
-            </div>
-          </div>
           {/* 카테고리 탭 */}
           <div className="flex gap-2 py-3.5 overflow-x-auto">
             {CATS.map((c) => (

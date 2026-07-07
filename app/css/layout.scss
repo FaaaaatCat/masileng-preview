@@ -1,0 +1,405 @@
+/* ─────────────────────────────────────────────
+   Header / Nav
+───────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid var(--ui-line-light);
+  transition:
+    background 280ms ease,
+    border-color 280ms ease;
+
+  &-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 0 24px 16px 24px;
+  }
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  height: 68px;
+}
+
+.site-brand {
+  font-weight: 800;
+  font-size: 25px;
+  letter-spacing: -0.04em;
+  color: var(--coral-strong);
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  text-decoration: none;
+
+  &-dot {
+    color: var(--coral);
+    font-size: 18px;
+  }
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link {
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--font-sub);
+  padding: 10px 14px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition:
+    color 280ms ease,
+    background var(--time-fast);
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 0px;
+    height: 3px;
+    background: var(--coral);
+    border-radius: 3px 3px 0 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--time-slow) ease;
+  }
+
+  &:not(.active):hover::after {
+    transform: scaleX(1);
+  }
+
+  &.active {
+    font-weight: 700;
+    color: var(--coral-strong);
+  }
+
+  &-underline {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 0px;
+    height: 3px;
+    background: var(--coral);
+    border-radius: 3px 3px 0 0;
+  }
+}
+
+.nav-divider {
+  display: inline-block;
+  width: 1px;
+  height: 16px;
+  background: var(--ui-bg-light);
+  margin: 0 6px;
+  flex-shrink: 0;
+}
+
+.nav-link-download {
+  color: var(--coral);
+  font-weight: 700;
+  display: inline-flex; // flyout을 인라인으로 배치
+  align-items: center;
+  gap: 20px;
+  height: 44px;
+
+  &:hover .nav-download-flyout {
+    display: inline-flex;
+  }
+}
+
+// 앱 다운로드 hover flyout
+.nav-download-wrap {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-download-flyout {
+  display: none; // absolute/transform 제거 — 인라인 흐름에 배치
+  gap: 6px;
+}
+
+.nav-download-option {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--font-sub2);
+  background: #fff;
+  border: 1.5px solid var(--ui-line-light);
+  border-radius: var(--r-sm);
+  padding: 5px 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    border-color var(--time-fast),
+    color var(--time-fast),
+    background var(--time-fast);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--coral-line);
+    color: var(--coral-strong);
+    background: var(--coral-soft);
+  }
+}
+
+// ── 헤더 유저 드롭다운
+.nav-user-wrap {
+  position: relative;
+
+  &-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 14px;
+  }
+
+  &-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 200px;
+    background: #fff;
+    border: 1.5px solid var(--ui-line-light);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-panel);
+    z-index: 200;
+    overflow: hidden;
+    padding: 6px;
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 14px;
+    border-radius: var(--r-sm);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--font-body);
+    text-decoration: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    text-align: left;
+    transition:
+      background var(--time-fast),
+      color var(--time-fast);
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--page-bg-gray);
+      color: var(--font-title);
+    }
+
+    &--mypage {
+      font-weight: 600;
+      color: var(--font-title);
+
+      .nav-user-item-icon-bg {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--r-full);
+        background: var(--coral);
+        color: #fff;
+        flex-shrink: 0;
+
+        svg {
+          margin: 0 !important;
+          stroke: #fff !important;
+        }
+      }
+
+      svg:last-child {
+        margin-left: auto;
+        color: var(--font-sub2);
+      }
+    }
+  }
+
+  &-divider {
+    height: 1px;
+    background: var(--ui-line-light);
+    margin: 4px 0;
+  }
+
+  &-logout {
+    color: var(--coral);
+
+    &:hover {
+      background: var(--coral-soft);
+      color: var(--coral-strong);
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Search input
+// ─────────────────────────────────────────────
+
+.search-input {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 60px;
+  padding: 0 8px;
+  background: var(--form-bg);
+  border: 2px solid var(--coral-line);
+  border-radius: var(--r-md);
+  transition: all var(--time-slow);
+  box-shadow:
+    0 0.47rem 0.19rem rgba(255, 0, 0, 0.03),
+    0 0.94rem 1.41rem rgba(255, 0, 0, 0.03),
+    0 0.25rem 0.53rem rgba(117, 47, 47, 0.01),
+    0 0.13rem 0.19rem rgba(37, 8, 8, 0.03);
+
+  &:focus-within,
+  &:hover {
+    border-color: var(--coral);
+    outline: none;
+  }
+  & button {
+    height: 40px;
+    width: 40px;
+    & svg{
+      color: white !important;
+    }
+  }
+  & input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 16px;
+    color: var(--font-title);
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+// ── 모바일: 2단 헤더 (1행 로고+버튼 / 2행 가로 스크롤 탭)
+@media (max-width: 768px) {
+  .site-header-inner {
+    padding: 0 var(--page-gutter) var(--page-gutter);
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    height: auto;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .nav-menu {
+    order: 10;
+    width: 100%;
+    overflow-x: auto;
+    gap: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .nav-link {
+    font-size: 15px;
+    padding: 10px 12px;
+    white-space: nowrap;
+  }
+
+  // 밑줄 위치: 고정 높이(-14px) 기준 → 탭 행 하단
+  .nav-link::after,
+  .nav-link-underline {
+    bottom: 2px;
+  }
+
+  // hover flyout은 터치에서 무의미
+  .nav-download-wrap,
+  .nav-divider {
+    display: none;
+  }
+}
+
+/* ─────────────────────────────────────────────
+   Page layout
+───────────────────────────────────────────── */
+
+// 센터 컨테이너 — 사이트 전 페이지 공통 (기본 콘텐츠 폭 1200px)
+.page-wrap {
+  width: 100%;
+  max-width: calc(1200px + 2 * var(--page-gutter));
+  margin: 0 auto;
+  padding-left: var(--page-gutter);
+  padding-right: var(--page-gutter);
+
+  // 폭 변형 — 콘텐츠 기준 폭
+  &--sm {
+    max-width: calc(1000px + 2 * var(--page-gutter));
+  }
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 22px 0;
+}
+
+.section-title-group {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.section-title-bar {
+  width: 4px;
+  height: 22px;
+  background: var(--coral);
+  border-radius: 3px;
+  display: block;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--font-title);
+}
+
+.section-subtitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-sub);
+  margin-left: 2px;
+}
+
+.section-sort {
+  display: flex;
+  gap: 6px;
+}
+
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 46px;
+}
