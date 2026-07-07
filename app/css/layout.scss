@@ -22,19 +22,15 @@
   &-inner {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 0 24px 16px 24px;
+    padding: 16px 24px;
   }
 
   // 스크롤 시 한 줄 헤더로 축소 — 메뉴/업로드 버튼 숨김, 검색창은 자기 자리(nav-menu 위치)로 복귀
   &--scrolled {
-    .nav-menu {
-      display: none;
-    }
-
-    .nav-upload-btn {
+    .nav-menu,
+    .nav-upload-btn,
+    .nav-user-wrap,
+    .nav-spacer {
       display: none;
     }
   }
@@ -44,8 +40,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 40px;
-  min-height: 68px;
+  gap: 16px;
 }
 
 .site-brand {
@@ -280,7 +275,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  height: 60px;
+  height: 66px;
   padding: 0 8px;
   background: var(--form-bg);
   border: 2px solid var(--coral-line);
@@ -290,7 +285,7 @@
   transition:
     height var(--time-slow),
     max-width var(--time-slow),
-    border-color var(--time-fast);
+    border-color var(--time-slow);
   box-shadow:
     0 0.47rem 0.19rem rgba(255, 0, 0, 0.03),
     0 0.94rem 1.41rem rgba(255, 0, 0, 0.03),
@@ -303,9 +298,11 @@
     outline: none;
   }
   & button {
-    height: 40px;
-    width: 40px;
-    & svg{
+    height: 48px;
+    width: 48px;
+    & svg {
+      height: 28px;
+      width: 28px;
       color: white !important;
     }
   }
@@ -324,9 +321,21 @@
   // 스크롤 축소 상태: order를 되돌려 DOM 순서(= nav-menu 바로 다음, 즉 nav-menu 자리)로 복귀
   &.search-mini {
     order: 0;
-    flex: 0 1 400px;
-    height: 40px;
-    max-width: 400px;
+    flex: 1;
+    height: 56px;
+    margin-left: 20px;
+    gap: 8;
+    & button {
+      height: 40px;
+      width: 40px;
+      background: none;
+      border: none;
+      & svg {
+        height: 28px;
+        width: 28px;
+        color: var(--gray-5) !important;
+      }
+    }
   }
 }
 
@@ -343,34 +352,16 @@
   height: 58px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 16px;
 }
 
 .mobile-header-actions {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   margin-left: auto;
 }
 
-.mobile-header-icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--r-full);
-  border: none;
-  background: none;
-  color: var(--font-title);
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background var(--time-fast);
-
-  &:hover {
-    background: var(--ui-bg-light);
-  }
-}
 
 // 메뉴 열림 상태의 X버튼 — 단독 배치라 헤더 우측 정렬용 auto 마진 필요
 .mobile-header-close {

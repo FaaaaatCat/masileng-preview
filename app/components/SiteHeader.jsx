@@ -139,206 +139,212 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
 
   return (
     <>
-      <div className="site-header-sentinel" ref={sentinelRef} aria-hidden="true" />
-      <header className={`site-header${scrolled ? " site-header--scrolled" : ""}`}>
+      <div
+        className="site-header-sentinel"
+        ref={sentinelRef}
+        aria-hidden="true"
+      />
+      <header
+        className={`site-header${scrolled ? " site-header--scrolled" : ""}`}
+      >
         <div className="site-header-inner">
           <nav className="site-nav">
-              {onNavClick ? (
-                <a
-                  href="#"
-                  className="site-brand"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  {logo}
-                </a>
-              ) : (
-                <Link href="/" className="site-brand">
-                  {logo}
-                </Link>
-              )}
+            {onNavClick ? (
+              <a
+                href="#"
+                className="site-brand"
+                onClick={(e) => e.preventDefault()}
+              >
+                {logo}
+              </a>
+            ) : (
+              <Link href="/" className="site-brand">
+                {logo}
+              </Link>
+            )}
 
-              <div className="nav-menu">
-                {NAV_ITEMS.map((item) =>
-                  onNavClick ? (
+            <div className="nav-menu">
+              {NAV_ITEMS.map((item) =>
+                onNavClick ? (
+                  <a
+                    key={item}
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onNavClick(item);
+                    }}
+                    className={`nav-link${activeNav === item ? " active" : ""}`}
+                  >
+                    {item}
+                    {activeNav === item && (
+                      <span className="nav-link-underline" />
+                    )}
+                  </a>
+                ) : (
+                  <Link
+                    key={item}
+                    href={`/?tab=${encodeURIComponent(item)}`}
+                    className="nav-link"
+                  >
+                    {item}
+                  </Link>
+                ),
+              )}
+              <span className="nav-divider" />
+              <Link href="/recommend" className="nav-link">
+                추천
+              </Link>
+              <div className="nav-download-wrap">
+                <div className="nav-link nav-link-download">
+                  앱 다운로드
+                  <div className="nav-download-flyout">
                     <a
-                      key={item}
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onNavClick(item);
-                      }}
-                      className={`nav-link${activeNav === item ? " active" : ""}`}
+                      className="nav-download-option"
+                      href="https://play.google.com/store/apps/details?id=com.padro.my_cocktail_app"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      {item}
-                      {activeNav === item && (
-                        <span className="nav-link-underline" />
-                      )}
+                      안드로이드
                     </a>
-                  ) : (
-                    <Link
-                      key={item}
-                      href={`/?tab=${encodeURIComponent(item)}`}
-                      className="nav-link"
+                    <a
+                      className="nav-download-option"
+                      href="https://apps.apple.com/us/app/%EB%A7%88%EC%8B%A4%EB%9E%AD-%ED%95%A8%EA%BB%98-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EC%B9%B5%ED%85%8C%EC%9D%BC-%EA%B0%80%EC%9D%B4%EB%93%9C/id1623101096"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
                     >
-                      {item}
-                    </Link>
-                  ),
-                )}
-                <span className="nav-divider" />
-                <Link href="/recommend" className="nav-link">
-                  추천
-                </Link>
-                <div className="nav-download-wrap">
-                  <div className="nav-link nav-link-download">
-                    앱 다운로드
-                    <div className="nav-download-flyout">
-                      <a
-                        className="nav-download-option"
-                        href="https://play.google.com/store/apps/details?id=com.padro.my_cocktail_app"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        안드로이드
-                      </a>
-                      <a
-                        className="nav-download-option"
-                        href="https://apps.apple.com/us/app/%EB%A7%88%EC%8B%A4%EB%9E%AD-%ED%95%A8%EA%BB%98-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EC%B9%B5%ED%85%8C%EC%9D%BC-%EA%B0%80%EC%9D%B4%EB%93%9C/id1623101096"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        애플
-                      </a>
-                    </div>
+                      애플
+                    </a>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className={`search-input${scrolled ? " search-mini" : ""}`}>
-                <button
-                  className="btn btn-filled btn-brand btn-md"
-                  onClick={submitSearch}
-                  aria-label="검색"
-                >
-                  <SearchIcon />
-                </button>
+            <div className={`search-input${scrolled ? " search-mini" : ""}`}>
+              <button
+                className="btn btn-filled btn-brand btn-md"
+                onClick={submitSearch}
+                aria-label="검색"
+              >
+                <SearchIcon />
+              </button>
 
-                <input
-                  type="text"
-                  placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") submitSearch();
-                  }}
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") submitSearch();
+                }}
+              />
+            </div>
 
-              <div style={{ flex: 1 }} />
+            <div className="nav-spacer" style={{ flex: 1 }} />
 
-              <div className="flex items-center gap-3">
-                {authUser ? (
-                  <div className="nav-user-wrap" ref={dropRef}>
-                    <button
-                      className="btn btn-lined btn-gray-light btn-sm"
-                      onClick={() => setDropOpen((v) => !v)}
-                    >
-                      <ProfileAvatar user={authUser} size={22} />
-                      {authUser.name}
-                      <ChevronIcon />
-                    </button>
-                    {dropOpen && (
-                      <div className="nav-user-dropdown">
-                        <a
-                          href="/mypage"
-                          className="nav-user-item nav-user-item--mypage"
-                          onClick={() => setDropOpen(false)}
-                        >
-                          <span
-                            className="nav-user-item-icon-bg"
-                            style={{ color: "#fff" }}
-                          >
-                            <PersonIcon />
-                          </span>
-                          내 페이지
-                          <ChevronRightIcon />
-                        </a>
-                        <div className="nav-user-divider" />
-                        <a
-                          href="#"
-                          className="nav-user-item"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setDropOpen(false);
-                            setIngRequestOpen(true);
-                          }}
-                        >
-                          <BoxPlusIcon />
-                          재료 요청하기
-                        </a>
-
-                        <a
-                          href="https://www.instagram.com/masileng/"
-                          className="nav-user-item"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => setDropOpen(false)}
-                        >
-                          <InstagramIcon />
-                          공식 인스타그램
-                        </a>
-                        <a
-                          href="#"
-                          className="nav-user-item"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setDropOpen(false);
-                            setTeamOpen(true);
-                          }}
-                        >
-                          <RocketIcon />
-                          마실랭 팀 소개
-                        </a>
-                        <a
-                          href="#"
-                          className="nav-user-item"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setDropOpen(false);
-                            setTermsOpen(true);
-                          }}
-                        >
-                          <TagIcon />
-                          이용약관
-                        </a>
-                        <div className="nav-user-divider" />
-                        <button
-                          className="nav-user-item nav-user-logout"
-                          onClick={handleLogout}
-                        >
-                          <LogoutIcon />
-                          로그아웃
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                ) : (
+            <div className="flex items-center gap-3">
+              {authUser ? (
+                <div className="nav-user-wrap" ref={dropRef}>
                   <button
-                    className="btn btn-lined btn-gray-light btn-md"
-                    onClick={() => setLoginOpen(true)}
+                    className="btn btn-lined btn-gray-light btn-sm"
+                    onClick={() => setDropOpen((v) => !v)}
                   >
-                    로그인
+                    <ProfileAvatar user={authUser} size={22} />
+                    {authUser.name}
+                    <ChevronIcon />
                   </button>
-                )}
-                <Link
-                  href="/upload"
-                  className="btn btn-filled btn-gradient-1 btn-md nav-upload-btn"
+                  {dropOpen && (
+                    <div className="nav-user-dropdown">
+                      <a
+                        href="/mypage"
+                        className="nav-user-item nav-user-item--mypage"
+                        onClick={() => setDropOpen(false)}
+                      >
+                        <span
+                          className="nav-user-item-icon-bg"
+                          style={{ color: "#fff" }}
+                        >
+                          <PersonIcon />
+                        </span>
+                        내 페이지
+                        <ChevronRightIcon />
+                      </a>
+                      <div className="nav-user-divider" />
+                      <a
+                        href="#"
+                        className="nav-user-item"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setDropOpen(false);
+                          setIngRequestOpen(true);
+                        }}
+                      >
+                        <BoxPlusIcon />
+                        재료 요청하기
+                      </a>
+
+                      <a
+                        href="https://www.instagram.com/masileng/"
+                        className="nav-user-item"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setDropOpen(false)}
+                      >
+                        <InstagramIcon />
+                        공식 인스타그램
+                      </a>
+                      <a
+                        href="#"
+                        className="nav-user-item"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setDropOpen(false);
+                          setTeamOpen(true);
+                        }}
+                      >
+                        <RocketIcon />
+                        마실랭 팀 소개
+                      </a>
+                      <a
+                        href="#"
+                        className="nav-user-item"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setDropOpen(false);
+                          setTermsOpen(true);
+                        }}
+                      >
+                        <TagIcon />
+                        이용약관
+                      </a>
+                      <div className="nav-user-divider" />
+                      <button
+                        className="nav-user-item nav-user-logout"
+                        onClick={handleLogout}
+                      >
+                        <LogoutIcon />
+                        로그아웃
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  className="btn btn-lined btn-gray-light btn-md"
+                  onClick={() => setLoginOpen(true)}
                 >
-                  <UploadIcon />
-                  레시피 업로드
-                </Link>
-              </div>
+                  로그인
+                </button>
+              )}
+              <Link
+                href="/upload"
+                className="btn btn-filled btn-gradient-1 btn-md nav-upload-btn"
+              >
+                <UploadIcon />
+                레시피 업로드
+              </Link>
+            </div>
           </nav>
 
           {/* ── 모바일 전용 헤더 (≤768px) ── */}
@@ -359,7 +365,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                   />
                   <button
                     type="button"
-                    className="mobile-header-icon-btn"
+                    className="btn btn-transparent btn-md"
                     onClick={closeMobileSearch}
                     aria-label="검색 닫기"
                   >
@@ -385,7 +391,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                   {mobileMenuOpen ? (
                     <button
                       type="button"
-                      className="mobile-header-icon-btn mobile-header-close"
+                      className="btn btn-transparent btn-md mobile-header-close"
                       onClick={() => setMobileMenuOpen(false)}
                       aria-label="메뉴 닫기"
                     >
@@ -395,7 +401,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                     <div className="mobile-header-actions">
                       <button
                         type="button"
-                        className="mobile-header-icon-btn"
+                        className="btn btn-transparent btn-md"
                         onClick={openMobileSearch}
                         aria-label="검색"
                       >
@@ -403,7 +409,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                       </button>
                       <button
                         type="button"
-                        className="mobile-header-icon-btn"
+                        className="btn btn-transparent btn-md"
                         onClick={openMobileMenu}
                         aria-label="메뉴"
                       >
@@ -424,7 +430,9 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <ProfileAvatar user={authUser} size={36} />
-                    <span className="mobile-menu-user-name">{authUser.name} 님</span>
+                    <span className="mobile-menu-user-name">
+                      {authUser.name} 님
+                    </span>
                     <ChevronRightIcon />
                   </Link>
                 ) : (
@@ -456,7 +464,11 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                             setMobileMenuOpen(false);
                           }}
                         >
-                          <img src={MOBILE_NAV_ICONS[item]} alt="" className="mobile-menu-item-icon" />
+                          <img
+                            src={MOBILE_NAV_ICONS[item]}
+                            alt=""
+                            className="mobile-menu-item-icon"
+                          />
                           {item}
                         </a>
                       ) : (
@@ -466,7 +478,11 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                           className="mobile-menu-item"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <img src={MOBILE_NAV_ICONS[item]} alt="" className="mobile-menu-item-icon" />
+                          <img
+                            src={MOBILE_NAV_ICONS[item]}
+                            alt=""
+                            className="mobile-menu-item-icon"
+                          />
                           {item}
                         </Link>
                       ),
@@ -476,7 +492,11 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                       className="mobile-menu-item"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <img src="/recommend.svg" alt="" className="mobile-menu-item-icon" />
+                      <img
+                        src="/recommend.svg"
+                        alt=""
+                        className="mobile-menu-item-icon"
+                      />
                       추천
                     </Link>
                   </div>
