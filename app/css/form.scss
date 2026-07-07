@@ -308,10 +308,25 @@ $btn-sizes: (
   display: flex;
 }
 
+// ── 모바일 전용 필터 트리거 버튼 (데스크톱에서는 숨김)
+.filter-mobile-trigger {
+  display: none;
+}
+
 // ── 모바일: 필터 줄바꿈 + 슬라이더 전체 폭
 @media (max-width: 768px) {
   .filter-bar {
     margin: 20px 0;
+  }
+
+  // 인라인 필터 행은 숨기고, 필터 버튼 하나만 노출
+  .filter-inline {
+    display: none;
+  }
+
+  .filter-mobile-trigger {
+    display: inline-flex;
+    width: fit-content;
   }
 
   .filter-row {
@@ -327,6 +342,11 @@ $btn-sizes: (
     height: 48px;
     gap: 8px;
     padding: 0 6px 0 14px;
+  }
+
+  // 필터 팝업(바텀시트) 내부 여백
+  .filter-popup-modal .common-popup-body {
+    gap: 14px;
   }
 }
 

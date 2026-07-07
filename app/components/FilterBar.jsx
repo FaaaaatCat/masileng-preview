@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { BASE_SPIRITS, THEMES } from "../data/constants.json";
-import { SearchIcon, ChevronIcon, XIcon, ResetIcon, CheckIcon } from "./icons";
+import { SearchIcon, ChevronIcon, XIcon, ResetIcon, CheckIcon, FilterIcon } from "./icons";
 
 export function SelectFilter({ value, onChange, onClear, placeholder, children, size = "large", styleVariant = "select-style-filter" }) {
   const [open, setOpen] = useState(false);
@@ -116,8 +116,23 @@ export default function FilterBar({
   onSearchChange, onReset,
   showIba = false,
 }) {
-  return (
-    <div className="filter-bar">
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  const filterFields = (
+    <>
       {/* 필터 행 */}
       <div className="filter-row">
         <SelectFilter value={abv} onChange={onAbvChange} onClear={() => onAbvChange("")} placeholder="도수">
@@ -165,6 +180,36 @@ export default function FilterBar({
           <button className="btn btn-filled btn-brand btn-md">검색</button>
         </div>
       </div>
+    </>
+  );
+
+  return (
+    <div className="filter-bar">
+      <div className="filter-inline">{filterFields}</div>
+
+      <button type="button" className="btn btn-lined btn-gray-light btn-xl filter-mobile-trigger" onClick={() => setMobileOpen(true)}>
+        <FilterIcon />
+        필터
+      </button>
+
+      {mobileOpen && (
+        <div
+          className="common-popup-backdrop"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setMobileOpen(false);
+          }}
+        >
+          <div className="common-popup-modal popup-sm filter-popup-modal">
+            <div className="common-popup-header">
+              <h2 className="common-title-lg">필터</h2>
+              <button className="common-popup-close" type="button" onClick={() => setMobileOpen(false)} aria-label="닫기">
+                <XIcon />
+              </button>
+            </div>
+            <div className="common-popup-body">{filterFields}</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

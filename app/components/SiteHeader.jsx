@@ -4,7 +4,17 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { NAV_ITEMS } from "../data/constants.json";
-import { UploadIcon, ChevronIcon, ChevronRightIcon, PersonIcon, BoxPlusIcon, InstagramIcon, TagIcon, LogoutIcon, RocketIcon } from "./icons";
+import {
+  UploadIcon,
+  ChevronIcon,
+  ChevronRightIcon,
+  PersonIcon,
+  BoxPlusIcon,
+  InstagramIcon,
+  TagIcon,
+  LogoutIcon,
+  RocketIcon,
+} from "./icons";
 import IngredientRequestModal from "./IngredientRequestModal";
 import TermsModal from "./TermsModal";
 import ProfileAvatar from "./ProfileAvatar";
@@ -34,7 +44,8 @@ export default function SiteHeader({ activeNav, onNavClick }) {
   useEffect(() => {
     if (!dropOpen) return;
     const h = (e) => {
-      if (dropRef.current && !dropRef.current.contains(e.target)) setDropOpen(false);
+      if (dropRef.current && !dropRef.current.contains(e.target))
+        setDropOpen(false);
     };
     document.addEventListener("mousedown", h);
     return () => document.removeEventListener("mousedown", h);
@@ -47,9 +58,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
     window.dispatchEvent(new Event("masileng_auth"));
   };
 
-  const logo = (
-    <img src="/logo.svg" alt="마실랭" style={{ height: 26 }} />
-  );
+  const logo = <img src="/logo.svg" alt="마실랭" style={{ height: 26 }} />;
 
   return (
     <>
@@ -102,9 +111,7 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                 추천
               </Link>
               <div className="nav-download-wrap">
-                <div
-                  className="nav-link nav-link-download"
-                >
+                <div className="nav-link nav-link-download">
                   앱 다운로드
                   <div className="nav-download-flyout">
                     <a
@@ -133,6 +140,17 @@ export default function SiteHeader({ activeNav, onNavClick }) {
             <div style={{ flex: 1 }} />
 
             <div className="flex items-center gap-3">
+              {/* 인풋 */}
+              <div className="search-bar">
+                <input
+                  type="text"
+                  className="search-input"
+                  placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
+                />
+                <button className="btn btn-filled btn-brand btn-md">
+                  검색
+                </button>
+              </div>
               {authUser ? (
                 <div className="nav-user-wrap" ref={dropRef}>
                   <button
@@ -150,7 +168,10 @@ export default function SiteHeader({ activeNav, onNavClick }) {
                         className="nav-user-item nav-user-item--mypage"
                         onClick={() => setDropOpen(false)}
                       >
-                        <span className="nav-user-item-icon-bg" style={{ color: "#fff" }}>
+                        <span
+                          className="nav-user-item-icon-bg"
+                          style={{ color: "#fff" }}
+                        >
                           <PersonIcon />
                         </span>
                         내 페이지
