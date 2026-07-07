@@ -553,6 +553,17 @@
   white-space: nowrap;
   flex-shrink: 0;
 }
+@media (max-width: 768px) {
+  .detail-ing-emoji {
+    width: 28px;
+    height: 28px;
+  }
+  .detail-ing-amount{
+    padding: 0px;
+    border: none;
+    background: none;
+  }
+}
 
 /* ─────────────────────────────────────────────
    Steps

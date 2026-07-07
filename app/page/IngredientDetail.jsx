@@ -153,11 +153,10 @@ export default function IngredientDetail({ ing }) {
     }
   };
 
-  // 이 재료를 사용하는 칵테일 (base 기준)
-  const relatedCards = CARDS.filter((c) => {
-    const bases = Array.isArray(c.base) ? c.base : [c.base];
-    return bases.includes(ing.n);
-  }).slice(0, 8);
+  // 이 재료를 사용하는 칵테일 (레시피 재료 목록의 ingredientId 기준)
+  const relatedCards = CARDS.filter((c) =>
+    (c.ingredients || []).some((x) => x.ingredientId === ing.id),
+  ).slice(0, 8);
 
   const products = getProducts(ing);
 
@@ -174,7 +173,7 @@ export default function IngredientDetail({ ing }) {
             재료를 내 냉장고에 추가했습니다
           </div>
         )}
-        <div className="page-wrap">
+        <div className="page-wrap page-wrap--sm">
           <div className="detail-grid">
             {/* ── 왼쪽 ── */}
             <div className="detail-left">

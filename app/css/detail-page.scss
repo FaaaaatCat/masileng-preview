@@ -14,7 +14,7 @@
 // ── 좌우 2단 그리드 (좌: 스티키 이미지 영역 / 우: 콘텐츠)
 .detail-grid {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 380px minmax(0, 1fr);
   gap: 32px;
   align-items: start;
 }
@@ -38,7 +38,7 @@
 // ── 모바일: 1단 전환
 @media (max-width: 768px) {
   .detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 20px;
   }
 
