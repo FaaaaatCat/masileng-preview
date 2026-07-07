@@ -330,46 +330,222 @@
   }
 }
 
-// ── 모바일: 2단 헤더 (1행 로고+버튼 / 2행 가로 스크롤 탭)
+// ─────────────────────────────────────────────
+//  Mobile header (≤768px 전용 — 데스크톱 .site-nav 대체)
+// ─────────────────────────────────────────────
+
+.mobile-header {
+  display: none; // 데스크톱에서는 숨김, 모바일에서만 노출(아래 미디어쿼리)
+  position: relative;
+}
+
+.mobile-header-bar {
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mobile-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.mobile-header-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-full);
+  border: none;
+  background: none;
+  color: var(--font-title);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background var(--time-fast);
+
+  &:hover {
+    background: var(--ui-bg-light);
+  }
+}
+
+// 메뉴 열림 상태의 X버튼 — 단독 배치라 헤더 우측 정렬용 auto 마진 필요
+.mobile-header-close {
+  margin-left: auto;
+}
+
+.mobile-search-row {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 100%;
+
+  > svg {
+    flex-shrink: 0;
+    color: var(--icon-dark);
+  }
+
+  input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 15px;
+    color: var(--font-title);
+    font-family: inherit;
+
+    &::placeholder {
+      color: var(--font-placeholder);
+    }
+  }
+}
+
+// ── 메뉴 패널: 헤더 아래 뷰포트 전체를 덮는 오버레이
+.mobile-menu-panel {
+  position: absolute;
+  top: 100%;
+  left: calc(-1 * var(--page-gutter));
+  right: calc(-1 * var(--page-gutter));
+  // 헤더(58px) 아래 화면 끝까지 — 콘텐츠가 짧아도 뒤 페이지가 비치지 않도록 고정 높이
+  height: calc(100vh - 58px);
+  height: calc(100dvh - 58px);
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-top: 1px solid var(--ui-line-light);
+  overflow-y: auto;
+}
+
+.mobile-menu-login-row,
+.mobile-menu-user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px var(--page-gutter);
+  border: none;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-title);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+
+  svg:last-child {
+    margin-left: auto;
+    color: var(--font-sub2);
+    flex-shrink: 0;
+  }
+}
+
+.mobile-menu-user-name {
+  flex: 1;
+}
+
+// 그룹 사이 구분: 시안의 얇은 회색 밴드
+.mobile-menu-section {
+  padding: 14px var(--page-gutter) 10px;
+  background: #fff;
+  border-top: 8px solid var(--ui-bg-light);
+}
+
+.mobile-menu-section-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--font-placeholder);
+  margin-bottom: 4px;
+}
+
+.mobile-menu-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  background: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--font-title);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  &-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+}
+
+.mobile-menu-logout {
+  padding: 18px var(--page-gutter);
+  border-top: 8px solid var(--ui-bg-light);
+  font-weight: 600;
+}
+
+// 하단 앱 다운로드 — 회색 배경 밴드, 패널 바닥에 고정 (flex column + margin-top:auto)
+.mobile-menu-download-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 24px var(--page-gutter) 28px;
+  margin-top: auto;
+  background: var(--ui-bg-light);
+}
+
+.mobile-menu-download-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  background: #fff;
+  border: 1px solid var(--ui-line-light);
+  border-radius: var(--r-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-title);
+  text-decoration: none;
+  transition: border-color var(--time-fast);
+
+  &:hover {
+    border-color: var(--coral-line);
+  }
+}
+
+// ── 모바일: 데스크톱 nav 숨기고 모바일 헤더 노출
 @media (max-width: 768px) {
   .site-header-inner {
-    padding: 0 var(--page-gutter) var(--page-gutter);
+    padding: 0 var(--page-gutter);
   }
 
   .site-nav {
-    gap: 12px;
-    padding-top: 12px;
-  }
-
-  .nav-menu {
-    order: 10;
-    width: 100%;
-    overflow-x: auto;
-    gap: 2px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .nav-link {
-    font-size: 15px;
-    padding: 10px 12px;
-    white-space: nowrap;
-  }
-
-  // 밑줄 위치: 고정 높이(-14px) 기준 → 탭 행 하단
-  .nav-link::after,
-  .nav-link-underline {
-    bottom: 2px;
-  }
-
-  // hover flyout은 터치에서 무의미
-  .nav-download-wrap,
-  .nav-divider {
     display: none;
+  }
+
+  .mobile-header {
+    display: block;
   }
 }
 
