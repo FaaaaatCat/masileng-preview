@@ -30,7 +30,10 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
   const [loginOpen, setLoginOpen] = useState(false);
   const [teamOpen, setTeamOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [scrolled, setScrolled] = useState(false);
   const dropRef = useRef(null);
+  const sentinelRef = useRef(null);
+  const scrollTimer = useRef();
   const router = useRouter();
 
   const submitSearch = () => {
@@ -38,6 +41,28 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
     if (!q) return;
     router.push(`/search?q=${encodeURIComponent(q)}`);
   };
+
+  // 헤더 위 1px 센티널을 IntersectionObserver로 감시 (masileng.com 방식)
+  // scroll 이벤트 대신 센티널의 화면 이탈 여부로 판정 + 60ms 디바운스로 경계 진동 방지
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[entries.length - 1]; // 여러 건 배달 시 최신 상태 기준
+        clearTimeout(scrollTimer.current);
+        scrollTimer.current = window.setTimeout(() => {
+          setScrolled(!entry.isIntersecting);
+        }, 60);
+      },
+      { rootMargin: "5px 0px" },
+    );
+    observer.observe(el);
+    return () => {
+      clearTimeout(scrollTimer.current);
+      observer.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const load = () => {
@@ -70,10 +95,10 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
 
   return (
     <>
-      <header className="site-header">
+      <div className="site-header-sentinel" ref={sentinelRef} aria-hidden="true" />
+      <header className={`site-header${scrolled ? " site-header--scrolled" : ""}`}>
         <div className="site-header-inner">
-          <div className="site-header-content">
-            <nav className="site-nav">
+          <nav className="site-nav">
               {onNavClick ? (
                 <a
                   href="#"
@@ -144,6 +169,26 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className={`search-input${scrolled ? " search-mini" : ""}`}>
+                <button
+                  className="btn btn-filled btn-brand btn-md"
+                  onClick={submitSearch}
+                  aria-label="검색"
+                >
+                  <SearchIcon />
+                </button>
+
+                <input
+                  type="text"
+                  placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") submitSearch();
+                  }}
+                />
               </div>
 
               <div style={{ flex: 1 }} />
@@ -244,35 +289,13 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                 )}
                 <Link
                   href="/upload"
-                  className="btn btn-filled btn-gradient-1 btn-md"
+                  className="btn btn-filled btn-gradient-1 btn-md nav-upload-btn"
                 >
                   <UploadIcon />
                   레시피 업로드
                 </Link>
               </div>
-            </nav>
-          </div>
-          <div className="site-header-search">
-            <div className="search-input">
-              <button
-                className="btn btn-filled btn-brand btn-md"
-                onClick={submitSearch}
-                aria-label="검색"
-              >
-                <SearchIcon />
-              </button>
-
-              <input
-                type="text"
-                placeholder="만들고 싶은 칵테일, 또는 재료를 검색하세요"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") submitSearch();
-                }}
-              />
-            </div>
-          </div>
+          </nav>
         </div>
       </header>
 

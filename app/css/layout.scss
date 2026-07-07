@@ -1,6 +1,13 @@
 /* ─────────────────────────────────────────────
    Header / Nav
 ───────────────────────────────────────────── */
+
+// 헤더 스크롤 판정용 1px 감시선 (masileng.com layout__ScrollObserver 방식)
+// 헤더보다 위(문서 흐름상)에 있어 헤더 높이 변화의 영향을 받지 않는다
+.site-header-sentinel {
+  height: 1px;
+}
+
 .site-header {
   position: sticky;
   top: 0;
@@ -20,13 +27,25 @@
     gap: 4px;
     padding: 0 24px 16px 24px;
   }
+
+  // 스크롤 시 한 줄 헤더로 축소 — 메뉴/업로드 버튼 숨김, 검색창은 자기 자리(nav-menu 위치)로 복귀
+  &--scrolled {
+    .nav-menu {
+      display: none;
+    }
+
+    .nav-upload-btn {
+      display: none;
+    }
+  }
 }
 
 .site-nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 40px;
-  height: 68px;
+  min-height: 68px;
 }
 
 .site-brand {
@@ -254,7 +273,10 @@
 // ─────────────────────────────────────────────
 
 .search-input {
-  flex: 1;
+  // 기본: nav-menu/spacer/actions 다음 순서지만, basis 100%로 강제 줄바꿈되어
+  // site-nav 두 번째 줄(기존 site-header-search 자리)에 넓게 자리잡는다
+  order: 99;
+  flex: 1 1 100%;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -263,7 +285,12 @@
   background: var(--form-bg);
   border: 2px solid var(--coral-line);
   border-radius: var(--r-md);
-  transition: all var(--time-slow);
+  // order·flex-basis는 transition 대상에서 제외 — all로 걸면 order(정수, 애니메이션 가능)가
+  // 99→0으로 보간되는 동안 양수라서 검색창이 로그인 버튼 오른쪽에 나타났다 점프하는 문제 발생
+  transition:
+    height var(--time-slow),
+    max-width var(--time-slow),
+    border-color var(--time-fast);
   box-shadow:
     0 0.47rem 0.19rem rgba(255, 0, 0, 0.03),
     0 0.94rem 1.41rem rgba(255, 0, 0, 0.03),
@@ -293,6 +320,14 @@
     font-size: 18px;
     font-weight: 600;
   }
+
+  // 스크롤 축소 상태: order를 되돌려 DOM 순서(= nav-menu 바로 다음, 즉 nav-menu 자리)로 복귀
+  &.search-mini {
+    order: 0;
+    flex: 0 1 400px;
+    height: 40px;
+    max-width: 400px;
+  }
 }
 
 // ── 모바일: 2단 헤더 (1행 로고+버튼 / 2행 가로 스크롤 탭)
@@ -302,8 +337,6 @@
   }
 
   .site-nav {
-    flex-wrap: wrap;
-    height: auto;
     gap: 12px;
     padding-top: 12px;
   }

@@ -195,6 +195,12 @@
   padding: 0;
 }
 
+html {
+  /* 스크롤 앵커링 비활성화 — 헤더 축소로 문서 높이가 줄 때
+     브라우저가 scrollY를 보정해 헤더가 진동(오락가락)하는 것을 방지 */
+  overflow-anchor: none;
+}
+
 body {
   font-family:
     "Pretendard Variable",
