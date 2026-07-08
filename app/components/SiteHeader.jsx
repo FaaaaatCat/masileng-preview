@@ -28,12 +28,16 @@ import TeamModal from "./TeamModal";
 
 // 모바일 메뉴 패널 "메뉴" 목록 아이콘 (검색결과 페이지 카테고리 아이콘과 동일한 자산 재사용)
 const MOBILE_NAV_ICONS = {
-  "칵테일": "https://www.masileng.com/test/ic_cocktail.svg",
-  "재료": "https://www.masileng.com/test/ic_ingredient.svg",
+  칵테일: "https://www.masileng.com/test/ic_cocktail.svg",
+  재료: "https://www.masileng.com/test/ic_ingredient.svg",
   "도전!마실랭": "https://www.masileng.com/test/ic_challenge.svg",
 };
 
-export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }) {
+export default function SiteHeader({
+  activeNav,
+  onNavClick,
+  initialSearch = "",
+}) {
   const [authUser, setAuthUser] = useState(null);
   const [dropOpen, setDropOpen] = useState(false);
   const [ingRequestOpen, setIngRequestOpen] = useState(false);
@@ -116,7 +120,10 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const h = (e) => {
-      if (mobileHeaderRef.current && !mobileHeaderRef.current.contains(e.target))
+      if (
+        mobileHeaderRef.current &&
+        !mobileHeaderRef.current.contains(e.target)
+      )
         setMobileMenuOpen(false);
     };
     document.addEventListener("mousedown", h);
@@ -369,7 +376,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                     onClick={closeMobileSearch}
                     aria-label="검색 닫기"
                   >
-                    <XIcon />
+                    <XIcon size={24} />
                   </button>
                 </div>
               ) : (
@@ -395,7 +402,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                       onClick={() => setMobileMenuOpen(false)}
                       aria-label="메뉴 닫기"
                     >
-                      <XIcon />
+                      <XIcon size={24} />
                     </button>
                   ) : (
                     <div className="mobile-header-actions">
@@ -405,7 +412,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                         onClick={openMobileSearch}
                         aria-label="검색"
                       >
-                        <SearchIcon />
+                        <SearchIcon size={24} />
                       </button>
                       <button
                         type="button"
@@ -413,7 +420,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                         onClick={openMobileMenu}
                         aria-label="메뉴"
                       >
-                        <MenuIcon />
+                        <MenuIcon size={24} />
                       </button>
                     </div>
                   )}
@@ -426,7 +433,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                 {authUser ? (
                   <Link
                     href="/mypage"
-                    className="mobile-menu-user-row"
+                    className="mobile-menu-user-row mobile-menu"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <ProfileAvatar user={authUser} size={36} />
@@ -449,7 +456,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                   </button>
                 )}
 
-                <div className="mobile-menu-section">
+                <div className="mobile-menu">
                   <p className="mobile-menu-section-label">메뉴</p>
                   <div className="mobile-menu-list">
                     {NAV_ITEMS.map((item) =>
@@ -504,7 +511,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
 
                 {authUser && (
                   <>
-                    <div className="mobile-menu-section">
+                    <div className="mobile-menu">
                       <p className="mobile-menu-section-label">추가 기능</p>
                       <div className="mobile-menu-list">
                         <button
@@ -552,24 +559,25 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                         </button>
                       </div>
                     </div>
-
-                    <button
-                      type="button"
-                      className="mobile-menu-item mobile-menu-logout"
-                      onClick={() => {
-                        setMobileMenuOpen(false);
-                        handleLogout();
-                      }}
-                    >
-                      <LogoutIcon />
-                      로그아웃
-                    </button>
+                    <div className="mobile-menu">
+                      <button
+                        type="button"
+                        className="mobile-menu-item"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          handleLogout();
+                        }}
+                      >
+                        <LogoutIcon />
+                        로그아웃
+                      </button>
+                    </div>
                   </>
                 )}
 
-                <div className="mobile-menu-download-grid">
+                <div className="flex gap-2" style={{padding:"8px 8px 20px 8px"}}>
                   <a
-                    className="mobile-menu-download-btn"
+                    className="btn btn-lined btn-gray-light btn-xl flex-1"
                     href="https://play.google.com/store/apps/details?id=com.padro.my_cocktail_app"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -578,7 +586,7 @@ export default function SiteHeader({ activeNav, onNavClick, initialSearch = "" }
                     구글 플레이 스토어
                   </a>
                   <a
-                    className="mobile-menu-download-btn"
+                    className="btn btn-lined btn-gray-light btn-xl flex-1"
                     href="https://apps.apple.com/us/app/%EB%A7%88%EC%8B%A4%EB%9E%AD-%ED%95%A8%EA%BB%98-%EB%A7%8C%EB%93%A4%EC%96%B4%EA%B0%80%EB%8A%94-%EC%B9%B5%ED%85%8C%EC%9D%BC-%EA%B0%80%EC%9D%B4%EB%93%9C/id1623101096"
                     target="_blank"
                     rel="noopener noreferrer"

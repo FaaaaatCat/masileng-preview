@@ -109,6 +109,28 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
   );
 }
 
+// 모바일 필터 팝업용 라디오 그룹
+function RadioFilterGroup({ label, value, onChange, options }) {
+  return (
+    <div className="filter-radio-group">
+      <p className="filter-radio-label">{label}</p>
+      <div className="filter-radio-options">
+        {options.map((opt) => (
+          <label key={opt.value} className="filter-radio-option">
+            <input
+              type="radio"
+              name={`filter-${label}`}
+              checked={value === opt.value}
+              onChange={() => onChange(opt.value)}
+            />
+            <span>{opt.label}</span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function FilterBar({
   abv, base, theme, ibaOnly, rangeMin, rangeMax,
   onAbvChange, onBaseChange, onThemeChange, onIbaToggle,
@@ -194,7 +216,59 @@ export default function FilterBar({
                 <XIcon />
               </button>
             </div>
-            <div className="common-popup-body">{filterFields}</div>
+            <div className="common-popup-body">
+              <RadioFilterGroup
+                label="도수"
+                value={abv}
+                onChange={onAbvChange}
+                options={[
+                  { value: "", label: "전체" },
+                  { value: "none", label: "무알콜" },
+                  { value: "low", label: "약한 도수" },
+                  { value: "high", label: "강한 도수" },
+                ]}
+              />
+              <RadioFilterGroup
+                label="베이스주"
+                value={base}
+                onChange={onBaseChange}
+                options={[
+                  { value: "", label: "전체" },
+                  ...BASE_SPIRITS.map((v) => ({ value: v, label: v })),
+                ]}
+              />
+              <RadioFilterGroup
+                label="테마"
+                value={theme}
+                onChange={onThemeChange}
+                options={[
+                  { value: "", label: "전체" },
+                  ...THEMES.map((v) => ({ value: v, label: v })),
+                ]}
+              />
+              <DualRangeSlider
+                min={rangeMin}
+                max={rangeMax}
+                onMinChange={onRangeMinChange}
+                onMaxChange={onRangeMaxChange}
+              />
+              {showIba && (
+                <button
+                  className={`btn btn-md${ibaOnly ? " btn-subfilled btn-brand" : " btn-lined btn-gray-light"}`}
+                  onClick={onIbaToggle}
+                >
+                  <span className="iba-check">{ibaOnly && <CheckIcon />}</span>
+                  IBA 공식 레시피만 보기
+                </button>
+              )}
+              <button
+                className="btn btn-lined btn-gray-light btn-md w-full"
+                onClick={onReset}
+              >
+                <ResetIcon />
+                초기화
+              </button>
+            </div>
           </div>
         </div>
       )}

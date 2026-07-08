@@ -358,10 +358,9 @@
 .mobile-header-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   margin-left: auto;
 }
-
 
 // 메뉴 열림 상태의 X버튼 — 단독 배치라 헤더 우측 정렬용 auto 마진 필요
 .mobile-header-close {
@@ -405,22 +404,56 @@
   // 헤더(58px) 아래 화면 끝까지 — 콘텐츠가 짧아도 뒤 페이지가 비치지 않도록 고정 높이
   height: calc(100vh - 58px);
   height: calc(100dvh - 58px);
+
+  // 상단 띠배너가 떠 있는 동안은 배너 높이만큼 추가로 뺀다
+  body:has(.notice-banner) & {
+    height: calc(100vh - 80px);
+    height: calc(100dvh - 80px);
+  }
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--gray-8);
   border-top: 1px solid var(--ui-line-light);
   overflow-y: auto;
+  gap: 8px;
+}
+
+// ── 상단 띠배너: 모바일에서는 좌측 정렬 + 말줄임 없이 전체 노출
+@media (max-width: 768px) {
+  .notice-banner {
+    justify-content: flex-start !important; // 인라인 center 오버라이드
+    padding-left: var(--page-gutter);
+    // 전체 문구 노출이 우선 — 두 줄이 되면 배너가 늘어난다 (인라인 height:32 오버라이드)
+    height: auto !important;
+    min-height: 32px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .notice-banner .notice-banner-content {
+    justify-content: flex-start;
+    max-width: calc(100% - 40px); // 우측 닫기 버튼 영역만 제외
+  }
+  .notice-banner .notice-banner-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}
+
+.mobile-menu {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 16px var(--page-gutter);
+  gap: 4px;
 }
 
 .mobile-menu-login-row,
 .mobile-menu-user-row {
-  display: flex;
+  height: 80px;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  padding: 18px var(--page-gutter);
-  border: none;
-  background: none;
+  gap: 16px;
   font-size: 15px;
   font-weight: 600;
   color: var(--font-title);
@@ -433,25 +466,15 @@
     margin-left: auto;
     color: var(--font-sub2);
     flex-shrink: 0;
+    width: 24px;
+    height: 24px;
   }
-}
-
-.mobile-menu-user-name {
-  flex: 1;
-}
-
-// 그룹 사이 구분: 시안의 얇은 회색 밴드
-.mobile-menu-section {
-  padding: 14px var(--page-gutter) 10px;
-  background: #fff;
-  border-top: 8px solid var(--ui-bg-light);
 }
 
 .mobile-menu-section-label {
   font-size: 13px;
   font-weight: 600;
   color: var(--font-placeholder);
-  margin-bottom: 4px;
 }
 
 .mobile-menu-list {
@@ -489,41 +512,13 @@
   }
 }
 
-.mobile-menu-logout {
-  padding: 18px var(--page-gutter);
-  border-top: 8px solid var(--ui-bg-light);
-  font-weight: 600;
-}
-
-// 하단 앱 다운로드 — 회색 배경 밴드, 패널 바닥에 고정 (flex column + margin-top:auto)
 .mobile-menu-download-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  padding: 24px var(--page-gutter) 28px;
-  margin-top: auto;
-  background: var(--ui-bg-light);
+  padding: 24px var(--page-gutter);
 }
 
-.mobile-menu-download-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  height: 52px;
-  background: #fff;
-  border: 1px solid var(--ui-line-light);
-  border-radius: var(--r-md);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--font-title);
-  text-decoration: none;
-  transition: border-color var(--time-fast);
-
-  &:hover {
-    border-color: var(--coral-line);
-  }
-}
 
 // ── 모바일: 데스크톱 nav 숨기고 모바일 헤더 노출
 @media (max-width: 768px) {
@@ -563,6 +558,13 @@
   align-items: flex-end;
   justify-content: space-between;
   margin: 22px 0;
+
+  // 모바일: 정렬 탭(section-sort)을 아랫줄로 내리고 좌측 정렬
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
 }
 
 .section-title-group {

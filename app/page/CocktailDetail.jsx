@@ -456,7 +456,7 @@ export default function CocktailDetail({
               {/* 기본 정보 카드 */}
               <div className="common-card">
                 <div className="common-card-inner">
-                  <div className="flex items-center gap-2.5">
+                  <div className="detail-title-row flex items-center gap-2.5">
                     {/* 테마 배경 + 칵테일 일러스트 */}
                     <div className="size-20 overflow-hidden shrink-0 relative">
                       {THEME_BG_MAP[card.theme] && (
@@ -479,33 +479,35 @@ export default function CocktailDetail({
                         {displayCard.name}
                       </h1>
                     </div>
-                    <button
-                      className={`btn btn-md ${liked ? " btn-subfilled btn-brand" : "btn-lined btn-gray-light"}`}
-                      style={{ borderRadius: "var(--r-full)" }}
-                      onClick={() => setLiked((v) => !v)}
-                    >
-                      <HeartIcon filled={liked} />
-                      좋아요 {card.likes + (liked ? 1 : 0)}
-                    </button>
-                    <button
-                      className="btn btn-lined btn-gray-light"
-                      style={{
-                        width: 40,
-                        height: 40,
-                        borderRadius: "var(--r-full)",
-                        padding: 0,
-                        flexShrink: 0,
-                      }}
-                      onClick={() =>
-                        navigator.share?.({
-                          title: card.name,
-                          url: window.location.href,
-                        })
-                      }
-                      aria-label="공유하기"
-                    >
-                      <ShareIcon />
-                    </button>
+                    <div className="detail-title-actions flex items-center gap-2.5">
+                      <button
+                        className={`btn btn-md ${liked ? " btn-subfilled btn-brand" : "btn-lined btn-gray-light"}`}
+                        style={{ borderRadius: "var(--r-full)" }}
+                        onClick={() => setLiked((v) => !v)}
+                      >
+                        <HeartIcon filled={liked} />
+                        좋아요 {card.likes + (liked ? 1 : 0)}
+                      </button>
+                      <button
+                        className="btn btn-lined btn-gray-light"
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: "var(--r-full)",
+                          padding: 0,
+                          flexShrink: 0,
+                        }}
+                        onClick={() =>
+                          navigator.share?.({
+                            title: card.name,
+                            url: window.location.href,
+                          })
+                        }
+                        aria-label="공유하기"
+                      >
+                        <ShareIcon />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="flex flex-wrap gap-1.5">
@@ -934,6 +936,7 @@ export default function CocktailDetail({
                       className="detail-comment-input"
                       type="text"
                       placeholder="댓글을 입력하세요..."
+                      enterKeyHint="send"
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
                       onKeyDown={(e) => {
@@ -941,7 +944,7 @@ export default function CocktailDetail({
                       }}
                     />
                     <button
-                      className="btn btn-filled btn-brand btn-md"
+                      className="btn btn-filled btn-brand btn-md detail-comment-submit"
                       style={{ borderRadius: "var(--r-full)" }}
                       onClick={handleCommentSubmit}
                     >

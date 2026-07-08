@@ -17,10 +17,10 @@ export const DownloadIcon = () => (
   </svg>
 );
 
-export const SearchIcon = () => (
+export const SearchIcon = ({ size = 20 }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
-    strokeLinecap="round" strokeLinejoin="round" width="20" height="20"
-    style={{ color: "var(--icon-dark)", flexShrink: 0 }}>
+    strokeLinecap="round" strokeLinejoin="round" width={size} height={size}
+    style={{ flexShrink: 0 }}>
     <circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" />
   </svg>
 );
@@ -32,9 +32,9 @@ export const ChevronIcon = () => (
   </svg>
 );
 
-export const XIcon = () => (
+export const XIcon = ({ size = 16 }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
-    strokeLinecap="round" strokeLinejoin="round" width="16" height="16" style={{ display: "block" }}>
+    strokeLinecap="round" strokeLinejoin="round" width={size} height={size} style={{ display: "block" }}>
     <path d="M18 6 6 18M6 6l12 12" />
   </svg>
 );
@@ -58,9 +58,9 @@ export const FilterIcon = () => (
   </svg>
 );
 
-export const MenuIcon = () => (
+export const MenuIcon = ({ size = 20 }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"
-    strokeLinecap="round" strokeLinejoin="round" width="20" height="20" style={{ display: "block" }}>
+    strokeLinecap="round" strokeLinejoin="round" width={size} height={size} style={{ display: "block" }}>
     <line x1="4" y1="7" x2="20" y2="7" />
     <line x1="4" y1="12" x2="20" y2="12" />
     <line x1="4" y1="17" x2="20" y2="17" />

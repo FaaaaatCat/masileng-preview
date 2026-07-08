@@ -10,6 +10,7 @@ export default function NoticeBanner({
 
   return (
     <div
+      className="notice-banner"
       style={{
         height: 32,
         background: "#280e56",
@@ -20,7 +21,7 @@ export default function NoticeBanner({
         flexShrink: 0,
       }}
     >
-      <div className="flex items-center justify-center gap-3 min-w-0 max-w-[calc(100%-104px)]">
+      <div className="notice-banner-content flex items-center justify-center gap-3 min-w-0 max-w-[calc(100%-104px)]">
         <div
           style={{
             padding: "2px 10px",
@@ -38,7 +39,7 @@ export default function NoticeBanner({
             새소식
           </p>
         </div>
-        <span className="common-body-md-light truncate" style={{ color: "white" }}>
+        <span className="notice-banner-text common-body-md-light truncate" style={{ color: "white" }}>
           {message}
         </span>
       </div>

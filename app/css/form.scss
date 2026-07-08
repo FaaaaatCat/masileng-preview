@@ -310,6 +310,42 @@ $btn-sizes: (
   display: none;
 }
 
+// ── 모바일 필터 팝업: 라디오 그룹
+.filter-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-radio-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--font-title);
+}
+
+.filter-radio-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+}
+
+.filter-radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--font-body);
+  cursor: pointer;
+
+  input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--coral);
+    cursor: pointer;
+  }
+}
+
 // ── 모바일: 필터 줄바꿈 + 슬라이더 전체 폭
 @media (max-width: 768px) {
   .filter-bar {
@@ -324,6 +360,11 @@ $btn-sizes: (
   .filter-mobile-trigger {
     display: inline-flex;
     width: fit-content;
+    // 모바일에서는 btn-md 크기로 (마크업은 데스크탑 기준 btn-xl 유지)
+    height: 40px;
+    font-size: 14px;
+    padding: 18px;
+    border-radius: var(--r-sm);
   }
 
   .filter-row {

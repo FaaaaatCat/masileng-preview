@@ -85,6 +85,11 @@
       justify-content: space-between;
     }
   }
+  @media (max-width: 768px) {
+    &-inner, &-header {
+      padding: 16px;
+    }
+  }
 }
 
 // ── 팝업 (공통)
