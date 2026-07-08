@@ -2,10 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-import { SORT_TABS } from "../data/constants.json";
-
 import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
+import SortDropdown from "../components/SortDropdown";
 import ChallengeCard, { CARDS } from "../components/ChallengeCard";
 
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
@@ -173,14 +172,14 @@ export default function ChallengeHome() {
 
       <div className="page-wrap">
         <FilterBar {...filterProps} />
-
+        <div className="section-sort">
+          <SortDropdown value={sortTab} onChange={setSortTab} />
+        </div>
         <section className="pb-12">
           <div className="section-header">
-            <div className="section-title-group">
-              <span className="section-title-bar" />
-              <h3 className="section-title">금주의 신규 칵테일</h3>
-            </div>
-            <button className="btn btn-transparent btn-md">
+            <span className="section-title-bar" />
+            <h3 className="section-title">금주의 신규 칵테일</h3>
+            <button className="btn btn-transparent btn-md" style={{marginLeft:"auto"}}>
               더보기 <ChevronRightIcon />
             </button>
           </div>
@@ -197,26 +196,13 @@ export default function ChallengeHome() {
 
         <section className="pb-12">
           <div className="section-header">
-            <div className="section-title-group">
-              <span className="section-title-bar" />
-              <h3 className="section-title">도전!마실랭 리스트</h3>
-              <span className="section-subtitle">
-                {filtered.length === CARDS.length
-                  ? "1,248개의 창작 레시피"
-                  : `${filtered.length}개의 검색 결과`}
-              </span>
-            </div>
-            <div className="section-sort">
-              {SORT_TABS.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setSortTab(tab)}
-                  className={`btn btn-sm ${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}
-                >
-                  {tab}
-                </button>
-              ))}
-            </div>
+            <span className="section-title-bar" />
+            <h3 className="section-title">도전!마실랭 리스트</h3>
+            <span className="section-subtitle">
+              {filtered.length === CARDS.length
+                ? "1,248개의 창작 레시피"
+                : `${filtered.length}개의 검색 결과`}
+            </span>
           </div>
 
           <div className="cocktail-grid">

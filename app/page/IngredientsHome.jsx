@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react";
 import INGREDIENTS from "../data/ingredients.json";
-import { BoxPlusIcon } from "../components/icons";
+import { BoxPlusIcon, FilterIcon } from "../components/icons";
 import IngredientCard from "../components/IngredientCard";
+import { FilterPopup, TabFilterGroup } from "../components/FilterBar";
 import "../css/ingredient-detail.css";
 
 
@@ -106,6 +107,7 @@ function SlidingBanner() {
 
 export default function IngredientsHome() {
   const [cat, setCat] = useState("전체");
+  const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
   const [myIngIds, setMyIngIds] = useState(
     () => new Set(INGREDIENTS.filter((i) => i.myIng).map((i) => i.id)),
   );
@@ -172,18 +174,41 @@ export default function IngredientsHome() {
       <div className="page-wrap">
         {/* 필터 */}
         <div className="filter-bar">
-          {/* 카테고리 탭 */}
-          <div className="flex gap-2 py-3.5 overflow-x-auto">
-            {CATS.map((c) => (
-              <button
-                key={c}
-                className={`ing-cat-tab${cat === c ? " active" : ""}`}
-                onClick={() => setCat(c)}
-              >
-                {c}
-              </button>
-            ))}
+          {/* 카테고리 탭 (데스크탑) */}
+          <div className="filter-inline">
+            <div className="flex gap-2 py-3.5 overflow-x-auto">
+              {CATS.map((c) => (
+                <button
+                  key={c}
+                  className={`common-tab${cat === c ? " active" : ""}`}
+                  onClick={() => setCat(c)}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
           </div>
+
+          {/* 필터 버튼 + 팝업 (모바일) */}
+          <button
+            type="button"
+            className="btn btn-lined btn-gray-light btn-xl filter-mobile-trigger"
+            onClick={() => setMobileFilterOpen(true)}
+          >
+            <FilterIcon />
+            필터
+          </button>
+          <FilterPopup
+            open={mobileFilterOpen}
+            onClose={() => setMobileFilterOpen(false)}
+          >
+            <TabFilterGroup
+              label="카테고리"
+              value={cat}
+              onChange={setCat}
+              options={CATS.map((c) => ({ value: c, label: c }))}
+            />
+          </FilterPopup>
         </div>
 
         {/* 재료 그리드 */}

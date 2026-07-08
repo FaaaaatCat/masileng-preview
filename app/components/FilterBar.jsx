@@ -109,23 +109,58 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
   );
 }
 
-// 모바일 필터 팝업용 라디오 그룹
-function RadioFilterGroup({ label, value, onChange, options }) {
+// 모바일 필터 팝업용 선택 그룹 (common-tab 필 버튼, 단일 선택)
+export function TabFilterGroup({ label, value, onChange, options }) {
   return (
-    <div className="filter-radio-group">
-      <p className="filter-radio-label">{label}</p>
-      <div className="filter-radio-options">
+    <div className="filter-popup-group">
+      <p className="filter-popup-group-label">{label}</p>
+      <div className="filter-popup-group-options">
         {options.map((opt) => (
-          <label key={opt.value} className="filter-radio-option">
-            <input
-              type="radio"
-              name={`filter-${label}`}
-              checked={value === opt.value}
-              onChange={() => onChange(opt.value)}
-            />
-            <span>{opt.label}</span>
-          </label>
+          <button
+            key={opt.value}
+            type="button"
+            className={`common-tab${value === opt.value ? " active" : ""}`}
+            onClick={() => onChange(opt.value)}
+          >
+            {opt.label}
+          </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// 모바일 필터 팝업 셸 (백드롭 + 바텀시트 + ESC/스크롤 잠금)
+export function FilterPopup({ open, onClose, children }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open, onClose]);
+
+  if (!open) return null;
+  return (
+    <div
+      className="common-popup-backdrop"
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="common-popup-modal popup-sm filter-popup-modal">
+        <div className="common-popup-header">
+          <h2 className="common-title-lg">필터</h2>
+          <button className="common-popup-close" type="button" onClick={onClose} aria-label="닫기">
+            <XIcon />
+          </button>
+        </div>
+        <div className="common-popup-body">{children}</div>
       </div>
     </div>
   );
@@ -138,19 +173,6 @@ export default function FilterBar({
   showIba = false,
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const onKey = (e) => {
-      if (e.key === "Escape") setMobileOpen(false);
-    };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
 
   const filterFields = (
     <>
@@ -202,76 +224,65 @@ export default function FilterBar({
         필터
       </button>
 
-      {mobileOpen && (
-        <div
-          className="common-popup-backdrop"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setMobileOpen(false);
-          }}
-        >
-          <div className="common-popup-modal popup-sm filter-popup-modal">
-            <div className="common-popup-header">
-              <h2 className="common-title-lg">필터</h2>
-              <button className="common-popup-close" type="button" onClick={() => setMobileOpen(false)} aria-label="닫기">
-                <XIcon />
-              </button>
-            </div>
-            <div className="common-popup-body">
-              <RadioFilterGroup
-                label="도수"
-                value={abv}
-                onChange={onAbvChange}
-                options={[
-                  { value: "", label: "전체" },
-                  { value: "none", label: "무알콜" },
-                  { value: "low", label: "약한 도수" },
-                  { value: "high", label: "강한 도수" },
-                ]}
-              />
-              <RadioFilterGroup
-                label="베이스주"
-                value={base}
-                onChange={onBaseChange}
-                options={[
-                  { value: "", label: "전체" },
-                  ...BASE_SPIRITS.map((v) => ({ value: v, label: v })),
-                ]}
-              />
-              <RadioFilterGroup
-                label="테마"
-                value={theme}
-                onChange={onThemeChange}
-                options={[
-                  { value: "", label: "전체" },
-                  ...THEMES.map((v) => ({ value: v, label: v })),
-                ]}
-              />
-              <DualRangeSlider
-                min={rangeMin}
-                max={rangeMax}
-                onMinChange={onRangeMinChange}
-                onMaxChange={onRangeMaxChange}
-              />
-              {showIba && (
-                <button
-                  className={`btn btn-md${ibaOnly ? " btn-subfilled btn-brand" : " btn-lined btn-gray-light"}`}
-                  onClick={onIbaToggle}
-                >
-                  <span className="iba-check">{ibaOnly && <CheckIcon />}</span>
-                  IBA 공식 레시피만 보기
-                </button>
-              )}
-              <button
-                className="btn btn-lined btn-gray-light btn-md w-full"
-                onClick={onReset}
-              >
-                <ResetIcon />
-                초기화
-              </button>
-            </div>
-          </div>
+      <FilterPopup open={mobileOpen} onClose={() => setMobileOpen(false)}>
+        <TabFilterGroup
+          label="도수"
+          value={abv}
+          onChange={onAbvChange}
+          options={[
+            { value: "", label: "전체" },
+            { value: "none", label: "무알콜" },
+            { value: "low", label: "약한 도수" },
+            { value: "high", label: "강한 도수" },
+          ]}
+        />
+        <TabFilterGroup
+          label="베이스주"
+          value={base}
+          onChange={onBaseChange}
+          options={[
+            { value: "", label: "전체" },
+            ...BASE_SPIRITS.map((v) => ({ value: v, label: v })),
+          ]}
+        />
+        <TabFilterGroup
+          label="테마"
+          value={theme}
+          onChange={onThemeChange}
+          options={[
+            { value: "", label: "전체" },
+            ...THEMES.map((v) => ({ value: v, label: v })),
+          ]}
+        />
+        <div className="filter-popup-group">
+          <p className="filter-popup-group-label">재료 수</p>
+          <DualRangeSlider
+            min={rangeMin}
+            max={rangeMax}
+            onMinChange={onRangeMinChange}
+            onMaxChange={onRangeMaxChange}
+          />
         </div>
-      )}
+        {showIba && (
+          <div className="filter-popup-group">
+            <p className="filter-popup-group-label">IBA 공식 레시피</p>
+            <button
+              className={`btn btn-md${ibaOnly ? " btn-subfilled btn-brand" : " btn-lined btn-gray-light"}`}
+              onClick={onIbaToggle}
+            >
+              <span className="iba-check">{ibaOnly && <CheckIcon />}</span>
+              IBA 공식 레시피만 보기
+            </button>
+          </div>
+        )}
+        <button
+          className="btn btn-lined btn-gray-light btn-md w-full"
+          onClick={onReset}
+        >
+          <ResetIcon />
+          초기화
+        </button>
+      </FilterPopup>
     </div>
   );
 }

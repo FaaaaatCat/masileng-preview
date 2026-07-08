@@ -7,6 +7,16 @@
 //  상태:   btn-disable
 //  사이즈 : btn-xxs / btn-xs / btn-sm / btn-md / btn-lg / btn-xl / btn-xxl
 // ─────────────────────────────────────────────
+// 터치 기기에서는 탭 후 hover 상태가 눌러붙는(sticky hover) 문제가 있어
+// hover를 실제 지원하는 포인터(마우스)에서만 hover 스타일을 적용한다
+@mixin hoverable {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
 $btn-sizes: (
   xxs: (
     height: 24px,
@@ -106,7 +116,7 @@ $btn-sizes: (
     background: var(--coral);
     border: 1.5px solid var(--coral);
     color: #fff;
-    &:hover {
+    @include hoverable {
       background: var(--coral-subtle);
     }
   }
@@ -114,7 +124,7 @@ $btn-sizes: (
     background: var(--purple);
     border: 1.5px solid var(--purple);
     color: #fff;
-    &:hover {
+    @include hoverable {
       background: var(--purple-strong);
     }
   }
@@ -122,7 +132,7 @@ $btn-sizes: (
     background: var(--ui-bg-subtle);
     border: 1.5px solid var(--ui-bg-subtle);
     color: var(--font-body);
-    &:hover {
+    @include hoverable {
       background: var(--ui-bg-dark);
       color: var(--font-title);
     }
@@ -131,7 +141,7 @@ $btn-sizes: (
     background: var(--gray-1);
     border: 1.5px solid var(--gray-1);
     color: #fff;
-    &:hover {
+    @include hoverable {
       background: var(--gray-1);
     }
   }
@@ -153,7 +163,7 @@ $btn-sizes: (
       );
       pointer-events: none;
     }
-    &:hover {
+    @include hoverable {
       transform: translateY(-1px);
       box-shadow: var(--shadow-btn-1-hover);
     }
@@ -163,7 +173,7 @@ $btn-sizes: (
     border: none;
     color: #fff;
     box-shadow: var(--shadow-btn-2);
-    &:hover {
+    @include hoverable {
       transform: translateY(-1px);
     }
   }
@@ -171,7 +181,7 @@ $btn-sizes: (
     background: #dc2626;
     border: 1.5px solid #dc2626;
     color: #fff;
-    &:hover {
+    @include hoverable {
       background: #b91c1c;
       border-color: #b91c1c;
     }
@@ -182,18 +192,17 @@ $btn-sizes: (
 .btn-subfilled {
   &.btn-brand {
     background: var(--coral-soft);
-    border: 1.5px solid rgba(243, 75, 101, 0.35);
+    border: 1.5px solid var(--coral-line);
     color: var(--coral);
-    &:hover {
-      background: var(--coral-line);
-      border-color: rgba(243, 75, 101, 0.6);
+    @include hoverable {
+      background: rgba(255, 199, 207, 0.6);
     }
   }
   &.btn-secondary {
     background: var(--purple-soft);
     border: 1.5px solid rgba(145, 55, 199, 0.3);
     color: var(--purple);
-    &:hover {
+    @include hoverable {
       background: color-mix(in oklch, var(--purple-soft) 70%, var(--purple));
       border-color: rgba(145, 55, 199, 0.55);
     }
@@ -202,7 +211,7 @@ $btn-sizes: (
     background: var(--ui-bg-light);
     border: 1.5px solid var(--ui-line-light);
     color: var(--font-sub);
-    &:hover {
+    @include hoverable {
       background: var(--ui-bg-subtle);
       border-color: var(--ui-line-subtle);
       color: var(--font-title);
@@ -216,21 +225,21 @@ $btn-sizes: (
   &.btn-brand {
     border: 1.5px solid var(--coral);
     color: var(--coral);
-    &:hover {
+    @include hoverable {
       background: var(--coral-soft);
     }
   }
   &.btn-secondary {
     border: 1.5px solid var(--purple);
     color: var(--purple);
-    &:hover {
+    @include hoverable {
       background: var(--purple-soft);
     }
   }
   &.btn-gray-light {
     border: 1.5px solid var(--ui-line-light);
     color: var(--font-sub);
-    &:hover {
+    @include hoverable {
       border-color: var(--ui-line-subtle);
       color: var(--font-title);
     }
@@ -238,21 +247,21 @@ $btn-sizes: (
   &.btn-gray-dark {
     border: 1.5px solid var(--font-title);
     color: var(--font-title);
-    &:hover {
+    @include hoverable {
       background: var(--ui-bg-subtle);
     }
   }
   &.btn-red {
     border: 1.5px solid #f87171;
     color: #dc2626;
-    &:hover {
+    @include hoverable {
       background: #fee2e2;
     }
   }
   &.btn-dark {
     border: 1.5px solid var(--dark-7);
     color: var(--dark-7);
-    &:hover {
+    @include hoverable {
       background: var(--dark-3);
     }
   }
@@ -270,14 +279,14 @@ $btn-sizes: (
   padding: 0;
   transition: color var(--time-fast);
   opacity: 0.5;
-  &:hover {
+  @include hoverable {
     opacity: 1;
   }
 
   &.btn-dark {
     color: white;
     opacity: 0.4;
-    &:hover {
+    @include hoverable {
       opacity: 0.7;
     }
   }
@@ -310,40 +319,23 @@ $btn-sizes: (
   display: none;
 }
 
-// ── 모바일 필터 팝업: 라디오 그룹
-.filter-radio-group {
+// ── 모바일 필터 팝업: 선택 그룹 (라벨 + common-tab 목록)
+.filter-popup-group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.filter-radio-label {
+.filter-popup-group-label {
   font-size: 14px;
   font-weight: 700;
   color: var(--font-title);
 }
 
-.filter-radio-options {
+.filter-popup-group-options {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 16px;
-}
-
-.filter-radio-option {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: var(--font-body);
-  cursor: pointer;
-
-  input[type="radio"] {
-    width: 18px;
-    height: 18px;
-    margin: 0;
-    accent-color: var(--coral);
-    cursor: pointer;
-  }
+  gap: 8px;
 }
 
 // ── 모바일: 필터 줄바꿈 + 슬라이더 전체 폭
@@ -379,6 +371,11 @@ $btn-sizes: (
   // 필터 팝업(바텀시트) 내부 여백
   .filter-popup-modal .common-popup-body {
     gap: 14px;
+  }
+
+  // 팝업에서는 그룹 라벨이 있으므로 슬라이더 내부 "재료 수" 라벨은 숨김
+  .filter-popup-modal .range-label {
+    display: none;
   }
 }
 
@@ -423,8 +420,10 @@ $btn-sizes: (
   justify-content: space-between;
   text-align: left;
 
-  &:not(.active):hover {
-    border-color: var(--form-line-hover);
+  @media (hover: hover) {
+    &:not(.active):hover {
+      border-color: var(--form-line-hover);
+    }
   }
   &.select-style-filter.active {
     border-color: var(--coral-strong);
@@ -477,7 +476,7 @@ $btn-sizes: (
   padding: 0;
   transition: background var(--time-fast);
 
-  &:hover {
+  @include hoverable {
     background: var(--coral-line);
   }
 }
@@ -528,7 +527,7 @@ $btn-sizes: (
   white-space: nowrap;
   gap: 12px;
 
-  &:hover {
+  @include hoverable {
     background: var(--form-bg-hover);
     color: var(--font-title);
   }
@@ -643,16 +642,16 @@ $btn-sizes: (
   flex-shrink: 0;
   transition: background var(--time-fast);
 
-  &:hover {
+  @include hoverable {
     background: var(--coral-line);
   }
 }
 
 // ─────────────────────────────────────────────
-//  카테고리 탭 (재료 페이지)
+//  공통 필 탭 (카테고리·필터 선택용)
 // ─────────────────────────────────────────────
 
-.ing-cat-tab {
+.common-tab {
   padding: 7px 18px;
   border-radius: var(--r-full);
   border: 1.5px solid var(--ui-line-light);
@@ -669,15 +668,17 @@ $btn-sizes: (
   white-space: nowrap;
 }
 
-.ing-cat-tab.active {
+.common-tab.active {
   background: var(--coral);
   border-color: var(--coral);
   color: #fff;
 }
 
-.ing-cat-tab:not(.active):hover {
-  border-color: var(--coral-line);
-  color: var(--coral-strong);
+@media (hover: hover) {
+  .common-tab:not(.active):hover {
+    border-color: var(--coral-line);
+    color: var(--coral-strong);
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -744,9 +745,11 @@ $btn-sizes: (
   &::placeholder {
     color: var(--font-placeholder);
   }
-  &:not(:disabled):hover {
-    background: var(--form-bg-hover);
-    border-color: var(--form-line-hover);
+  @media (hover: hover) {
+    &:not(:disabled):hover {
+      background: var(--form-bg-hover);
+      border-color: var(--form-line-hover);
+    }
   }
   &:not(:disabled):focus {
     border-color: var(--coral);

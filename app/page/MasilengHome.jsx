@@ -5,11 +5,9 @@ import { useSearchParams } from "next/navigation";
 
 import COCKTAILS from "../data/cocktails.json";
 const CARDS = COCKTAILS.filter((c) => c.official);
-import { SORT_TABS } from "../data/constants.json";
-
-import { ChevronRightIcon } from "../components/icons";
 import CocktailCard from "../components/CocktailCard";
 import FilterBar from "../components/FilterBar";
+import SortDropdown from "../components/SortDropdown";
 import ChallengeHome from "../page/ChallengeHome";
 import IngredientsHome from "../page/IngredientsHome";
 import SiteHeader from "../components/SiteHeader";
@@ -262,28 +260,18 @@ function CocktailPage({ filterProps }) {
   return (
     <div className="page-wrap">
       <FilterBar {...filterProps} showIba={true} />
+      <div className="section-sort">
+        <SortDropdown value={sortTab} onChange={setSortTab} />
+      </div>
       <section className="pb-12">
         <div className="section-header">
-          <div className="section-title-group">
-            <span className="section-title-bar" />
-            <h3 className="section-title">정식 칵테일 리스트</h3>
-            <span className="section-subtitle">
-              {filtered.length === CARDS.length
-                ? "전 세계 칵테일 레시피 모음"
-                : `${filtered.length}개의 검색 결과`}
-            </span>
-          </div>
-          <div className="section-sort">
-            {SORT_TABS.map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setSortTab(tab)}
-                className={`btn btn-sm${sortTab === tab ? " btn-filled btn-gray-dark" : " btn-lined btn-gray-light"}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
+          <span className="section-title-bar" />
+          <h3 className="section-title">정식 칵테일 리스트</h3>
+          <span className="section-subtitle">
+            {filtered.length === CARDS.length
+              ? "전 세계 칵테일 레시피 모음"
+              : `${filtered.length}개의 검색 결과`}
+          </span>
         </div>
         <div className="cocktail-grid">
           {filtered.length > 0 ? (
