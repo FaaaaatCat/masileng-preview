@@ -384,30 +384,6 @@ export default function CocktailDetail({
                   <ExpandIcon />
                 </button>
               </div>
-              {showIllust && (
-                <div
-                  className={`grid gap-2 h-[80px]`}
-                  style={{
-                    gridTemplateColumns: `repeat(${thumbImgs.length}, 1fr)`,
-                  }}
-                >
-                  {thumbImgs.map((url, idx) => (
-                    <div
-                      key={idx}
-                      className={`detail-thumb${activeThumb === idx ? " active" : ""}`}
-                      onClick={() => setActiveThumb(idx)}
-                    >
-                      <img
-                        src={url}
-                        alt=""
-                        onError={(e) => {
-                          e.target.src = "/theme.png";
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
               {isMyRecipe && (
                 <div style={{ display: "flex", gap: 8 }}>
                   <button
@@ -1029,22 +1005,6 @@ export default function CocktailDetail({
           >
             <XIcon />
           </button>
-
-          {thumbImgs.length > 1 && (
-            <button
-              className="lightbox-arrow lightbox-arrow--prev"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightbox(
-                  (lightbox - 1 + thumbImgs.length) % thumbImgs.length,
-                );
-              }}
-              aria-label="이전"
-            >
-              <ChevronLeftIcon />
-            </button>
-          )}
-
           <div
             className="lightbox-img-wrap"
             onClick={(e) => e.stopPropagation()}
@@ -1058,25 +1018,6 @@ export default function CocktailDetail({
               }}
             />
           </div>
-
-          {thumbImgs.length > 1 && (
-            <button
-              className="lightbox-arrow lightbox-arrow--next"
-              onClick={(e) => {
-                e.stopPropagation();
-                setLightbox((lightbox + 1) % thumbImgs.length);
-              }}
-              aria-label="다음"
-            >
-              <ChevronRightIcon />
-            </button>
-          )}
-
-          {thumbImgs.length > 1 && (
-            <div className="lightbox-counter">
-              {lightbox + 1} / {thumbImgs.length}
-            </div>
-          )}
         </div>
       )}
     </>

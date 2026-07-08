@@ -22,28 +22,58 @@
   );
 }
 @keyframes float-up {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-18px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
 }
 @keyframes float-down {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(14px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(14px);
+  }
 }
 @keyframes float-left {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-16px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(-16px);
+  }
 }
 @keyframes float-right {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(12px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(12px);
+  }
 }
 @keyframes float-diag1 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(10px, -14px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(10px, -14px);
+  }
 }
 @keyframes float-diag2 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-12px, 10px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-12px, 10px);
+  }
 }
 
 .detail-theme-pattern img {
@@ -162,11 +192,32 @@
 .lightbox-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
-  z-index: 9999;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 9999;
+}
+.lightbox-img-wrap {
+  max-width: min(92vw, 1200px);
+  max-height: 88dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 88dvh;
+  object-fit: contain;
 }
 .lightbox-close {
   position: absolute;
@@ -190,109 +241,6 @@
 .lightbox-close svg {
   width: 20px;
   height: 20px;
-}
-.lightbox-img-wrap {
-  max-width: 60vw;
-  max-height: 88vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.lightbox-img {
-  max-width: 100%;
-  max-height: 88vh;
-  object-fit: contain;
-  border-radius: 4px;
-  display: block;
-}
-.lightbox-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  background: rgba(255, 255, 255, 0.15);
-  border: none;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  opacity: 0.8;
-  transition:
-    background 0.15s,
-    opacity 0.15s;
-}
-.lightbox-arrow:hover {
-  background: rgba(255, 255, 255, 0.28);
-  opacity: 1;
-}
-.lightbox-arrow svg {
-  width: 20px;
-  height: 20px;
-}
-.lightbox-arrow--prev {
-  left: 32px;
-}
-.lightbox-arrow--next {
-  right: 32px;
-}
-
-/* 모바일: 이미지 폭 확대 */
-@media (max-width: 768px) {
-  .lightbox-img-wrap {
-    max-width: 92vw;
-  }
-}
-.lightbox-counter {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-}
-
-.detail-thumb {
-  border-radius: var(--r-md);
-  overflow: hidden;
-  background: var(--ui-bg-subtle);
-  cursor: pointer;
-  position: relative;
-  opacity: 0.5;
-  transition: opacity var(--time-fast);
-  border: 2px solid transparent;
-}
-.detail-thumb.active {
-  opacity: 1;
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 4px var(--coral);
-}
-.detail-thumb:not(.active):hover {
-  opacity: 0.75;
-}
-.detail-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* ─────────────────────────────────────────────
-   단일 이미지 정책 — 칵테일은 첫 번째 사진 한 장만 노출
-   (JS는 그대로 두고 화면단에서만: 썸네일 목록 행 +
-    라이트박스 이전/다음/카운터 숨김)
-───────────────────────────────────────────── */
-.detail-left > div:has(> .detail-thumb) {
-  display: none;
-}
-.lightbox-arrow,
-.lightbox-counter {
-  display: none;
 }
 
 /* ─────────────────────────────────────────────
@@ -416,12 +364,12 @@
    Stats
 ───────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .detail-stat-inner{
+  .detail-stat-inner {
     flex-direction: column !important;
     gap: 8px;
   }
 }
-.detail-stat-inner{
+.detail-stat-inner {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -558,7 +506,7 @@
     width: 28px;
     height: 28px;
   }
-  .detail-ing-amount{
+  .detail-ing-amount {
     padding: 0px;
     border: none;
     background: none;
