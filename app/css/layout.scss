@@ -170,96 +170,88 @@
 // ── 헤더 유저 드롭다운
 .nav-user-wrap {
   position: relative;
+}
 
-  &-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-size: 14px;
+.nav-user-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border: 1.5px solid var(--ui-line-light);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-panel);
+  z-index: 200;
+  overflow: hidden;
+  padding: 6px;
+}
+
+.nav-user-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 14px;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-align: left;
+  transition:
+    background var(--time-fast),
+    color var(--time-fast);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--page-bg-gray);
+    color: var(--font-title);
   }
 
-  &-dropdown {
-    position: absolute;
-    top: calc(100% + 6px);
-    right: 0;
-    min-width: 200px;
-    background: #fff;
-    border: 1.5px solid var(--ui-line-light);
-    border-radius: var(--r-md);
-    box-shadow: var(--shadow-panel);
-    z-index: 200;
-    overflow: hidden;
-    padding: 6px;
-  }
+  &--mypage {
+    font-weight: 600;
+    color: var(--font-title);
 
-  &-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    padding: 9px 14px;
-    border-radius: var(--r-sm);
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--font-body);
-    text-decoration: none;
-    cursor: pointer;
-    background: none;
-    border: none;
-    font-family: inherit;
-    text-align: left;
-    transition:
-      background var(--time-fast),
-      color var(--time-fast);
-    white-space: nowrap;
+    .nav-user-item-icon-bg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--r-full);
+      background: var(--coral);
+      color: #fff;
+      flex-shrink: 0;
 
-    &:hover {
-      background: var(--page-bg-gray);
-      color: var(--font-title);
-    }
-
-    &--mypage {
-      font-weight: 600;
-      color: var(--font-title);
-
-      .nav-user-item-icon-bg {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        border-radius: var(--r-full);
-        background: var(--coral);
-        color: #fff;
-        flex-shrink: 0;
-
-        svg {
-          margin: 0 !important;
-          stroke: #fff !important;
-        }
-      }
-
-      svg:last-child {
-        margin-left: auto;
-        color: var(--font-sub2);
+      svg {
+        margin: 0 !important;
+        stroke: #fff !important;
       }
     }
-  }
 
-  &-divider {
-    height: 1px;
-    background: var(--ui-line-light);
-    margin: 4px 0;
-  }
-
-  &-logout {
-    color: var(--coral);
-
-    &:hover {
-      background: var(--coral-soft);
-      color: var(--coral-strong);
+    svg:last-child {
+      margin-left: auto;
+      color: var(--font-sub2);
     }
+  }
+}
+
+.nav-user-divider {
+  height: 1px;
+  background: var(--ui-line-light);
+  margin: 4px 0;
+}
+
+.nav-user-logout {
+  color: var(--coral);
+
+  &:hover {
+    background: var(--coral-soft);
+    color: var(--coral-strong);
   }
 }
 
@@ -404,18 +396,18 @@
   // 헤더(58px) 아래 화면 끝까지 — 콘텐츠가 짧아도 뒤 페이지가 비치지 않도록 고정 높이
   height: calc(100vh - 58px);
   height: calc(100dvh - 58px);
+  display: flex;
+  flex-direction: column;
+  background: var(--gray-8);
+  border-top: 1px solid var(--ui-line-light);
+  overflow-y: auto;
+  gap: 1px;
 
   // 상단 띠배너가 떠 있는 동안은 배너 높이만큼 추가로 뺀다
   body:has(.notice-banner) & {
     height: calc(100vh - 80px);
     height: calc(100dvh - 80px);
   }
-  display: flex;
-  flex-direction: column;
-  background: var(--gray-8);
-  border-top: 1px solid var(--ui-line-light);
-  overflow-y: auto;
-  gap: 8px;
 }
 
 // ── 상단 띠배너: 모바일에서는 좌측 정렬 + 말줄임 없이 전체 노출
@@ -445,16 +437,21 @@
   display: flex;
   flex-direction: column;
   padding: 16px var(--page-gutter);
-  gap: 4px;
+  
+  &.sub-menu-list .mobile-menu-item {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--font-title);
+  }
 }
 
 .mobile-menu-login-row,
 .mobile-menu-user-row {
-  height: 80px;
+  height: 100px;
   flex-direction: row;
   align-items: center;
   gap: 16px;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--font-title);
   text-decoration: none;
@@ -471,26 +468,16 @@
   }
 }
 
-.mobile-menu-section-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--font-placeholder);
-}
-
-.mobile-menu-list {
-  display: flex;
-  flex-direction: column;
-}
 
 .mobile-menu-item {
   display: flex;
   align-items: center;
   gap: 14px;
   width: 100%;
-  padding: 14px 0;
+  padding: 8px 0;
   border: none;
   background: none;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--font-title);
   text-decoration: none;
@@ -499,8 +486,14 @@
   text-align: left;
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  img {
+    width: 36px;
+    height: 36px;
     flex-shrink: 0;
   }
 
@@ -556,17 +549,17 @@
   display: flex;
   align-items: center;
   margin: 22px 0;
-  gap: 11px;
+  gap: 12px;
 
   // 모바일: 정렬 탭(section-sort)을 아랫줄로 내리고 좌측 정렬
   @media (max-width: 768px) {
-    & .section-title-bar {
-      display: none;
-    }
-    align-items: center;
     flex-direction: column;
     align-items: flex-start;
-    gap: 10px;
+    gap: 4px;
+
+    .section-title-bar {
+      display: none;
+    }
   }
 }
 
@@ -595,6 +588,16 @@
 .section-sort {
   display: flex;
   gap: 6px;
+
+  // 모바일에서는 btn-md 크기로 (마크업은 데스크탑 기준 btn-xl 유지)
+  @media (max-width: 768px) {
+    .btn-xl {
+      height: 40px;
+      font-size: 14px;
+      padding: 18px;
+      border-radius: var(--r-sm);
+    }
+  }
 }
 
 .load-more-wrap {

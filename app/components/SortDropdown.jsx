@@ -23,7 +23,7 @@ export default function SortDropdown({ value, onChange, options = SORT_TABS }) {
         className="btn btn-lined btn-gray-light btn-xl"
         onClick={() => setOpen((v) => !v)}
       >
-        정렬
+        {value}
         <ChevronIcon />
       </button>
       {open && (

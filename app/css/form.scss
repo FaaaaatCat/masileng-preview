@@ -303,6 +303,20 @@ $btn-sizes: (
   gap: 10px;
 }
 
+// 필터바 + 정렬 드롭다운 한 줄 배치
+.filter-sort-row {
+  margin: 36px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .filter-bar {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+  }
+}
+
 .filter-row {
   display: flex;
   align-items: center;
@@ -341,6 +355,10 @@ $btn-sizes: (
 // ── 모바일: 필터 줄바꿈 + 슬라이더 전체 폭
 @media (max-width: 768px) {
   .filter-bar {
+    margin: 20px 0;
+  }
+
+  .filter-sort-row {
     margin: 20px 0;
   }
 

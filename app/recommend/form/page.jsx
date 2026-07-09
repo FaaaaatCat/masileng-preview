@@ -105,17 +105,7 @@ export default function RecommendFormPage() {
         <XIcon />
       </Link>
 
-      <div
-        className="common-card"
-        style={{
-          width: 480,
-          height: 643,
-          background: "var(--dark-2)",
-          border: "1.5px solid var(--dark-2)",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
-          overflow:"hidden"
-        }}
-      >
+      <div className="common-card recommend-dark-card recommend-form-card">
         <div
           className={`common-card-inner ${cardAnim ? ` recommend-card-${cardAnim}` : ""}`}
         >

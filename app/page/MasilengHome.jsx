@@ -259,9 +259,11 @@ function CocktailPage({ filterProps }) {
 
   return (
     <div className="page-wrap">
-      <FilterBar {...filterProps} showIba={true} />
-      <div className="section-sort">
-        <SortDropdown value={sortTab} onChange={setSortTab} />
+      <div className="filter-sort-row">
+        <FilterBar {...filterProps} showIba={true} />
+        <div className="section-sort">
+          <SortDropdown value={sortTab} onChange={setSortTab} />
+        </div>
       </div>
       <section className="pb-12">
         <div className="section-header">

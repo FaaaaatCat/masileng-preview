@@ -455,127 +455,129 @@ export default function SiteHeader({
                     <ChevronRightIcon />
                   </button>
                 )}
-
                 <div className="mobile-menu">
-                  <p className="mobile-menu-section-label">메뉴</p>
-                  <div className="mobile-menu-list">
-                    {NAV_ITEMS.map((item) =>
-                      onNavClick ? (
-                        <a
-                          key={item}
-                          href="#"
-                          className="mobile-menu-item"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            onNavClick(item);
-                            setMobileMenuOpen(false);
-                          }}
-                        >
-                          <img
-                            src={MOBILE_NAV_ICONS[item]}
-                            alt=""
-                            className="mobile-menu-item-icon"
-                          />
-                          {item}
-                        </a>
-                      ) : (
-                        <Link
-                          key={item}
-                          href={`/?tab=${encodeURIComponent(item)}`}
-                          className="mobile-menu-item"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <img
-                            src={MOBILE_NAV_ICONS[item]}
-                            alt=""
-                            className="mobile-menu-item-icon"
-                          />
-                          {item}
-                        </Link>
-                      ),
-                    )}
-                    <Link
-                      href="/recommend"
-                      className="mobile-menu-item"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <img
-                        src="/recommend.svg"
-                        alt=""
-                        className="mobile-menu-item-icon"
-                      />
-                      추천
-                    </Link>
-                  </div>
-                </div>
-
-                {authUser && (
-                  <>
-                    <div className="mobile-menu">
-                      <p className="mobile-menu-section-label">추가 기능</p>
-                      <div className="mobile-menu-list">
-                        <button
-                          type="button"
-                          className="mobile-menu-item"
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            setIngRequestOpen(true);
-                          }}
-                        >
-                          <BoxPlusIcon />
-                          재료 요청하기
-                        </button>
-                        <a
-                          href="https://www.instagram.com/masileng/"
-                          className="mobile-menu-item"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={() => setMobileMenuOpen(false)}
-                        >
-                          <InstagramIcon />
-                          공식 인스타그램
-                        </a>
-                        <button
-                          type="button"
-                          className="mobile-menu-item"
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            setTeamOpen(true);
-                          }}
-                        >
-                          <RocketIcon />
-                          마실랭 팀 소개
-                        </button>
-                        <button
-                          type="button"
-                          className="mobile-menu-item"
-                          onClick={() => {
-                            setMobileMenuOpen(false);
-                            setTermsOpen(true);
-                          }}
-                        >
-                          <TagIcon />
-                          이용약관
-                        </button>
-                      </div>
-                    </div>
-                    <div className="mobile-menu">
-                      <button
-                        type="button"
+                  {NAV_ITEMS.map((item) =>
+                    onNavClick ? (
+                      <a
+                        key={item}
+                        href="#"
                         className="mobile-menu-item"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onNavClick(item);
                           setMobileMenuOpen(false);
-                          handleLogout();
                         }}
                       >
-                        <LogoutIcon />
-                        로그아웃
-                      </button>
-                    </div>
-                  </>
+                        <img
+                          src={MOBILE_NAV_ICONS[item]}
+                          alt=""
+                          className="mobile-menu-item-icon"
+                        />
+                        {item}
+                      </a>
+                    ) : (
+                      <Link
+                        key={item}
+                        href={`/?tab=${encodeURIComponent(item)}`}
+                        className="mobile-menu-item"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <img
+                          src={MOBILE_NAV_ICONS[item]}
+                          alt=""
+                          className="mobile-menu-item-icon"
+                        />
+                        {item}
+                      </Link>
+                    ),
+                  )}
+                  <Link
+                    href="/recommend"
+                    className="mobile-menu-item"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <img
+                      src="/recommend.svg"
+                      alt=""
+                      className="mobile-menu-item-icon"
+                    />
+                    추천
+                  </Link>
+                </div>
+                <div className="mobile-menu sub-menu-list">
+                  <Link
+                    href="/upload"
+                    className="mobile-menu-item"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <UploadIcon />
+                    레시피 업로드
+                  </Link>
+                  <button
+                    type="button"
+                    className="mobile-menu-item"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setIngRequestOpen(true);
+                    }}
+                  >
+                    <BoxPlusIcon />
+                    재료 요청하기
+                  </button>
+                </div>
+                <div className="mobile-menu sub-menu-list">
+                  <a
+                    href="https://www.instagram.com/masileng/"
+                    className="mobile-menu-item"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <InstagramIcon />
+                    공식 인스타그램
+                  </a>
+                  <button
+                    type="button"
+                    className="mobile-menu-item"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setTeamOpen(true);
+                    }}
+                  >
+                    <RocketIcon />
+                    마실랭 팀 소개
+                  </button>
+                  <button
+                    type="button"
+                    className="mobile-menu-item"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      setTermsOpen(true);
+                    }}
+                  >
+                    <TagIcon />
+                    이용약관
+                  </button>
+                </div>
+                {authUser && (
+                  <div className="mobile-menu sub-menu-list">
+                    <button
+                      type="button"
+                      className="mobile-menu-item"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        handleLogout();
+                      }}
+                    >
+                      <LogoutIcon />
+                      로그아웃
+                    </button>
+                  </div>
                 )}
-
-                <div className="flex gap-2" style={{padding:"8px 8px 20px 8px"}}>
+                <div
+                  className="flex gap-2"
+                  style={{ padding: "8px 8px 20px 8px" }}
+                >
                   <a
                     className="btn btn-lined btn-gray-light btn-xl flex-1"
                     href="https://play.google.com/store/apps/details?id=com.padro.my_cocktail_app"

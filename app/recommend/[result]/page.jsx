@@ -70,19 +70,9 @@ export default function RecommendResultPage() {
 
   return (
     <>
-      <div
-        ref={cardRef}
-        className="common-card"
-        style={{
-          background: "var(--dark-2)",
-          border: "1.5px solid var(--dark-2)",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
-          overflow: "hidden",
-          padding: 0,
-        }}
-      >
+      <div ref={cardRef} className="common-card recommend-dark-card">
         {/* 상단 히어로 이미지 */}
-        <div style={{ position: "relative", width: "100%", height: 320 }}>
+        <div className="recommend-result-hero">
           <img
             src={imgSrc}
             alt="애플 모히토"
@@ -117,16 +107,7 @@ export default function RecommendResultPage() {
               추천 결과
             </p>
 
-            <div
-              style={{
-                width: 160,
-                height: 160,
-                borderRadius: "var(--r-md)",
-                overflow: "hidden",
-                flexShrink: 0,
-                boxShadow: "0 24px 60px rgba(0,0,0,0.3)",
-              }}
-            >
+            <div className="recommend-result-thumb">
               <img
                 src={imgSrc}
                 alt="애플 모히토"
@@ -159,10 +140,7 @@ export default function RecommendResultPage() {
             >
               Apple Mojito
             </p>
-            <h2
-              className="common-title-lg"
-              style={{ fontSize: 34, color: "var(--dark-10)" }}
-            >
+            <h2 className="common-title-lg recommend-result-title">
               애플 모히토
             </h2>
             <p
@@ -211,7 +189,7 @@ export default function RecommendResultPage() {
             '애플 모히토' 레시피 보기
           </Link>
           {/* 버튼들 */}
-          <div className="flex gap-6 justify-center">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
             <Link
               href="/"
               className="btn btn-transparent btn-dark btn-md"

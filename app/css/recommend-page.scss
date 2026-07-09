@@ -96,7 +96,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px 60px;
+  padding: 40px var(--page-gutter) 60px;
   gap: 16px;
   width: 100%;
   max-width: 530px;
@@ -329,6 +329,48 @@
   animation: recommend-slide-in 0.25s ease forwards;
 }
 
+// ── 다크 카드 공통 (폼 스텝 카드 / 결과 카드)
+.recommend-dark-card {
+  background: var(--dark-2);
+  border: 1.5px solid var(--dark-2);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+// ── 폼 스텝 카드
+.recommend-form-card {
+  width: 480px;
+  max-width: 100%;
+  height: 643px;
+}
+
+// ────────────────────────────────────────────
+// 결과 페이지
+// ────────────────────────────────────────────
+
+// ── 상단 히어로 이미지 영역
+.recommend-result-hero {
+  position: relative;
+  width: 100%;
+  height: 320px;
+}
+
+// ── 칵테일 썸네일
+.recommend-result-thumb {
+  width: 160px;
+  height: 160px;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  flex-shrink: 0;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+}
+
+// ── 칵테일 이름 타이틀
+.recommend-result-title {
+  font-size: 34px;
+  color: var(--dark-10);
+}
+
 // ── 추천 페이지 선택 아이템
 .recommend-option {
   display: flex;
@@ -399,5 +441,61 @@
     .recommend-option-label {
       color: #f8eef8;
     }
+  }
+}
+
+// ────────────────────────────────────────────
+// 모바일 (768px 이하)
+// ────────────────────────────────────────────
+@media (max-width: 768px) {
+  .recommend-page-wrap {
+    padding: 24px var(--page-gutter) 40px;
+  }
+
+  // 고정폭(w-100 = 400px) 요소는 풀폭으로
+  .recommend-page-wrap .w-100 {
+    width: 100%;
+  }
+
+  // CTA는 btn-xl 크기로 (마크업은 데스크탑 기준 btn-xxl 유지)
+  .recommend-page-wrap .btn-xxl {
+    height: 54px;
+    font-size: 16px;
+    padding: 18px;
+    border-radius: var(--r-md);
+  }
+
+  // 인트로: 진행 카드 축소
+  .recommend-intro-card-step {
+    padding: 12px 0;
+  }
+  .recommend-intro-card-step-img {
+    width: 30px;
+    height: 30px;
+  }
+
+  // 폼: 고정 높이 해제 (콘텐츠 높이만큼)
+  .recommend-form-card {
+    height: auto;
+  }
+
+  // 선택 아이템 패딩 축소
+  .recommend-option--grid3 {
+    padding: 16px 8px;
+  }
+  .recommend-option--grid2 {
+    padding: 28px 16px;
+  }
+
+  // 결과: 히어로/썸네일/타이틀 축소
+  .recommend-result-hero {
+    height: 240px;
+  }
+  .recommend-result-thumb {
+    width: 128px;
+    height: 128px;
+  }
+  .recommend-result-title {
+    font-size: 28px;
   }
 }
