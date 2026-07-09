@@ -1,53 +1,5 @@
-// 베이스주별 재료 데이터
-const INGREDIENTS_BY_BASE = {
-  "럼": [
-    { emoji: "🍾", name: "화이트 럼", type: "술(약한 도수)", abvStr: "40.0%", amount: "45ml" },
-    { emoji: "🍋", name: "라임 주스", type: "주스", abvStr: null, amount: "30ml" },
-    { emoji: "🍯", name: "슈거 시럽", type: "시럽", abvStr: null, amount: "15ml" },
-    { emoji: "🌿", name: "민트잎", type: "가니쉬", abvStr: null, amount: "적당량" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "보드카": [
-    { emoji: "🍸", name: "보드카", type: "술(약한 도수)", abvStr: "40.0%", amount: "45ml" },
-    { emoji: "🍊", name: "트리플 섹", type: "리큐르", abvStr: "30.0%", amount: "20ml" },
-    { emoji: "🍋", name: "라임 주스", type: "주스", abvStr: null, amount: "15ml" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "위스키": [
-    { emoji: "🥃", name: "버번 위스키", type: "술(강한 도수)", abvStr: "47.4%", amount: "45ml" },
-    { emoji: "🍷", name: "스위트 베르무트", type: "술(약한 도수)", abvStr: "18.0%", amount: "30ml" },
-    { emoji: "💧", name: "앙고스투라 비터스", type: "비터스", abvStr: null, amount: "2dash" },
-    { emoji: "🍊", name: "오렌지 필", type: "가니쉬", abvStr: null, amount: "1개" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "진": [
-    { emoji: "🌿", name: "드라이 진", type: "술(강한 도수)", abvStr: "40.0%", amount: "45ml" },
-    { emoji: "🍸", name: "드라이 베르무트", type: "술(약한 도수)", abvStr: "18.0%", amount: "15ml" },
-    { emoji: "🫒", name: "올리브", type: "가니쉬", abvStr: null, amount: "2개" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "데킬라": [
-    { emoji: "🌵", name: "실버 데킬라", type: "술(강한 도수)", abvStr: "38.0%", amount: "45ml" },
-    { emoji: "🍊", name: "트리플 섹", type: "리큐르", abvStr: "30.0%", amount: "20ml" },
-    { emoji: "🍋", name: "라임 주스", type: "주스", abvStr: null, amount: "30ml" },
-    { emoji: "🧂", name: "소금", type: "기타", abvStr: null, amount: "적당량" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "브랜디": [
-    { emoji: "🍷", name: "브랜디", type: "술(강한 도수)", abvStr: "40.0%", amount: "45ml" },
-    { emoji: "🍋", name: "레몬 주스", type: "주스", abvStr: null, amount: "25ml" },
-    { emoji: "🍯", name: "슈거 시럽", type: "시럽", abvStr: null, amount: "15ml" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-  "소주": [
-    { emoji: "🍶", name: "소주", type: "술(약한 도수)", abvStr: "25.0%", amount: "45ml" },
-    { emoji: "🍑", name: "복숭아 주스", type: "주스", abvStr: null, amount: "60ml" },
-    { emoji: "🫧", name: "탄산수", type: "탄산", abvStr: null, amount: "적당량" },
-    { emoji: "🧊", name: "얼음", type: "기타", abvStr: null, amount: "적당량" },
-  ],
-};
-
 // 테마별 레시피 스텝
+// '만드는 방법' 에 데이터가 null 일 경우 들어가는 데이터.
 const STEPS_BY_THEME = {
   "Sour": [
     "셰이커에 얼음을 가득 채웁니다.",

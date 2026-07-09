@@ -797,7 +797,7 @@ export default function CocktailDetail({
                       className="btn btn-sm btn-lined btn-gray-light"
                       onClick={() =>
                         window.open(
-                          `https://www.youtube.com/results?search_query=${encodeURIComponent(card.name + " 칵테일 만들기")}`,
+                          `https://www.youtube.com/results?search_query=${encodeURIComponent(card.name + " 칵테일 레시피")}`,
                           "_blank",
                         )
                       }
