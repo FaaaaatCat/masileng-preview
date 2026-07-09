@@ -448,15 +448,14 @@
 // 모바일 (768px 이하)
 // ────────────────────────────────────────────
 @media (max-width: 768px) {
-  .recommend-intro-float-emoji{
+  .recommend-intro-float-emoji {
     display: none;
   }
-  .common-title-md{
-    opacity: 0;
-  }
-
   .recommend-page-wrap {
     padding: 24px var(--page-gutter) 40px;
+    & .common-title-md {
+      opacity: 0;
+    }
   }
 
   // 고정폭(w-100 = 400px) 요소는 풀폭으로
