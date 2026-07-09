@@ -5,6 +5,7 @@ import INGREDIENTS from "../data/ingredients.json";
 import { BoxPlusIcon, FilterIcon } from "../components/icons";
 import IngredientCard from "../components/IngredientCard";
 import { FilterPopup, TabFilterGroup } from "../components/FilterBar";
+import LoginModal from "../components/LoginModal";
 import "../css/ingredient-detail.css";
 
 
@@ -112,6 +113,8 @@ export default function IngredientsHome() {
     () => new Set(INGREDIENTS.filter((i) => i.myIng).map((i) => i.id)),
   );
   const [burstIds, setBurstIds] = useState(new Set());
+  const [loginPromptOpen, setLoginPromptOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastLeaving, setToastLeaving] = useState(false);
   const toastTimers = useRef([]);
@@ -131,6 +134,10 @@ export default function IngredientsHome() {
   const toggleMyIng = (e, id) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!localStorage.getItem("masileng_user")) {
+      setLoginPromptOpen(true);
+      return;
+    }
     setMyIngIds((prev) => {
       const next = new Set(prev);
       const adding = !next.has(id);
@@ -167,6 +174,47 @@ export default function IngredientsHome() {
           재료를 내 냉장고에 추가했습니다
         </div>
       )}
+
+      {/* 비로그인 상태에서 재료 담기 시 로그인 안내 팝업 */}
+      {loginPromptOpen && (
+        <div
+          className="common-popup-backdrop"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setLoginPromptOpen(false);
+          }}
+        >
+          <div className="common-popup-modal popup-xs">
+            <div className="common-popup-header">
+              <div />
+              <button
+                className="common-popup-close"
+                type="button"
+                onClick={() => setLoginPromptOpen(false)}
+                aria-label="닫기"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="common-popup-success">
+              <span className="common-popup-success-icon">🔒</span>
+              <p className="common-popup-success-title">로그인이 필요한 기능입니다</p>
+              <p className="common-popup-success-sub">
+                로그인하고 내 냉장고에 재료를 담아보세요!
+              </p>
+              <button
+                className="btn btn-filled btn-brand btn-lg w-full"
+                onClick={() => {
+                  setLoginPromptOpen(false);
+                  setLoginOpen(true);
+                }}
+              >
+                로그인 하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {loginOpen && <LoginModal onClose={() => setLoginOpen(false)} />}
 
       {/* 슬라이딩 배너 */}
       <SlidingBanner />

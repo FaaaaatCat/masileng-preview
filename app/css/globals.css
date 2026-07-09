@@ -180,8 +180,6 @@
   --thumb-shadow: rgba(20, 12, 10, 0.4);
 }
 
-
-
 /* ── 모바일 (768px 이하 공통 기준) */
 @media (max-width: 768px) {
   :root {

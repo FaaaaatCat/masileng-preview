@@ -553,6 +553,11 @@
   // 폭 변형 — 콘텐츠 기준 폭
   &--sm {
     max-width: calc(1000px + 2 * var(--page-gutter));
+
+    // 모바일: 좁은 컨테이너는 거터 8px (max-width·패딩 공통 반영)
+    @media (max-width: 768px) {
+      --page-gutter: 8px;
+    }
   }
 }
 

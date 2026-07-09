@@ -778,6 +778,27 @@
     height: auto;
     aspect-ratio: 3 / 4;
   }
+
+  // 모바일은 hover가 없으므로 카드 액션 버튼(재료 담기/냉장고 삭제)을 항상 노출
+  .common-card-item-basket-btn {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  // thumb + action은 첫 줄(space-between), info는 다음 줄 전체
+  .common-list-item {
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &-action {
+      order: 1;
+    }
+
+    &-info {
+      order: 2;
+      flex: 1 1 100%;
+    }
+  }
 }
 
 @keyframes common-card-pop {

@@ -35,23 +35,6 @@
   padding-top: 60px;
 }
 
-// ── 모바일: 1단 전환
-@media (max-width: 768px) {
-  .detail-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .detail-left {
-    position: static;
-    padding-top: 12px;
-  }
-
-  .detail-right {
-    padding-top: 0;
-  }
-}
-
 // ── 뒤로가기 버튼
 .detail-back-btn {
   margin-bottom: 4px;
@@ -71,5 +54,25 @@
 
   &:hover {
     color: var(--font-title);
+  }
+}
+
+// ── 모바일: 1단 전환
+@media (max-width: 768px) {
+  .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .detail-left {
+    position: static;
+    padding-top: 12px;
+  }
+
+  .detail-right {
+    padding-top: 0;
+  }
+  .detail-back-btn {
+    margin-left: 8px;
   }
 }

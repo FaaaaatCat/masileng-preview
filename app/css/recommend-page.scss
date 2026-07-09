@@ -448,6 +448,13 @@
 // 모바일 (768px 이하)
 // ────────────────────────────────────────────
 @media (max-width: 768px) {
+  .recommend-intro-float-emoji{
+    display: none;
+  }
+  .common-title-md{
+    opacity: 0;
+  }
+
   .recommend-page-wrap {
     padding: 24px var(--page-gutter) 40px;
   }
@@ -481,11 +488,8 @@
 
   .recommend-form-card {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: auto;
+    inset: 0;
+    height: 100dvh;
   }
 
   // 선택 아이템 패딩 축소
