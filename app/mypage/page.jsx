@@ -232,9 +232,6 @@ export default function MyPage() {
             <div className="mypage-profile-top">
               <ProfileAvatar user={user} size={120} />
               <h1 className="mypage-username">{username}</h1>
-              <p className="mypage-handle">
-                @{username.toLowerCase().replace(/\s/g, "_")}
-              </p>
               <button
                 className="btn btn-sm btn-lined btn-gray-light mypage-profile-edit-btn"
                 type="button"
@@ -311,7 +308,7 @@ export default function MyPage() {
                     >
                       {showCocktailList
                         ? "← 재료함으로 돌아가기"
-                        : "지금 갖고 있는 재료로 만들 수 있는 칵테일은? →"}
+                        : "지금 재료로 만들 수 있는 칵테일은? →"}
                     </button>
 
                     {showCocktailList ? (
@@ -398,7 +395,7 @@ export default function MyPage() {
                         ))}
                       </div>
                     ) : (
-                      <div className="cocktail-grid" style={{ gridTemplateColumns: "repeat(5, 1fr)" }}>
+                      <div className="cocktail-grid mypage-ing-grid">
                         {fridgeItems.map((ing) => (
                           <IngredientCard
                             key={ing.id}

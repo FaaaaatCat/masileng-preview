@@ -109,13 +109,6 @@
   margin: 0;
 }
 
-.mypage-handle {
-  font-size: 13px;
-  color: var(--font-sub2);
-  font-weight: 500;
-  margin: 0;
-}
-
 /* ── 통계 박스 3열 */
 .mypage-stats-row {
   display: grid;

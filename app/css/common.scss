@@ -86,7 +86,8 @@
     }
   }
   @media (max-width: 768px) {
-    &-inner, &-header {
+    &-inner,
+    &-header {
       padding: 16px;
     }
   }
@@ -747,16 +748,27 @@
   > * {
     min-width: 0;
   }
-
+  &.mypage-ing-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
   @media (max-width: 1300px) {
     grid-template-columns: repeat(4, 1fr);
+    &.mypage-ing-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
   @media (max-width: 900px) {
     grid-template-columns: repeat(3, 1fr);
+    &.mypage-ing-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
   @media (max-width: 600px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 12px;
+    &.mypage-ing-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 }
 

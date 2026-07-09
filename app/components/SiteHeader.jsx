@@ -445,7 +445,7 @@ export default function SiteHeader({
                 ) : (
                   <button
                     type="button"
-                    className="mobile-menu-login-row"
+                    className="mobile-menu-user-row mobile-menu"
                     onClick={() => {
                       setMobileMenuOpen(false);
                       setLoginOpen(true);
@@ -576,7 +576,10 @@ export default function SiteHeader({
                 )}
                 <div
                   className="flex gap-2"
-                  style={{ padding: "8px 8px 20px 8px" }}
+                  style={{
+                    padding: "8px 8px 60px 8px",
+                    borderTop: "1.5px solid var(--ui-line-light)",
+                  }}
                 >
                   <a
                     className="btn btn-lined btn-gray-light btn-xl flex-1"

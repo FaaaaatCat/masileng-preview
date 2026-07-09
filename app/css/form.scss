@@ -86,27 +86,25 @@ $btn-sizes: (
     border-color var(--time-fast),
     box-shadow var(--time-fast),
     transform 0.12s;
+}
+// ── disable (모든 스타일/색상 공통) ──
+.btn-disable {
+  background: var(--form-bg-disable) !important;
+  border: 1.5px solid var(--form-line-disable) !important;
+  color: var(--font-disable) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 
-  // ── disable (모든 스타일/색상 공통) ──
-  &.btn-disable {
-    &.btn-dark {
-      background: var(--gray-1) !important;
-      border: 1.5px solid var(--gray-1) !important;
-      color: var(--gray-3) !important;
-    }
-    &,
-    &:hover {
-      background: var(--form-bg-disable) !important;
-      border: 1.5px solid var(--form-line-disable) !important;
-      color: var(--font-disable) !important;
-      box-shadow: none !important;
-      transform: none !important;
-      cursor: not-allowed !important;
-      pointer-events: none;
-    }
-    svg {
-      color: var(--icon-disable) !important;
-    }
+  svg {
+    color: var(--icon-disable) !important;
+  }
+
+  &.btn-dark {
+    background: var(--gray-1) !important;
+    border-color: var(--gray-1) !important;
+    color: var(--gray-3) !important;
   }
 }
 
@@ -327,7 +325,6 @@ $btn-sizes: (
   }
 }
 
-
 // ── 모바일 전용 필터 트리거 버튼 (데스크톱에서는 숨김)
 .filter-mobile-trigger {
   display: none;
@@ -396,7 +393,6 @@ $btn-sizes: (
     display: none;
   }
 }
-
 
 // ─────────────────────────────────────────────
 //  Custom Select Dropdown

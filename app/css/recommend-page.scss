@@ -474,14 +474,23 @@
     height: 30px;
   }
 
-  // 폼: 고정 높이 해제 (콘텐츠 높이만큼)
+  // 폼: 카드가 화면 전체를 차지 (닫기 버튼은 우상단 고정)
+  .recommend-intro-close {
+    display: none;
+  }
+
   .recommend-form-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: auto;
   }
 
   // 선택 아이템 패딩 축소
   .recommend-option--grid3 {
-    padding: 16px 8px;
+    padding: 0px 8px;
   }
   .recommend-option--grid2 {
     padding: 28px 16px;
