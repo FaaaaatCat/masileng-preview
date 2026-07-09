@@ -781,6 +781,11 @@
   flex-direction: column;
   gap: 8px;
 }
+@media (max-width: 768px) {
+  .upload-ing-list {
+      gap: 20px;
+  }
+}
 
 .upload-ing-row {
   display: flex;
@@ -1006,6 +1011,7 @@
     color var(--time-fast),
     background var(--time-fast);
   margin-top: 4px;
+  white-space: nowrap;
 }
 
 .upload-add-btn:hover {
@@ -1195,7 +1201,7 @@
 .upload-actions {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .upload-notice {
@@ -1221,9 +1227,34 @@
     gap: 24px;
   }
 
-  /* 재료 입력 행: 좁은 화면에서 줄바꿈 허용 */
+  /* 재료 입력 행: 재료명 검색은 한 줄 전체, 용량·단위는 다음 줄에 50%씩 */
   .upload-ing-inputs {
     flex-wrap: wrap;
+  }
+
+  .upload-ing-inputs .common-input-wrap {
+    flex: 1 1 100%;
+  }
+
+  .upload-ing-inputs .common-input--amount {
+    flex: 1 1 calc(50% - 3px);
+    width: auto;
+    min-width: 0;
+  }
+
+  .upload-ing-inputs .custom-select-wrap {
+    flex: 1 1 calc(50% - 3px);
+    width: auto;
+    min-width: 0;
+  }
+
+  /* 난이도: AI 추천/직접 선택 버튼은 한 줄, 별점(안내문구)은 다음 줄 전체 */
+  .upload-diff-row {
+    flex-wrap: wrap;
+  }
+
+  .upload-stars {
+    flex: 1 1 100%;
   }
 
   .upload-right {

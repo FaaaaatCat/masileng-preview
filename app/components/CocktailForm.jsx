@@ -732,7 +732,7 @@ export default function CocktailForm({
                       <div className="upload-summary-row">
                         <span className="upload-summary-label">난이도</span>
                         <span className="upload-summary-value">
-                          {diffMode === "manual" && difficulty > 0 ? DIFFICULTY_LABELS[difficulty - 1] : "—"}
+                          {diffMode === "manual" && difficulty > 0 ? DIFFICULTY_LABELS[difficulty - 1] : "AI 추천"}
                         </span>
                       </div>
                     )}
