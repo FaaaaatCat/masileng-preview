@@ -530,7 +530,7 @@ export default function CocktailDetail({
                   </p>
 
                   {/* 맛 프로필 도트 박스 */}
-                  <div className="detail-flavor-box">
+                  {/* <div className="detail-flavor-box">
                     {[
                       { label: "당도", val: flavor.sweet },
                       { label: "산미", val: flavor.sour },
@@ -545,7 +545,7 @@ export default function CocktailDetail({
                         <FlavorDots value={val} />
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
                   {/* 5 & 7. 마실랭 공식: 브랜드색 + 흰M, 일반: userProfile.png */}
                   <div className="relative" ref={authorRef}>

@@ -155,6 +155,11 @@
   position: relative;
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  .detail-gallery-main {
+    height: 320px;
+  }
+}
 .detail-gallery-main img {
   width: 100%;
   height: 100%;

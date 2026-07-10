@@ -86,10 +86,15 @@
     }
   }
   @media (max-width: 768px) {
-    &-inner,
-    &-header {
+    &-inner {
       padding: 16px;
     }
+    &-header{
+      padding: 20px 16px;
+      border-bottom: 1px solid var(--ui-bg-white);
+    }
+    border: 1px solid var(--ui-bg-white);
+
   }
 }
 
@@ -785,19 +790,43 @@
     transform: scale(1);
   }
 
-  // thumb + action은 첫 줄(space-between), info는 다음 줄 전체
+  // 1줄: 사진+제목+기능 / 2줄: 설명 / 3줄: 태그
   .common-list-item {
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 54px 1fr auto;
+    grid-template-areas:
+      "thumb title action"
+      "desc desc desc"
+      "tags tags tags";
+    align-items: center;
+    gap: 4px 10px;
+
+    &-thumb {
+      grid-area: thumb;
+    }
 
     &-action {
-      order: 1;
+      grid-area: action;
     }
 
     &-info {
-      order: 2;
-      flex: 1 1 100%;
+      display: contents;
     }
+
+    &-title {
+      grid-area: title;
+    }
+
+    &-desc {
+      grid-area: desc;
+    }
+
+    &-tags {
+      grid-area: tags;
+    }
+  }
+  .common-list-item-desc{
+    margin-top: 4px;
   }
 }
 

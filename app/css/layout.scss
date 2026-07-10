@@ -20,9 +20,10 @@
     border-color 280ms ease;
 
   &-inner {
-    max-width: 1200px;
+    max-width: calc(1200px + 2 * var(--page-gutter));
+    width: 100%;
     margin: 0 auto;
-    padding: 16px 24px;
+    padding: 16px var(--page-gutter);
   }
 
   // 스크롤 시 한 줄 헤더로 축소 — 메뉴/업로드 버튼 숨김, 검색창은 자기 자리(nav-menu 위치)로 복귀
@@ -365,7 +366,6 @@
   align-items: center;
   gap: 10px;
   height: 100%;
-  padding-right: 16px;
 
   > svg {
     flex-shrink: 0;
@@ -438,20 +438,20 @@
   flex-direction: column;
   padding: 16px var(--page-gutter);
   position: relative;
-  
+
   &.sub-menu-list .mobile-menu-item {
     font-size: 14px;
     font-weight: 600;
     color: var(--font-title);
   }
 
-  &::after{
+  &::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - var(--page-gutter)*2);
+    width: calc(100% - var(--page-gutter) * 2);
     height: 1px;
     background: var(--ui-line-light);
   }
@@ -478,7 +478,6 @@
     height: 24px;
   }
 }
-
 
 .mobile-menu-item {
   display: flex;
@@ -527,6 +526,7 @@
 @media (max-width: 768px) {
   .site-header-inner {
     padding: 0 var(--page-gutter);
+    border: 10px solid red;
   }
 
   .site-nav {
@@ -553,7 +553,6 @@
   // 폭 변형 — 콘텐츠 기준 폭
   &--sm {
     max-width: calc(1000px + 2 * var(--page-gutter));
-
     // 모바일: 좁은 컨테이너는 거터 8px (max-width·패딩 공통 반영)
     @media (max-width: 768px) {
       --page-gutter: 8px;

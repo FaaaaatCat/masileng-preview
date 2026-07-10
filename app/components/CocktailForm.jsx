@@ -477,7 +477,7 @@ export default function CocktailForm({
       <div className="upload-page">
         <div className="page-wrap page-wrap--sm">
           {/* ── Hero */}
-          <div style={{ marginBottom: 40 }}>
+          <div style={{ marginBottom: 40, padding:"0 16px" }}>
             {isEdit ? (
               <button className="btn btn-transparent btn-md" onClick={onCancel}>
                 <ArrowLeftIcon />
