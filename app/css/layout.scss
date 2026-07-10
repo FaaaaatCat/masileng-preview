@@ -528,12 +528,6 @@
 @media (max-width: 768px) {
   .site-header-inner {
     padding: 0 var(--page-gutter);
-    & input{
-      border: 5px solid pink;
-    }
-    & button{
-      border: 5px solid green;
-    }
   }
 
   .site-nav {
