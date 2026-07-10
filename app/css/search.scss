@@ -61,10 +61,11 @@
   justify-content: center;
   gap: 8px;
   padding: 30px 0;
-  background: var(--ui-bg-light);
+  background: var(--gray-8);
   border-radius: var(--r-md);
   font-size: 14px;
-  color: var(--font-placeholder);
+  font-weight: 500;
+  color: var(--font-sub2);
 
   &-icon {
     font-size: 18px;
@@ -87,5 +88,16 @@
 
   .search-section {
     margin-bottom: 36px;
+
+    &-title {
+      gap: 4px;
+      & img{
+        width: 32px;
+        height: 32px;
+      }
+      & .section-subtitle{
+        margin-left: 8px;
+      }
+    }
   }
 }
