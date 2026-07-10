@@ -366,6 +366,7 @@
   align-items: center;
   gap: 10px;
   height: 100%;
+  min-width: 0;
 
   > svg {
     flex-shrink: 0;
@@ -374,6 +375,7 @@
 
   input {
     flex: 1;
+    width: 0;
     min-width: 0;
     border: none;
     outline: none;
@@ -527,10 +529,10 @@
   .site-header-inner {
     padding: 0 var(--page-gutter);
     & input{
-      border: 5px solid red;
+      border: 5px solid pink;
     }
     & button{
-      border: 5px solid blue;
+      border: 5px solid green;
     }
   }
 
