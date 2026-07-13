@@ -8,7 +8,6 @@ import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
 import CocktailCard from "../components/CocktailCard";
 import IngredientCard from "../components/IngredientCard";
-import ChallengeCard from "../components/ChallengeCard";
 
 // 한 번에 보여줄 결과 수 — '결과 더 보기' 클릭마다 이만큼 추가 노출
 const PAGE_SIZE = 12;
@@ -72,7 +71,7 @@ export default function SearchResults({ query }) {
           title="칵테일"
           items={cocktails}
           renderItem={(card) => (
-            <CocktailCard key={card.id} card={card} cardId={card.id} showAuthor={false} />
+            <CocktailCard key={card.id} card={card} cardId={card.id} />
           )}
         />
 
@@ -91,7 +90,9 @@ export default function SearchResults({ query }) {
           icon="https://www.masileng.com/test/ic_challenge.svg"
           title="도전!마실랭"
           items={challenges}
-          renderItem={(card) => <ChallengeCard key={card.id} card={card} />}
+          renderItem={(card) => (
+            <CocktailCard key={card.id} card={card} cardId={card.id} basePath="/challenge" />
+          )}
         />
       </div>
     </div>

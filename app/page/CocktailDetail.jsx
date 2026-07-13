@@ -464,6 +464,16 @@ export default function CocktailDetail({
                           className="detail-cocktail-icon-bg"
                           src={`/theme/${encodeURIComponent(THEME_BG_MAP[card.theme])}`}
                           alt=""
+                          style={
+                            !showIllust || !card.cocktail_illust
+                              ? {
+                                  WebkitMaskImage:
+                                    "linear-gradient(to right, black 0%, black 40%, transparent 100%)",
+                                  maskImage:
+                                    "linear-gradient(to right, black 0%, black 40%, transparent 100%)",
+                                }
+                              : undefined
+                          }
                         />
                       )}
                       {showIllust && card.cocktail_illust && (
@@ -475,7 +485,19 @@ export default function CocktailDetail({
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h1 className="detail-cocktail-name">
+                      <h1
+                        className="detail-cocktail-name"
+                        style={
+                          !showIllust || !card.cocktail_illust
+                            ? {
+                                marginLeft: "-45px",
+                                position: "relative",
+                                zIndex: 1,
+                                textShadow: "0 0 8px rgba(255,255,255,0.9)",
+                              }
+                            : undefined
+                        }
+                      >
                         {displayCard.name}
                       </h1>
                     </div>
@@ -548,7 +570,11 @@ export default function CocktailDetail({
                   </div> */}
 
                   {/* 5 & 7. 마실랭 공식: 브랜드색 + 흰M, 일반: userProfile.png */}
-                  <div className="relative" ref={authorRef}>
+                  <div
+                    className="relative"
+                    ref={authorRef}
+                    style={{ margin: "12px 0px" }}
+                  >
                     <button
                       className={[
                         !isOfficial && !card.iba && "detail-author--clickable",
@@ -674,7 +700,7 @@ export default function CocktailDetail({
               {/* 재료 카드 */}
               <div className="common-card">
                 <div className="common-card-header common-card-header--spread">
-                  <h2 className="common-title-md">재료 정보</h2>
+                  <h2 className="common-title-md">재료</h2>
                   <button
                     className="btn btn-sm btn-lined btn-gray-light"
                     onClick={() =>
@@ -685,7 +711,10 @@ export default function CocktailDetail({
                     단위 변경
                   </button>
                 </div>
-                <div className="common-card-inner">
+                <div
+                  className="common-card-inner"
+                  style={{ marginBottom: "8px" }}
+                >
                   <div className="flex flex-col gap-5">
                     {[...ingredients]
                       .sort((a, b) => {

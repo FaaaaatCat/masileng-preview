@@ -5,7 +5,10 @@ import { useState, useEffect, useCallback } from "react";
 import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
 import SortDropdown from "../components/SortDropdown";
-import ChallengeCard, { CARDS } from "../components/ChallengeCard";
+import CocktailCard from "../components/CocktailCard";
+import COCKTAILS from "../data/cocktails.json";
+
+const CARDS = COCKTAILS.filter((c) => !c.official);
 
 const NEW_COCKTAILS = CARDS.slice(-6).reverse();
 
@@ -114,12 +117,6 @@ export default function ChallengeHome() {
   const [rangeMin, setRangeMin] = useState(2);
   const [rangeMax, setRangeMax] = useState(10);
   const [search, setSearch] = useState("");
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const s = localStorage.getItem("masileng_user");
-    if (s) setCurrentUser(JSON.parse(s));
-  }, []);
 
   const handleReset = () => {
     setAbv("");
@@ -177,24 +174,6 @@ export default function ChallengeHome() {
             <SortDropdown value={sortTab} onChange={setSortTab} />
           </div>
         </div>
-        <section className="pb-12">
-          <div className="section-header">
-            <span className="section-title-bar" />
-            <h3 className="section-title">금주의 신규 칵테일</h3>
-            <button className="btn btn-transparent btn-md" style={{marginLeft:"auto"}}>
-              더보기 <ChevronRightIcon />
-            </button>
-          </div>
-          <div className="cocktail-grid">
-            {NEW_COCKTAILS.map((card) => (
-              <ChallengeCard
-                key={card.id}
-                card={card}
-                currentUser={currentUser}
-              />
-            ))}
-          </div>
-        </section>
 
         <section className="pb-12">
           <div className="section-header">
@@ -210,10 +189,11 @@ export default function ChallengeHome() {
           <div className="cocktail-grid">
             {filtered.length > 0 ? (
               filtered.map((card) => (
-                <ChallengeCard
+                <CocktailCard
                   key={card.id}
                   card={card}
-                  currentUser={currentUser}
+                  cardId={card.id}
+                  basePath="/challenge"
                 />
               ))
             ) : (

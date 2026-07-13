@@ -282,7 +282,6 @@ function CocktailPage({ filterProps }) {
                 key={card.id}
                 card={card}
                 cardId={card.id}
-                showAuthor={false}
               />
             ))
           ) : (

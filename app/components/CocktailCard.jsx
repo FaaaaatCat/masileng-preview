@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { HeartIcon, ChatIcon } from "./icons";
+import { HeartIcon, PersonIcon } from "./icons";
 
-export default function CocktailCard({ card, cardId, showAuthor = true }) {
-  const href = cardId !== undefined ? `/cocktail/${cardId}` : undefined;
+export default function CocktailCard({ card, cardId, basePath = "/cocktail" }) {
+  const href = cardId !== undefined ? `${basePath}/${cardId}` : undefined;
   const inner = (
     <>
       <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
@@ -16,12 +16,6 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
           }}
         />
         <div className="common-card-item-overlay" />
-        {showAuthor && (
-          <div className="common-card-item-author">
-            <div className="common-card-item-author-avatar" />
-            <span className="common-card-item-author-name">@{card.user}</span>
-          </div>
-        )}
         <div className="common-card-item-desc-layer">
           <p className="common-card-item-desc">{card.desc}</p>
         </div>
@@ -32,10 +26,12 @@ export default function CocktailCard({ card, cardId, showAuthor = true }) {
           <HeartIcon />
           {card.likes}
         </span>
-        <span className="common-card-item-meta-item">
-          <ChatIcon />
-          {card.comments}
-        </span>
+        {!card.official && (
+          <span className="common-card-item-meta-item">
+            <PersonIcon size={13} />
+            {card.user || "비활성유저"}
+          </span>
+        )}
       </div>
     </>
   );
