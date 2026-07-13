@@ -256,6 +256,9 @@ function applyFilters(
 function CocktailPage({ filterProps }) {
   const [sortTab, setSortTab] = useState("최신순");
   const filtered = applyFilters(CARDS, filterProps);
+  const sorted = sortTab === "인기순"
+    ? [...filtered].sort((a, b) => b.likes - a.likes)
+    : filtered;
 
   return (
     <div className="page-wrap">
@@ -276,7 +279,7 @@ function CocktailPage({ filterProps }) {
         </div>
         <div className="cocktail-grid">
           {filtered.length > 0 ? (
-            filtered.map((card) => (
+            sorted.map((card) => (
               <CocktailCard
                 key={card.id}
                 card={card}

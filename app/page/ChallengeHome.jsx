@@ -153,6 +153,10 @@ export default function ChallengeHome() {
     return true;
   });
 
+  const sorted = sortTab === "인기순"
+    ? [...filtered].sort((a, b) => b.likes - a.likes)
+    : filtered;
+
   return (
     <>
       <ChallengeHero />
@@ -177,7 +181,7 @@ export default function ChallengeHome() {
 
           <div className="cocktail-grid">
             {filtered.length > 0 ? (
-              filtered.map((card) => (
+              sorted.map((card) => (
                 <CocktailCard
                   key={card.id}
                   card={card}

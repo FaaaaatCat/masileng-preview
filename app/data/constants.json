@@ -1,7 +1,7 @@
 {
   "IMG_BASE": "https://www.thecocktaildb.com/images/media/drink/",
   "NAV_ITEMS": ["칵테일", "재료", "도전!마실랭"],
-  "SORT_TABS": ["최신순", "인기순", "댓글순"],
+  "SORT_TABS": ["최신순", "인기순"],
   "BASE_SPIRITS": ["럼", "보드카", "위스키", "진", "데킬라", "브랜디", "소주"],
   "THEMES": ["Sour", "Party", "Creamy", "Sparkling", "City", "Tropical", "Fruity", "Hot"]
 }
