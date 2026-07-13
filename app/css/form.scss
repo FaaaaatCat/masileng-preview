@@ -313,7 +313,12 @@ $btn-sizes: (
 .filter-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
+  // 하나의 캡슐 컨테이너 (세그먼트들은 아래에서 테두리/배경을 투명화해 이 안에 녹인다)
+  border: 1.5px solid var(--coral-line);
+  border-radius: var(--r-full);
+  background: var(--form-bg);
+  box-shadow: var(--coral-shadow);
 
   // 필터 셀렉트만 크기 통일 (다른 페이지의 custom-select-wrap에는 영향 없음)
   .custom-select-wrap {
@@ -321,10 +326,114 @@ $btn-sizes: (
     min-width: 0;
   }
 
+  // 세그먼트 평탄화: 캡슐 자체가 테두리/배경/그림자를 담당
   .custom-select-trigger {
-    height: 44px;
-    // 120px 폭에서 "베이스주" 등 라벨이 잘리지 않게 기본(0 42px 0 18px)보다 축소
-    padding: 0 34px 0 14px;
+    height: 52px;
+    // 쉐브론을 없애므로 좌우 대칭 padding + 가운데 정렬
+    padding: 0 14px;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  // IBA 버튼도 세그먼트로 평탄화 + 다른 필터와 동일한 크기·폰트 (칵테일 탭에만 존재, 항상 마지막 자식)
+  > .btn {
+    width: 120px;
+    height: 52px;
+    font-size: 14.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+
+    &.btn-lined.btn-gray-light {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      color: var(--font-title);
+    }
+
+    // 체크된 상태도 캡슐 안에서는 배경 채움/글자색만 (글자색은 필터 active와 통일)
+    &.btn-subfilled.btn-brand {
+      border: none;
+      color: var(--coral-strong);
+    }
+  }
+
+  // 세그먼트 사이 구분선 (border 대신 after — 높이 70%만 사용)
+  > * + * {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 1px;
+      height: 50%;
+      background: var(--ui-line-light);
+    }
+  }
+
+  // 캡슐의 둥근 끝을 첫/마지막 세그먼트가 따라가도록
+  > :first-child .custom-select-trigger {
+    border-radius: var(--r-full) 0 0 var(--r-full);
+  }
+
+  > :last-child .custom-select-trigger,
+  > .btn:last-child {
+    border-radius: 0 var(--r-full) var(--r-full) 0;
+  }
+
+  // 쉐브론 제거 + 값 가운데 정렬 (전역 flex:1이면 가운데 정렬이 깨짐)
+  .custom-select-chevron {
+    display: none;
+  }
+
+  .custom-select-value {
+    flex: 0 1 auto;
+  }
+
+  // active 시 X 버튼을 텍스트 바로 옆에 붙임
+  .custom-select-clear {
+    position: static;
+    transform: none;
+    margin-left: 6px;
+    flex-shrink: 0;
+  }
+
+  // hover 그라데이션 오버레이 (위 흰색 → 아래 form-bg-hover, 그라데이션은 transition이
+  // 불가능하므로 ::before의 opacity 페이드로 구현)
+  .custom-select-trigger,
+  > .btn {
+    position: relative;
+    z-index: 0;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      background: linear-gradient(#fff, var(--coral-soft));
+      opacity: 0;
+      transition: opacity var(--time-fast);
+      pointer-events: none;
+    }
+  }
+
+  .custom-select-trigger:not(.active),
+  > .btn.btn-lined.btn-gray-light {
+    @include hoverable {
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  .custom-select-wrap.open .custom-select-trigger:not(.active) {
+    background: linear-gradient(#fff, var(--coral-soft));
   }
 }
 
@@ -511,7 +620,7 @@ $btn-sizes: (
   background: transparent;
   height: 46px;
   min-width: 280px;
-  padding: 0 8px;
+  padding: 0 18px 0 28px;
 }
 .custom-select-dropdown .range-label {
   display: none;
@@ -566,7 +675,7 @@ $btn-sizes: (
 
 .range-wrap {
   height: 54px;
-  padding: 0 18px;
+  padding: 0 18px 0 28px;
   border-radius: var(--r-md);
   border: 1.5px solid var(--form-line);
   background: var(--form-bg);
@@ -719,6 +828,15 @@ $btn-sizes: (
 
   svg {
     display: block;
+  }
+
+  // 체크된 상태(btn-subfilled.btn-brand): 박스를 글자색으로 가득 채우고 체크 표시만 흰색
+  .btn-subfilled.btn-brand & {
+    background: currentColor;
+
+    svg {
+      color: #fff;
+    }
   }
 }
 

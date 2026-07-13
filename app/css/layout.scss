@@ -279,11 +279,7 @@
     height var(--time-slow),
     max-width var(--time-slow),
     border-color var(--time-slow);
-  box-shadow:
-    0 0.47rem 0.19rem rgba(255, 0, 0, 0.03),
-    0 0.94rem 1.41rem rgba(255, 0, 0, 0.03),
-    0 0.25rem 0.53rem rgba(117, 47, 47, 0.01),
-    0 0.13rem 0.19rem rgba(37, 8, 8, 0.03);
+  box-shadow: var(--coral-shadow);
 
   &:focus-within,
   &:hover {

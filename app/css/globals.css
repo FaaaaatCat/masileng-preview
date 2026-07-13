@@ -175,7 +175,11 @@
   --shadow-btn-1: 0 4px 16px -4px oklch(0.58 0.22 18 / 0.55);
   --shadow-btn-1-hover: 0 7px 22px -4px oklch(0.58 0.22 18 / 0.65);
   --shadow-btn-2: 0 4px 16px -4px oklch(60.424% 0.23609 25.516 / 0.76);
-  --coral-shadow: rgba(200, 60, 80, 0.55);
+  --coral-shadow:
+    0 0.47rem 0.19rem rgba(255, 0, 0, 0.03),
+    0 0.94rem 1.41rem rgba(255, 0, 0, 0.03),
+    0 0.25rem 0.53rem rgba(117, 47, 47, 0.01),
+    0 0.13rem 0.19rem rgba(37, 8, 8, 0.03);
   --coral-shadow-sm: rgba(200, 60, 80, 0.4);
   --thumb-shadow: rgba(20, 12, 10, 0.4);
 }
