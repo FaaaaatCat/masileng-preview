@@ -600,18 +600,34 @@
   font-weight: 600;
   color: var(--font-sub);
   margin-left: 2px;
+  // 정렬 버튼을 section-header 가장 오른쪽으로 밀어냄
+  margin-right: auto;
 }
 
 .section-sort {
   display: flex;
   gap: 6px;
 
+  // 정렬 버튼은 두 곳에 렌더링됨 — 데스크톱: section-header 쪽만, 모바일: filter-sort-row 쪽만 노출
+  .filter-sort-row & {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .filter-sort-row & {
+      display: flex;
+    }
+    .section-header & {
+      display: none;
+    }
+  }
+
   // 모바일에서는 btn-md 크기로 (마크업은 데스크탑 기준 btn-xl 유지)
   @media (max-width: 768px) {
     .btn-xl {
+      padding: 0px !important;
       height: 40px;
       font-size: 14px;
-      padding: 18px;
       border-radius: var(--r-sm);
     }
   }

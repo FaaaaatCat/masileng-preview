@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { BASE_SPIRITS, THEMES } from "../data/constants.json";
-import { ChevronIcon, XIcon, ResetIcon, CheckIcon, FilterIcon } from "./icons";
+import { ChevronIcon, XIcon, CheckIcon, FilterIcon } from "./icons";
 
 export function SelectFilter({ value, onChange, onClear, placeholder, children, size = "large", styleVariant = "select-style-filter" }) {
   const [open, setOpen] = useState(false);
@@ -109,6 +109,47 @@ function DualRangeSlider({ min, max, onMinChange, onMaxChange }) {
   );
 }
 
+// 데스크톱 filter-row용 재료 수 셀렉트 (다른 필터와 동일한 트리거+드롭다운 패턴, 내부는 DualRangeSlider)
+function RangeSelectFilter({ min, max, onMinChange, onMaxChange }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+  const active = min > 2 || max < 10;
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const selectedLabel = active ? `${min}~${max >= 10 ? "10+" : max}개` : "재료 수";
+
+  return (
+    <div className={`custom-select-wrap${open ? " open" : ""}`} ref={ref}>
+      <button
+        type="button"
+        className={`custom-select-trigger custom-select-trigger--large select-style-filter${active ? " active" : ""}`}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className="custom-select-value">{selectedLabel}</span>
+        {active ? (
+          <span className="custom-select-clear" onMouseDown={(e) => { e.stopPropagation(); onMinChange(2); onMaxChange(10); setOpen(false); }}>
+            <XIcon />
+          </span>
+        ) : (
+          <span className={`custom-select-chevron${open ? " rotated" : ""}`}><ChevronIcon /></span>
+        )}
+      </button>
+      {open && (
+        <div className="custom-select-dropdown">
+          <DualRangeSlider min={min} max={max} onMinChange={onMinChange} onMaxChange={onMaxChange} />
+        </div>
+      )}
+    </div>
+  );
+}
+
 // 모바일 필터 팝업용 선택 그룹 (common-tab 필 버튼, 단일 선택)
 export function TabFilterGroup({ label, value, onChange, options }) {
   return (
@@ -169,12 +210,12 @@ export function FilterPopup({ open, onClose, children }) {
 export default function FilterBar({
   abv, base, theme, ibaOnly, rangeMin, rangeMax,
   onAbvChange, onBaseChange, onThemeChange, onIbaToggle,
-  onRangeMinChange, onRangeMaxChange, onReset,
+  onRangeMinChange, onRangeMaxChange,
   showIba = false,
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const filterFields = (
+  return (
     <>
       {/* 필터 행 */}
       <div className="filter-row">
@@ -184,7 +225,7 @@ export default function FilterBar({
           <option value="high">강한 도수</option>
         </SelectFilter>
 
-        <DualRangeSlider min={rangeMin} max={rangeMax} onMinChange={onRangeMinChange} onMaxChange={onRangeMaxChange} />
+        <RangeSelectFilter min={rangeMin} max={rangeMax} onMinChange={onRangeMinChange} onMaxChange={onRangeMaxChange} />
 
         <SelectFilter value={base} onChange={onBaseChange} onClear={() => onBaseChange("")} placeholder="베이스주">
           {BASE_SPIRITS.map((v) => <option key={v} value={v}>{v}</option>)}
@@ -206,18 +247,7 @@ export default function FilterBar({
             </span>
           </button>
         )}
-
-        <button className="btn btn-lined btn-gray-light btn-xl" onClick={onReset}>
-          <ResetIcon />
-          초기화
-        </button>
       </div>
-    </>
-  );
-
-  return (
-    <div className="filter-bar">
-      <div className="filter-inline">{filterFields}</div>
 
       <button type="button" className="btn btn-lined btn-gray-light btn-xl filter-mobile-trigger" onClick={() => setMobileOpen(true)}>
         <FilterIcon />
@@ -275,14 +305,7 @@ export default function FilterBar({
             </button>
           </div>
         )}
-        <button
-          className="btn btn-lined btn-gray-light btn-md w-full"
-          onClick={onReset}
-        >
-          <ResetIcon />
-          초기화
-        </button>
       </FilterPopup>
-    </div>
+    </>
   );
 }

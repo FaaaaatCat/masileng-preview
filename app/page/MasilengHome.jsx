@@ -261,9 +261,7 @@ function CocktailPage({ filterProps }) {
     <div className="page-wrap">
       <div className="filter-sort-row">
         <FilterBar {...filterProps} showIba={true} />
-        <div className="section-sort">
-          <SortDropdown value={sortTab} onChange={setSortTab} />
-        </div>
+        <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
       </div>
       <section className="pb-12">
         <div className="section-header">
@@ -274,6 +272,7 @@ function CocktailPage({ filterProps }) {
               ? "전 세계 칵테일 레시피 모음"
               : `${filtered.length}개의 검색 결과`}
           </span>
+          <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
         </div>
         <div className="cocktail-grid">
           {filtered.length > 0 ? (
@@ -329,16 +328,6 @@ export default function MasilengHome() {
   const [rangeMax, setRangeMax] = useState(10);
   const [search, setSearch] = useState("");
 
-  const handleReset = () => {
-    setAbv("");
-    setBase("");
-    setTheme("");
-    setIbaOnly(false);
-    setRangeMin(2);
-    setRangeMax(10);
-    setSearch("");
-  };
-
   const filterProps = {
     abv,
     base,
@@ -354,7 +343,6 @@ export default function MasilengHome() {
     onRangeMinChange: setRangeMin,
     onRangeMaxChange: setRangeMax,
     onSearchChange: setSearch,
-    onReset: handleReset,
   };
 
   const isChallenge = activeNav === "도전!마실랭";

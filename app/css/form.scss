@@ -306,13 +306,8 @@ $btn-sizes: (
   margin: 36px 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
-
-  .filter-bar {
-    margin: 0;
-    flex: 1;
-    min-width: 0;
-  }
 }
 
 .filter-row {
@@ -320,8 +315,16 @@ $btn-sizes: (
   align-items: center;
   gap: 10px;
 
-  > .btn:last-child {
-    margin-left: auto;
+  // 필터 셀렉트만 크기 통일 (다른 페이지의 custom-select-wrap에는 영향 없음)
+  .custom-select-wrap {
+    width: 120px;
+    min-width: 0;
+  }
+
+  .custom-select-trigger {
+    height: 44px;
+    // 120px 폭에서 "베이스주" 등 라벨이 잘리지 않게 기본(0 42px 0 18px)보다 축소
+    padding: 0 34px 0 14px;
   }
 }
 
@@ -357,10 +360,11 @@ $btn-sizes: (
 
   .filter-sort-row {
     margin: 20px 0;
+    justify-content: space-between;
   }
 
   // 인라인 필터 행은 숨기고, 필터 버튼 하나만 노출
-  .filter-inline {
+  .filter-row {
     display: none;
   }
 
@@ -372,15 +376,6 @@ $btn-sizes: (
     font-size: 14px;
     padding: 18px;
     border-radius: var(--r-sm);
-  }
-
-  .filter-row {
-    flex-wrap: wrap;
-
-    > .range-wrap {
-      order: 10;
-      width: 100%;
-    }
   }
 
   // 필터 팝업(바텀시트) 내부 여백
@@ -507,6 +502,19 @@ $btn-sizes: (
   z-index: 200;
   overflow: hidden;
   padding: 6px;
+}
+
+// 재료 수 셀렉트: 드롭다운 안 슬라이더는 박스 테두리 없이
+.custom-select-dropdown .range-wrap {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  height: 46px;
+  min-width: 280px;
+  padding: 0 8px;
+}
+.custom-select-dropdown .range-label {
+  display: none;
 }
 
 .custom-select-group-label {

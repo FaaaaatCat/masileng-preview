@@ -118,15 +118,6 @@ export default function ChallengeHome() {
   const [rangeMax, setRangeMax] = useState(10);
   const [search, setSearch] = useState("");
 
-  const handleReset = () => {
-    setAbv("");
-    setBase("");
-    setTheme("");
-    setRangeMin(2);
-    setRangeMax(10);
-    setSearch("");
-  };
-
   const filterProps = {
     abv,
     base,
@@ -142,7 +133,6 @@ export default function ChallengeHome() {
     onRangeMinChange: setRangeMin,
     onRangeMaxChange: setRangeMax,
     onSearchChange: setSearch,
-    onReset: handleReset,
   };
 
   const filtered = CARDS.filter((card) => {
@@ -170,9 +160,7 @@ export default function ChallengeHome() {
       <div className="page-wrap">
         <div className="filter-sort-row">
           <FilterBar {...filterProps} />
-          <div className="section-sort">
-            <SortDropdown value={sortTab} onChange={setSortTab} />
-          </div>
+          <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
         </div>
 
         <section className="pb-12">
@@ -184,6 +172,7 @@ export default function ChallengeHome() {
                 ? "1,248개의 창작 레시피"
                 : `${filtered.length}개의 검색 결과`}
             </span>
+            <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
           </div>
 
           <div className="cocktail-grid">
