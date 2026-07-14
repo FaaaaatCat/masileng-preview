@@ -20,16 +20,6 @@ function AppHero() {
   return (
     <div className="cocktail-main-banner">
       <div className="cocktail-main-banner-inner">
-        {/* 상단: 로고 + 다운로드 링크 */}
-        <div className="cocktail-main-banner-top">
-          <img
-            src="/logo.svg"
-            alt="마실랭"
-            className="cocktail-main-banner-logo"
-          />
-          <span className="cocktail-main-banner-download">앱 다운로드 하기</span>
-        </div>
-
         {/* 본문: 폰 스크린샷 + 텍스트/QR */}
         <div className="cocktail-main-banner-body">
           <div className="cocktail-main-banner-phone-wrap">
