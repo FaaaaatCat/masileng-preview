@@ -13,9 +13,6 @@ import IngredientsHome from "../page/IngredientsHome";
 import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
 
-// 폰 목업에 보여줄 pool 이미지 인덱스 (2열 3행 = 6개)
-const PHONE_ITEMS = [0, 7, 2, 5, 8, 3];
-
 // ─────────────────────────────────────────────
 // 앱 배너 히어로
 // ─────────────────────────────────────────────
@@ -23,203 +20,38 @@ function AppHero() {
   return (
     <div className="cocktail-main-banner">
       <div className="cocktail-main-banner-inner">
-        {/* 왼쪽: 텍스트 */}
-        <div className="cocktail-main-banner-left">
-          <div className="cocktail-main-banner-icon">
-            <span>마</span>
-          </div>
-          <h1 className="cocktail-main-banner-title">
-            오늘의 칵테일,
-            <br />
-            <span className="cocktail-main-banner-accent">마실랭</span>
-          </h1>
-          <p className="cocktail-main-banner-desc">
-            주류 경험의 새로운 기준이 되는
-            <br />
-            칵테일 라이프 플랫폼 마실랭을 시작해보세요
-          </p>
+        {/* 상단: 로고 + 다운로드 링크 */}
+        <div className="cocktail-main-banner-top">
+          <img
+            src="/logo.svg"
+            alt="마실랭"
+            className="cocktail-main-banner-logo"
+          />
+          <span className="cocktail-main-banner-download">앱 다운로드 하기</span>
         </div>
 
-        {/* 가운데: 폰 목업 */}
-        <div className="cocktail-main-banner-phone-wrap">
-          <div className="cocktail-main-banner-phone">
-            <div className="cocktail-main-banner-phone-notch" />
-            <div className="cocktail-main-banner-phone-screen">
-              <div className="cocktail-main-banner-phone-header">
-                <span className="cocktail-main-banner-phone-brand">
-                  마실랭<span style={{ color: "var(--coral)" }}>●</span>
-                </span>
-              </div>
-              <div className="cocktail-main-banner-phone-grid">
-                {PHONE_ITEMS.map((idx) => {
-                  const d = CARDS[idx];
-                  if (!d) return null;
-                  return (
-                    <div
-                      key={idx}
-                      className="cocktail-main-banner-phone-card"
-                      style={{ background: d.gradient }}
-                    >
-                      <img
-                        src={d.photo_0}
-                        alt={d.name}
-                        onError={(e) => {
-                          e.target.style.display = "none";
-                        }}
-                      />
-                      <span className="cocktail-main-banner-phone-card-name">{d.name}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+        {/* 본문: 폰 스크린샷 + 텍스트/QR */}
+        <div className="cocktail-main-banner-body">
+          <div className="cocktail-main-banner-phone-wrap">
+            <img
+              src="/main_phone.png"
+              alt="마실랭 앱 화면"
+              className="cocktail-main-banner-phone"
+            />
           </div>
-        </div>
-
-        {/* 오른쪽: QR */}
-        <div className="cocktail-main-banner-qr-wrap">
-          <div className="cocktail-main-banner-qr-box">
-            <svg
-              viewBox="0 0 100 100"
-              className="cocktail-main-banner-qr-svg"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* 좌상단 파인더 */}
-              <rect
-                x="5"
-                y="5"
-                width="30"
-                height="30"
-                rx="4"
-                fill="none"
-                stroke="#111"
-                strokeWidth="4"
-              />
-              <rect x="13" y="13" width="14" height="14" rx="2" fill="#111" />
-              {/* 우상단 파인더 */}
-              <rect
-                x="65"
-                y="5"
-                width="30"
-                height="30"
-                rx="4"
-                fill="none"
-                stroke="#111"
-                strokeWidth="4"
-              />
-              <rect x="73" y="13" width="14" height="14" rx="2" fill="#111" />
-              {/* 좌하단 파인더 */}
-              <rect
-                x="5"
-                y="65"
-                width="30"
-                height="30"
-                rx="4"
-                fill="none"
-                stroke="#111"
-                strokeWidth="4"
-              />
-              <rect x="13" y="73" width="14" height="14" rx="2" fill="#111" />
-              {/* 데이터 셀 (랜덤 패턴) */}
-              {[
-                [45, 5],
-                [50, 5],
-                [55, 5],
-                [60, 5],
-                [45, 12],
-                [55, 12],
-                [60, 12],
-                [45, 19],
-                [50, 19],
-                [60, 19],
-                [45, 26],
-                [50, 26],
-                [55, 26],
-                [45, 33],
-                [60, 33],
-                [5, 45],
-                [10, 45],
-                [20, 45],
-                [30, 45],
-                [35, 45],
-                [45, 45],
-                [55, 45],
-                [65, 45],
-                [75, 45],
-                [85, 45],
-                [90, 45],
-                [95, 45],
-                [5, 52],
-                [15, 52],
-                [25, 52],
-                [35, 52],
-                [50, 52],
-                [60, 52],
-                [70, 52],
-                [80, 52],
-                [90, 52],
-                [5, 59],
-                [10, 59],
-                [20, 59],
-                [30, 59],
-                [40, 59],
-                [55, 59],
-                [65, 59],
-                [75, 59],
-                [85, 59],
-                [95, 59],
-                [5, 66],
-                [15, 66],
-                [35, 66],
-                [50, 66],
-                [60, 66],
-                [80, 66],
-                [95, 66],
-                [5, 73],
-                [10, 73],
-                [25, 73],
-                [40, 73],
-                [55, 73],
-                [70, 73],
-                [85, 73],
-                [45, 73],
-                [50, 73],
-                [55, 73],
-                [60, 73],
-                [70, 73],
-                [80, 73],
-                [90, 73],
-                [95, 73],
-                [45, 80],
-                [55, 80],
-                [65, 80],
-                [75, 80],
-                [90, 80],
-                [45, 87],
-                [50, 87],
-                [60, 87],
-                [70, 87],
-                [80, 87],
-                [95, 87],
-                [45, 94],
-                [55, 94],
-                [65, 94],
-                [85, 94],
-                [95, 94],
-              ].map(([cx, cy], i) => (
-                <rect
-                  key={i}
-                  x={cx}
-                  y={cy}
-                  width="4"
-                  height="4"
-                  rx="1"
-                  fill="#111"
-                />
-              ))}
-            </svg>
+          <div className="cocktail-main-banner-right">
+            <h1 className="cocktail-main-banner-title">
+              내 손안의 레시피
+              <br />
+              마실랭
+            </h1>
+            <p className="cocktail-main-banner-desc">지금 시작하세요</p>
+            <img
+              src="/download_qr.png"
+              alt="앱 다운로드 QR"
+              className="cocktail-main-banner-qr"
+            />
           </div>
-          <p className="cocktail-main-banner-qr-label">앱 다운로드 QR</p>
         </div>
       </div>
     </div>
