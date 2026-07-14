@@ -197,7 +197,10 @@
       padding: 0 20px;
     }
 
-    &-body { gap: 16px; }
+    &-body {
+      gap: 16px;
+      height: auto;
+    }
 
     &-phone {
       width: 180px;
