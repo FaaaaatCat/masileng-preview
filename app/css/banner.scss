@@ -146,7 +146,7 @@
     display: flex;
     align-items: stretch;
     justify-content: center;
-    gap: 0;
+    gap: 75px;
     height: 400px;
   }
 
@@ -159,9 +159,8 @@
 
   &-phone {
     display: block;
-    width: 560px;
-    margin-top: -10px;
-    margin-right: -80px;
+    width: 240px;
+    margin-top: 32px;
   }
 
   &-right {
