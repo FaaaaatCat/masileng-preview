@@ -13,6 +13,7 @@ import ChallengeHome from "../page/ChallengeHome";
 import IngredientsHome from "../page/IngredientsHome";
 import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
+import { ArrowRightIcon } from "../components/icons";
 
 // ─────────────────────────────────────────────
 // 앱 배너 히어로
@@ -51,8 +52,11 @@ function AppHero() {
                 앱 다운로드 QR
               </span>
             </div>
-            <Link href="/app" className="btn btn-filled btn-brand btn-md md:hidden!">
+            <Link href="/app" className="btn btn-filled btn-brand btn-md md:hidden! cocktail-main-banner-download-btn">
               앱 다운로드
+              <span className="cocktail-main-banner-download-btn-icon">
+                <ArrowRightIcon />
+              </span>
             </Link>
           </div>
         </div>

@@ -154,6 +154,11 @@
       transform: rotate(0deg);
     }
   }
+
+  @keyframes poke-right {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(4px); }
+  }
 }
 
 .cocktail-main-banner {
@@ -255,6 +260,15 @@
     margin-top: -4px;
   }
 
+  &-download-btn-icon {
+    display: inline-flex;
+    align-items: center;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: poke-right 1.4s ease-in-out infinite;
+    }
+  }
+
   @media (max-width: 768px) {
     background: var(--coral-soft);
     &-inner {
@@ -272,10 +286,11 @@
     &-right {
       align-items: center;
       text-align: center;
-      padding: 20px 0 24px;
+      padding: 36px 20px;
       display: flex;
       flex-direction: row;
-      gap: 32px;
+      justify-content: space-between;
+      width: 100%;
     }
     &-text-wrap{
       text-align: left;
@@ -299,8 +314,7 @@
     }
 
     &-desc {
-      margin-top: 6px;
-      font-size: 13px;
+      display: none;
     }
 
     /* 모바일: QR 카드 대신 앱 다운로드 버튼(md:hidden! 유틸) 노출 */
