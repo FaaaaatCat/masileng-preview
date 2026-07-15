@@ -299,6 +299,8 @@ export default function CocktailForm({
       <Fragment key={ing.id}>
       <div
         className={`upload-ing-row${clickingIngId === ing.id ? " upload-ing-row--clicking" : ""}`}
+        data-ing-list={listKey}
+        data-ing-index={idx}
         onDragOver={(e) => {
           const drag = dragItemRef.current;
           if (!drag || drag.list !== listKey) return;
@@ -328,6 +330,43 @@ export default function CocktailForm({
             setDragIngId(ing.id);
           }}
           onDragEnd={() => { dragItemRef.current = null; setDragIngId(null); setClickingIngId(null); }}
+          onPointerDown={(e) => {
+            if (e.pointerType === "mouse") return; // 데스크탑은 네이티브 DnD 사용
+            try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+            dragItemRef.current = { list: listKey, index: idx };
+            setDragIngId(ing.id);
+            setClickingIngId(ing.id);
+          }}
+          onPointerMove={(e) => {
+            if (e.pointerType === "mouse") return;
+            const drag = dragItemRef.current;
+            if (!drag || drag.list !== listKey) return;
+            const row = document
+              .elementFromPoint(e.clientX, e.clientY)
+              ?.closest(".upload-ing-row");
+            if (!row || row.dataset.ingList !== listKey) return;
+            const overIdx = Number(row.dataset.ingIndex);
+            if (Number.isNaN(overIdx) || overIdx === drag.index) return;
+            setListFn((prev) => {
+              const next = [...prev];
+              const [moved] = next.splice(drag.index, 1);
+              next.splice(overIdx, 0, moved);
+              return next;
+            });
+            dragItemRef.current = { list: listKey, index: overIdx };
+          }}
+          onPointerUp={(e) => {
+            if (e.pointerType === "mouse") return;
+            dragItemRef.current = null;
+            setDragIngId(null);
+            setClickingIngId(null);
+          }}
+          onPointerCancel={(e) => {
+            if (e.pointerType === "mouse") return;
+            dragItemRef.current = null;
+            setDragIngId(null);
+            setClickingIngId(null);
+          }}
           title="드래그하여 순서 변경"
         >
           <span className="upload-ing-num-label">{idx + 1}</span>
