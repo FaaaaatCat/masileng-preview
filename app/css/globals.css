@@ -1,4 +1,3 @@
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
 @import "tailwindcss";
 
 :root {
@@ -204,9 +203,9 @@ html {
 }
 
 body {
+  /* --font-pretendard: next/font/local이 셀프호스팅 Pretendard Std + 폴백 메트릭을 주입 */
   font-family:
-    "Pretendard Variable",
-    Pretendard,
+    var(--font-pretendard),
     -apple-system,
     BlinkMacSystemFont,
     system-ui,
