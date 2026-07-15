@@ -156,8 +156,13 @@
   }
 
   @keyframes poke-right {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(4px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(4px);
+    }
   }
 }
 
@@ -209,10 +214,10 @@
   &-title-wrap {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     & .divider {
-      width: 40px;
-      height: 3px;
+      width: 56px;
+      height: 1.6px;
       background: #d8b3b8;
       border-radius: var(--r-full);
     }
@@ -225,11 +230,19 @@
     color: #ba7d86;
     & b {
       font-size: 40px;
+      background: linear-gradient(90deg, var(--coral) 0%, #9a5c65 50%, #ba7d86 100%);
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      /* 일부 브라우저 대응용 */
+      background-clip: text;
+      color: transparent;
     }
   }
 
   &-desc {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     font-size: 18px;
     font-weight: 500;
     color: #ba7d86;
@@ -292,7 +305,7 @@
       justify-content: space-between;
       width: 100%;
     }
-    &-text-wrap{
+    &-text-wrap {
       text-align: left;
       align-items: flex-start;
     }
@@ -308,7 +321,7 @@
 
     &-title {
       font-size: 20px;
-      & b{
+      & b {
         font-size: 28px;
       }
     }
