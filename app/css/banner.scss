@@ -256,6 +256,7 @@
   }
 
   @media (max-width: 768px) {
+    background: var(--coral-soft);
     &-inner {
       padding: 0 20px;
     }
@@ -271,10 +272,10 @@
     &-right {
       align-items: center;
       text-align: center;
-      padding: 28px 0 32px;
+      padding: 20px 0 24px;
       display: flex;
       flex-direction: row;
-      gap: 24px;
+      gap: 32px;
     }
     &-text-wrap{
       text-align: left;
@@ -291,9 +292,9 @@
     }
 
     &-title {
-      font-size: 24px;
+      font-size: 20px;
       & b{
-        font-size: 32px;
+        font-size: 28px;
       }
     }
 

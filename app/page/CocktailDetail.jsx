@@ -467,10 +467,7 @@ export default function CocktailDetail({
                           style={
                             !showIllust || !card.cocktail_illust
                               ? {
-                                  WebkitMaskImage:
-                                    "linear-gradient(to right, black 0%, black 40%, transparent 100%)",
-                                  maskImage:
-                                    "linear-gradient(to right, black 0%, black 40%, transparent 100%)",
+                                  marginLeft: "-4px",
                                 }
                               : undefined
                           }
@@ -490,10 +487,7 @@ export default function CocktailDetail({
                         style={
                           !showIllust || !card.cocktail_illust
                             ? {
-                                marginLeft: "-45px",
-                                position: "relative",
-                                zIndex: 1,
-                                textShadow: "0 0 8px rgba(255,255,255,0.9)",
+                                marginLeft: "-8px"
                               }
                             : undefined
                         }
@@ -550,24 +544,6 @@ export default function CocktailDetail({
                   >
                     {displayCard.desc}
                   </p>
-
-                  {/* 맛 프로필 도트 박스 */}
-                  {/* <div className="detail-flavor-box">
-                    {[
-                      { label: "당도", val: flavor.sweet },
-                      { label: "산미", val: flavor.sour },
-                      { label: "쌉쌀함", val: flavor.bitter },
-                      { label: "바디감", val: flavor.body },
-                    ].map(({ label, val }) => (
-                      <div
-                        key={label}
-                        className="flex items-center gap-2 h-[18px]"
-                      >
-                        <span className="detail-flavor-label">{label}</span>
-                        <FlavorDots value={val} />
-                      </div>
-                    ))}
-                  </div> */}
 
                   {/* 5 & 7. 마실랭 공식: 브랜드색 + 흰M, 일반: userProfile.png */}
                   <div
