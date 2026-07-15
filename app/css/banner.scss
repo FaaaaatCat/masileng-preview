@@ -197,6 +197,10 @@
     flex-direction: column;
     justify-content: center;
   }
+  &-text-wrap {
+    display: flex;
+    flex-direction: column;
+  }
   &-title-wrap {
     display: flex;
     align-items: center;
@@ -268,20 +272,29 @@
       align-items: center;
       text-align: center;
       padding: 28px 0 32px;
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
     }
-
+    &-text-wrap{
+      text-align: left;
+      align-items: flex-start;
+    }
     &-title-wrap {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       gap: 0px;
       & .divider {
-       display: none;
+        display: none;
       }
     }
 
     &-title {
       font-size: 24px;
+      & b{
+        font-size: 32px;
+      }
     }
 
     &-desc {
@@ -289,19 +302,9 @@
       font-size: 13px;
     }
 
+    /* 모바일: QR 카드 대신 앱 다운로드 버튼(md:hidden! 유틸) 노출 */
     &-qr-card {
-      margin-top: 14px;
-      align-self: center;
-      border-radius: var(--r-sm);
-      padding: 8px 8px 12px;
-    }
-
-    &-qr {
-      width: 120px;
-    }
-
-    &-qr-label {
-      font-size: 10px;
+      display: none;
     }
   }
 }

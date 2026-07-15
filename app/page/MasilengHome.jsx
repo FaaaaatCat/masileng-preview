@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 import COCKTAILS from "../data/cocktails.json";
 const CARDS = COCKTAILS.filter((c) => c.official);
@@ -30,17 +31,16 @@ function AppHero() {
             />
           </div>
           <div className="cocktail-main-banner-right">
-            <p className="cocktail-main-banner-desc">지금 시작하세요</p>
-            <div className="cocktail-main-banner-title-wrap">
-              <h1 className="cocktail-main-banner-title">
-                내 손안의 레시피
-              </h1>
-              <div className="divider"></div>
-              <h1 className="cocktail-main-banner-title">
-                <b> Masileng</b>
-              </h1>
+            <div className="cocktail-main-banner-text-wrap">
+              <p className="cocktail-main-banner-desc">지금 시작하세요</p>
+              <div className="cocktail-main-banner-title-wrap">
+                <h1 className="cocktail-main-banner-title">내 손안의 레시피</h1>
+                <div className="divider"></div>
+                <h1 className="cocktail-main-banner-title">
+                  <b> Masileng</b>
+                </h1>
+              </div>
             </div>
-
             <div className="cocktail-main-banner-qr-card">
               <img
                 src="/download_qr.png"
@@ -51,6 +51,9 @@ function AppHero() {
                 앱 다운로드 QR
               </span>
             </div>
+            <Link href="/app" className="btn btn-filled btn-brand btn-md md:hidden!">
+              앱 다운로드
+            </Link>
           </div>
         </div>
       </div>
