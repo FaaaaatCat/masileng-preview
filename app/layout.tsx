@@ -13,9 +13,9 @@ import "./css/ingredient-detail.css";
 import "./css/upload.css";
 
 const pretendard = localFont({
-  src: "./fonts/PretendardStdVariable.woff2",
+  src: "./fonts/PretendardVariable.woff2",
   display: "swap",
-  weight: "45 920",
+  weight: "45 930",
   variable: "--font-pretendard",
 });
 
