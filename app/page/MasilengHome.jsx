@@ -149,13 +149,6 @@ function CocktailPage({ filterProps }) {
             </p>
           )}
         </div>
-        {filtered.length > 0 && (
-          <div className="load-more-wrap">
-            <button className="btn btn-lined btn-gray-light btn-xl">
-              레시피 더 보기
-            </button>
-          </div>
-        )}
       </section>
     </div>
   );

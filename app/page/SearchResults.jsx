@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import "../css/search.scss";
 
 import SiteHeader from "../components/SiteHeader";
@@ -8,11 +7,7 @@ import NoticeBanner from "../components/NoticeBanner";
 import CocktailCard from "../components/CocktailCard";
 import IngredientCard from "../components/IngredientCard";
 
-// 한 번에 보여줄 결과 수 — '결과 더 보기' 클릭마다 이만큼 추가 노출
-const PAGE_SIZE = 12;
-
 function SearchSection({ icon, title, items, renderItem }) {
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const count = items.length;
 
   return (
@@ -23,21 +18,7 @@ function SearchSection({ icon, title, items, renderItem }) {
         {count > 0 && <span className="section-subtitle">{count}개의 검색 결과</span>}
       </h3>
       {count > 0 ? (
-        <>
-          <div className="cocktail-grid">
-            {items.slice(0, visibleCount).map(renderItem)}
-          </div>
-          {count > visibleCount && (
-            <div className="load-more-wrap">
-              <button
-                className="btn btn-lined btn-gray-light btn-xl"
-                onClick={() => setVisibleCount((v) => v + PAGE_SIZE)}
-              >
-                결과 더 보기
-              </button>
-            </div>
-          )}
-        </>
+        <div className="cocktail-grid">{items.map(renderItem)}</div>
       ) : (
         <div className="search-empty">
           <span className="search-empty-icon">🍸</span>
