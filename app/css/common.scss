@@ -463,6 +463,15 @@
     border: 5px solid transparent;
     border-top-color: var(--font-title);
   }
+
+  // 모바일: nowrap 상태로 뷰포트를 넘어가면 opacity 0이어도 가로 스크롤이 생김.
+  // 96px = 화면 우측 가장자리 근처 앵커(부재료 추가 ?)에서도 중앙 정렬이 안 넘치는 폭.
+  @media (max-width: 768px) {
+    white-space: normal;
+    width: max-content;
+    max-width: 96px;
+    text-align: center;
+  }
 }
 
 // ── 카드 아이템 (칵테일·재료 공통)

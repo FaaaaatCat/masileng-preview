@@ -460,7 +460,7 @@ export default function CocktailForm({
     <>
       {/* create 모드: 상단 X 버튼 */}
       {!isEdit && (
-        <Link href="/" className="upload-intro-close" aria-label="홈으로">
+        <Link href="/" className="upload-intro-close max-md:hidden!" aria-label="홈으로">
           <XIcon />
         </Link>
       )}

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 
 import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
@@ -98,10 +99,12 @@ function ChallengeHero() {
           나만의 칵테일을 선보여보세요.
         </p>
         <div className="challenge-main-banner-cta">
-          <button className="challenge-main-banner-btn challenge-main-banner-btn-primary btn-xl">
+          <Link
+            href="/upload"
+            className="btn btn-brand btn-filled btn-xl"
+          >
             내 레시피 등록하기
-          </button>
-          <button className="challenge-main-banner-btn challenge-main-banner-btn-secondary btn-xl">레시피 둘러보기</button>
+          </Link>
         </div>
       </div>
     </div>

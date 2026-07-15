@@ -473,7 +473,8 @@ $btn-sizes: (
   }
 
   // 인라인 필터 행은 숨기고, 필터 버튼 하나만 노출
-  .filter-row {
+  .filter-row,
+  .filter-inline {
     display: none;
   }
 
