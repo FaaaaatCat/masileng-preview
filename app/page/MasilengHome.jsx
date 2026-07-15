@@ -24,23 +24,33 @@ function AppHero() {
         <div className="cocktail-main-banner-body">
           <div className="cocktail-main-banner-phone-wrap">
             <img
-              src="/main_phone.png"
+              src="/main_phone_2.png"
               alt="마실랭 앱 화면"
               className="cocktail-main-banner-phone"
             />
           </div>
           <div className="cocktail-main-banner-right">
-            <h1 className="cocktail-main-banner-title">
-              내 손안의 레시피
-              <br />
-              마실랭
-            </h1>
             <p className="cocktail-main-banner-desc">지금 시작하세요</p>
-            <img
-              src="/download_qr.png"
-              alt="앱 다운로드 QR"
-              className="cocktail-main-banner-qr"
-            />
+            <div className="cocktail-main-banner-title-wrap">
+              <h1 className="cocktail-main-banner-title">
+                내 손안의 레시피
+              </h1>
+              <div className="divider"></div>
+              <h1 className="cocktail-main-banner-title">
+                <b> Masileng</b>
+              </h1>
+            </div>
+
+            <div className="cocktail-main-banner-qr-card">
+              <img
+                src="/download_qr.png"
+                alt="앱 다운로드 QR"
+                className="cocktail-main-banner-qr"
+              />
+              <span className="cocktail-main-banner-qr-label">
+                앱 다운로드 QR
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -78,15 +88,20 @@ function applyFilters(
 function CocktailPage({ filterProps }) {
   const [sortTab, setSortTab] = useState("최신순");
   const filtered = applyFilters(CARDS, filterProps);
-  const sorted = sortTab === "인기순"
-    ? [...filtered].sort((a, b) => b.likes - a.likes)
-    : filtered;
+  const sorted =
+    sortTab === "인기순"
+      ? [...filtered].sort((a, b) => b.likes - a.likes)
+      : filtered;
 
   return (
     <div className="page-wrap">
       <div className="filter-sort-row">
         <FilterBar {...filterProps} showIba={true} />
-        <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
+        <SortDropdown
+          className="section-sort"
+          value={sortTab}
+          onChange={setSortTab}
+        />
       </div>
       <section className="pb-12">
         <div className="section-header">
@@ -97,16 +112,16 @@ function CocktailPage({ filterProps }) {
               ? "전 세계 칵테일 레시피 모음"
               : `${filtered.length}개의 검색 결과`}
           </span>
-          <SortDropdown className="section-sort" value={sortTab} onChange={setSortTab} />
+          <SortDropdown
+            className="section-sort"
+            value={sortTab}
+            onChange={setSortTab}
+          />
         </div>
         <div className="cocktail-grid">
           {filtered.length > 0 ? (
             sorted.map((card) => (
-              <CocktailCard
-                key={card.id}
-                card={card}
-                cardId={card.id}
-              />
+              <CocktailCard key={card.id} card={card} cardId={card.id} />
             ))
           ) : (
             <p

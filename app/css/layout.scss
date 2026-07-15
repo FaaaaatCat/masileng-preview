@@ -14,7 +14,7 @@
   z-index: 50;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: saturate(180%) blur(14px);
-  border-bottom: 1px solid var(--ui-line-light);
+  border-bottom: 1px solid white;
   transition:
     background 280ms ease,
     border-color 280ms ease;
@@ -28,6 +28,7 @@
 
   // 스크롤 시 한 줄 헤더로 축소 — 메뉴/업로드 버튼 숨김, 검색창은 자기 자리(nav-menu 위치)로 복귀
   &--scrolled {
+    border-bottom: 1px solid var(--ui-line-light);
     .nav-menu,
     .nav-upload-btn,
     .nav-user-wrap,
