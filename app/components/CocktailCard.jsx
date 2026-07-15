@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { HeartIcon, PersonIcon } from "./icons";
 
 export default function CocktailCard({ card, cardId, basePath = "/cocktail" }) {
@@ -7,10 +8,12 @@ export default function CocktailCard({ card, cardId, basePath = "/cocktail" }) {
     <>
       <div className="common-card-item-img-wrap common-card-item-img-wrap--cover">
         <div className="common-card-item-bg" style={{ background: card.gradient }} />
-        <img
+        <Image
           src={card.photo_0}
           alt={card.name}
           className="common-card-item-img"
+          fill
+          sizes="(max-width: 768px) 50vw, 300px"
           onError={(e) => {
             e.target.style.display = "none";
           }}

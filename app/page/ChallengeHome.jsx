@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
@@ -75,10 +76,12 @@ function ChallengeHero() {
                 animationDelay: `${idx * 55}ms`,
               }}
             >
-              <img
+              <Image
                 src={d?.photo_0}
                 alt={d?.name}
                 className="challenge-main-banner-scatter-img"
+                fill
+                sizes="160px"
                 onError={(e) => {
                   e.target.style.display = "none";
                 }}

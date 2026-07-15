@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 export default function IngredientCard({
   ing,
@@ -40,10 +41,12 @@ export default function IngredientCard({
         style={imgHeight ? { height: imgHeight } : undefined}
       >
         {isBurst && <span className="common-card-item-ripple" />}
-        <img
+        <Image
           src={ing.photo}
           alt={ing.n}
           className="common-card-item-img--product"
+          width={400}
+          height={400}
           onError={(e) => { e.target.style.opacity = "0"; }}
         />
         {onAction && (

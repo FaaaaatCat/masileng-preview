@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { XIcon, ArrowRightIcon } from "../components/icons";
 
 const STEPS = [
@@ -144,7 +145,7 @@ export default function UploadIntroPage() {
                   className={`upload-intro-step reveal reveal-delay-${i + 1}`}
                 >
                   <div className="upload-intro-step-icon">
-                    <img src={step.img} alt={step.title} />
+                    <Image src={step.img} alt={step.title} width={180} height={180} />
                   </div>
                   <div className="upload-intro-step-num">{step.num}</div>
                   <h3 className="upload-intro-step-title">{step.title}</h3>

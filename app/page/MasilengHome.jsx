@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 import COCKTAILS from "../data/cocktails.json";
 const CARDS = COCKTAILS.filter((c) => c.official);
@@ -25,10 +26,14 @@ function AppHero() {
         {/* 본문: 폰 스크린샷 + 텍스트/QR */}
         <div className="cocktail-main-banner-body">
           <div className="cocktail-main-banner-phone-wrap">
-            <img
+            <Image
               src="/main_phone_2.png"
               alt="마실랭 앱 화면"
               className="cocktail-main-banner-phone"
+              width={960}
+              height={956}
+              preload
+              style={{ height: "auto" }}
             />
           </div>
           <div className="cocktail-main-banner-right">
@@ -43,10 +48,12 @@ function AppHero() {
               </div>
             </div>
             <div className="cocktail-main-banner-qr-card">
-              <img
+              <Image
                 src="/download_qr.png"
                 alt="앱 다운로드 QR"
                 className="cocktail-main-banner-qr"
+                width={140}
+                height={140}
               />
               <span className="cocktail-main-banner-qr-label">
                 앱 다운로드 QR
