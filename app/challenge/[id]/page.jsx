@@ -9,5 +9,16 @@ export default async function ChallengePage({ params }) {
   const cardId = parseInt(id, 10);
   const card = CARDS.find((c) => c.id === cardId);
   if (!card) notFound();
-  return <CocktailDetail card={card} cardId={cardId} backHref="/" showIllust={false} />;
+  const authorCards = COCKTAILS.filter(
+    (c) => !c.official && c.user === card.user,
+  ).map((c) => ({ id: c.id, name: c.name, gradient: c.gradient, photo_0: c.photo_0 }));
+  return (
+    <CocktailDetail
+      card={card}
+      cardId={cardId}
+      backHref="/"
+      showIllust={false}
+      authorCards={authorCards}
+    />
+  );
 }

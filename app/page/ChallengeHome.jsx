@@ -8,7 +8,7 @@ import { ChevronRightIcon } from "../components/icons";
 import FilterBar from "../components/FilterBar";
 import SortDropdown from "../components/SortDropdown";
 import CocktailCard from "../components/CocktailCard";
-import COCKTAILS from "../data/cocktails.json";
+import COCKTAILS from "../data/cocktails.list.json";
 
 const CARDS = COCKTAILS.filter((c) => !c.official);
 
@@ -146,7 +146,7 @@ export default function ChallengeHome() {
     if (abv === "high" && card.abv <= 15) return false;
     if (base && card.base !== base) return false;
     if (theme && card.theme !== theme) return false;
-    const count = card.ingredients?.length ?? 0;
+    const count = card.ingCount ?? 0;
     if (count < rangeMin || count > rangeMax) return false;
     if (search) {
       const q = search.toLowerCase();

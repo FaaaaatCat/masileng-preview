@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-import COCKTAILS from "../data/cocktails.json";
+import COCKTAILS from "../data/cocktails.list.json";
 const CARDS = COCKTAILS.filter((c) => c.official);
 import CocktailCard from "../components/CocktailCard";
 import FilterBar from "../components/FilterBar";
@@ -85,7 +85,7 @@ function applyFilters(
     if (base && card.base !== base) return false;
     if (theme && card.theme !== theme) return false;
     if (ibaOnly && !card.iba) return false;
-    const count = card.ingredients?.length ?? 0;
+    const count = card.ingCount ?? 0;
     if (count < rangeMin || count > rangeMax) return false;
     if (search) {
       const q = search.toLowerCase();

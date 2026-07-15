@@ -5,13 +5,10 @@ import Link from "next/link";
 import "../css/ingredient-detail.css";
 import "../css/cocktail-detail.css";
 
-import COCKTAILS from "../data/cocktails.json";
 import { getCardTags } from "../data/detail-helpers";
 import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
 import { ArrowLeftIcon, ArrowRightIcon, ChevronRightIcon, RocketIcon, BoxPlusIcon } from "../components/icons";
-
-const CARDS = COCKTAILS.filter((c) => c.official);
 
 // 재료별 쿠팡 관련상품 (mock)
 const PRODUCT_MAP = {
@@ -129,7 +126,7 @@ function getProducts(ing) {
   return PRODUCT_MAP[ing.n] || DEFAULT_PRODUCTS(ing);
 }
 
-export default function IngredientDetail({ ing }) {
+export default function IngredientDetail({ ing, relatedCards = [] }) {
   const imgSrc = ing.photo;
   const isAlcohol = ing.cat === "술(강한 도수)" || ing.cat === "술(약한 도수)";
   const [isInBasket, setIsInBasket] = useState(!!ing.myIng);
@@ -152,11 +149,6 @@ export default function IngredientDetail({ ing }) {
       }, 2000);
     }
   };
-
-  // 이 재료를 사용하는 칵테일 (레시피 재료 목록의 ingredientId 기준)
-  const relatedCards = CARDS.filter((c) =>
-    (c.ingredients || []).some((x) => x.ingredientId === ing.id),
-  ).slice(0, 8);
 
   const products = getProducts(ing);
 

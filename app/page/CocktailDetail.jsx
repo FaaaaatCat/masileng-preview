@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import "../css/cocktail-detail.css";
 
-import COCKTAILS from "../data/cocktails.json";
 import INGREDIENTS from "../data/ingredients.json";
 import { getCardDetail, getCardTags } from "../data/detail-helpers.js";
 import SiteHeader from "../components/SiteHeader";
@@ -155,8 +154,6 @@ function FlavorDots({ value, max = 5 }) {
 
 /* 헤더 – MasilengHome과 동일 구조 */
 
-const CHALLENGE_CARDS = COCKTAILS.filter((c) => !c.official);
-
 const FIRST_BG = "#FFB3C6";
 const FIRST_IMG = "profile_img";
 
@@ -179,6 +176,7 @@ export default function CocktailDetail({
   backHref = "/",
   showIllust = true,
   isOfficial = false,
+  authorCards = [],
 }) {
   const [liked, setLiked] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
@@ -598,15 +596,12 @@ export default function CocktailDetail({
                     </button>
                     {authorDropOpen &&
                       (() => {
-                        const userCards = CHALLENGE_CARDS.filter(
-                          (c) => c.user === card.user,
-                        );
                         return (
                           <div className="common-dropdown detail-author-dropdown">
                             <p className="common-dropdown-header">
                               @{card.user}의 레시피
                             </p>
-                            {userCards.map((uc) => (
+                            {authorCards.map((uc) => (
                               <Link
                                 key={uc.id}
                                 href={`/challenge/${uc.id}`}

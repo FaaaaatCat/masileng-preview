@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import COCKTAILS from "../data/cocktails.json";
+import COCKTAILS from "../data/cocktails.list.json";
 import INGREDIENTS from "../data/ingredients.json";
 import SiteHeader from "../components/SiteHeader";
 import IngredientCard from "../components/IngredientCard";

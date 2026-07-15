@@ -3,7 +3,6 @@
 import { useState } from "react";
 import "../css/search.scss";
 
-import { searchAll } from "../data/search-helpers";
 import SiteHeader from "../components/SiteHeader";
 import NoticeBanner from "../components/NoticeBanner";
 import CocktailCard from "../components/CocktailCard";
@@ -49,8 +48,7 @@ function SearchSection({ icon, title, items, renderItem }) {
   );
 }
 
-export default function SearchResults({ query }) {
-  const { cocktails, ingredients, challenges } = searchAll(query);
+export default function SearchResults({ query, cocktails, ingredients, challenges }) {
   const total = cocktails.length + ingredients.length + challenges.length;
 
   return (
